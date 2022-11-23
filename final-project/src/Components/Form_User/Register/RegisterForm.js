@@ -1,9 +1,26 @@
-import { Button } from "antd";
-import React from "react";
-import { Card, Col, Container, Form, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 
 
 export default function RegisterForm() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirm, setConfirm] = useState('');
+    const [role, setRole] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+
+        // const user = {
+        //     email: email,
+        //     password: password,
+        //     userRole: role
+        // }
+
+        // console.log(user);
+    }
 
     return (
         <Container>
@@ -16,21 +33,21 @@ export default function RegisterForm() {
                         <Card.Header> <h1> Register </h1> </Card.Header>
 
                         <Card.Body>
-                            <Form className="m-3">
+                            <Form className="m-3" onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Row>
                                         <Form.Label /> Email
-                                        <Form.Control type="email" />
+                                        <Form.Control type="email" onChange={(event) => setEmail(event.target.value)}/>
                                     </Row>
 
                                     <Row>
                                         <Form.Label /> Password
-                                        <Form.Control type="Password" />
+                                        <Form.Control type="Password" onChange={(event) => setPassword(event.target.value)}/>
                                     </Row>
 
                                     <Row>
                                         <Form.Label /> Confirm Password
-                                        <Form.Control type="password" />
+                                        <Form.Control type="password" onChange={(event) => setConfirm(event.target.value)} />
                                     </Row>
 
                                     <Row>
@@ -39,17 +56,21 @@ export default function RegisterForm() {
                                                 <div key={`inline-${type}`} className="m-3">
                                                     <Form.Check
                                                         inline
-                                                        label="Ứng viên"
+                                                        label="candidate"
+                                                        value="candidate"
                                                         name="group1"
                                                         type={type}
                                                         id={`inline-${type}-1`}
+                                                        onChange={(event) => setRole(event.target.value)}
                                                     />
                                                     <Form.Check
                                                         inline
-                                                        label="Nhà tuyển dụng"
+                                                        label="recruiter"
+                                                        value="recruiter"
                                                         name="group1"
                                                         type={type}
                                                         id={`inline-${type}-2`}
+                                                        onChange={(event) => setRole(event.target.value)}
                                                     />
                                                 </div>
                                             ))}
@@ -62,7 +83,7 @@ export default function RegisterForm() {
 
                                     <Row>
                                         <Col>
-                                            <Button variant="primary"> Register </Button>
+                                            <Button variant="outline-primary" type="submit"> Register </Button>
                                         </Col>
                                     </Row>
                                     
