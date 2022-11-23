@@ -12,7 +12,9 @@ export default function MainApp() {
         <div className="main-app">
           <Header />
           <Routes>
-            <Route path="/" element={<HomePage />}></Route>
+                <Route path="/" element={<HomePage/>}></Route>
+                <Route path="/login" element={<Login/>}></Route>
+                <Route path="/register" element={<RegisterForm/>}></Route>
           </Routes>
           <Footer />
         </div>
