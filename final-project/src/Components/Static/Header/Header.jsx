@@ -14,5 +14,5 @@ export default function Header(){
           </div>
         </Header>
     </Layout>
-    )
+  );
 }
