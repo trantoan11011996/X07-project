@@ -11,7 +11,12 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
       "https://ecommerce-mindx.herokuapp.com/api/auth/login",
+<<<<<<< HEAD
+      { email, password },
+      config
+=======
       { email, password },config
+>>>>>>> 16d9cd5d92ef5a06ffb100feae42ab93b8481333
     );
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     navigate("/");
