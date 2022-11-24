@@ -1,5 +1,11 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu,Avatar } from "antd";
+import {
+  UserOutlined,
+  KeyOutlined,
+  FormOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
 import { useSelector } from "react-redux";
@@ -17,7 +23,7 @@ const AuthHeader = ({ mode }) => {
         theme="white"
         mode={mode}
         onClick={handleMenuClick}
-        style={{ marginBottom: 15, boxShadow: "0px 5px 5px 0px grey" }}
+        style={{ marginBottom: 15, boxShadow: "2px 5px 7px -1px rgba(184,165,184,1)" }}
       >
          <Menu.Item>
               <img
@@ -40,10 +46,28 @@ const AuthHeader = ({ mode }) => {
 
         {isAuthenticated && (
            <>
-          <Menu.Item>
-            {" "}
-            <InfoUserDropDown mode={"horizontal"} />
-          </Menu.Item>
+        <Menu theme="white" mode={mode} onClick={handleMenuClick} style={{}}>
+      <Menu.SubMenu
+        title={
+          <>
+            <Avatar icon={<UserOutlined />} />
+          </>
+        }
+      >
+        <Menu.Item>
+          <UserOutlined /> Profile
+        </Menu.Item>
+        <Menu.Item key="/update_password">
+            <KeyOutlined /> Update Password
+        </Menu.Item>
+        <Menu.Item>
+          <FormOutlined /> Update Info
+        </Menu.Item>
+        <Menu.Item>
+          <LogoutOutlined /> Log out
+        </Menu.Item>
+      </Menu.SubMenu>
+    </Menu>
            </>
         )}
       </Menu>
