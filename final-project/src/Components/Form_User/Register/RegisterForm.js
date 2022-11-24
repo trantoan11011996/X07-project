@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { eye } from 'react-bootstrap-icons';
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -20,12 +20,12 @@ export default function RegisterForm() {
         event.preventDefault();
 
         if (email && (password == confirm)) {
-            const user = {
-                email: email,
-                password: password,
-                userRole: role
-            }
-            alert("Register successful")
+            // const user = {
+            //     email: email,
+            //     password: password,
+            //     userRole: role
+            // }
+            // alert("Register successful")
             navigate("/")
         } else {
             alert("password and confirm password must be match")
@@ -39,7 +39,7 @@ export default function RegisterForm() {
                 <Col sm={3} md={3} ></Col>
 
                 <Col sm={6} md={6} >
-                    <Form className="m-3 p-3 text-start border shadow-ms" onSubmit={handleSubmit}>
+                    <Form className="m-3 p-5 text-start border shadow-ms" onSubmit={handleSubmit}>
                         <Form.Group>
                         <h1 className="mt-3 text-center"> Register </h1>
                             <Row>
@@ -54,7 +54,7 @@ export default function RegisterForm() {
 
                             <Row>
                                 <Form.Label className="label-input" /> <b>Confirm Password</b>
-                                <Form.Control className="ms-2" type="password" onChange={(event) => setConfirm(event.target.value)} />
+                                <Form.Control className="ms-2 " type="password" onChange={(event) => setConfirm(event.target.value)} />
                             </Row>
 
                             <Row>

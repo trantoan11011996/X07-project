@@ -11,7 +11,7 @@ export default function UserRecruiter() {
     const [career, setCareer] = useState('');
     const [description, setDescription] = useState('');
 
-     const handleClick = (event) => {
+    const handleClick = (event) => {
         event.preventDefault();
 
 
@@ -34,71 +34,66 @@ export default function UserRecruiter() {
                 <Col sm={3} md={3}></Col>
 
                 <Col sm={6} md={6}>
-                    <Card className="text-center">
-                        <Card.Header>  <h1> Cập nhật thông tin nhà tuyển dụng</h1> </Card.Header>
+                    <Form className="m-3 p-5 text-start border shadow-ms">
+                        <Form.Group>
+                            <h1 className="mt-3 text-center"> Recruiter's Information</h1>
+                            <Row>
+                                <Form.Label /> <b> Company </b>
+                                <Form.Control className="ms-2 " type="text" onChange={(event) => setCompany(event.target.value)} />
+                            </Row>
 
-                        <Card.Body>
-                            <Form className="m-3">
-                                <Form.Group>
-                                    <Row>
-                                        <Form.Label /> Company
-                                        <Form.Control type="text"  onChange={(event) => setCompany(event.target.value)}/>
+                            <Row>
+                                <Form.Label /> <b> Website </b>
+                                <Form.Control className="ms-2" type="text" onChange={(event) => setWebsite(event.target.value)} />
+                            </Row>
+
+                            <Row className="mt-1">
+                                <Col sm={5} md={5}>
+                                    <Row className="text-start">
+                                        <Form.Label /> <b> Email </b>
+                                        <Form.Control className="ms-2" type="email" onChange={(event) => setEmail(event.target.value)} />
                                     </Row>
+                                </Col>
 
-                                    <Row>
-                                        <Form.Label /> Website
-                                        <Form.Control type="text"  onChange={(event) => setWebsite(event.target.value)} />
+                                <Col sm={6} md={6}>
+                                    <Row className="ms-1">
+                                        <Form.Label /> <b> Phone Number </b>
+                                        <Form.Control className="ms-2" type="text" onChange={(event) => setPhone(event.target.value)} />
                                     </Row>
+                                </Col>
+                            </Row>
 
-                                    <Row className="mt-1">
-                                        <Col sm={5} md={5} className="me-2">
-                                            <Row className="text-start">
-                                                <Form.Label> Email</Form.Label>
-                                                <Form.Control type="email"  onChange={(event) => setEmail(event.target.value)}/>
-                                            </Row>
-                                        </Col>
+                            <Row>
+                                <Form.Label /> <b> Address </b>
+                                <Form.Control className="ms-2" type="text" onChange={(event) => setAddress(event.target.value)} />
+                            </Row>
 
-                                        <Col sm={6} md={6}>
-                                            <Row className="text-start">
-                                                <Form.Label> Phone Number</Form.Label>
-                                                <Form.Control type="text"  onChange={(event) => setPhone(event.target.value)} />
-                                            </Row>
-                                        </Col>
-                                    </Row>
+                            <Row>
+                                <Form.Label /> <b> Career </b>
+                                <Form.Select className="ms-2" onChange={(event) => setCareer(event.target.value)}>
+                                    <option></option>
+                                    <option value="Dev"> Dev</option>
+                                    <option value="Tester"> Tester</option>
+                                </Form.Select>
+                            </Row>
 
-                                    <Row>
-                                        <Form.Label /> Address
-                                        <Form.Control type="text"  onChange={(event) => setAddress(event.target.value)} />
-                                    </Row>
+                            <Row>
+                                <Form.Label /> <b> Description </b>
+                                <Form.Control className="ms-2" as="textarea" rows={3} onChange={(event) => setDescription(event.target.value)} />
+                            </Row>
 
-                                    <Row>
-                                        <Form.Label /> Career
-                                        <Form.Select onChange={(event) => setCareer(event.target.value)}>
-                                            <option></option>
-                                            <option value="Dev"> Dev</option>
-                                            <option value="Tester"> Tester</option>
-                                        </Form.Select>
-                                    </Row>
+                            <Row className="m-3">
+                                <Col sm={3} md={3}> </Col>
+                                <Col sm={3} md={3}>
+                                    <Button variant="outline-primary" onClick={handleClick}> Register </Button>
+                                </Col>
+                                <Col sm={3} md={3}>
+                                    <Button variant="light"> Cancel </Button>
+                                </Col>
+                            </Row>
 
-                                    <Row>
-                                        <Form.Label /> Description
-                                        <Form.Control as="textarea" rows={3}  onChange={(event) => setDescription(event.target.value)} />
-                                    </Row>
-
-                                    <Row className="m-3">
-                                        <Col sm={3} md={3}> </Col>
-                                        <Col sm={3} md={3}>
-                                            <Button variant="outline-primary" onClick={handleClick}> Register </Button>
-                                        </Col>
-                                        <Col sm={3} md={3}>
-                                            <Button variant="light"> Cancel </Button>
-                                        </Col>
-                                    </Row>
-
-                                </Form.Group>
-                            </Form>
-                        </Card.Body>
-                    </Card>
+                        </Form.Group>
+                    </Form>
                 </Col>
 
                 <Col sm={3} md={3}></Col>
