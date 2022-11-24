@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../Static/Header/Header";
 import Footer from "../Static/Footer/Footer";
 import HomePage from "../HomePage/HomePage";
+import Login from "../Form_User/Login/Login";
+import RegisterForm from "../Form_User/Register/RegisterForm";
 
 export default function MainApp() {
   return (

@@ -4,7 +4,7 @@ import styles from "./Login.module.scss";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { isEmail, isEmpty } from "../../../utils/validate";
+import { isEmail, isEmpty } from "../../../Utils/validate";
 import { loginUser } from "../../../Actions/authAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

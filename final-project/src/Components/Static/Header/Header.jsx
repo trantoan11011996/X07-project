@@ -2,6 +2,7 @@ import React, { useState }  from "react";
 import { Layout, Menu, Button, Avatar, Row, Col, Space, Dropdown } from "antd";
 import { Link } from "react-router-dom";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Header(){
    
@@ -10,6 +11,8 @@ export default function Header(){
         { label: "Login", key: "/login" },
         { label: "Register", key: "/register" },
       ];
+      const {isAuthenticated} = useSelector(state=>state.auths)
+      console.log(isAuthenticated);
       const navigate = useNavigate();
 
       const handleMenuClick = ({ key }) => {
