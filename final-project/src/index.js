@@ -6,10 +6,13 @@ import { DatePicker } from "antd";
 import "antd/dist/antd.min.css";
 import { Provider } from "react-redux";
 import store from "./store";
+import GlobalStyles from "./Components/GlobalStyles/GlobalStyles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <GlobalStyles>
+      <App />
+    </GlobalStyles>
   </Provider>
 );

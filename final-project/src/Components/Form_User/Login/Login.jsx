@@ -8,6 +8,7 @@ import { isEmail, isEmpty } from "../../../Utils/validate";
 import { loginUser } from "../../../Actions/authAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../../MetaData/MetaData";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -46,6 +47,7 @@ const Login = () => {
   return (
     <>
       <ToastContainer />
+      <MetaData title="Login" />
       <div className={cx("container")}>
         <div className={cx("container_login")}>
           <div className={cx("wrapper")}>
