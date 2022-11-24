@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 * {
   margin: 0;
   padding: 0;
@@ -29,6 +27,5 @@ ol,
 ul {
   list-style: none;
 }
->>>>>>> 16d9cd5d92ef5a06ffb100feae42ab93b8481333
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");

@@ -39,10 +39,12 @@ const AuthHeader = ({ mode }) => {
         )}
 
         {isAuthenticated && (
+           <>
           <Menu.Item>
             {" "}
             <InfoUserDropDown mode={"horizontal"} />
           </Menu.Item>
+           </>
         )}
       </Menu>
     </div>
