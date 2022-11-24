@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
-import { eye } from 'react-bootstrap-icons';
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
