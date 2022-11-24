@@ -15,7 +15,7 @@ export default function MainApp() {
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
-
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/update_password" element={<UpdatePassword />}></Route>
           </Routes>
           <Footer />
