@@ -23,7 +23,7 @@ const AuthHeader = ({ mode }) => {
         theme="white"
         mode={mode}
         onClick={handleMenuClick}
-        style={{ marginBottom: 15, boxShadow: "0px 5px 5px 0px grey" }}
+        style={{ marginBottom: 15, boxShadow: "2px 5px 7px -1px rgba(184,165,184,1)" }}
       >
          <Menu.Item>
               <img
