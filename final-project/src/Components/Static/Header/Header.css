@@ -1,0 +1,13 @@
+.wrap-user{
+    border : 1px solid red;
+    cursor: pointer;
+    position: relative;
+}
+.info-user{
+    border : 1px solid black;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    top: 50px;
+
+}
