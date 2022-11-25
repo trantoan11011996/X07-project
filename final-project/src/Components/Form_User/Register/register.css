@@ -2,3 +2,12 @@
     background-color: rgb(253,61,87);
     border: none;
 }
+
+.input{
+    width: 97%;
+}
+
+.register{
+    font-size: 25px;
+    font-weight: bold;
+}
