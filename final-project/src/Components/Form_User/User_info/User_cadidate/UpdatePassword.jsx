@@ -2,9 +2,7 @@ import React, { Fragment, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
 import {
-  isEmpty,
-  isLength,
-  isNewPasswordLength,
+  isEmpty
 } from "../../../../utils/validate";
 import { toast, ToastContainer } from "react-toastify";
 

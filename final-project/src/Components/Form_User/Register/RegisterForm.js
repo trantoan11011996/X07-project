@@ -33,9 +33,9 @@ export default function RegisterForm() {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col sm={3} md={3}></Col>
+      <Container>
+        <Row>
+          <Col sm={3} md={3}></Col>
 
         <Col sm={6} md={6}>
           <Form
