@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
-import { TfiPencil } from "react-icons/tfi";
+
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
@@ -22,56 +22,52 @@ const UpdatePassword = () => {
             </div>
           </div>
           <div className={cx("col_info_2")}>
-            <div className={cx("info_top")}>
-              <div className={cx("info_top_title")}>
-                <h3>Tài khoản</h3>
-                <p>Hãy cập nhật thông tin mới nhất.</p>
-                <p>
-                  Thông tin cá nhân dưới đây sẽ tự động điền khi bạn tạo hồ sơ
-                  mới.
-                </p>
-              </div>
+            <div className={cx("form_container")}>
               <form action="">
-                <h1>avatar</h1>
+                <h3>Thay đổi mật khẩu</h3>
+                <div className={cx("group_input")}>
+                  <label htmlFor="email">
+                    Mật khẩu hiện tại <span>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="old_password"
+                    className={cx("password")}
+                  />
+                </div>
+
+                <div className={cx("group_input")}>
+                  <label htmlFor="email">
+                    Mật khẩu mới <span>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="old_password"
+                    className={cx("password")}
+                  />
+                </div>
+                <div className={cx("group_input")}>
+                  <label htmlFor="email">
+                    Gõ lại mật khẩu mới <span>*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="old_password"
+                    className={cx("password")}
+                  />
+                </div>
+                <div className={cx("check_password")}>
+                  <input type="checkbox" id="check_password" />
+                  <label htmlFor="check_password">Hiển thị mật khẩu</label>
+                </div>
+                <div className={cx("update_btn")}>
+                  <button type="submit">Cập nhật mật khẩu</button>
+                </div>
               </form>
             </div>
-            <ul className={cx("list_info_user")}>
-              <li>
-                <div className={cx("name")}>
-                  Họ và tên <span>*</span>
-                </div>
-                <div className={cx("name_info")}>
-                  <h5>Quang Minh</h5>
-                  <a href="/#">
-                    <TfiPencil />
-                    Chỉnh sửa
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className={cx("name")}>
-                  Địa chỉ email <span>*</span>
-                </div>
-                <div className={cx("name_info")}>
-                  <h5>nguyendoquangminh2112@gmail.com</h5>
-                  <a href="/#">
-                    <TfiPencil />
-                    Chỉnh sửa
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className={cx("name")}>
-                  Họ và tên <span>*</span>
-                </div>
-                <div className={cx("name_info")}>
-                  <h5>Quang Minh</h5>
-                  <a href="/#">
-                    <TfiPencil /> Chỉnh sửa
-                  </a>
-                </div>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
