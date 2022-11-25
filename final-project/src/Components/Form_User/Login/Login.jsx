@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { isEmail, isEmpty } from "../../../utils/validate";
 import { loginUser } from "../../../Actions/authAction";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 const cx = classNames.bind(styles);
 const Login = () => {
@@ -87,11 +87,11 @@ const Login = () => {
                   <a href="/#">Forgot Password?</a>
                 </div>
                 <div className={cx("register")}>
-                  <a href="/#">Do you have an account ?</a>
+                  <Link to={"/register"}>Do you have an account ?</Link>
                 </div>
               </div>
               <div className={cx("login_btn")}>
-                <button type="submit">Đăng nhập</button>
+                <button type="submit">Login</button>
               </div>
             </form>
           </div>
