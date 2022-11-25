@@ -18,7 +18,7 @@ export const isLength = (password) => {
 };
 
 // check password match
-export const isMatch = (password, cf_password) => {
-  if (password === cf_password) return true;
+export const isMatch = (password, confirmPassword) => {
+  if (password === confirmPassword) return true;
   return false;
 };
