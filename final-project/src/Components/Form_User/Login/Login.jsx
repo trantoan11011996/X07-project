@@ -47,6 +47,7 @@ const Login = () => {
 
   return (
     <>
+    <MetaData title="Login"/>
       <ToastContainer />
       <MetaData title="Login" />
       <div className={cx("container")}>
