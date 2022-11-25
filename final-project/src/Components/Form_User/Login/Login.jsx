@@ -41,6 +41,7 @@ const Login = () => {
         className: "toast-failed",
         bodyClassName: "toast-failed",
       });
+
     dispatch(loginUser(email, password, navigate));
   };
 
