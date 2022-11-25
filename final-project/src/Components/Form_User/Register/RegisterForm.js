@@ -33,7 +33,7 @@ export default function RegisterForm() {
   };
 
   return (
-      <Container>
+      <Container className="register">
         <Row>
           <Col sm={3} md={3}></Col>
 
@@ -72,8 +72,8 @@ export default function RegisterForm() {
               </Row>
 
               <Row>
-                <Col sm={7} md={7}>
-                  {["radio"].map((type) => (
+                <Col sm={7} md={6}>
+                  {["radio"].map((type) => (  
                     <div key={`inline-${type}`} className="m-3">
                       <Form.Check
                         inline

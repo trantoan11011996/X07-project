@@ -2,7 +2,8 @@ p{
     margin : 0 !important;
 }
 .footer{
-    height: 600px;
+    height: fit-content;
+    padding-bottom: 20px;
     margin-top: 20px;
 }
 .container-footer-content{
