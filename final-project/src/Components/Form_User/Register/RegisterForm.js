@@ -33,7 +33,7 @@ export default function RegisterForm() {
   };
 
   return (
-      <Container className="register">
+      <Container className="register-container">
         <Row>
           <Col sm={3} md={3}></Col>
 
