@@ -53,11 +53,11 @@ const Login = () => {
       <div className={cx("container")}>
         <div className={cx("container_login")}>
           <div className={cx("wrapper")}>
-            <h1>Login</h1>
+            <h1>Đăng nhập</h1>
             <form className={cx("login")} onSubmit={handleSubmitLogin}>
               <div className={cx("group_input")}>
                 <label htmlFor="email">
-                  Email Address <span>*</span>
+                  Địa chỉ Email <span>*</span>
                 </label>
                 <input
                   type="email"
@@ -70,7 +70,7 @@ const Login = () => {
               </div>
               <div className={cx("group_input")}>
                 <label htmlFor="password">
-                  Password <span>*</span>
+                  Mật khẩu <span>*</span>
                   <div className={cx("input_icon")} onClick={handleClick}>
                     {visible ? <MdVisibility /> : <MdVisibilityOff />}
                   </div>
@@ -86,14 +86,14 @@ const Login = () => {
               </div>
               <div className={cx("login_actions")}>
                 <div className={cx("login_forgotPassword")}>
-                  <a href="/#">Forgot Password?</a>
+                  <a href="/#">Quên mật khẩu?</a>
                 </div>
                 <div className={cx("register")}>
-                  <Link to={"/register"}>Do you have an account ?</Link>
+                  <Link to={"/register"}>Bạn đã có tài khoản ?</Link>
                 </div>
               </div>
               <div className={cx("login_btn")}>
-                <button type="submit">Login</button>
+                <button type="submit">Đăng nhập</button>
               </div>
             </form>
           </div>

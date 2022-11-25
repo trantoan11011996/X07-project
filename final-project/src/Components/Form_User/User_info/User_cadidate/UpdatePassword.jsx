@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
-import {
-  isEmpty
-} from "../../../../utils/validate";
+import { isEmpty } from "../../../../utils/validate";
 import { toast, ToastContainer } from "react-toastify";
-
+import MetaData from "../../../MetaData/MetaData";
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
@@ -41,6 +39,7 @@ const UpdatePassword = () => {
   };
   return (
     <Fragment>
+      <MetaData title="Update Password" />
       <ToastContainer />
       <div className={cx("container")}>
         <div className={cx("container_info")}>
