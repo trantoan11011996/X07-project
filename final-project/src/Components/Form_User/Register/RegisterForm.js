@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import { isEmail, isEmpty, isMatch } from "../../../utils/validate";
 import "../Register/register.css"
 
 export default function RegisterForm() {
@@ -14,16 +15,20 @@ export default function RegisterForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (email && password == confirm) {
-      // const user = {
+    if (isEmpty(email) || isEmpty(password) ) {
+      return alert("Hãy nhập email và mật khẩu")
+    } else if (!isEmail(email)) {
+       return alert("Hãy nhập email đúng định dạng")
+    } else if (!isMatch(password, confirm)) {
+        return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp")
+    } else if (isEmail(email) && isMatch(password, confirm)) {
+        // const user = {
       //     email: email,
       //     password: password,
       //     userRole: role
       // }
       // alert("Register successful")
-      navigate("/");
-    } else {
-      alert("password and confirm password must be match");
+        navigate("/")
     }
   };
 
@@ -34,33 +39,33 @@ export default function RegisterForm() {
 
         <Col sm={6} md={6}>
           <Form
-            className="m-3 p-5 text-start shadow"
+            className="m-2 p-5 text-start shadow"
             onSubmit={handleSubmit}
           >
             <Form.Group>
-              <h1 className="mt-3 text-center"> Register </h1>
+              <h1 className="register text-center"> Đăng Ký </h1>
               <Row>
                 <Form.Label /> <b>Email <span style={{color:'red'}}>*</span></b>
                 <Form.Control
-                  className="ms-2"
+                  className="input ms-2"
                   type="email"
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </Row>
 
               <Row>
-                <Form.Label /> <b>Password <span style={{color:'red'}}>*</span></b>
+                <Form.Label /> <b>Mật khẩu <span style={{color:'red'}}>*</span></b>
                 <Form.Control
-                  className="ms-2"
+                  className="input ms-2"
                   type="password"
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </Row>
 
               <Row>
-                <Form.Label className="label-input" /> <b>Confirm Password <span style={{color:'red'}}>*</span></b>
+                <Form.Label /> <b>Xác nhận mật khẩu <span style={{color:'red'}}>*</span></b>
                 <Form.Control
-                  className="ms-2 "
+                  className="input ms-2 "
                   type="password"
                   onChange={(event) => setConfirm(event.target.value)}
                 />
@@ -72,8 +77,8 @@ export default function RegisterForm() {
                     <div key={`inline-${type}`} className="m-3">
                       <Form.Check
                         inline
-                        label="candidate"
-                        value="candidate"
+                        label="Ứng viên"
+                        value="Ứng viên"
                         name="group1"
                         type={type}
                         id={`inline-${type}-1`}
@@ -81,8 +86,8 @@ export default function RegisterForm() {
                       />
                       <Form.Check
                         inline
-                        label="recruiter"
-                        value="recruiter"
+                        label="Nhà tuyển dụng"
+                        value="Nhà tuyển dụng"
                         name="group1"
                         type={type}
                         id={`inline-${type}-2`}
@@ -93,9 +98,7 @@ export default function RegisterForm() {
                 </Col>
 
                 <Col sm={3} md={4} className="m-3">
-                  <Link to={"/login"}>
-                    <a> Have a account?</a>
-                  </Link>
+                  <Link to={"/login"}> Đã có tài khoản? </Link>
                 </Col>
               </Row>
 
@@ -103,7 +106,7 @@ export default function RegisterForm() {
                 <Col className="ms-2">
                   <Button className="button-submit" type="submit">
                     {" "}
-                    REGISTER{" "}
+                    Hoàn tất{" "}
                   </Button>
                 </Col>
               </Row>
