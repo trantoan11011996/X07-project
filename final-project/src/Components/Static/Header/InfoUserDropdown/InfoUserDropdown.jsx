@@ -32,8 +32,11 @@ const InfoUserDropDown = ({ mode }) => {
         <Menu.Item key="/update_password">
             <KeyOutlined /> Update Password
         </Menu.Item>
-        <Menu.Item>
-          <FormOutlined /> Update Info
+        <Menu.Item key={"/candidate"}>
+          <FormOutlined /> Update Info cadidate
+        </Menu.Item>
+        <Menu.Item key={"/recruiter"}>
+          <FormOutlined /> Update Info recruiter
         </Menu.Item>
         <Menu.Item>
           <LogoutOutlined /> Log out
