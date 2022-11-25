@@ -25,7 +25,7 @@ const AuthHeader = ({ mode }) => {
         onClick={handleMenuClick}
         style={{ marginBottom: 15, boxShadow: "2px 5px 7px -1px rgba(184,165,184,1)" }}
       >
-         <Menu.Item>
+         <Menu.Item key={"/"}>
               <img
                 src="logo192.png"
                 alt="logo"

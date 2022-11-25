@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import "../Footer/Footer.css";
+import "../Footer/Footer.css"
 import { SiVerizon } from "react-icons/si";
 
 export default function Footer() {

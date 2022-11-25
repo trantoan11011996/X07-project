@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from "../../Context/Context";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "../MainApp/mainapp.css"
 import Header from "../Static/Header/Header";
 import Footer from "../Static/Footer/Footer";
 import HomePage from "../HomePage/HomePage";
