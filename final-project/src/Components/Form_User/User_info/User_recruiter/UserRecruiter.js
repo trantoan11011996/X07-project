@@ -86,10 +86,10 @@ export default function UserRecruiter() {
                             <Row className="m-3">
                                 <Col sm={3} md={3}> </Col>
                                 <Col sm={3} md={3}>
-                                    <Button variant="outline-primary" onClick={handleClick}> Register </Button>
+                                    <Button variant="outline-primary" onClick={handleClick}> Đăng kí </Button>
                                 </Col>
                                 <Col sm={3} md={3}>
-                                    <Button variant="light"> Cancel </Button>
+                                    <Button variant="light"> Hủy bỏ </Button>
                                 </Col>
                             </Row>
 
