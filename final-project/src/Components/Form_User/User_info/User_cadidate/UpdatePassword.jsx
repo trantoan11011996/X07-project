@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
 
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
+  const [checked, setChecked] = useState(false);
+
+  const handleChangeCheckPassword = (e) => {
+    setChecked(e.target.checked);
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("container_info")}>
@@ -26,44 +31,50 @@ const UpdatePassword = () => {
               <form action="">
                 <h3>Thay đổi mật khẩu</h3>
                 <div className={cx("group_input")}>
-                  <label htmlFor="email">
+                  <label htmlFor="old_password">
                     Mật khẩu hiện tại <span>*</span>
                   </label>
                   <input
-                    type="password"
-                    id="password"
+                    type={checked ? "text" : "password"}
+                    id="old_password"
                     name="old_password"
                     className={cx("password")}
                   />
                 </div>
 
                 <div className={cx("group_input")}>
-                  <label htmlFor="email">
+                  <label htmlFor="new_password">
                     Mật khẩu mới <span>*</span>
                   </label>
                   <input
-                    type="password"
-                    id="password"
-                    name="old_password"
+                    type={checked ? "text" : "password"}
+                    id="new_password"
+                    name="new_password"
                     className={cx("password")}
                   />
                 </div>
                 <div className={cx("group_input")}>
-                  <label htmlFor="email">
+                  <label htmlFor="cf_password">
                     Gõ lại mật khẩu mới <span>*</span>
                   </label>
                   <input
-                    type="password"
-                    id="password"
-                    name="old_password"
+                    type={checked ? "text" : "password"}
+                    id="cf_password"
+                    name="cf_password"
                     className={cx("password")}
                   />
                 </div>
+
                 <div className={cx("check_password")}>
-                  <input type="checkbox" id="check_password" />
+                  <input
+                    type="checkbox"
+                    id="check_password"
+                    checked={checked}
+                    onChange={handleChangeCheckPassword}
+                  />
                   <label htmlFor="check_password">Hiển thị mật khẩu</label>
                 </div>
-                <div className={cx("update_btn")}>
+                <div className={cx("group_input")}>
                   <button type="submit">Cập nhật mật khẩu</button>
                 </div>
               </form>
