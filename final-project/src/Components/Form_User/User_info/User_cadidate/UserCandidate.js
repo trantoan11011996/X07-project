@@ -127,7 +127,7 @@ export default function UserCandidate() {
                                     <Button className="button" onClick={handleClick}> Đăng kí </Button>
                                 </Col>
                                 <Col>
-                                    <Link to={"/"}>
+                                    <Link to={"/register"}>
                                         <Button variant="light"> Hủy bỏ </Button>
                                     </Link>
                                 </Col>

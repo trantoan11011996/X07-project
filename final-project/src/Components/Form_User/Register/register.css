@@ -3,14 +3,25 @@
     border: none;
 }
 
-.input{
+.input {
     width: 500px;
-    height: 43.11px;
     margin-top: 2%;
     border-radius: 0%;
+    position: relative;
 }
 
 .register {
     font-size: 25px;
     font-weight: bold;
 }
+
+.input_icon {
+    font-size: 15px;
+    margin-top: 2%;
+    background-color: white;
+}
+
+.input-group {
+    width: 500px;
+}
+

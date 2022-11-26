@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isEmail, isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css"
 
@@ -100,7 +100,9 @@ export default function UserRecruiter() {
                                     <Button className="button" onClick={handleClick}> Đăng kí </Button>
                                 </Col>
                                 <Col sm={3} md={3}>
-                                    <Button variant="light"> Hủy bỏ </Button>
+                                    <Link to={"/register"}>
+                                        <Button variant="light"> Hủy bỏ </Button>
+                                    </Link>
                                 </Col>
                             </Row>
 

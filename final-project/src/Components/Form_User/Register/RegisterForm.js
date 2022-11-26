@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup } from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
@@ -11,6 +11,20 @@ export default function RegisterForm() {
   const [confirm, setConfirm] = useState("");
   const [role, setRole] = useState("");
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+
+  const checkRole = (role) => {
+    if (role === "Ứng viên") {
+      navigate("/candidate")
+    } else {
+      navigate("/recruiter")
+    }
+  };
+
+  const handleClick = () => {
+    setVisible(!visible);
+  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +33,7 @@ export default function RegisterForm() {
       return alert("Hãy nhập đầy đủ thông tin ")
     } else if (!isEmail(email)) {
       return alert("Hãy nhập email đúng định dạng")
-    } else if(!isPassword(password)) {
+    } else if (!isPassword(password)) {
       return alert("Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường")
     } else if (!isMatch(password, confirm)) {
       return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp")
@@ -30,7 +44,7 @@ export default function RegisterForm() {
       //     userRole: role
       // }
       // alert("Register successful")
-      navigate("/")
+      checkRole(role)
     }
   };
 
@@ -45,63 +59,76 @@ export default function RegisterForm() {
             onSubmit={handleSubmit}
           >
             <Form.Group>
-              <h1 className="register text-center"> Đăng Ký </h1>
+              <h1 className="register mt-2 text-center"> Đăng Ký </h1>
               <Row>
                 <Form.Label /> <b>Email <span style={{ color: 'red' }}>*</span></b>
-                <Form.Control
-                  className="input ms-2"
-                  type="email"
-                  onChange={(event) => setEmail(event.target.value)}
-                />
+                <InputGroup className="input-group">
+                  <Form.Control
+                    className="input"
+                    type="email"
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </InputGroup>
               </Row>
 
               <Row>
                 <Form.Label className="mt-2" /> <b>Mật khẩu <span style={{ color: 'red' }}>*</span></b>
-                <Form.Control
-                  className="input ms-2"
-                  type="password"
-                  onChange={(event) => setPassword(event.target.value)}
-                />
+
+                <InputGroup className="input-group" >
+                  <Form.Control
+                    className="input"
+                    type={visible ? "text" : "password"}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                  <InputGroup.Text className="input_icon" onClick={handleClick}>
+                    {visible ? <MdVisibility /> : <MdVisibilityOff />}
+                  </InputGroup.Text>
+                </InputGroup>
               </Row>
 
               <Row>
                 <Form.Label className="mt-2" /> <b>Xác nhận mật khẩu <span style={{ color: 'red' }}>*</span></b>
-                <Form.Control
-                  className="input ms-2 "
-                  type="password"
-                  onChange={(event) => setConfirm(event.target.value)}
-                />
+                <InputGroup className="input-group">
+                  <Form.Control
+                    className="input"
+                    type={visible ? "text" : "password"}
+                    onChange={(event) => setConfirm(event.target.value)}
+                  />
+                  <InputGroup.Text className="input_icon" onClick={handleClick}>
+                    {visible ? <MdVisibility /> : <MdVisibilityOff />}
+                  </InputGroup.Text>
+                </InputGroup>
               </Row>
 
               <Row>
                 {["radio"].map((type) => (
                   <div key={`inline-${type}`} className="m-3">
                     <Row>
-                    <Col>
-                      <Form.Check
-                        inline
-                        label="Ứng viên"
-                        value="Ứng viên"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-1`}
-                        onChange={(event) => setRole(event.target.value)}
-                      />
-                    </Col>
+                      <Col>
+                        <Form.Check
+                          inline
+                          label="Ứng viên"
+                          value="Ứng viên"
+                          name="group1"
+                          type={type}
+                          id={`inline-${type}-1`}
+                          onChange={(event) => setRole(event.target.value)}
+                        />
+                      </Col>
 
-                    <Col sm={4} md={4}></Col>
+                      <Col sm={4} md={4}></Col>
 
-                    <Col>
-                      <Form.Check
-                        inline
-                        label="Nhà tuyển dụng"
-                        value="Nhà tuyển dụng"
-                        name="group1"
-                        type={type}
-                        id={`inline-${type}-2`}
-                        onChange={(event) => setRole(event.target.value)}
-                      />
-                    </Col>
+                      <Col>
+                        <Form.Check
+                          inline
+                          label="Nhà tuyển dụng"
+                          value="Nhà tuyển dụng"
+                          name="group1"
+                          type={type}
+                          id={`inline-${type}-2`}
+                          onChange={(event) => setRole(event.target.value)}
+                        />
+                      </Col>
                     </Row>
                   </div>
                 ))}
@@ -119,8 +146,7 @@ export default function RegisterForm() {
               </Row>
             </Form.Group>
 
-            <Link to={"/candidate"}><Button> test </Button></Link>
-            <Link to={"/recruiter"}><Button> test </Button></Link>
+
           </Form>
         </Col>
         <Col sm={3} md={3}></Col>
