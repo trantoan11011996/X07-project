@@ -22,3 +22,14 @@ export const isMatch = (password, confirmPassword) => {
   if (password === confirmPassword) return true;
   return false;
 };
+
+export const isCheckPassword = (newPassword) => {
+  const re =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return re.test(newPassword);
+};
+
+export const isMathUpdatePassword = (newPassword, confirmPassword) => {
+  if (newPassword === confirmPassword) return true;
+  return false;
+};

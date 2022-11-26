@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
-import { isEmpty } from "../../../../utils/validate";
+import {
+  isCheckPassword,
+  isEmpty,
+  isMathUpdatePassword,
+} from "../../../../utils/validate";
 import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../MetaData/MetaData";
 const cx = classNames.bind(styles);
@@ -28,11 +32,17 @@ const UpdatePassword = () => {
       isEmpty(newPassword) ||
       isEmpty(confirmPassword)
     ) {
-      return toast.warn("Please fill in all fields.");
+      return toast.warn("Vui lòng điền tất cả thông tin !");
     }
     //check length pass
-    if (newPassword.length < 6) {
-      return toast.warn("Password must be 6 or more characters");
+    if (!isCheckPassword(newPassword)) {
+      return toast.warn(
+        "Mật khẩu phải tối thiểu 8 ký tự, tối thiểu 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
+      );
+    }
+    // check comfirm update newPassword
+    if (!isMathUpdatePassword(newPassword, confirmPassword)) {
+      return toast.warn("Mật khẩu không khớp !");
     }
 
     console.log(dataPassword);
@@ -47,7 +57,7 @@ const UpdatePassword = () => {
             <div className={cx("col_info_1")}>
               <div className={cx("profile")}>
                 <ul className={cx("navbar")}>
-                  <li>
+                  <li className={cx("disabled")}>
                     <a href="/#">
                       <h5>Đổi mật khẩu</h5>
                       <p>Đổi mật khẩu đăng nhập</p>

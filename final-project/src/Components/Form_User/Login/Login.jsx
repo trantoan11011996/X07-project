@@ -31,23 +31,17 @@ const Login = () => {
     e.preventDefault();
     //check fields
     if (isEmpty(email) || isEmpty(password))
-      return toast.warn("Please fill in all fields.", {
-        className: "toast-failed",
-        bodyClassName: "toast-failed",
-      });
+      return toast.warn("Vui lòng điền tất cả thông tin !");
     // check email
     if (!isEmail(email))
-      return toast.error("Please enter a valid email address.", {
-        className: "toast-failed",
-        bodyClassName: "toast-failed",
-      });
+      return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
 
     dispatch(loginUser(email, password, navigate));
   };
 
   return (
     <>
-    <MetaData title="Login"/>
+      <MetaData title="Login" />
       <ToastContainer />
       <MetaData title="Login" />
       <div className={cx("container")}>
