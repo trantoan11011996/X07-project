@@ -11,7 +11,8 @@ export default function RegisterForm() {
   const [confirm, setConfirm] = useState("");
   const [role, setRole] = useState("");
   const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [visible2, setVisible2] = useState(false);
 
   const checkRole = (role) => {
     if (role === "Ứng viên") {
@@ -21,8 +22,12 @@ export default function RegisterForm() {
     }
   };
 
-  const handleClick = () => {
-    setVisible(!visible);
+  const handleClick1 = () => {
+    setVisible1(!visible1);
+  };
+
+  const handleClick2 = () => {
+    setVisible2(!visible2);
   };
 
 
@@ -77,11 +82,11 @@ export default function RegisterForm() {
                 <InputGroup className="input-group" >
                   <Form.Control
                     className="input"
-                    type={visible ? "text" : "password"}
+                    type={visible1 ? "text" : "password"}
                     onChange={(event) => setPassword(event.target.value)}
                   />
-                  <InputGroup.Text className="input_icon" onClick={handleClick}>
-                    {visible ? <MdVisibility /> : <MdVisibilityOff />}
+                  <InputGroup.Text className="input_icon" onClick={handleClick1}>
+                    {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
               </Row>
@@ -91,11 +96,11 @@ export default function RegisterForm() {
                 <InputGroup className="input-group">
                   <Form.Control
                     className="input"
-                    type={visible ? "text" : "password"}
+                    type={visible2 ? "text" : "password"}
                     onChange={(event) => setConfirm(event.target.value)}
                   />
-                  <InputGroup.Text className="input_icon" onClick={handleClick}>
-                    {visible ? <MdVisibility /> : <MdVisibilityOff />}
+                  <InputGroup.Text className="input_icon" onClick={handleClick2}>
+                    {visible2 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
               </Row>
