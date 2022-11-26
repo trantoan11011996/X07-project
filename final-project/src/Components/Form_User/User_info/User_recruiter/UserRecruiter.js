@@ -45,29 +45,29 @@ export default function UserRecruiter() {
             <Row>
                 <Col sm={3} md={3}></Col>
 
-                <Col sm={6} md={6}>
+                <Col className="container-recruiter" sm={6} md={6} >
                     <Form className="m-3 p-5 text-start border shadow-ms">
                         <Form.Group>
                             <h1 className="recruiter text-center"> Thông Tin Nhà Tuyển Dụng</h1>
-                            <Row>
+                            <Row className="row-form">
                                 <Form.Label /> <b> Công ty<span style={{color:'red'}}>*</span> </b>
                                 <Form.Control className="input ms-2 " type="text" maxLength={100} onChange={(event) => setCompany(event.target.value)} />
                             </Row>
 
-                            <Row>
+                            <Row className="row-form">
                                 <Form.Label /> <b> Website<span style={{color:'red'}}>*</span> </b>
                                 <Form.Control className="input ms-2" type="text" onChange={(event) => setWebsite(event.target.value)} />
                             </Row>
 
                             <Row className="mt-1">
-                                <Col sm={5} md={5}>
+                                <Col sm={6} md={6}>
                                     <Row className="text-start">
                                         <Form.Label /> <b> Email<span style={{color:'red'}}>*</span> </b>
                                         <Form.Control className="input ms-2" type="email" onChange={(event) => setEmail(event.target.value)} />
                                     </Row>
                                 </Col>
 
-                                <Col sm={7} md={7}>
+                                <Col sm={6} md={6}>
                                     <Row className="ms-1">
                                         <Form.Label /> <b> Số điện thoại<span style={{color:'red'}}>*</span> </b>
                                         <Form.Control className="input ms-2" type="text" onChange={(event) => setPhone(event.target.value)} />
@@ -75,12 +75,12 @@ export default function UserRecruiter() {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            <Row className="row-form">
                                 <Form.Label /> <b> Địa chỉ<span style={{color:'red'}}>*</span> </b>
                                 <Form.Control className="input ms-2" type="text" maxLength={200} onChange={(event) => setAddress(event.target.value)} />
                             </Row>
 
-                            <Row>
+                            <Row className="row-form">
                                 <Form.Label /> <b> Lĩnh vực<span style={{color:'red'}}>*</span> </b>
                                 <Form.Select className="input ms-2" onChange={(event) => setCareer(event.target.value)}>
                                     <option></option>
@@ -89,7 +89,7 @@ export default function UserRecruiter() {
                                 </Form.Select>
                             </Row>
 
-                            <Row>
+                            <Row className="row-form">
                                 <Form.Label /> <b> Mô tả<span style={{color:'red'}}>*</span> </b>
                                 <Form.Control className="input ms-2" as="textarea" rows={3} maxLength={1000} onChange={(event) => setDescription(event.target.value)} />
                             </Row>

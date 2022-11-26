@@ -5,11 +5,15 @@
 }
 
 .input{
-    width: 500px;
     margin-top: 2%;
 }
-
+.container-candidate{
+    margin-top: 60px;
+}
 .button{
     background-color: rgb(253,61,87);
     border: none;
+}
+.row-form > .input{
+    width: 100%;
 }
