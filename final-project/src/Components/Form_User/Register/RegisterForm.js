@@ -81,7 +81,7 @@ export default function RegisterForm() {
 
                 <InputGroup className="input-group" >
                   <Form.Control
-                    className="input"
+                    className="input border-right"
                     type={visible1 ? "text" : "password"}
                     onChange={(event) => setPassword(event.target.value)}
                   />
@@ -95,7 +95,7 @@ export default function RegisterForm() {
                 <Form.Label className="mt-2" /> <b>Xác nhận mật khẩu <span style={{ color: 'red' }}>*</span></b>
                 <InputGroup className="input-group">
                   <Form.Control
-                    className="input"
+                    className="input border-right"
                     type={visible2 ? "text" : "password"}
                     onChange={(event) => setConfirm(event.target.value)}
                   />
