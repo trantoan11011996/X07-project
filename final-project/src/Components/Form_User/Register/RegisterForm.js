@@ -1,24 +1,40 @@
-import React, { useState } from "react";
-import { Card, Col, Container, Form, Row, Button, InputGroup } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import {
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Button,
+  InputGroup,
+} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../Context/UserContext";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
-import "../Register/register.css"
+import "../Register/register.css";
 
 export default function RegisterForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [role, setRole] = useState("");
+  const {
+    setEmail,
+    setPassword,
+    setRole,
+    email,
+    password,
+    role,
+    setConfirmPassword,
+    confirmPassword,
+    registerUser
+  } = useContext(UserContext);
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
   const checkRole = (role) => {
     if (role === "Ứng viên") {
-      navigate("/candidate")
+      navigate("/candidate");
     } else {
-      navigate("/recruiter")
+      navigate("/recruiter");
     }
   };
 
@@ -30,43 +46,52 @@ export default function RegisterForm() {
     setVisible2(!visible2);
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!email || !password || !role) {
-      return alert("Hãy nhập đầy đủ thông tin ")
+      return alert("Hãy nhập đầy đủ thông tin ");
     } else if (!isEmail(email)) {
-      return alert("Hãy nhập email đúng định dạng")
+      return alert("Hãy nhập email đúng định dạng");
     } else if (!isPassword(password)) {
-      return alert("Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường")
-    } else if (!isMatch(password, confirm)) {
-      return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp")
-    } else if (isEmail(email) && isPassword(password) && isMatch(password, confirm)) {
+      return alert(
+        "Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
+      );
+    } else if (!isMatch(password, confirmPassword)) {
+      return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp");
+    } else if (
+      isEmail(email) &&
+      isPassword(password) &&
+      isMatch(password, confirmPassword)
+    ) {
       // const user = {
       //     email: email,
       //     password: password,
       //     userRole: role
       // }
       // alert("Register successful")
-      checkRole(role)
+      registerUser()
+      checkRole(role);
     }
   };
 
   return (
     <Container>
       <Row>
-        <Col sm={3} md={3}></Col>
+        <Col sm={4} md={4}></Col>
 
-        <Col sm={6} md={6}>
-          <Form
-            className="p-5 text-start shadow"
-            onSubmit={handleSubmit}
-          >
+        <Col className="form-container" sm={6} md={4}>
+          <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
-              <h1 className="register mt-2 text-center"> Đăng Ký </h1>
+              <h1 className="register mt-2 text-center form-register-header">
+                {" "}
+                ĐĂNG KÝ
+              </h1>
               <Row>
-                <Form.Label /> <b>Email <span style={{ color: 'red' }}>*</span></b>
+                <Form.Label />{" "}
+                <b>
+                 Địa chỉ Email <span style={{ color: "red" }}>*</span>
+                </b>
                 <InputGroup className="input-group">
                   <Form.Control
                     className="input"
@@ -77,29 +102,40 @@ export default function RegisterForm() {
               </Row>
 
               <Row>
-                <Form.Label className="mt-2" /> <b>Mật khẩu <span style={{ color: 'red' }}>*</span></b>
-
-                <InputGroup className="input-group" >
+                <Form.Label className="mt-2" />{" "}
+                <b>
+                  Mật khẩu <span style={{ color: "red" }}>*</span>
+                </b>
+                <InputGroup className="input-group">
                   <Form.Control
                     className="input border-right"
                     type={visible1 ? "text" : "password"}
                     onChange={(event) => setPassword(event.target.value)}
                   />
-                  <InputGroup.Text className="input_icon" onClick={handleClick1}>
+                  <InputGroup.Text
+                    className="input_icon"
+                    onClick={handleClick1}
+                  >
                     {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
               </Row>
 
               <Row>
-                <Form.Label className="mt-2" /> <b>Xác nhận mật khẩu <span style={{ color: 'red' }}>*</span></b>
+                <Form.Label className="mt-2" />{" "}
+                <b>
+                  Xác nhận mật khẩu <span style={{ color: "red" }}>*</span>
+                </b>
                 <InputGroup className="input-group">
                   <Form.Control
                     className="input border-right"
                     type={visible2 ? "text" : "password"}
-                    onChange={(event) => setConfirm(event.target.value)}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
                   />
-                  <InputGroup.Text className="input_icon" onClick={handleClick2}>
+                  <InputGroup.Text
+                    className="input_icon"
+                    onClick={handleClick2}
+                  >
                     {visible2 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
@@ -109,7 +145,7 @@ export default function RegisterForm() {
                 {["radio"].map((type) => (
                   <div key={`inline-${type}`} className="m-3">
                     <Row>
-                      <Col>
+                      <Col sm={3} md={5}>
                         <Form.Check
                           inline
                           label="Ứng viên"
@@ -121,7 +157,7 @@ export default function RegisterForm() {
                         />
                       </Col>
 
-                      <Col sm={4} md={4}></Col>
+                      <Col sm={3} md={1}></Col>
 
                       <Col>
                         <Form.Check
@@ -150,11 +186,9 @@ export default function RegisterForm() {
                 </Button>
               </Row>
             </Form.Group>
-
-
           </Form>
         </Col>
-        <Col sm={3} md={3}></Col>
+        <Col sm={4} md={4}></Col>
       </Row>
     </Container>
   );
