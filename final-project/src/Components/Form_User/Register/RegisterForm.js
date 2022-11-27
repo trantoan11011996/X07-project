@@ -67,15 +67,14 @@ export default function RegisterForm() {
         checkRole(role)
       }
     }
-    await registerUser(email,password,role)
   };
 
   return (
     <Container>
       <Row>
-        <Col sm={3} md={3}></Col>
+        <Col sm={4} md={4}></Col>
 
-        <Col className="form-container" sm={7} md={7}>
+        <Col className="form-container" sm={4} md={4}>
           <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
@@ -183,7 +182,7 @@ export default function RegisterForm() {
             </Form.Group>
           </Form>
         </Col>
-        <Col sm={2} md={2}></Col>
+        <Col sm={4} md={4}></Col>
       </Row>
     </Container>
   );

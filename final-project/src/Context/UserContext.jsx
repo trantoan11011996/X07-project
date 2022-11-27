@@ -28,9 +28,7 @@ const UserProvider = ({ children }) => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser)
     const updateData = [...UserData, newUser];
-    setUserData(updateData);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
-    localStorage.setItem("userData", JSON.stringify(updateData));
 
     // push lên API
     let item = { "email": email, "password": password, "role": role }
@@ -73,7 +71,10 @@ const UserProvider = ({ children }) => {
         }
     })
     result = await result.json();
-    localStorage.setItem("userData", JSON.stringify(result))
+    if(!result.message){
+      setCurrentUser(result)
+      localStorage.setItem("currentUser", JSON.stringify(result))
+    }
 
     return
   };
@@ -81,7 +82,6 @@ const UserProvider = ({ children }) => {
   const updateRecruiterInfo = async() => {
     const info = UserApi.recruiterInfo(company, website, companyEmail, phone, address, career, description);
     const updateInfo = { ...currentUser, user_info: info };
-    setCurrentUser(updateInfo);
     localStorage.setItem("currentUser", JSON.stringify(updateInfo));
 
     let item = { "name":company, "website":website, "email": companyEmail, "phoneNumber": phone, "address": address, "career": career, "description": description }
@@ -90,13 +90,16 @@ const UserProvider = ({ children }) => {
         body: JSON.stringify(item),
         headers: {
             "Content-Type": 'application/json',
-            "Accept": 'application/json'
+            "Accept": 'application/json',
+            authorization : `Bearer ${updateInfo.token}`
         }
     })
     result = await result.json();
-    localStorage.setItem("userData", JSON.stringify(result))
-
-    return
+    if(!result.message){
+      localStorage.setItem("currentUser", JSON.stringify(result))
+      return result
+    }
+    return result
   }
 
 
