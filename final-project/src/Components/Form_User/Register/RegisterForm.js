@@ -25,9 +25,9 @@ export default function RegisterForm() {
   const [visible2, setVisible2] = useState(false);
 
   const checkRole = (role) => {
-    if (role === "Ứng viên") {
+    if (role === "candidate") {
       navigate("/candidate");
-    } else {
+    } if (role === "recruiter") {
       navigate("/recruiter");
     }
   };
@@ -40,25 +40,32 @@ export default function RegisterForm() {
     setVisible2(!visible2);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
 
     if (!email || !password || !role) {
       return alert("Hãy nhập đầy đủ thông tin ");
-    } else if (!isEmail(email)) {
+    } if (!isEmail(email)) {
       return alert("Hãy nhập email đúng định dạng");
-    } else if (!isPassword(password)) {
+    } if (!isPassword(password)) {
       return alert(
         "Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
       );
-    } else if (!isMatch(password, confirmPassword)) {
+    } if (!isMatch(password, confirmPassword)) {
       return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp");
-    } else if (
+    } if (
       isEmail(email) &&
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
-      checkRole(role);
+      const user = await registerUser();
+      console.log(user);
+      if (user.message) {
+        // show error by pop-up
+        return
+      } else {
+        checkRole(role)
+      }
     }
     await registerUser(email,password,role)
   };
@@ -137,7 +144,7 @@ export default function RegisterForm() {
                         <Form.Check
                           inline
                           label="Ứng viên"
-                          value="Ứng viên"
+                          value="candidate"
                           name="group1"
                           type={type}
                           id={`inline-${type}-1`}
@@ -151,7 +158,7 @@ export default function RegisterForm() {
                         <Form.Check
                           inline
                           label="Nhà tuyển dụng"
-                          value="Nhà tuyển dụng"
+                          value="recruiter"
                           name="group1"
                           type={type}
                           id={`inline-${type}-2`}
