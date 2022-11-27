@@ -30,12 +30,11 @@ export default function UserCandidate() {
     event.preventDefault();
     if ( !name || !gender || !age || !phone || !address || !career || !description) {
       return alert("Hãy nhập đầy đủ thông tin ");
-    } else if (age < 18) {
+    } if (age < 18) {
       return alert("Tuổi phải hơn 18");
-    } else if (!isVietnamesePhoneNumberValid(phone)) {
+    } if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-
       updateCandidateInfo(name, gender, age, phone, address, career, description)
       navigate("/");
     }
