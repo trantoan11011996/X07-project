@@ -79,7 +79,7 @@ const Login = () => {
               </div>
               <div className={cx("login_actions")}>
                 <div className={cx("login_forgotPassword")}>
-                  <a href="/#">Quên mật khẩu?</a>
+                  <Link to={"/forgot_password"}>Quên mật khẩu?</Link>
                 </div>
                 <div className={cx("register")}>
                   <Link to={"/register"}>Bạn đã có tài khoản ?</Link>

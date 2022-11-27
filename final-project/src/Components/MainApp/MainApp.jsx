@@ -11,6 +11,7 @@ import RegisterForm from "../Form_User/Register/RegisterForm";
 import UserCandidate from "../Form_User/User_info/User_cadidate/UserCandidate";
 import UserRecruiter from "../Form_User/User_info/User_recruiter/UserRecruiter";
 import { UserProvider } from "../../Context/UserContext";
+import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 export default function MainApp() {
   return (
     <AuthContext.Provider>
@@ -24,6 +25,10 @@ export default function MainApp() {
               <Route
                 path="/update_password"
                 element={<UpdatePassword />}
+              ></Route>
+              <Route
+                path="/forgot_password"
+                element={<ForgotPassword />}
               ></Route>
               <Route path="/register" element={<RegisterForm />}></Route>
               <Route path="/candidate" element={<UserCandidate />}></Route>
