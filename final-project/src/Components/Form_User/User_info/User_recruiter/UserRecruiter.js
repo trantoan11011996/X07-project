@@ -4,27 +4,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
 import { isEmail, isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
-import { UserContext } from "../../../../Context/UserContext";
+
 
 export default function UserRecruiter() {
 
-    const [company, setCompany] = useState('');
-    const [website, setWebsite] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [career, setCareer] = useState('');
-    const [description, setDescription] = useState('');
-    console.log('current',currentUser);
     const navigate = useNavigate('');
-    const {currentUser, setCurrentUser} = useContext(UserContext)
+    const {
+        currentUser,
+        setCurrentUser,
+        company,
+        setCompany,
+        website,
+        setWebsite,
+        companyEmail,
+        setCompanyEmail,
+        phone,
+        setPhone,
+        address,
+        setAddress,
+        career,
+        setCareer,
+        description,
+        setDescription    
+    } = useContext(UserContext)
 
 
-    const recruiterInfo = (company, website, email, phone, address, career, description) => {
+    const recruiterInfo = (company, website, companyEmail, phone, address, career, description) => {
         const userInfo = {
             name: company,
             website: website,
-            email: email,
+            email: companyEmail,
             phoneNumber: phone,
             address: address,
             career: career,
@@ -33,21 +42,22 @@ export default function UserRecruiter() {
     
         const updateInfo = {...currentUser, user_info : userInfo} 
         setCurrentUser(updateInfo);
+        // localStorage.setItem("currentUser", JSON.stringify(updateInfo));
         return
     }
 
     const handleClick = (event) => {
         event.preventDefault();
 
-        if (!company || !website || !email || !phone || !address || !career || !description) {
+        if (!company || !website || !companyEmail || !phone || !address || !career || !description) {
             return alert("Hãy nhập đầy đủ thông tin ")
-        } else if (!isEmail(email)) {
+        } else if (!isEmail(companyEmail)) {
             return alert("Hãy nhập email đúng định dạng")
         } else if (!isVietnamesePhoneNumberValid(phone)) {
             return alert("Hãy nhập sdt Việt Nam")
         } else {
         
-            recruiterInfo(company, website, email, phone, address, career, description)
+            recruiterInfo(company, website, companyEmail, phone, address, career, description)
             navigate('/')
         }
     }
@@ -75,7 +85,7 @@ export default function UserRecruiter() {
                                 <Col sm={6} md={6}>
                                     <Row className="text-start">
                                         <Form.Label /> <b> Email<span style={{color:'red'}}>*</span> </b>
-                                        <Form.Control className="input ms-2" type="email" onChange={(event) => setEmail(event.target.value)} />
+                                        <Form.Control className="input ms-2" type="email" onChange={(event) => setCompanyEmail(event.target.value)} />
                                     </Row>
                                 </Col>
 
