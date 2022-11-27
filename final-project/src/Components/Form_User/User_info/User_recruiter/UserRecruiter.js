@@ -25,26 +25,10 @@ export default function UserRecruiter() {
         career,
         setCareer,
         description,
-        setDescription    
+        setDescription,
+        updateRecruiterInfo 
     } = useContext(UserContext)
 
-
-    const recruiterInfo = (company, website, companyEmail, phone, address, career, description) => {
-        const userInfo = {
-            name: company,
-            website: website,
-            email: companyEmail,
-            phoneNumber: phone,
-            address: address,
-            career: career,
-            description: description
-        }
-    
-        const updateInfo = {...currentUser, user_info : userInfo} 
-        setCurrentUser(updateInfo);
-        // localStorage.setItem("currentUser", JSON.stringify(updateInfo));
-        return
-    }
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -57,7 +41,7 @@ export default function UserRecruiter() {
             return alert("Hãy nhập sdt Việt Nam")
         } else {
         
-            recruiterInfo(company, website, companyEmail, phone, address, career, description)
+            updateRecruiterInfo(company, website, companyEmail, phone, address, career, description)
             navigate('/')
         }
     }

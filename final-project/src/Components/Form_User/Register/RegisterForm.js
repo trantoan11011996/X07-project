@@ -68,7 +68,7 @@ export default function RegisterForm() {
       <Row>
         <Col sm={3} md={3}></Col>
 
-        <Col className="form-container" sm={6} md={6}>
+        <Col className="form-container" sm={7} md={7}>
           <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
@@ -176,7 +176,7 @@ export default function RegisterForm() {
             </Form.Group>
           </Form>
         </Col>
-        <Col sm={3} md={3}></Col>
+        <Col sm={2} md={2}></Col>
       </Row>
     </Container>
   );

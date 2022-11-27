@@ -31,6 +31,7 @@ const UserProvider = ({ children }) => {
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     localStorage.setItem("userData", JSON.stringify(updateData));
 
+    // push lên API
     let item = { "email":email, "password":password, "role": role }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
         method: "POST",
@@ -41,8 +42,8 @@ const UserProvider = ({ children }) => {
         }
     })
     result = await result.json();
-    localStorage.setItem("userData", JSON.stringify(result))
-
+    // localStorage.setItem("userData", JSON.stringify(result))
+    return
   };
 
   // const autologin = () => {
@@ -52,6 +53,48 @@ const UserProvider = ({ children }) => {
   // useEffect(() => {
   //   autologin();
   // }, []);
+
+  const updateCandidateInfo = async() => {
+    const info = UserApi.candidateInfo(name, gender, age, phone, address, career, description);
+    const updateInfo = { ...currentUser, user_info: info };
+    setCurrentUser(updateInfo);
+    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
+
+    let item = { "name":name, "gender":gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
+    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json'
+        }
+    })
+    result = await result.json();
+    // localStorage.setItem("userData", JSON.stringify(result))
+
+    return
+  };
+
+  const updateRecruiterInfo = async() => {
+    const info = UserApi.recruiterInfo(company, website, companyEmail, phone, address, career, description);
+    const updateInfo = { ...currentUser, user_info: info };
+    setCurrentUser(updateInfo);
+    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
+
+    let item = { "name":company, "website":website, "email": companyEmail, "phoneNumber": phone, "address": address, "career": career, "description": description }
+    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json'
+        }
+    })
+    result = await result.json();
+    // localStorage.setItem("userData", JSON.stringify(result))
+
+    return
+  }
 
 
   const value = {
@@ -86,7 +129,9 @@ const UserProvider = ({ children }) => {
     gender,
     setGender,
     age,
-    setAge
+    setAge,
+    updateCandidateInfo,
+    updateRecruiterInfo
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
