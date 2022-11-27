@@ -24,7 +24,8 @@ export default function RegisterForm() {
     role,
     setConfirmPassword,
     confirmPassword,
-    registerUser
+    registerUser,
+    currentUser,
   } = useContext(UserContext);
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   Row,
@@ -10,10 +10,12 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 
 export default function UserCandidate() {
+
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
@@ -21,9 +23,25 @@ export default function UserCandidate() {
   const [address, setAddress] = useState("");
   const [career, setCareer] = useState("");
   const [description, setDescription] = useState("");
+  const {currentUser,setCurrentUser} = useContext(UserContext)
   const navigate = useNavigate("");
 
+  const updateInfo = (name,gender,age,phone,address,career,description)=>{
+      const user_info = {
+        name : name,
+        gender:gender,
+        age:age,
+        phone:phone,
+        address:address,
+        career:career,
+        description:description
+      }
+      const updateUser = {...currentUser, user_info : user_info}
+      setCurrentUser(updateUser)
+  }
+
   const handleClick = (event) => {
+
     event.preventDefault();
 
     if (
@@ -51,7 +69,8 @@ export default function UserCandidate() {
       // }
 
       // console.log(user);
-      navigate("/");
+      updateInfo(name,gender,age,phone,address,career,description)
+      navigate('/')
     }
   };
 
