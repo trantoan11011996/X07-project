@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu,Avatar } from "antd";
 import {
   UserOutlined,
@@ -9,10 +9,13 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
 import { useSelector } from "react-redux";
+import { UserContext } from "../../../../Context/UserContext";
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const handleMenuClick = ({ key }) => {
+  
+
+   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
     }
