@@ -12,16 +12,39 @@ const UserProvider = ({ children }) => {
   const [role, setRole] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentUser, setCurrentUser] = useState({});
+  const [company, setCompany] = useState('');
+  const [website, setWebsite] = useState('');
+  const [companyEmail, setCompanyEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [career, setCareer] = useState('');
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
 
-  const registerUser = () => {
+  const  registerUser = async() => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser)
     const updateData = [...UserData, newUser];
-    console.log('user',updateData);
     setUserData(updateData);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     localStorage.setItem("userData", JSON.stringify(updateData));
+
+    let item = { "email":email, "password":password, "role": role }
+    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json'
+        }
+    })
+    result = await result.json();
+    localStorage.setItem("userData", JSON.stringify(result))
+
   };
+
   // const autologin = () => {
   //   let user = UserApi.autologin();
   //   setCurrentUser(user);
@@ -29,6 +52,7 @@ const UserProvider = ({ children }) => {
   // useEffect(() => {
   //   autologin();
   // }, []);
+
 
   const value = {
     userData,
@@ -42,7 +66,27 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    company,
+    setCompany,
+    website,
+    setWebsite,
+    companyEmail,
+    setCompanyEmail,
+    phone,
+    setPhone,
+    address,
+    setAddress,
+    career,
+    setCareer,
+    description,
+    setDescription,
+    name,
+    setName,
+    gender,
+    setGender,
+    age,
+    setAge
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

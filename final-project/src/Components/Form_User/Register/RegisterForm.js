@@ -1,13 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-  Button,
-  InputGroup,
-} from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
@@ -27,6 +19,7 @@ export default function RegisterForm() {
     registerUser,
     currentUser,
   } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
@@ -65,7 +58,6 @@ export default function RegisterForm() {
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
-   
       registerUser()
       checkRole(role);
     }
