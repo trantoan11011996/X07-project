@@ -35,12 +35,11 @@ export default function UserRecruiter() {
 
         if (!company || !website || !companyEmail || !phone || !address || !career || !description) {
             return alert("Hãy nhập đầy đủ thông tin ")
-        } else if (!isEmail(companyEmail)) {
+        } if (!isEmail(companyEmail)) {
             return alert("Hãy nhập email đúng định dạng")
-        } else if (!isVietnamesePhoneNumberValid(phone)) {
+        } if (!isVietnamesePhoneNumberValid(phone)) {
             return alert("Hãy nhập sdt Việt Nam")
         } else {
-        
             updateRecruiterInfo(company, website, companyEmail, phone, address, career, description)
             navigate('/')
         }
