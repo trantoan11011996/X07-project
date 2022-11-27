@@ -58,7 +58,7 @@ const AuthHeader = ({ mode }) => {
           <UserOutlined /> Hồ Sơ
         </Menu.Item>
         <Menu.Item key="/update_password">
-            <KeyOutlined /> Cập nhật mật khẩu
+            <KeyOutlined /> Cập nhật mật khẩu người dùng
         </Menu.Item>
         <Menu.Item key={"/candidate"}>
           <FormOutlined /> Cập nhật thông tin thí sinh
