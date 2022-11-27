@@ -23,13 +23,26 @@ const UserProvider = ({ children }) => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
-  const registerUser = () => {
+  const  registerUser = async() => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser)
     const updateData = [...UserData, newUser];
     setUserData(updateData);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     localStorage.setItem("userData", JSON.stringify(updateData));
+
+    let item = { "email":email, "password":password, "role": role }
+    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json'
+        }
+    })
+    result = await result.json();
+    localStorage.setItem("userData", JSON.stringify(result))
+
   };
 
   // const autologin = () => {
@@ -39,6 +52,7 @@ const UserProvider = ({ children }) => {
   // useEffect(() => {
   //   autologin();
   // }, []);
+
 
   const value = {
     userData,
