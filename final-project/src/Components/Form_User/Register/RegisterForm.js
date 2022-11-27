@@ -40,7 +40,7 @@ export default function RegisterForm() {
     setVisible2(!visible2);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!email || !password || !role) {
@@ -58,9 +58,9 @@ export default function RegisterForm() {
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
-      registerUser()
       checkRole(role);
     }
+    await registerUser(email,password,role)
   };
 
   return (

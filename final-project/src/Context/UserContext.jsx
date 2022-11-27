@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
+import axios from "axios";
 
 const UserContext = createContext();
 
@@ -23,27 +24,23 @@ const UserProvider = ({ children }) => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
-  const  registerUser = async() => {
-    let newUser = UserApi.register(email, password, role);
-    setCurrentUser(newUser)
-    const updateData = [...UserData, newUser];
-    setUserData(updateData);
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
-    localStorage.setItem("userData", JSON.stringify(updateData));
-
+  const  registerUser = async(email,password,role) => {
+  
     // push lên API
-    let item = { "email":email, "password":password, "role": role }
-    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
-        method: "POST",
+    let item = { email:email, password:password, role: role }
+    let result =  await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
+        method : "POST",
         body: JSON.stringify(item),
         headers: {
             "Content-Type": 'application/json',
-            "Accept": 'application/json'
+            Accept: "application/json",
         }
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      setCurrentUser(data)
     })
-    result = await result.json();
-    // localStorage.setItem("userData", JSON.stringify(result))
-    return
+    return result
   };
 
   // const autologin = () => {
@@ -66,7 +63,8 @@ const UserProvider = ({ children }) => {
         body: JSON.stringify(item),
         headers: {
             "Content-Type": 'application/json',
-            "Accept": 'application/json'
+            "Accept": 'application/json',
+            authorization: `Bearer `,
         }
     })
     result = await result.json();
