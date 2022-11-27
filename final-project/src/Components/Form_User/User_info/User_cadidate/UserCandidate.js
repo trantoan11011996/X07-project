@@ -15,65 +15,28 @@ import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 
 export default function UserCandidate() {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [career, setCareer] = useState("");
-  const [description, setDescription] = useState("");
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const {
+    name,
+    setName,
+    gender,
+    setGender,
+    age,
+    setAge,
+    phone,
+    setPhone,
+    address,
+    setAddress,
+    career,
+    setCareer,
+    description,
+    setDescription,
+    updateCandidateInfo,
+  } = useContext(UserContext);
+
   const navigate = useNavigate("");
-
-  const candidateInfo = (
-    name,
-    gender,
-    age,
-    phone,
-    address,
-    career,
-    description
-  ) => {
-    const userInfo = {
-      fullname: name,
-      age: age,
-      gender: gender,
-      phoneNumber: phone,
-      address: address,
-      career: career,
-      description: description,
-    };
-
-    const updateInfo = { ...currentUser, user_info: userInfo };
-    setCurrentUser(updateInfo);
-    return;
-  };
-
-  const updateInfo = (
-    name,
-    gender,
-    age,
-    phone,
-    address,
-    career,
-    description
-  ) => {
-    const user_info = {
-      name: name,
-      gender: gender,
-      age: age,
-      phone: phone,
-      address: address,
-      career: career,
-      description: description,
-    };
-    const updateUser = { ...currentUser, user_info: user_info };
-    setCurrentUser(updateUser);
-  };
 
   const handleClick = (event) => {
     event.preventDefault();
-
     if (
       !name ||
       !gender ||
@@ -89,7 +52,15 @@ export default function UserCandidate() {
     } else if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-      candidateInfo(name, gender, age, phone, address, career, description);
+      updateCandidateInfo(
+        name,
+        gender,
+        age,
+        phone,
+        address,
+        career,
+        description
+      );
       navigate("/");
     }
   };

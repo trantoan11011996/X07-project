@@ -1,13 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-  Button,
-  InputGroup,
-} from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
@@ -27,6 +19,7 @@ export default function RegisterForm() {
     registerUser,
     currentUser,
   } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
@@ -65,7 +58,6 @@ export default function RegisterForm() {
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
-   
       registerUser()
       checkRole(role);
     }
@@ -76,7 +68,7 @@ export default function RegisterForm() {
       <Row>
         <Col sm={3} md={3}></Col>
 
-        <Col className="form-container" sm={6} md={6}>
+        <Col className="form-container" sm={7} md={7}>
           <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
@@ -184,7 +176,7 @@ export default function RegisterForm() {
             </Form.Group>
           </Form>
         </Col>
-        <Col sm={3} md={3}></Col>
+        <Col sm={2} md={2}></Col>
       </Row>
     </Container>
   );

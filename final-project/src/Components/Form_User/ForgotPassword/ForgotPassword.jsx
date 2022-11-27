@@ -28,6 +28,7 @@ const ForgotPassword = () => {
       return toast.error("Địa chỉ email không đúng định dạng !");
     }
     console.log("đã gửi email tới", email);
+    console.log("đã gửi email tới", email);
   };
   return (
     <>
