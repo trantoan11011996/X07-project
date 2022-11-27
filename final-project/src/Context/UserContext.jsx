@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
+import axios from "axios";
 
 const UserContext = createContext();
 
@@ -63,12 +64,13 @@ const UserProvider = ({ children }) => {
 
     let item = { "name": name, "gender": gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
-      method: "POST",
-      body: JSON.stringify(item),
-      headers: {
-        "Content-Type": 'application/json',
-        "Accept": 'application/json',
-      }
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json',
+            authorization: `Bearer `,
+        }
     })
     result = await result.json();
     localStorage.setItem("userData", JSON.stringify(result))

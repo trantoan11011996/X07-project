@@ -67,6 +67,7 @@ export default function RegisterForm() {
         checkRole(role)
       }
     }
+    await registerUser(email,password,role)
   };
 
   return (
