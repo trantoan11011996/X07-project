@@ -34,3 +34,8 @@
     border-right: none;
 }
 
+.input-group > .input{
+    width: 85%;
+}
+
+

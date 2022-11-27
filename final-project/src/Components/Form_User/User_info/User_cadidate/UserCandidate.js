@@ -25,6 +25,24 @@ export default function UserCandidate() {
   const [description, setDescription] = useState("");
   const {currentUser,setCurrentUser} = useContext(UserContext)
   const navigate = useNavigate("");
+ 
+
+
+  const candidateInfo = (name, gender, age, phone, address, career, description,) => {
+    const userInfo = {
+        fullname: name,
+        age: age,
+        gender: gender,
+        phoneNumber: phone,
+        address: address,
+        career: career,
+        description: description
+    }
+
+    const updateInfo = {...currentUser, user_info : userInfo} 
+    setCurrentUser(updateInfo);
+    return
+};
 
   const updateInfo = (name,gender,age,phone,address,career,description)=>{
       const user_info = {
@@ -43,7 +61,7 @@ export default function UserCandidate() {
   const handleClick = (event) => {
 
     event.preventDefault();
-
+    
     if (
       !name ||
       !gender ||
@@ -59,18 +77,9 @@ export default function UserCandidate() {
     } else if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-      // const user = {
-      //    name: name,
-      //    gender: gender,
-      //    age: age,
-      //    phone: phone,
-      //    address: address,
-      //    career: career
-      // }
-
-      // console.log(user);
-      updateInfo(name,gender,age,phone,address,career,description)
-      navigate('/')
+     
+      candidateInfo(name, gender, age, phone, address, career, description)
+      navigate("/");
     }
   };
 

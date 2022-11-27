@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
 import { isEmail, isVietnamesePhoneNumberValid } from "../../../../utils/validate";
-import "../User_recruiter/recruiter.css"
+import "../User_recruiter/recruiter.css";
+import { UserContext } from "../../../../Context/UserContext";
 
 export default function UserRecruiter() {
 
@@ -14,9 +15,26 @@ export default function UserRecruiter() {
     const [address, setAddress] = useState('');
     const [career, setCareer] = useState('');
     const [description, setDescription] = useState('');
-    const {currentUser} = useContext(UserContext)
     console.log('current',currentUser);
     const navigate = useNavigate('');
+    const {currentUser, setCurrentUser} = useContext(UserContext)
+
+
+    const recruiterInfo = (company, website, email, phone, address, career, description) => {
+        const userInfo = {
+            name: company,
+            website: website,
+            email: email,
+            phoneNumber: phone,
+            address: address,
+            career: career,
+            description: description
+        }
+    
+        const updateInfo = {...currentUser, user_info : userInfo} 
+        setCurrentUser(updateInfo);
+        return
+    }
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -28,17 +46,8 @@ export default function UserRecruiter() {
         } else if (!isVietnamesePhoneNumberValid(phone)) {
             return alert("Hãy nhập sdt Việt Nam")
         } else {
-            // const user = {
-            //    company: company,
-            //    website: website,
-            //    email: email,
-            //    phone: phone,
-            //    address: address,
-            //    career: career,
-            //    description: description
-            // }
-    
-            // console.log(user);
+        
+            recruiterInfo(company, website, email, phone, address, career, description)
             navigate('/')
         }
     }
