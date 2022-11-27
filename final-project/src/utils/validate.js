@@ -11,6 +11,13 @@ export const isEmail = (email) => {
   return re.test(email);
 };
 
+//check password
+export const isPassword = (password) => {
+  const re =
+    /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
+  return re.test(password)
+}
+
 //check password length
 export const isLength = (password) => {
   if (password.lenght < 6) return true;
@@ -23,6 +30,7 @@ export const isMatch = (password, confirmPassword) => {
   return false;
 };
 
+<<<<<<< HEAD
 export const isCheckPassword = (newPassword) => {
   const re =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -33,3 +41,9 @@ export const isMathUpdatePassword = (newPassword, confirmPassword) => {
   if (newPassword === confirmPassword) return true;
   return false;
 };
+=======
+//check phone format
+export const isVietnamesePhoneNumberValid = (phone) => {
+  return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone);
+}
+>>>>>>> b661b11f512b1b06d57a9f4bc787cd7efb7d6eda

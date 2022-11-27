@@ -3,3 +3,17 @@
     font-weight: bold;
     margin-bottom: 25px;
 }
+
+.input{
+    margin-top: 2%;
+}
+.container-recruiter{
+    margin-top: 60px;
+}
+.button{
+    background-color: rgb(253,61,87);
+    border: none;
+}
+.row-form > .input{
+    width: 100%;
+}
