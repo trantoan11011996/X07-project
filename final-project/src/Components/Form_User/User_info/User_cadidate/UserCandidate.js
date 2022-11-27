@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   Row,
@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 
@@ -22,10 +23,28 @@ export default function UserCandidate() {
   const [career, setCareer] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate("");
+  const {currentUser, setCurrentUser} = useContext(UserContext)
+
+
+  const candidateInfo = (name, gender, age, phone, address, career, description,) => {
+    const userInfo = {
+        fullname: name,
+        age: age,
+        gender: gender,
+        phoneNumber: phone,
+        address: address,
+        career: career,
+        description: description
+    }
+
+    const updateInfo = {...currentUser, user_info : userInfo} 
+    setCurrentUser(updateInfo);
+    return
+};
 
   const handleClick = (event) => {
     event.preventDefault();
-
+    
     if (
       !name ||
       !gender ||
@@ -41,16 +60,8 @@ export default function UserCandidate() {
     } else if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-      // const user = {
-      //    name: name,
-      //    gender: gender,
-      //    age: age,
-      //    phone: phone,
-      //    address: address,
-      //    career: career
-      // }
-
-      // console.log(user);
+     
+      candidateInfo(name, gender, age, phone, address, career, description)
       navigate("/");
     }
   };

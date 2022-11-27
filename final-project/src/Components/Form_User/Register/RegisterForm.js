@@ -64,12 +64,7 @@ export default function RegisterForm() {
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
-      // const user = {
-      //     email: email,
-      //     password: password,
-      //     userRole: role
-      // }
-      // alert("Register successful")
+   
       registerUser()
       checkRole(role);
     }
@@ -78,9 +73,9 @@ export default function RegisterForm() {
   return (
     <Container>
       <Row>
-        <Col sm={4} md={4}></Col>
+        <Col sm={3} md={3}></Col>
 
-        <Col className="form-container" sm={6} md={4}>
+        <Col className="form-container" sm={6} md={6}>
           <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
@@ -145,7 +140,7 @@ export default function RegisterForm() {
                 {["radio"].map((type) => (
                   <div key={`inline-${type}`} className="m-3">
                     <Row>
-                      <Col sm={3} md={5}>
+                      <Col sm={5} md={5}>
                         <Form.Check
                           inline
                           label="Ứng viên"
@@ -157,7 +152,7 @@ export default function RegisterForm() {
                         />
                       </Col>
 
-                      <Col sm={3} md={1}></Col>
+                      <Col sm={1} md={1}></Col>
 
                       <Col>
                         <Form.Check
@@ -188,7 +183,7 @@ export default function RegisterForm() {
             </Form.Group>
           </Form>
         </Col>
-        <Col sm={4} md={4}></Col>
+        <Col sm={3} md={3}></Col>
       </Row>
     </Container>
   );
