@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -23,6 +24,7 @@ const UserProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [showLogin,setShowLogin] = useState(true)
 
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
@@ -41,18 +43,29 @@ const UserProvider = ({ children }) => {
       }
     })
     result = await result.json();
-    localStorage.setItem("userData", JSON.stringify(result))
-    console.log(result);
+    if(!result.message){
+      setCurrentUser(result)
+      localStorage.setItem("currentUser", JSON.stringify(result))
+    }
     return result
   };
 
-  // const autologin = () => {
-  //   let user = UserApi.autologin();
-  //   setCurrentUser(user);
-  // };
-  // useEffect(() => {
-  //   autologin();
-  // }, []);
+  const autologin = () => {
+    let user = UserApi.autologin();
+    if(user){
+      setShowLogin(false)
+      return
+    }
+    setCurrentUser(user);
+  };
+  const logOutUser = ()=>{
+    UserApi.logOut()
+    setShowLogin(true)
+    setCurrentUser(null)
+  }
+  useEffect(() => {
+    autologin();
+  }, []);
 
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(name, gender, age, phone, address, career, description);
@@ -67,7 +80,7 @@ const UserProvider = ({ children }) => {
         headers: {
             "Content-Type": 'application/json',
             "Accept": 'application/json',
-            authorization: `Bearer `,
+            authorization: `Bearer ${updateInfo.token}`,
         }
     })
     result = await result.json();
@@ -75,7 +88,6 @@ const UserProvider = ({ children }) => {
       setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
     }
-
     return
   };
 
@@ -137,7 +149,11 @@ const UserProvider = ({ children }) => {
     age,
     setAge,
     updateCandidateInfo,
-    updateRecruiterInfo
+    updateRecruiterInfo,
+    setShowLogin,
+    showLogin,
+    logOutUser,
+    currentUser
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

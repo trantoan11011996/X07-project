@@ -42,7 +42,7 @@ export default function Footer() {
             </Col>
             <Col md={3}>
               <p className="header-footer-content">Chứng nhận</p>
-              <div className="virify-footer">
+              <div className="verify-footer">
                 <div className="wrap-verify-icon">
                   <SiVerizon className="verify-icon"></SiVerizon>
                 </div>
