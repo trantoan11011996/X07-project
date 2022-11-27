@@ -14,6 +14,32 @@ const register =  (email,password,user_role) =>{
         return newUser
 };
 
+const candidateInfo = (name, gender, age, phone, address, career, description,) => {
+    const userInfo = {
+      fullname: name,
+      age: age,
+      gender: gender,
+      phoneNumber: phone,
+      address: address,
+      career: career,
+      description: description
+    }
+    return userInfo
+};
+
+const recruiterInfo = (company, website, companyEmail, phone, address, career, description) => {
+    const userInfo = {
+        name: company,
+        website: website,
+        email: companyEmail,
+        phoneNumber: phone,
+        address: address,
+        career: career,
+        description: description
+    }
+    return userInfo
+};
+
 
 const autoLogin = () =>{
     const json = localStorage.getItem('currentUser')
@@ -23,6 +49,8 @@ const autoLogin = () =>{
 const UserApis  = {
     register : register,
     autologin : autoLogin,
+    candidateInfo: candidateInfo,
+    recruiterInfo: recruiterInfo
 };
 export default UserApis
 

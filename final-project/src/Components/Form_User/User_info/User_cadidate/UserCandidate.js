@@ -7,8 +7,6 @@ import "../User_cadidate/candidate.css";
 
 export default function UserCandidate() {
   const {
-    currentUser, 
-    setCurrentUser,
     name,
     setName,
     gender,
@@ -22,42 +20,15 @@ export default function UserCandidate() {
     career,
     setCareer,
     description,
-    setDescription
+    setDescription,
+    updateCandidateInfo
   } = useContext(UserContext)
+  
   const navigate = useNavigate("");
 
-
-
-  const candidateInfo = (name, gender, age, phone, address, career, description,) => {
-    const userInfo = {
-      fullname: name,
-      age: age,
-      gender: gender,
-      phoneNumber: phone,
-      address: address,
-      career: career,
-      description: description
-    }
-
-    const updateInfo = { ...currentUser, user_info: userInfo }
-    setCurrentUser(updateInfo);
-    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
-    return
-  };
-
   const handleClick = (event) => {
-
     event.preventDefault();
-
-    if (
-      !name ||
-      !gender ||
-      !age ||
-      !phone ||
-      !address ||
-      !career ||
-      !description
-    ) {
+    if ( !name || !gender || !age || !phone || !address || !career || !description) {
       return alert("Hãy nhập đầy đủ thông tin ");
     } else if (age < 18) {
       return alert("Tuổi phải hơn 18");
@@ -65,7 +36,7 @@ export default function UserCandidate() {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
 
-      candidateInfo(name, gender, age, phone, address, career, description)
+      updateCandidateInfo(name, gender, age, phone, address, career, description)
       navigate("/");
     }
   };
