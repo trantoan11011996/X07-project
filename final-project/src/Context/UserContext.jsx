@@ -15,19 +15,20 @@ const UserProvider = ({ children }) => {
 
   const registerUser = () => {
     let newUser = UserApi.register(email, password, role);
+    setCurrentUser(newUser)
     const updateData = [...UserData, newUser];
     console.log('user',updateData);
     setUserData(updateData);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     localStorage.setItem("userData", JSON.stringify(updateData));
   };
-  const autologin = () => {
-    let user = UserApi.autologin();
-    setCurrentUser(user);
-  };
-  useEffect(() => {
-    autologin();
-  }, []);
+  // const autologin = () => {
+  //   let user = UserApi.autologin();
+  //   setCurrentUser(user);
+  // };
+  // useEffect(() => {
+  //   autologin();
+  // }, []);
 
   const value = {
     userData,
@@ -41,6 +42,7 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
+    setCurrentUser,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
