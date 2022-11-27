@@ -52,10 +52,10 @@ const UserProvider = ({ children }) => {
 
   const autologin = () => {
     let user = UserApi.autologin();
-    if(user){
-      setShowLogin(false)
+    if(!user){
       return
     }
+    setShowLogin(false)
     setCurrentUser(user);
   };
   const logOutUser = ()=>{

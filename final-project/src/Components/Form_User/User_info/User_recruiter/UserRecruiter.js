@@ -105,7 +105,7 @@ export default function UserRecruiter() {
                                     <Button className="button" onClick={handleClick}> Đăng kí </Button>
                                 </Col>
                                 <Col sm={3} md={3}>
-                                    <Link to={"/register"}>
+                                    <Link to={"/"}>
                                         <Button variant="light"> Hủy bỏ </Button>
                                     </Link>
                                 </Col>
