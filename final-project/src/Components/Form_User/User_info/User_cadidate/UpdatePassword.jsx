@@ -49,7 +49,7 @@ const UpdatePassword = () => {
   };
   return (
     <Fragment>
-      <MetaData title="Update Password" />
+      <MetaData title="Cập nhật mật khẩu" />
       <ToastContainer />
       <div className={cx("container")}>
         <div className={cx("container_info")}>

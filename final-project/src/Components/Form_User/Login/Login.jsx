@@ -41,9 +41,8 @@ const Login = () => {
 
   return (
     <>
-      <MetaData title="Login" />
       <ToastContainer />
-      <MetaData title="Login" />
+      <MetaData title="Đăng nhập" />
       <div className={cx("container")}>
         <div className={cx("container_login")}>
           <div className={cx("wrapper")}>
