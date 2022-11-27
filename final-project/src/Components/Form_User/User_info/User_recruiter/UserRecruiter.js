@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../Context/UserContext";
 import { isEmail, isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
 import { UserContext } from "../../../../Context/UserContext";
@@ -14,6 +15,7 @@ export default function UserRecruiter() {
     const [address, setAddress] = useState('');
     const [career, setCareer] = useState('');
     const [description, setDescription] = useState('');
+    console.log('current',currentUser);
     const navigate = useNavigate('');
     const {currentUser, setCurrentUser} = useContext(UserContext)
 

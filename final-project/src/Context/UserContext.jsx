@@ -42,7 +42,7 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
-    setCurrentUser,
+    setCurrentUser
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

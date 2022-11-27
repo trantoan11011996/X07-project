@@ -15,6 +15,7 @@ import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 
 export default function UserCandidate() {
+
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
@@ -22,8 +23,9 @@ export default function UserCandidate() {
   const [address, setAddress] = useState("");
   const [career, setCareer] = useState("");
   const [description, setDescription] = useState("");
+  const {currentUser,setCurrentUser} = useContext(UserContext)
   const navigate = useNavigate("");
-  const {currentUser, setCurrentUser} = useContext(UserContext)
+ 
 
 
   const candidateInfo = (name, gender, age, phone, address, career, description,) => {
@@ -42,7 +44,22 @@ export default function UserCandidate() {
     return
 };
 
+  const updateInfo = (name,gender,age,phone,address,career,description)=>{
+      const user_info = {
+        name : name,
+        gender:gender,
+        age:age,
+        phone:phone,
+        address:address,
+        career:career,
+        description:description
+      }
+      const updateUser = {...currentUser, user_info : user_info}
+      setCurrentUser(updateUser)
+  }
+
   const handleClick = (event) => {
+
     event.preventDefault();
     
     if (
