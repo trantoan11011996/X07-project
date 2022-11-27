@@ -44,13 +44,17 @@ const recruiterInfo = (company, website, companyEmail, phone, address, career, d
 const autoLogin = () =>{
     const json = localStorage.getItem('currentUser')
     return json ? JSON.parse(json) : null
-};;
+};
+ const logOut = () =>{
+    localStorage.removeItem('currentUser')
+}
 
 const UserApis  = {
     register : register,
     autologin : autoLogin,
     candidateInfo: candidateInfo,
-    recruiterInfo: recruiterInfo
+    recruiterInfo: recruiterInfo,
+    logOut : logOut
 };
 export default UserApis
 
