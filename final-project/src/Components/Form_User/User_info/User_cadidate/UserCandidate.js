@@ -37,6 +37,8 @@ export default function UserCandidate() {
   console.log("current", currentUser);
   const navigate = useNavigate("");
 
+  const item = {name, gender, age, phone, address, career, description}
+
   const handleClick = (event) => {
     event.preventDefault();
     if (
@@ -46,7 +48,8 @@ export default function UserCandidate() {
       !phone ||
       !address ||
       !career ||
-      !description
+      !description ||
+      item == ""
     ) {
       return alert("Hãy nhập đầy đủ thông tin ");
     }

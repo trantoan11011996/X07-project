@@ -30,6 +30,8 @@ export default function UserRecruiter() {
     updateRecruiterInfo,
   } = useContext(UserContext);
 
+  const item = {company, website, companyEmail, phone, address, career, description }
+
   const handleClick = (event) => {
     event.preventDefault();
 
@@ -40,7 +42,8 @@ export default function UserRecruiter() {
       !phone ||
       !address ||
       !career ||
-      !description
+      !description ||
+      item == ""
     ) {
       return alert("Hãy nhập đầy đủ thông tin ");
     } else if (!isEmail(companyEmail)) {
