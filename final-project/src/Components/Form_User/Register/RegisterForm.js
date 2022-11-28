@@ -61,9 +61,8 @@ export default function RegisterForm() {
       isMatch(password, confirmPassword)
     ) {
       const user = await registerUser();
-      console.log(user);
       if (user.message) {
-        // show error by pop-up
+        alert(user.message)
         return
       } else {
         checkRole(role)
@@ -75,9 +74,8 @@ export default function RegisterForm() {
     <Container>
       <Row>
         <Col sm={4} md={4}></Col>
-
         <Col className="form-container" sm={4} md={4}>
-          <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
+          <Form className="form-register p-5 text-start shadow" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
                 {" "}
