@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
@@ -9,6 +9,7 @@ import { loginUser } from "../../../Actions/authAction";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
+import { UserContext } from "../../../Context/UserContext";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -37,6 +38,7 @@ const Login = () => {
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
 
     dispatch(loginUser(email, password, navigate));
+    
   };
 
   return (

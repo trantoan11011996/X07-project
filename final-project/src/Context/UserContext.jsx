@@ -153,7 +153,8 @@ const UserProvider = ({ children }) => {
     setShowLogin,
     showLogin,
     logOutUser,
-    currentUser
+    currentUser,
+    setCurrentUser
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
