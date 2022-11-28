@@ -8,11 +8,20 @@ a {
 }
 body {
   font-size: 16px;
-  font-family: Poppins, sans-serif !important;
+  font-family: var(--font-family);
 }
 
 ol,
 ul {
   list-style: none;
   padding-left: 0 !important;
+}
+:root {
+  --font-family: Poppins, sans-serif !important;
+
+  --primary: #fd3d57;
+  --white-color: #ffff;
+  --blue-color: #0707f5;
+
+  --border-color: #e9e4e4;
 }

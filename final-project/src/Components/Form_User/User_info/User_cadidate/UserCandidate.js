@@ -1,5 +1,14 @@
 import React, { useContext, useState } from "react";
-import {Card, Row, Col, Container, Form, Dropdown, DropdownButton, Button,} from "react-bootstrap";
+import {
+  Card,
+  Row,
+  Col,
+  Container,
+  Form,
+  Dropdown,
+  DropdownButton,
+  Button,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
@@ -23,22 +32,40 @@ export default function UserCandidate() {
     setDescription,
     updateCandidateInfo,
     setShowLogin,
-    currentUser
-  } = useContext(UserContext)
-  console.log('current',currentUser);
+    currentUser,
+  } = useContext(UserContext);
+  console.log("current", currentUser);
   const navigate = useNavigate("");
 
   const handleClick = (event) => {
     event.preventDefault();
-    if ( !name || !gender || !age || !phone || !address || !career || !description) {
+    if (
+      !name ||
+      !gender ||
+      !age ||
+      !phone ||
+      !address ||
+      !career ||
+      !description
+    ) {
       return alert("Hãy nhập đầy đủ thông tin ");
-    } if (age < 18) {
+    }
+    if (age < 18) {
       return alert("Tuổi phải hơn 18");
-    } if (!isVietnamesePhoneNumberValid(phone)) {
+    }
+    if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-      updateCandidateInfo(name, gender, age, phone, address, career, description)
-      setShowLogin(false)
+      updateCandidateInfo(
+        name,
+        gender,
+        age,
+        phone,
+        address,
+        career,
+        description
+      );
+      setShowLogin(false);
       navigate("/");
     }
   };
@@ -51,7 +78,10 @@ export default function UserCandidate() {
         <Col className="container-candidate" sm={6} md={6}>
           <Form className="mt-2 p-5 text-start shadow">
             <Form.Group>
-              <h1 className="form-candidate-header text-center"> Thông tin ứng viên </h1>
+              <h1 className="form-candidate-header text-center">
+                {" "}
+                Thông tin ứng viên{" "}
+              </h1>
               <Row>
                 <Col sm={6} md={6}>
                   <Row className="text-start">

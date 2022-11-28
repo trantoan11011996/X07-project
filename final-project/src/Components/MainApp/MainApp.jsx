@@ -13,6 +13,7 @@ import UserRecruiter from "../Form_User/User_info/User_recruiter/UserRecruiter";
 import { UserProvider } from "../../Context/UserContext";
 import CompanyPage from "../CompanyPage/CompanyPage";
 import JobAndLocation from "../JobAndLocation/JobAndLocation";
+import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 export default function MainApp() {
   return (
     <AuthContext.Provider>
@@ -27,11 +28,15 @@ export default function MainApp() {
                 path="/update_password"
                 element={<UpdatePassword />}
               ></Route>
+              <Route
+                path="/forgot_password"
+                element={<ForgotPassword />}
+              ></Route>
               <Route path="/register" element={<RegisterForm />}></Route>
               <Route path="/candidate" element={<UserCandidate />}></Route>
               <Route path="/recruiter" element={<UserRecruiter />}></Route>
-              <Route path="/company" element = {<CompanyPage/>}></Route>
-              <Route path="/job&location" element = {<JobAndLocation/>}></Route>
+              <Route path="/company" element={<CompanyPage />}></Route>
+              <Route path="/job&location" element={<JobAndLocation />}></Route>
             </Routes>
             <Footer />
           </div>
