@@ -28,7 +28,6 @@ const AuthHeader = ({ mode }) => {
     navigate("/");
     dispatch(logoutUser())
   };
-  console.log(isAuthenticated);
   return (
     <div>
       <Menu

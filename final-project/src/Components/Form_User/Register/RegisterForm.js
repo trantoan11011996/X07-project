@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Container, Form, Row, Button, InputGroup} from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup,Modal} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
@@ -25,6 +25,8 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [showAlert,setShowAlert] = useState(false)
+  const [emailExsistAlert,setEmailExsistAlert] = useState(false)
 
   const checkRole = (role) => {
     if (role === "candidate") {
@@ -46,15 +48,17 @@ export default function RegisterForm() {
     event.preventDefault();
 
     if (!email || !password || !role) {
-      return alert("Hãy nhập đầy đủ thông tin ");
+      setShowAlert(true)
+      return 
     } if (!isEmail(email)) {
-      return alert("Hãy nhập email đúng định dạng");
+      setShowAlert(true)
+      return 
     } if (!isPassword(password)) {
-      return alert(
-        "Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
-      );
+      setShowAlert(true)
+      return 
     } if (!isMatch(password, confirmPassword)) {
-      return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp");
+      setShowAlert(true)
+      return 
     } if (
       isEmail(email) &&
       isPassword(password) &&
@@ -62,7 +66,7 @@ export default function RegisterForm() {
     ) {
       const user = await registerUser();
       if (user.message) {
-        alert(user.message)
+        setEmailExsistAlert(true)
         return
       } else {
         checkRole(role)
@@ -93,6 +97,7 @@ export default function RegisterForm() {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </InputGroup>
+                {emailExsistAlert && <p>Email đã tồn tại</p>}
               </Row>
 
               <Row>
@@ -113,6 +118,7 @@ export default function RegisterForm() {
                     {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
+                {showAlert && (<p>Hãy nhập đúng định dạng mật khẩu</p>)}
               </Row>
 
               <Row>
