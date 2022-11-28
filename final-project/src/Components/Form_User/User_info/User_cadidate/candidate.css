@@ -1,14 +1,14 @@
-.candidate{
+.form-candidate-header{
     font-size: 25px;
     font-weight: bold;
     margin-bottom: 25px;
 }
-
 .input{
     margin-top: 2%;
 }
 .container-candidate{
-    margin-top: 60px;
+    margin-top: 80px;
+    margin-bottom: 10px;
 }
 .button{
     background-color: rgb(253,61,87);

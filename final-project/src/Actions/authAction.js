@@ -10,14 +10,15 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "https://ecommerce-mindx.herokuapp.com/api/auth/login",
+      "https://xjob-mindx.herokuapp.com/api/users/login",
       { email, password },
       config
     );
-    dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+    console.log(data);
+    dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {
-    toast.error(error.response.data.msg);
-    dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
+    toast.error(error.response.data.message);
+    dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };

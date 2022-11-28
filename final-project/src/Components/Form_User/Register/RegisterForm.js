@@ -18,6 +18,8 @@ export default function RegisterForm() {
     confirmPassword,
     registerUser,
     currentUser,
+    setShowLogin,
+    showLogin
   } = useContext(UserContext);
 
   const navigate = useNavigate();

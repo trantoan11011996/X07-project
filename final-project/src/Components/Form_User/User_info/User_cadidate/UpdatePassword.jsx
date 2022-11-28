@@ -1,16 +1,23 @@
 import React, { Fragment, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./UpdatePassword.module.scss";
-import { isEmpty } from "../../../../utils/validate";
+import {
+  isCheckPassword,
+  isEmpty,
+  isMathUpdatePassword,
+} from "../../../../utils/validate";
 import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../MetaData/MetaData";
+import { updatePassword } from "../../../../Actions/userAction";
+import { useDispatch } from "react-redux";
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
   const [checked, setChecked] = useState(false);
-  const [oldPassword, setOldPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleChangeCheckPassword = (e) => {
     setChecked(e.target.checked);
@@ -19,27 +26,32 @@ const UpdatePassword = () => {
   const updatePasswordSubmit = (e) => {
     e.preventDefault();
     const dataPassword = {
-      oldPassword,
+      currentPassword,
       newPassword,
-      confirmPassword,
     };
     if (
-      isEmpty(oldPassword) ||
+      isEmpty(currentPassword) ||
       isEmpty(newPassword) ||
       isEmpty(confirmPassword)
     ) {
-      return toast.warn("Please fill in all fields.");
+      return toast.warn("Vui lòng điền tất cả thông tin !");
     }
     //check length pass
-    if (newPassword.length < 6) {
-      return toast.warn("Password must be 6 or more characters");
+    if (!isCheckPassword(newPassword)) {
+      return toast.warn(
+        "Mật khẩu phải tối thiểu 8 ký tự, tối thiểu 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
+      );
+    }
+    // check comfirm update newPassword
+    if (!isMathUpdatePassword(newPassword, confirmPassword)) {
+      return toast.warn("Mật khẩu không khớp !");
     }
 
-    console.log(dataPassword);
+    dispatch(updatePassword(dataPassword));
   };
   return (
     <Fragment>
-      <MetaData title="Update Password" />
+      <MetaData title="Cập nhật mật khẩu" />
       <ToastContainer />
       <div className={cx("container")}>
         <div className={cx("container_info")}>
@@ -47,7 +59,7 @@ const UpdatePassword = () => {
             <div className={cx("col_info_1")}>
               <div className={cx("profile")}>
                 <ul className={cx("navbar")}>
-                  <li>
+                  <li className={cx("disabled")}>
                     <a href="/#">
                       <h5>Đổi mật khẩu</h5>
                       <p>Đổi mật khẩu đăng nhập</p>
@@ -68,9 +80,9 @@ const UpdatePassword = () => {
                       type={checked ? "text" : "password"}
                       id="old_password"
                       name="old_password"
-                      value={oldPassword}
+                      value={currentPassword}
                       className={cx("password")}
-                      onChange={(e) => setOldPassword(e.target.value)}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
                     />
                   </div>
 
