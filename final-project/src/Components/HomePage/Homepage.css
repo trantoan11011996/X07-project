@@ -1,4 +1,13 @@
 .home-page{
+    margin-top: 65px;
+}
+.home-banner{
+    border : 1px solid black;
+    height: 200px;
+}
+.home-jobs{
     border : 1px solid red;
-    margin-top: 100px;
+}
+.job-item{
+    border : 1px solid black
 }

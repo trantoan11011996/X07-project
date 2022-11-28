@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Menu, Avatar } from "antd";
 import {
   UserOutlined,
@@ -9,12 +9,15 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../../../Context/UserContext";
+import { logoutUser } from "../../../../Actions/authAction";
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const { showLogin, logOutUser, currentUser } = useContext(UserContext);
+  const { showLogin, logOutUser, currentUser} = useContext(UserContext);
+  console.log("current",currentUser);
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -23,7 +26,9 @@ const AuthHeader = ({ mode }) => {
   const handleLogOutUser = () => {
     logOutUser();
     navigate("/");
+    dispatch(logoutUser())
   };
+  console.log(isAuthenticated);
   return (
     <div>
       <Menu
@@ -45,7 +50,7 @@ const AuthHeader = ({ mode }) => {
           ></img>
         </Menu.Item>
         <div style={{ width: 1400 }}></div>
-        {isAuthenticated || showLogin == false || currentUser?.email ? (
+        {(isAuthenticated || showLogin == false || currentUser?.token) ? (
           <>
             <Menu
               theme="white"
@@ -72,16 +77,17 @@ const AuthHeader = ({ mode }) => {
                 <Menu.Item key="/update_password">
                   <KeyOutlined /> Cập nhật mật khẩu người dùng
                 </Menu.Item>
-                {currentUser.role === "candidate" && (
+                {((currentUser?.role === "candidate") || (user?.role === "candidate")) && (
                   <Menu.Item key={"/candidate"}>
                     <FormOutlined /> Cập nhật thông tin ứng viên
                   </Menu.Item>
                 )}
-                {currentUser.role === "recruiter" && (
-                  <Menu.Item key={"/recruiter"}>
-                    <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                  </Menu.Item>
-                )}
+                { ((currentUser?.role === "recruiter" ) ||
+                  (user?.role === "recruiter")) && (
+                    <Menu.Item key={"/recruiter"}>
+                      <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
+                    </Menu.Item>
+                  )}
 
                 <Menu.Item onClick={handleLogOutUser} key={"/"}>
                   <LogoutOutlined /> Đăng xuất
