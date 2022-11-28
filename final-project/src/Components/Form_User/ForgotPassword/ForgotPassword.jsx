@@ -4,6 +4,10 @@ import styles from "./ForgotPassword.module.scss";
 import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../MetaData/MetaData";
 import { isEmail, isEmpty } from "../../../utils/validate";
+import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../../Actions/userAction";
+import { CiLogin } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +17,7 @@ const ForgotPassword = () => {
   };
   const [data, setData] = useState(initialState);
   const { email } = data;
-
+  const dispatch = useDispatch();
   //handle even
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -27,8 +31,8 @@ const ForgotPassword = () => {
     if (!isEmail(email)) {
       return toast.error("Địa chỉ email không đúng định dạng !");
     }
-    console.log("đã gửi email tới", email);
-    console.log("đã gửi email tới", email);
+
+    dispatch(forgotPassword(email));
   };
   return (
     <>
@@ -62,6 +66,10 @@ const ForgotPassword = () => {
                   placeholder="example@mail.com"
                 />
               </div>
+
+              <Link to={"/login"} className={cx("back_to_login")}>
+                Đi đến đăng nhập <CiLogin />{" "}
+              </Link>
 
               <div className={cx("login_btn")}>
                 <button type="submit">Gửi Email</button>

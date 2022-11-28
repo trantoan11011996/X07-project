@@ -31,8 +31,10 @@ export default function UserCandidate() {
     description,
     setDescription,
     updateCandidateInfo,
+    setShowLogin,
+    currentUser,
   } = useContext(UserContext);
-
+  console.log("current", currentUser);
   const navigate = useNavigate("");
 
   const handleClick = (event) => {
@@ -47,9 +49,11 @@ export default function UserCandidate() {
       !description
     ) {
       return alert("Hãy nhập đầy đủ thông tin ");
-    } else if (age < 18) {
+    }
+    if (age < 18) {
       return alert("Tuổi phải hơn 18");
-    } else if (!isVietnamesePhoneNumberValid(phone)) {
+    }
+    if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
       updateCandidateInfo(
@@ -61,6 +65,7 @@ export default function UserCandidate() {
         career,
         description
       );
+      setShowLogin(false);
       navigate("/");
     }
   };
@@ -73,7 +78,10 @@ export default function UserCandidate() {
         <Col className="container-candidate" sm={6} md={6}>
           <Form className="mt-2 p-5 text-start shadow">
             <Form.Group>
-              <h1 className="candidate text-center"> Thông tin ứng viên </h1>
+              <h1 className="form-candidate-header text-center">
+                {" "}
+                Thông tin ứng viên{" "}
+              </h1>
               <Row>
                 <Col sm={6} md={6}>
                   <Row className="text-start">
@@ -212,7 +220,7 @@ export default function UserCandidate() {
                   </Button>
                 </Col>
                 <Col>
-                  <Link to={"/register"}>
+                  <Link to={"/"}>
                     <Button variant="light"> Hủy bỏ </Button>
                   </Link>
                 </Col>

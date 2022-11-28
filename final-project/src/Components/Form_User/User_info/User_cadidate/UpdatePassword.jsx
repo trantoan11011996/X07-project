@@ -8,13 +8,16 @@ import {
 } from "../../../../utils/validate";
 import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../MetaData/MetaData";
+import { updatePassword } from "../../../../Actions/userAction";
+import { useDispatch } from "react-redux";
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
   const [checked, setChecked] = useState(false);
-  const [oldPassword, setOldPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleChangeCheckPassword = (e) => {
     setChecked(e.target.checked);
@@ -23,12 +26,11 @@ const UpdatePassword = () => {
   const updatePasswordSubmit = (e) => {
     e.preventDefault();
     const dataPassword = {
-      oldPassword,
+      currentPassword,
       newPassword,
-      confirmPassword,
     };
     if (
-      isEmpty(oldPassword) ||
+      isEmpty(currentPassword) ||
       isEmpty(newPassword) ||
       isEmpty(confirmPassword)
     ) {
@@ -45,7 +47,7 @@ const UpdatePassword = () => {
       return toast.warn("Mật khẩu không khớp !");
     }
 
-    console.log(dataPassword);
+    dispatch(updatePassword(dataPassword));
   };
   return (
     <Fragment>
@@ -78,9 +80,9 @@ const UpdatePassword = () => {
                       type={checked ? "text" : "password"}
                       id="old_password"
                       name="old_password"
-                      value={oldPassword}
+                      value={currentPassword}
                       className={cx("password")}
-                      onChange={(e) => setOldPassword(e.target.value)}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
                     />
                   </div>
 

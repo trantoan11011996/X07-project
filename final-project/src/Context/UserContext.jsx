@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -22,63 +24,76 @@ const UserProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [showLogin,setShowLogin] = useState(true)
 
-  const  registerUser = async() => {
+  const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser)
     const updateData = [...UserData, newUser];
-    setUserData(updateData);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
-    localStorage.setItem("userData", JSON.stringify(updateData));
 
     // push lên API
-    let item = { "email":email, "password":password, "role": role }
+    let item = { "email": email, "password": password, "role": role }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
-        method: "POST",
-        body: JSON.stringify(item),
-        headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json'
-        }
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": 'application/json',
+        "Accept": 'application/json'
+      }
     })
     result = await result.json();
-    // localStorage.setItem("userData", JSON.stringify(result))
-    return
+    if(!result.message){
+      setCurrentUser(result)
+      localStorage.setItem("currentUser", JSON.stringify(result))
+    }
+    return result
   };
 
-  // const autologin = () => {
-  //   let user = UserApi.autologin();
-  //   setCurrentUser(user);
-  // };
-  // useEffect(() => {
-  //   autologin();
-  // }, []);
+  const autologin = () => {
+    let user = UserApi.autologin();
+    if(!user){
+      return
+    }
+    setShowLogin(false)
+    setCurrentUser(user);
+  };
+  const logOutUser = ()=>{
+    UserApi.logOut()
+    setShowLogin(true)
+    setCurrentUser(null)
+  }
+  useEffect(() => {
+    autologin();
+  }, []);
 
-  const updateCandidateInfo = async() => {
+  const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(name, gender, age, phone, address, career, description);
     const updateInfo = { ...currentUser, user_info: info };
     setCurrentUser(updateInfo);
     localStorage.setItem("currentUser", JSON.stringify(updateInfo));
 
-    let item = { "name":name, "gender":gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
+    let item = { "name": name, "gender": gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
         method: "POST",
         body: JSON.stringify(item),
         headers: {
             "Content-Type": 'application/json',
-            "Accept": 'application/json'
+            "Accept": 'application/json',
+            authorization: `Bearer ${updateInfo.token}`,
         }
     })
     result = await result.json();
-    // localStorage.setItem("userData", JSON.stringify(result))
-
+    if(!result.message){
+      setCurrentUser(result)
+      localStorage.setItem("currentUser", JSON.stringify(result))
+    }
     return
   };
 
   const updateRecruiterInfo = async() => {
     const info = UserApi.recruiterInfo(company, website, companyEmail, phone, address, career, description);
     const updateInfo = { ...currentUser, user_info: info };
-    setCurrentUser(updateInfo);
     localStorage.setItem("currentUser", JSON.stringify(updateInfo));
 
     let item = { "name":company, "website":website, "email": companyEmail, "phoneNumber": phone, "address": address, "career": career, "description": description }
@@ -87,13 +102,16 @@ const UserProvider = ({ children }) => {
         body: JSON.stringify(item),
         headers: {
             "Content-Type": 'application/json',
-            "Accept": 'application/json'
+            "Accept": 'application/json',
+            authorization : `Bearer ${updateInfo.token}`
         }
     })
     result = await result.json();
-    // localStorage.setItem("userData", JSON.stringify(result))
-
-    return
+    if(!result.message){
+      localStorage.setItem("currentUser", JSON.stringify(result))
+      return result
+    }
+    return result
   }
 
 
@@ -131,7 +149,11 @@ const UserProvider = ({ children }) => {
     age,
     setAge,
     updateCandidateInfo,
-    updateRecruiterInfo
+    updateRecruiterInfo,
+    setShowLogin,
+    showLogin,
+    logOutUser,
+    currentUser
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
