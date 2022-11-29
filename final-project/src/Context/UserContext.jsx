@@ -24,7 +24,11 @@ const UserProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [showLogin,setShowLogin] = useState(true)
+  const [showLogin, setShowLogin] = useState(true);
+  const [companyPhone, setCompanyPhone] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [companyCareer, setCompanyCareer] = useState('');
+  const [companyDescription, setCompanyDescription] = useState('');
 
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
@@ -40,7 +44,7 @@ const UserProvider = ({ children }) => {
       }
     })
     result = await result.json();
-    if(result.token){
+    if (result.token) {
       setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
     }
@@ -49,13 +53,13 @@ const UserProvider = ({ children }) => {
 
   const autologin = () => {
     let user = UserApi.autologin();
-    if(!user){
+    if (!user) {
       return
     }
     setShowLogin(false)
     setCurrentUser(user);
   };
-  const logOutUser = ()=>{
+  const logOutUser = () => {
     UserApi.logOut()
     setShowLogin(true)
     setCurrentUser(null)
@@ -70,39 +74,39 @@ const UserProvider = ({ children }) => {
     setCurrentUser(updateInfo)
     let item = { "name": name, "gender": gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
-        method: "POST",
-        body: JSON.stringify(item),
-        headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json',
-            authorization: `Bearer ${updateInfo.token}`,
-        }
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": 'application/json',
+        "Accept": 'application/json',
+        authorization: `Bearer ${updateInfo.token}`,
+      }
     })
     result = await result.json();
-    if(result.token){
+    if (result.token) {
       setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
     }
     return
   };
 
-  const updateRecruiterInfo = async() => {
-    const info = UserApi.recruiterInfo(company, website, companyEmail, phone, address, career, description);
+  const updateRecruiterInfo = async () => {
+    const info = UserApi.recruiterInfo(company, website, companyEmail, companyPhone, companyAddress, companyCareer, companyDescription);
     const updateInfo = { ...currentUser, user_info: info };
     localStorage.setItem("currentUser", JSON.stringify(updateInfo));
 
-    let item = { "name":company, "website":website, "email": companyEmail, "phoneNumber": phone, "address": address, "career": career, "description": description }
+    let item = { "name": company, "website": website, "email": companyEmail, "phoneNumber": companyPhone, "address": companyAddress, "career": companyCareer, "description": companyDescription}
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
-        method: "POST",
-        body: JSON.stringify(item),
-        headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json',
-            authorization : `Bearer ${updateInfo.token}`
-        }
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": 'application/json',
+        "Accept": 'application/json',
+        authorization: `Bearer ${updateInfo.token}`
+      }
     })
     result = await result.json();
-    if(!result.message){
+    if (!result.message) {
       localStorage.setItem("currentUser", JSON.stringify(result))
       return result
     }
@@ -149,7 +153,16 @@ const UserProvider = ({ children }) => {
     showLogin,
     logOutUser,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    companyPhone,
+    companyAddress,
+    companyCareer,
+    companyDescription,
+    setCompanyPhone,
+    setCompanyAddress,
+    setCompanyCareer,
+    setCompanyDescription,
+
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
