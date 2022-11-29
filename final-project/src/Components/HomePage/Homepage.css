@@ -11,3 +11,8 @@
 .job-item{
     border : 1px solid black
 }
+.navigate-header{
+    display: flex;
+    gap: 20px;
+    margin-left: 20px;
+}
