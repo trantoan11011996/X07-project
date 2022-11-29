@@ -14,10 +14,10 @@ import { UserContext } from "../../../../Context/UserContext";
 import { logoutUser } from "../../../../Actions/authAction";
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const { showLogin, logOutUser, currentUser} = useContext(UserContext);
-  console.log("current",currentUser);
+  const { showLogin, logOutUser, currentUser } = useContext(UserContext);
+  console.log("current", currentUser);
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -26,7 +26,7 @@ const AuthHeader = ({ mode }) => {
   const handleLogOutUser = () => {
     logOutUser();
     navigate("/");
-    dispatch(logoutUser())
+    dispatch(logoutUser());
   };
   return (
     <div>
@@ -37,7 +37,6 @@ const AuthHeader = ({ mode }) => {
         style={{
           marginBottom: 15,
           height: 60,
-          boxShadow: "2px 5px 7px -1px rgba(184,165,184,1)",
           fontSize: "18px",
         }}
       >
@@ -49,20 +48,14 @@ const AuthHeader = ({ mode }) => {
           ></img>
         </Menu.Item>
         <div style={{ width: 1400 }}></div>
-        {(isAuthenticated || showLogin == false || currentUser?.token) ? (
+        <Menu.Item key="/company" style={{ marginTop: 9 }}>
+          Công ty
+        </Menu.Item>
+        <Menu.Item key="/job&location" style={{ marginTop: 9 }}>
+          Ngành nghề/Địa điểm
+        </Menu.Item>
+        {isAuthenticated || showLogin == false || currentUser?.token ? (
           <>
-            <Menu
-              theme="white"
-              mode={mode}
-              onClick={handleMenuClick}
-              style={{}}
-            >
-              <Menu.Item key="/company" style={{ marginTop: 9 }}>
-                Công ty
-              </Menu.Item>
-              <Menu.Item key="/job&location" style={{ marginTop: 9 }}>
-                Ngành nghề/Địa điểm
-              </Menu.Item>
               <Menu.SubMenu
                 title={
                   <>
@@ -76,33 +69,27 @@ const AuthHeader = ({ mode }) => {
                 <Menu.Item key="/update_password">
                   <KeyOutlined /> Cập nhật mật khẩu người dùng
                 </Menu.Item>
-                {((currentUser?.role === "candidate") || (user?.role === "candidate")) && (
+                {(currentUser?.role === "candidate" ||
+                  user?.role === "candidate") && (
                   <Menu.Item key={"/candidate"}>
                     <FormOutlined /> Cập nhật thông tin ứng viên
                   </Menu.Item>
                 )}
-                { ((currentUser?.role === "recruiter" ) ||
-                  (user?.role === "recruiter")) && (
-                    <Menu.Item key={"/recruiter"}>
-                      <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                    </Menu.Item>
-                  )}
+                {(currentUser?.role === "recruiter" ||
+                  user?.role === "recruiter") && (
+                  <Menu.Item key={"/recruiter"}>
+                    <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
+                  </Menu.Item>
+                )}
 
                 <Menu.Item onClick={handleLogOutUser} key={"/"}>
                   <LogoutOutlined /> Đăng xuất
                 </Menu.Item>
               </Menu.SubMenu>
-            </Menu>
           </>
         ) : (
           <>
             <div style={{ width: 1600 }}></div>
-            <Menu.Item key="/company" style={{ marginTop: 9 }}>
-              Công ty
-            </Menu.Item>
-            <Menu.Item key="/job&location" style={{ marginTop: 9 }}>
-              Ngành nghề/Địa điểm
-            </Menu.Item>
             <Menu.Item key="/login" style={{ marginTop: 9 }}>
               Đăng nhập
             </Menu.Item>
