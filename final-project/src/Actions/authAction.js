@@ -3,6 +3,7 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT,
 } from "../Constants/authConstant";
 import axios from "axios";
 export const loginUser = (email, password, navigate) => async (dispatch) => {
@@ -14,10 +15,16 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
       { email, password },
       config
     );
+    localStorage.setItem("currentUser", JSON.stringify(data));
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {
     toast.error(error.response.data.message);
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
+};
+export const logoutUser = () => async (dispatch) => {
+  dispatch({ type: LOGOUT });
+  localStorage.removeItem("currentUser");
+  dispatch({ type: LOGOUT, payload: null });
 };

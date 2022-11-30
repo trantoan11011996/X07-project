@@ -29,9 +29,6 @@ const UserProvider = ({ children }) => {
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser)
-    const updateData = [...UserData, newUser];
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
-
     // push lên API
     let item = { "email": email, "password": password, "role": role }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
@@ -43,7 +40,7 @@ const UserProvider = ({ children }) => {
       }
     })
     result = await result.json();
-    if(!result.message){
+    if(result.token){
       setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
     }
@@ -70,9 +67,7 @@ const UserProvider = ({ children }) => {
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(name, gender, age, phone, address, career, description);
     const updateInfo = { ...currentUser, user_info: info };
-    setCurrentUser(updateInfo);
-    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
-
+    setCurrentUser(updateInfo)
     let item = { "name": name, "gender": gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
     let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
         method: "POST",
@@ -84,7 +79,7 @@ const UserProvider = ({ children }) => {
         }
     })
     result = await result.json();
-    if(!result.message){
+    if(result.token){
       setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
     }
@@ -153,7 +148,8 @@ const UserProvider = ({ children }) => {
     setShowLogin,
     showLogin,
     logOutUser,
-    currentUser
+    currentUser,
+    setCurrentUser
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

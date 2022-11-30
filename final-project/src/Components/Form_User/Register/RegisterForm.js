@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Container, Form, Row, Button, InputGroup} from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup,Modal} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
 import "../Register/register.css";
-
+import bannerRegister from "../../../img/image-banner.webp"
 export default function RegisterForm() {
   const {
     setEmail,
@@ -25,6 +25,8 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [showAlert,setShowAlert] = useState(false)
+  const [emailExsistAlert,setEmailExsistAlert] = useState(false)
 
   const checkRole = (role) => {
     if (role === "candidate") {
@@ -46,24 +48,25 @@ export default function RegisterForm() {
     event.preventDefault();
 
     if (!email || !password || !role) {
-      return alert("Hãy nhập đầy đủ thông tin ");
+      setShowAlert(true)
+      return 
     } if (!isEmail(email)) {
-      return alert("Hãy nhập email đúng định dạng");
+      setShowAlert(true)
+      return 
     } if (!isPassword(password)) {
-      return alert(
-        "Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường"
-      );
+      setShowAlert(true)
+      return 
     } if (!isMatch(password, confirmPassword)) {
-      return alert("Mật khẩu và xác nhận mật khẩu phải trùng khớp");
+      setShowAlert(true)
+      return 
     } if (
       isEmail(email) &&
       isPassword(password) &&
       isMatch(password, confirmPassword)
     ) {
       const user = await registerUser();
-      console.log(user);
       if (user.message) {
-        // show error by pop-up
+        setEmailExsistAlert(true)
         return
       } else {
         checkRole(role)
@@ -72,12 +75,13 @@ export default function RegisterForm() {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col sm={4} md={4}></Col>
-
-        <Col className="form-container" sm={4} md={4}>
-          <Form className="p-5 text-start shadow" onSubmit={handleSubmit}>
+    <Container fluid>
+      <Row className="container-register">
+        <Col className="container-register-banner" sm={4} md={6}>
+          <img className="register-banner" src={bannerRegister}></img>
+        </Col>
+        <Col className="form-container" sm={4} md={6}>
+          <Form className="form-register text-start" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
                 {" "}
@@ -95,6 +99,7 @@ export default function RegisterForm() {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </InputGroup>
+                {emailExsistAlert && <p>Email đã tồn tại</p>}
               </Row>
 
               <Row>
@@ -115,6 +120,7 @@ export default function RegisterForm() {
                     {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
+                {showAlert && (<p>Hãy nhập đúng định dạng mật khẩu</p>)}
               </Row>
 
               <Row>
@@ -184,7 +190,6 @@ export default function RegisterForm() {
             </Form.Group>
           </Form>
         </Col>
-        <Col sm={4} md={4}></Col>
       </Row>
     </Container>
   );

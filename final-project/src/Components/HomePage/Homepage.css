@@ -1,4 +1,85 @@
-.home-page{
-    border : 1px solid red;
-    margin-top: 100px;
+.home-page {
+  margin-top: 62px;
+}
+.home-banner {
+  height: 400px;
+}
+.home-jobs {
+}
+.job-item {
+  border: 1px solid black;
+}
+.navigate-header {
+  display: flex;
+  gap: 20px;
+  margin-left: 20px;
+}
+.home-banner {
+  position: relative;
+}
+.home-banner::before {
+  content: "";
+  background-image: url("https://dxwd4tssreb4w.cloudfront.net/images/common/background-cover/sapporo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+.content-banner {
+  position: absolute;
+  top: 130px;
+  right: calc(50% + 100px);
+  padding: 0 50px;
+}
+.header-content-banner {
+  font-size: 30px;
+  color: white;
+  font-weight: bolder;
+}
+.search-banner {
+  background-color: white;
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  box-shadow: -1px 0px 12px -3px rgba(112, 106, 112, 1);
+  position: relative;
+}
+.search-icon-banner {
+  font-size: 25px;
+  color: rgb(0, 105, 219);
+}
+.input-search-banner {
+  border: none;
+  outline: none;
+  width: 300px;
+  font-size: 15px;
+  width: 80%;
+}
+.result-search {
+  position: absolute;
+  height: 100px;
+  width: 100%;
+  background-color: white;
+  top: 70px;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: -1px 4px 12px -3px rgba(112,106,112,1);
+
+}
+.result-search::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top: 0;
+  border-bottom: 13px solid white;
+  top: -12px;
+  left: 30px;
 }
