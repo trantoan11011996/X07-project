@@ -9,7 +9,7 @@ import {
 import "../User_recruiter/recruiter.css";
 
 export default function UserRecruiter() {
-  const navigate = useNavigate("");
+  const navigate = useNavigate(null);
   const {
     currentUser,
     setCurrentUser,
@@ -19,44 +19,104 @@ export default function UserRecruiter() {
     setWebsite,
     companyEmail,
     setCompanyEmail,
-    phone,
-    setPhone,
-    address,
-    setAddress,
-    career,
-    setCareer,
-    description,
-    setDescription,
+    companyPhone,
+    setCompanyPhone,
+    companyAddress,
+    setCompanyAddress,
+    companyCareer,
+    setCompanyCareer,
+    companyDescription,
+    setCompanyDescription,
     updateRecruiterInfo,
+    setShowLogin
   } = useContext(UserContext);
+
+  const [companyEmpty, setCompanyEmpty] = useState(false);
+  const [websiteEmpty, setWebsiteEmpty] = useState(false);
+  const [companyEmailEmpty, setCompanyEmailEmpty] = useState(false);
+  const [phoneEmpty, setPhoneEmpty] = useState(false);
+  const [addressEmpty, setAddressEmpty] = useState(false);
+  const [careerEmpty, setCareerEmpty] = useState(false);
+  const [descriptEmpty, setDescriptEmpty] = useState(false);
+
+  const [EmailErr, setEmailErr] = useState(false);
+  const [phoneErr, setPhoneErr] = useState(false);
 
   const handleClick = (event) => {
     event.preventDefault();
 
-    if (
-      !company ||
-      !website ||
-      !companyEmail ||
-      !phone ||
-      !address ||
-      !career ||
-      !description
-    ) {
-      return alert("Hãy nhập đầy đủ thông tin ");
-    } else if (!isEmail(companyEmail)) {
-      return alert("Hãy nhập email đúng định dạng");
-    } else if (!isVietnamesePhoneNumberValid(phone)) {
-      return alert("Hãy nhập sdt Việt Nam");
+    if (!company || company == null) {
+      setCompanyEmpty(true)
+      return
     } else {
+      setCompanyEmpty(false)
+    }
+
+    if (!website || website == null) {
+      setWebsiteEmpty(true)
+      return
+    } else {
+      setWebsiteEmpty(false)
+    }
+
+    if(!companyEmail || companyEmail == null) {
+      setCompanyEmailEmpty(true)
+      return
+    } else {
+      setCompanyEmailEmpty(false)
+    }
+
+    if (!isEmail(companyEmail)) {
+      setEmailErr(true)
+      return
+    } else {
+      setEmailErr(false)
+    }
+
+    if (!companyPhone || companyPhone == null) {
+      setPhoneEmpty(true)
+      return
+    } else {
+      setPhoneEmpty(false)
+    }
+
+    if (!isVietnamesePhoneNumberValid(companyPhone)) {
+      setPhoneErr(true)
+      return
+    } else {
+      setPhoneErr(false)
+    }
+    
+    if(!companyAddress || companyAddress == null) {
+      setAddressEmpty(true)
+      return
+    } else {
+      setAddressEmpty(false)
+    }
+
+    if(!companyCareer || companyCareer == null) {
+      setCareerEmpty(true)
+      return
+    } else {
+      setCareerEmpty(false)
+    }
+
+    if(!companyDescription || companyDescription == null) {
+      setDescriptEmpty(true)
+      return
+    } else {
+      setDescriptEmpty(false)
+    
       updateRecruiterInfo(
         company,
         website,
         companyEmail,
-        phone,
-        address,
-        career,
-        description
+        companyPhone,
+        companyAddress,
+        companyCareer,
+        companyDescription
       );
+      setShowLogin(false);
       navigate("/");
     }
   };
@@ -77,14 +137,16 @@ export default function UserRecruiter() {
                 <Form.Label />{" "}
                 <b>
                   {" "}
-                  Công ty<span style={{ color: "red" }}>*</span>{" "}
+                  Tên công ty<span style={{ color: "red" }}>*</span>{" "}
                 </b>
                 <Form.Control
                   className="input ms-2 "
                   type="text"
                   maxLength={100}
+                  value={currentUser?.info ? currentUser.info.name : null }
                   onChange={(event) => setCompany(event.target.value)}
                 />
+                {companyEmpty && <p className="text">Tên công ty không được để trống</p>}
               </Row>
 
               <Row className="row-form">
@@ -96,8 +158,10 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  value={currentUser?.info ? currentUser.info.website : null }
                   onChange={(event) => setWebsite(event.target.value)}
                 />
+                {websiteEmpty && <p className="text">Website không được để trống</p>}
               </Row>
 
               <Row className="mt-1">
@@ -106,13 +170,16 @@ export default function UserRecruiter() {
                     <Form.Label />{" "}
                     <b>
                       {" "}
-                      Email<span style={{ color: "red" }}>*</span>{" "}
+                      Email công ty<span style={{ color: "red" }}>*</span>{" "}
                     </b>
                     <Form.Control
                       className="input ms-2"
                       type="email"
+                      value={currentUser?.info ? currentUser.info.email : null }
                       onChange={(event) => setCompanyEmail(event.target.value)}
                     />
+                    {companyEmailEmpty && <p className="text">Email không được để trống</p>}
+                    {EmailErr && <p className="text"> Hãy nhập email đúng định dạng</p>}
                   </Row>
                 </Col>
 
@@ -126,8 +193,11 @@ export default function UserRecruiter() {
                     <Form.Control
                       className="input ms-2"
                       type="text"
-                      onChange={(event) => setPhone(event.target.value)}
+                      value={currentUser?.info ? currentUser.info.phoneNumber : null }
+                      onChange={(event) => setCompanyPhone(event.target.value)}
                     />
+                    {phoneEmpty && (<p className="text"> Số điện thoại không được để trống</p>)}
+                    {phoneErr && (<p className="text"> Hãy nhập số điện thoại Việt Nam</p>)}
                   </Row>
                 </Col>
               </Row>
@@ -142,8 +212,10 @@ export default function UserRecruiter() {
                   className="input ms-2"
                   type="text"
                   maxLength={200}
-                  onChange={(event) => setAddress(event.target.value)}
+                  value={currentUser?.info ? currentUser.info.address : null }
+                  onChange={(event) => setCompanyAddress(event.target.value)}
                 />
+                {addressEmpty && (<p className="text"> Địa chỉ không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
@@ -154,12 +226,14 @@ export default function UserRecruiter() {
                 </b>
                 <Form.Select
                   className="input ms-2"
-                  onChange={(event) => setCareer(event.target.value)}
+                  onChange={(event) => setCompanyCareer(event.target.value)}
+                  value={currentUser?.info ? currentUser.info.career : null }
                 >
                   <option></option>
                   <option value="Dev"> Dev</option>
                   <option value="Tester"> Tester</option>
                 </Form.Select>
+                {careerEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
@@ -173,8 +247,10 @@ export default function UserRecruiter() {
                   as="textarea"
                   rows={3}
                   maxLength={1000}
-                  onChange={(event) => setDescription(event.target.value)}
+                  value={currentUser?.info ? currentUser.info.description : null }
+                  onChange={(event) => setCompanyDescription(event.target.value)}
                 />
+                 {descriptEmpty && (<p className="text"> Mô tả không được để trống</p>)}
               </Row>
 
               <Row className="mt-5">
@@ -184,7 +260,7 @@ export default function UserRecruiter() {
                 <Col sm={3} md={3}>
                   <Button className="button" onClick={handleClick}>
                     {" "}
-                    Đăng kí{" "}
+                    Cập nhật{" "}
                   </Button>
                 </Col>
                 <Col sm={3} md={3}>

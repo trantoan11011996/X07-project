@@ -36,8 +36,8 @@ export const forgotPasswordReducer = (state = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
       return {
-        ...state,
         loading: true,
+        error: null,
       };
     case FORGOT_PASSWORD_SUCCESS:
       return {
@@ -47,7 +47,6 @@ export const forgotPasswordReducer = (state = {}, action) => {
       };
     case FORGOT_PASSWORD_FAIL:
       return {
-        ...state,
         loading: false,
         error: action.payload,
       };

@@ -27,9 +27,15 @@ const UserProvider = ({ children }) => {
   const [showLogin, setShowLogin] = useState(true);
   const [token,setToken] = useState(null)
   const { user } = useSelector((state) => state.auths);
+  const [companyPhone, setCompanyPhone] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [companyCareer, setCompanyCareer] = useState('');
+  const [companyDescription, setCompanyDescription] = useState('');
+
   useEffect(()=>{
     setToken(user?.token)
   },[user])
+  
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser);
@@ -69,6 +75,7 @@ const UserProvider = ({ children }) => {
   };
   useEffect(() => {
     autologin();
+    
   }, []);
 
   const updateCandidateInfo = async () => {
@@ -191,6 +198,15 @@ const UserProvider = ({ children }) => {
     logOutUser,
     currentUser,
     setCurrentUser,
+    companyPhone,
+    companyAddress,
+    companyCareer,
+    companyDescription,
+    setCompanyPhone,
+    setCompanyAddress,
+    setCompanyCareer,
+    setCompanyDescription,
+
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

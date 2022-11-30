@@ -18,6 +18,7 @@ const ForgotPassword = () => {
   const [data, setData] = useState(initialState);
   const { email } = data;
   const dispatch = useDispatch();
+
   //handle even
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

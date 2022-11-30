@@ -35,34 +35,85 @@ export default function UserCandidate() {
     currentUser,
     setCurrentUser
   } = useContext(UserContext);
-  const [autoInfo,setAutoInfo] = useState({})
-  useEffect(()=>{
-    let user = localStorage.getItem('currentUser');
-    user = JSON.parse(user)
-    setCurrentUser(user)
-  },[])
-  
-  const navigate = useNavigate("");
+
+  const navigate = useNavigate(null);
+
+  const [nameEmpty, setNameEmpty] = useState(false);
+  const [genderEmpty, setGenderEmpty] = useState(false);
+  const [ageEmpty, setAgeEmpty] = useState(false);
+  const [phoneEmpty, setPhoneEmpty] = useState(false);
+  const [addressEmpty, setAddressEmpty] = useState(false);
+  const [categoryEmpty, setCategoryEmpty] = useState(false);
+  const [descriptEmpty, setDescriptEmpty] = useState(false);
+
+  const [ageErr, setAgeErr] = useState(false);
+  const [phoneErr, setPhoneErr] = useState(false);
 
   const handleClick = (event) => {
     event.preventDefault();
-    if (
-      !name ||
-      !gender ||
-      !age ||
-      !phone ||
-      !address ||
-      !category ||
-      !description
-    ) {
-      return alert("Hãy nhập đầy đủ thông tin ");
-    }
-    if (age < 18) {
-      return alert("Tuổi phải hơn 18");
-    }
-    if (!isVietnamesePhoneNumberValid(phone)) {
-      return alert("Hãy nhập sdt Việt Nam");
+
+    if (!name || name == null) {
+      setNameEmpty(true)
+      return
     } else {
+      setNameEmpty(false)
+    }
+
+    if (!gender || gender == null) {
+      setGenderEmpty(true)
+      return
+    } else {
+      setGenderEmpty(false)
+    }
+
+    if(!age || age == null) {
+      setAgeEmpty(true)
+      return
+    } else {
+      setAgeEmpty(false)
+    }
+
+    if (age < 18) {
+      setAgeErr(true)
+      return
+    } else {
+      setAgeErr(false)
+    }
+
+    if (!phone || phone == null) {
+      setPhoneEmpty(true)
+      return
+    } else {
+      setPhoneEmpty(false)
+    }
+
+    if (!isVietnamesePhoneNumberValid(phone)) {
+      setPhoneErr(true)
+      return
+    } else {
+      setPhoneErr(false)
+    }
+    
+    if(!address || address == null) {
+      setAddressEmpty(true)
+      return
+    } else {
+      setAddressEmpty(false)
+    }
+
+    if(!category || category == null) {
+      setCategoryEmpty(true)
+      return
+    } else {
+      setCategoryEmpty(false)
+    }
+
+    if(!description || description == null) {
+      setDescriptEmpty(true)
+      return
+    } else {
+      setDescriptEmpty(false)
+
       updateCandidateInfo();
       setShowLogin(false);
       navigate("/");
@@ -92,8 +143,10 @@ export default function UserCandidate() {
                       className="input ms-2"
                       type="text"
                       maxLength={100}
+                      value={currentUser?.info ? currentUser.info.fullname : null }
                       onChange={(event) => setName(event.target.value)}
                     />
+                  {nameEmpty && (<p className="text"> Họ và Tên không được để trống</p>)}
                   </Row>
                 </Col>
 
@@ -109,7 +162,7 @@ export default function UserCandidate() {
                         <Form.Check
                           inline
                           label="Nam"
-                          value="Nam"
+                          value={currentUser?.info ? currentUser.info.gender : "Nam" }
                           name="group1"
                           type={type}
                           id={`inline-${type}-1`}
@@ -118,7 +171,7 @@ export default function UserCandidate() {
                         <Form.Check
                           inline
                           label="Nữ"
-                          value="Nữ"
+                          value={currentUser?.info ? currentUser.info.gender : "Nữ" }
                           name="group1"
                           type={type}
                           id={`inline-${type}-2`}
@@ -126,6 +179,7 @@ export default function UserCandidate() {
                         />
                       </div>
                     ))}
+                    {genderEmpty && (<p className="text"> Giới tính không được để trống</p>)}
                   </Row>
                 </Col>
               </Row>
@@ -143,8 +197,11 @@ export default function UserCandidate() {
                       type="number"
                       min={18}
                       max={100}
+                      value={currentUser?.info ? currentUser.info.age : null }
                       onChange={(event) => setAge(event.target.value)}
                     />
+                  {ageEmpty && (<p className="text"> Tuổi không được để trống</p>)}
+                  {ageErr && (<p className="text"> Tuổi không được nhỏ hơn 18</p>)}
                   </Row>
                 </Col>
 
@@ -158,8 +215,11 @@ export default function UserCandidate() {
                     <Form.Control
                       className="input ms-2"
                       type="text"
+                      value={currentUser?.info ? currentUser.info.phoneNumber : null }
                       onChange={(event) => setPhone(event.target.value)}
                     />
+                    {phoneEmpty && (<p className="text"> Số điện thoại không được để trống</p>)}
+                    {phoneErr && (<p className="text"> Hãy nhập số điện thoại Việt Nam</p>)}
                   </Row>
                 </Col>
               </Row>
@@ -174,8 +234,10 @@ export default function UserCandidate() {
                   className="input ms-2"
                   type="text"
                   maxLength={200}
+                  value={currentUser?.info ? currentUser.info.address : null }
                   onChange={(event) => setAddress(event.target.value)}
                 />
+                {addressEmpty && (<p className="text"> Địa chỉ không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
@@ -191,6 +253,7 @@ export default function UserCandidate() {
                   <option value="Dev"> Dev</option>
                   <option value="Tester"> Tester</option>
                 </Form.Select>
+                {categoryEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
@@ -204,8 +267,10 @@ export default function UserCandidate() {
                   as="textarea"
                   rows={3}
                   maxLength={1000}
+                  value={currentUser?.info ? currentUser.info.description : null }
                   onChange={(event) => setDescription(event.target.value)}
                 />
+                {descriptEmpty && (<p className="text"> Mô tả không được để trống</p>)}
               </Row>
 
               <Row className="mt-5">
@@ -215,7 +280,7 @@ export default function UserCandidate() {
                 <Col sm={3} md={3}>
                   <Button className="button" onClick={handleClick}>
                     {" "}
-                    Đăng kí{" "}
+                    Cập nhật{" "}
                   </Button>
                 </Col>
                 <Col>

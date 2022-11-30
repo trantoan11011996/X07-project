@@ -24,8 +24,8 @@ const AuthHeader = ({ mode }) => {
   };
   const handleLogOutUser = () => {
     logOutUser();
-    navigate("/");
-    dispatch(logoutUser());
+    navigate("/login");
+    dispatch(logoutUser(navigate));
   };
   return (
     <div>
@@ -55,36 +55,36 @@ const AuthHeader = ({ mode }) => {
         </Menu.Item>
         {isAuthenticated || showLogin == false || currentUser?.token ? (
           <>
-              <Menu.SubMenu
-                title={
-                  <>
-                    <Avatar icon={<UserOutlined />} />
-                  </>
-                }
-              >
-                <Menu.Item>
-                  <UserOutlined /> Hồ Sơ
+            <Menu.SubMenu
+              title={
+                <>
+                  <Avatar icon={<UserOutlined />} />
+                </>
+              }
+            >
+              <Menu.Item>
+                <UserOutlined /> Hồ Sơ
+              </Menu.Item>
+              <Menu.Item key="/update_password">
+                <KeyOutlined /> Cập nhật mật khẩu người dùng
+              </Menu.Item>
+              {(currentUser?.role === "candidate" ||
+                user?.role === "candidate") && (
+                <Menu.Item key={"/candidate"}>
+                  <FormOutlined /> Cập nhật thông tin ứng viên
                 </Menu.Item>
-                <Menu.Item key="/update_password">
-                  <KeyOutlined /> Cập nhật mật khẩu người dùng
+              )}
+              {(currentUser?.role === "recruiter" ||
+                user?.role === "recruiter") && (
+                <Menu.Item key={"/recruiter"}>
+                  <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
                 </Menu.Item>
-                {(currentUser?.role === "candidate" ||
-                  user?.role === "candidate") && (
-                  <Menu.Item key={"/candidate"}>
-                    <FormOutlined /> Cập nhật thông tin ứng viên
-                  </Menu.Item>
-                )}
-                {(currentUser?.role === "recruiter" ||
-                  user?.role === "recruiter") && (
-                  <Menu.Item key={"/recruiter"}>
-                    <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                  </Menu.Item>
-                )}
+              )}
 
-                <Menu.Item onClick={handleLogOutUser} key={"/"}>
-                  <LogoutOutlined /> Đăng xuất
-                </Menu.Item>
-              </Menu.SubMenu>
+              <Menu.Item onClick={handleLogOutUser} key={"/"}>
+                <LogoutOutlined /> Đăng xuất
+              </Menu.Item>
+            </Menu.SubMenu>
           </>
         ) : (
           <>

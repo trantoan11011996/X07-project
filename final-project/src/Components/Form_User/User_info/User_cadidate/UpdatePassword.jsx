@@ -9,16 +9,17 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../../MetaData/MetaData";
 import { updatePassword } from "../../../../Actions/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 const UpdatePassword = () => {
   const [checked, setChecked] = useState(false);
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
-
+  const { token } = useSelector((state) => state.auths?.user);
   const handleChangeCheckPassword = (e) => {
     setChecked(e.target.checked);
   };
@@ -47,7 +48,7 @@ const UpdatePassword = () => {
       return toast.warn("Mật khẩu không khớp !");
     }
 
-    dispatch(updatePassword(dataPassword));
+    dispatch(updatePassword(currentPassword, newPassword, token));
   };
   return (
     <Fragment>
