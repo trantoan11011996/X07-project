@@ -17,7 +17,6 @@ const AuthHeader = ({ mode }) => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const { showLogin, logOutUser, currentUser } = useContext(UserContext);
-  console.log("current", currentUser);
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);

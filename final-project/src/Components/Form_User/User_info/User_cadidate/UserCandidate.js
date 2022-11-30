@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   Row,
@@ -26,15 +26,22 @@ export default function UserCandidate() {
     setPhone,
     address,
     setAddress,
-    career,
-    setCareer,
+    category,
+    setCategory,
     description,
     setDescription,
     updateCandidateInfo,
     setShowLogin,
     currentUser,
+    setCurrentUser
   } = useContext(UserContext);
-  console.log("current", currentUser);
+  const [autoInfo,setAutoInfo] = useState({})
+  useEffect(()=>{
+    let user = localStorage.getItem('currentUser');
+    user = JSON.parse(user)
+    setCurrentUser(user)
+  },[])
+  
   const navigate = useNavigate("");
 
   const handleClick = (event) => {
@@ -45,7 +52,7 @@ export default function UserCandidate() {
       !age ||
       !phone ||
       !address ||
-      !career ||
+      !category ||
       !description
     ) {
       return alert("Hãy nhập đầy đủ thông tin ");
@@ -56,15 +63,7 @@ export default function UserCandidate() {
     if (!isVietnamesePhoneNumberValid(phone)) {
       return alert("Hãy nhập sdt Việt Nam");
     } else {
-      updateCandidateInfo(
-        name,
-        gender,
-        age,
-        phone,
-        address,
-        career,
-        description
-      );
+      updateCandidateInfo();
       setShowLogin(false);
       navigate("/");
     }
@@ -76,7 +75,7 @@ export default function UserCandidate() {
         <Col sm={3} md={3}></Col>
 
         <Col className="container-candidate" sm={6} md={6}>
-          <Form className="mt-2 p-5 text-start shadow">
+          <Form className="mt-2 p-5 text-start shadow" autoComplete="on">
             <Form.Group>
               <h1 className="form-candidate-header text-center">
                 {" "}
@@ -186,7 +185,7 @@ export default function UserCandidate() {
                 </b>
                 <Form.Select
                   className="input ms-2"
-                  onChange={(event) => setCareer(event.target.value)}
+                  onChange={(event) => setCategory(event.target.value)}
                 >
                   <option></option>
                   <option value="Dev"> Dev</option>

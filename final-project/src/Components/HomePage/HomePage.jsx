@@ -7,6 +7,9 @@ import HomeBanner from "./HomeBanner/HomeBanner";
 import HomeJobs from "./HomeJobs/HomeJobs";
 export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
+  console.log(user);
+
+
   return (
     <>
       <MetaData title="Home"/>
