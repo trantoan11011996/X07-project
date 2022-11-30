@@ -15,7 +15,7 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
       { email, password },
       config
     );
-    localStorage.setItem("currentUser",JSON.stringify(data))
+    localStorage.setItem("currentUser", JSON.stringify(data));
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {
@@ -23,8 +23,8 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
-export const logoutUser = ()=> async (dispatch)=>{
-  dispatch({type : LOGOUT})
-  localStorage.removeItem('currentUser')
-  dispatch({type : LOGOUT, payload : null})
-}
+export const logoutUser = () => async (dispatch) => {
+  dispatch({ type: LOGOUT });
+  localStorage.removeItem("currentUser");
+  dispatch({ type: LOGOUT, payload: null });
+};
