@@ -7,6 +7,10 @@ export default function HomeJobs(){
     return(
         <div className="home-jobs">
             <Container>
+              <div className="navigate-header">
+                <p>xem tất cả</p>
+                <p>công việc đã ứng tuyển</p>
+              </div>
                 <Row>
                     <Col md={6}>
                     <ListJobs/>
