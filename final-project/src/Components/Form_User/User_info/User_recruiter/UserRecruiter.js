@@ -118,7 +118,6 @@ export default function UserRecruiter() {
       );
       setShowLogin(false);
       navigate("/");
-      console.log(currentUser);
     }
   };
 
@@ -144,7 +143,7 @@ export default function UserRecruiter() {
                   className="input ms-2 "
                   type="text"
                   maxLength={100}
-                  value={currentUser.user_info ? currentUser.user_info.name : null }
+                  value={currentUser?.info ? currentUser.info.name : null }
                   onChange={(event) => setCompany(event.target.value)}
                 />
                 {companyEmpty && <p className="text">Tên công ty không được để trống</p>}
@@ -159,7 +158,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
-                  value={currentUser.user_info ? currentUser.user_info.website : null }
+                  value={currentUser?.info ? currentUser.info.website : null }
                   onChange={(event) => setWebsite(event.target.value)}
                 />
                 {websiteEmpty && <p className="text">Website không được để trống</p>}
@@ -176,7 +175,7 @@ export default function UserRecruiter() {
                     <Form.Control
                       className="input ms-2"
                       type="email"
-                      value={currentUser.user_info ? currentUser.user_info.email : null }
+                      value={currentUser?.info ? currentUser.info.email : null }
                       onChange={(event) => setCompanyEmail(event.target.value)}
                     />
                     {companyEmailEmpty && <p className="text">Email không được để trống</p>}
@@ -194,7 +193,7 @@ export default function UserRecruiter() {
                     <Form.Control
                       className="input ms-2"
                       type="text"
-                      value={currentUser.user_info ? currentUser.user_info.phoneNumber : null }
+                      value={currentUser?.info ? currentUser.info.phoneNumber : null }
                       onChange={(event) => setCompanyPhone(event.target.value)}
                     />
                     {phoneEmpty && (<p className="text"> Số điện thoại không được để trống</p>)}
@@ -213,7 +212,7 @@ export default function UserRecruiter() {
                   className="input ms-2"
                   type="text"
                   maxLength={200}
-                  value={currentUser.user_info ? currentUser.user_info.address : null }
+                  value={currentUser?.info ? currentUser.info.address : null }
                   onChange={(event) => setCompanyAddress(event.target.value)}
                 />
                 {addressEmpty && (<p className="text"> Địa chỉ không được để trống</p>)}
@@ -228,7 +227,7 @@ export default function UserRecruiter() {
                 <Form.Select
                   className="input ms-2"
                   onChange={(event) => setCompanyCareer(event.target.value)}
-                  value={currentUser.user_info ? currentUser.user_info.career : null }
+                  value={currentUser?.info ? currentUser.info.career : null }
                 >
                   <option></option>
                   <option value="Dev"> Dev</option>
@@ -248,7 +247,7 @@ export default function UserRecruiter() {
                   as="textarea"
                   rows={3}
                   maxLength={1000}
-                  value={currentUser.user_info ? currentUser.user_info.description : null }
+                  value={currentUser?.info ? currentUser.info.description : null }
                   onChange={(event) => setCompanyDescription(event.target.value)}
                 />
                  {descriptEmpty && (<p className="text"> Mô tả không được để trống</p>)}

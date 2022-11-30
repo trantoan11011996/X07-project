@@ -150,7 +150,7 @@ export default function UserCandidate() {
                       className="input ms-2"
                       type="text"
                       maxLength={100}
-                      value={currentUser.user_info ? currentUser.user_info.fullname : null }
+                      value={currentUser?.info ? currentUser.info.fullname : null }
                       onChange={(event) => setName(event.target.value)}
                     />
                   {nameEmpty && (<p className="text"> Họ và Tên không được để trống</p>)}
@@ -169,7 +169,7 @@ export default function UserCandidate() {
                         <Form.Check
                           inline
                           label="Nam"
-                          value={currentUser.user_info ? currentUser.user_info.gender : "Nam" }
+                          value={currentUser?.info ? currentUser.info.gender : "Nam" }
                           name="group1"
                           type={type}
                           id={`inline-${type}-1`}
@@ -178,7 +178,7 @@ export default function UserCandidate() {
                         <Form.Check
                           inline
                           label="Nữ"
-                          value={currentUser.user_info ? currentUser.user_info.gender : "Nữ" }
+                          value={currentUser?.info ? currentUser.info.gender : "Nữ" }
                           name="group1"
                           type={type}
                           id={`inline-${type}-2`}
@@ -204,7 +204,7 @@ export default function UserCandidate() {
                       type="number"
                       min={18}
                       max={100}
-                      value={currentUser.user_info ? currentUser.user_info.age : null }
+                      value={currentUser?.info ? currentUser.info.age : null }
                       onChange={(event) => setAge(event.target.value)}
                     />
                   {ageEmpty && (<p className="text"> Tuổi không được để trống</p>)}
@@ -222,7 +222,7 @@ export default function UserCandidate() {
                     <Form.Control
                       className="input ms-2"
                       type="text"
-                      value={currentUser.user_info ? currentUser.user_info.phoneNumber : null }
+                      value={currentUser?.info ? currentUser.info.phoneNumber : null }
                       onChange={(event) => setPhone(event.target.value)}
                     />
                     {phoneEmpty && (<p className="text"> Số điện thoại không được để trống</p>)}
@@ -241,7 +241,7 @@ export default function UserCandidate() {
                   className="input ms-2"
                   type="text"
                   maxLength={200}
-                  value={currentUser.user_info ? currentUser.user_info.address : null }
+                  value={currentUser?.info ? currentUser.info.address : null }
                   onChange={(event) => setAddress(event.target.value)}
                 />
                 {addressEmpty && (<p className="text"> Địa chỉ không được để trống</p>)}
@@ -254,7 +254,7 @@ export default function UserCandidate() {
                 </b>
                 <Form.Select
                   className="input ms-2"
-                  value={currentUser.user_info ? currentUser.user_info.career : null }
+                  value={currentUser?.info ? currentUser.info.career : null }
                   onChange={(event) => setCareer(event.target.value)}
                 >
                   <option></option>
@@ -275,7 +275,7 @@ export default function UserCandidate() {
                   as="textarea"
                   rows={3}
                   maxLength={1000}
-                  value={currentUser.user_info ? currentUser.user_info.description : null }
+                  value={currentUser?.info ? currentUser.info.description : null }
                   onChange={(event) => setDescription(event.target.value)}
                 />
                 {descriptEmpty && (<p className="text"> Mô tả không được để trống</p>)}
