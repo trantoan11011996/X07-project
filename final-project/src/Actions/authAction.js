@@ -14,7 +14,6 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
       { email, password },
       config
     );
-    console.log(data);
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {

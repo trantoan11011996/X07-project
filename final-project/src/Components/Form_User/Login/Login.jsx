@@ -72,8 +72,8 @@ const Login = () => {
                     id="password"
                     name="password"
                     onChange={handleChange}
-                    className={cx("email")}
-                    placeholder="password"
+                    className={cx("password")}
+                    placeholder="Mật khẩu"
                   />
                 </label>
               </div>
@@ -82,7 +82,7 @@ const Login = () => {
                   <Link to={"/forgot_password"}>Quên mật khẩu?</Link>
                 </div>
                 <div className={cx("register")}>
-                  <Link to={"/register"}>Bạn đã có tài khoản ?</Link>
+                  <Link to={"/register"}>Bạn chưa có tài khoản ?</Link>
                 </div>
               </div>
               <div className={cx("login_btn")}>
