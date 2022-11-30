@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Container, Form, Row, Button, InputGroup,Modal} from "react-bootstrap";
+import { Card, Col, Container, Form, Row, Button, InputGroup, Modal } from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
@@ -25,13 +25,22 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  const [showAlert,setShowAlert] = useState(false)
-  const [emailExsistAlert,setEmailExsistAlert] = useState(false)
+  const [emailExsistAlert, setEmailExsistAlert] = useState(false)
+  const [passErr, setPassErr] = useState(false);
+  const [EmailErr, setEmailErr] = useState(false);
+  const [confirmPassErr, setConfirmPassErr] = useState(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
+  const [passEmpty, setPassEmpty] = useState(false);
+  const [confirmEmpty, setConfirmEmpty] = useState(false);
+  const [roleEmpty, setRoleEmpty] = useState(false);
+  
+  const [isLoading, setIsLoading] = useState(false)
 
+  
   const checkRole = (role) => {
-    if (role === "candidate") {
+    if (role == "candidate") {
       navigate("/candidate");
-    } if (role === "recruiter") {
+    } if (role == "recruiter") {
       navigate("/recruiter");
     }
   };
@@ -44,33 +53,68 @@ export default function RegisterForm() {
     setVisible2(!visible2);
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!email || !password || !role) {
-      setShowAlert(true)
-      return 
-    } if (!isEmail(email)) {
-      setShowAlert(true)
-      return 
-    } if (!isPassword(password)) {
-      setShowAlert(true)
-      return 
-    } if (!isMatch(password, confirmPassword)) {
-      setShowAlert(true)
-      return 
-    } if (
-      isEmail(email) &&
-      isPassword(password) &&
-      isMatch(password, confirmPassword)
-    ) {
+    if (!email || email == null) {
+      setEmailEmpty(true)
+      return
+    } else {
+      setEmailEmpty(false)
+      setEmailExsistAlert(false)
+    }
+
+    if (!password || password== null) {
+      setPassEmpty(true)
+      return
+    } else {
+      setPassEmpty(false)
+    }
+
+    if (!confirmPassword || confirmPassword == null) {
+      setConfirmEmpty(true)
+      return
+    } else {
+      setConfirmEmpty(false)
+    }
+
+    if (!isMatch(password, confirmPassword)) {
+      setConfirmPassErr(true)
+      return
+    } else {
+      setConfirmPassErr(false)
+    }
+
+    if (!role || role == null) {
+      setRoleEmpty(true)
+      return
+    } else {
+      setRoleEmpty(false)
+    }
+
+    if (!isPassword(password)) {
+      setPassErr(true)
+      return
+    } else {
+      setPassErr(false)
+    }
+
+    if (!isEmail(email)) {
+      setEmailErr(true)
+      return
+    } else {
+      setEmailErr(false)
+    }
+    if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
       const user = await registerUser();
       if (user.message) {
         setEmailExsistAlert(true)
         return
       } else {
-        checkRole(role)
+        setEmailExsistAlert(false)
       }
+      checkRole(role)
+
     }
   };
 
@@ -90,7 +134,7 @@ export default function RegisterForm() {
               <Row>
                 <Form.Label />{" "}
                 <b>
-                 Địa chỉ Email <span style={{ color: "red" }}>*</span>
+                  Địa chỉ Email <span style={{ color: "red" }}>*</span>
                 </b>
                 <InputGroup className="input-group">
                   <Form.Control
@@ -99,7 +143,9 @@ export default function RegisterForm() {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </InputGroup>
-                {emailExsistAlert && <p>Email đã tồn tại</p>}
+                {emailExsistAlert && <p className="text">Email đã tồn tại</p>}
+                {emailEmpty && <p className="text">Email không được để trống</p>}
+                {EmailErr && <p className="text"> Hãy nhập email đúng định dạng</p>}
               </Row>
 
               <Row>
@@ -120,7 +166,8 @@ export default function RegisterForm() {
                     {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
-                {showAlert && (<p>Hãy nhập đúng định dạng mật khẩu</p>)}
+                {passEmpty && (<p className="text">Mật khẩu không được để trống</p>)}
+                {passErr && (<p className="text">Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường</p>)}
               </Row>
 
               <Row>
@@ -141,6 +188,8 @@ export default function RegisterForm() {
                     {visible2 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
+                {confirmEmpty && (<p className="text">Xác nhận mật khẩu không được để trống</p>)}
+                {confirmPassErr && (<p className="text">Mật khẩu và xác nhận mật khẩu phải trùng khớp</p>)}
               </Row>
 
               <Row>
@@ -175,7 +224,9 @@ export default function RegisterForm() {
                     </Row>
                   </div>
                 ))}
+                {roleEmpty && (<p className="text">Vai trò không được để trống</p>)}
               </Row>
+
 
               <Row className="text-center">
                 <Link to={"/login"}> Đã có tài khoản? </Link>
@@ -184,9 +235,10 @@ export default function RegisterForm() {
               <Row className="mt-2">
                 <Button className="button-submit" type="submit">
                   {" "}
-                  Hoàn tất{" "}
+                 Đăng kí{" "}
                 </Button>
               </Row>
+
             </Form.Group>
           </Form>
         </Col>
