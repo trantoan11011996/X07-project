@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   Row,
@@ -26,13 +26,14 @@ export default function UserCandidate() {
     setPhone,
     address,
     setAddress,
-    career,
-    setCareer,
+    category,
+    setCategory,
     description,
     setDescription,
     updateCandidateInfo,
     setShowLogin,
     currentUser,
+    setCurrentUser
   } = useContext(UserContext);
 
   const navigate = useNavigate(null);
@@ -42,7 +43,7 @@ export default function UserCandidate() {
   const [ageEmpty, setAgeEmpty] = useState(false);
   const [phoneEmpty, setPhoneEmpty] = useState(false);
   const [addressEmpty, setAddressEmpty] = useState(false);
-  const [careerEmpty, setCareerEmpty] = useState(false);
+  const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
 
   const [ageErr, setAgeErr] = useState(false);
@@ -100,11 +101,11 @@ export default function UserCandidate() {
       setAddressEmpty(false)
     }
 
-    if(!career || career == null) {
-      setCareerEmpty(true)
+    if(!category || category == null) {
+      setCategoryEmpty(true)
       return
     } else {
-      setCareerEmpty(false)
+      setCategoryEmpty(false)
     }
 
     if(!description || description == null) {
@@ -113,15 +114,7 @@ export default function UserCandidate() {
     } else {
       setDescriptEmpty(false)
 
-      updateCandidateInfo(
-        name,
-        gender,
-        age,
-        phone,
-        address,
-        career,
-        description
-      );
+      updateCandidateInfo();
       setShowLogin(false);
       navigate("/");
     }
@@ -133,7 +126,7 @@ export default function UserCandidate() {
         <Col sm={3} md={3}></Col>
 
         <Col className="container-candidate" sm={6} md={6}>
-          <Form className="mt-2 p-5 text-start shadow">
+          <Form className="mt-2 p-5 text-start shadow" autoComplete="on">
             <Form.Group>
               <h1 className="form-candidate-header text-center">
                 {" "}
@@ -254,14 +247,13 @@ export default function UserCandidate() {
                 </b>
                 <Form.Select
                   className="input ms-2"
-                  value={currentUser?.info ? currentUser.info.career : null }
-                  onChange={(event) => setCareer(event.target.value)}
+                  onChange={(event) => setCategory(event.target.value)}
                 >
                   <option></option>
                   <option value="Dev"> Dev</option>
                   <option value="Tester"> Tester</option>
                 </Form.Select>
-                {careerEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
+                {categoryEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
