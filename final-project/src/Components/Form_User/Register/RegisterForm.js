@@ -56,7 +56,7 @@ export default function RegisterForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!email || email.value == null) {
+    if (!email || email == null) {
       setEmailEmpty(true)
       return
     } else {
@@ -64,14 +64,14 @@ export default function RegisterForm() {
       setEmailExsistAlert(false)
     }
 
-    if (!password || password.value == null) {
+    if (!password || password== null) {
       setPassEmpty(true)
       return
     } else {
       setPassEmpty(false)
     }
 
-    if (!confirmPassword || confirmPassword.value == null) {
+    if (!confirmPassword || confirmPassword == null) {
       setConfirmEmpty(true)
       return
     } else {
@@ -85,7 +85,7 @@ export default function RegisterForm() {
       setConfirmPassErr(false)
     }
 
-    if (!role || role.value == null) {
+    if (!role || role == null) {
       setRoleEmpty(true)
       return
     } else {
@@ -235,7 +235,7 @@ export default function RegisterForm() {
               <Row className="mt-2">
                 <Button className="button-submit" type="submit">
                   {" "}
-                  Hoàn tất{" "}
+                 Đăng kí{" "}
                 </Button>
               </Row>
 

@@ -106,11 +106,11 @@ const UserProvider = ({ children }) => {
       }
     })
     result = await result.json();
-    if (!result.message) {
+    if (result.token) {
+      setCurrentUser(result)
       localStorage.setItem("currentUser", JSON.stringify(result))
-      return result
     }
-    return result
+    return
   }
 
 
