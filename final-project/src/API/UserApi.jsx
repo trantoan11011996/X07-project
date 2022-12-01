@@ -36,15 +36,16 @@ const candidateInfo = (
   return userInfo;
 };
 
-const recruiterInfo = (company, website, companyEmail, companyPhone, companyAddress, companyCareer, companyDescription) => {
+const recruiterInfo = (company, companyEmail, companyPhone, companyAddress, operationSector, companyDescription) => {
     const userInfo = {
+        info : {
         name: company,
-        website: website,
         email: companyEmail,
         phoneNumber: companyPhone,
         address: companyAddress,
-        career: companyCareer,
         description: companyDescription
+        },
+        operationSector : operationSector
     }
     return userInfo
 };
