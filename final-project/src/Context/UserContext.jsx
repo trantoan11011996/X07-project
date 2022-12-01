@@ -55,6 +55,7 @@ const UserProvider = ({ children }) => {
     result = await result.json();
     if (result.token) {
       setCurrentUser(result);
+      setToken(result.token)
       localStorage.setItem("currentUser", JSON.stringify(result));
     }
     return result;
