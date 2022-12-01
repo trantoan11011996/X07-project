@@ -9,6 +9,7 @@ import {
   DropdownButton,
   Button,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
@@ -33,9 +34,9 @@ export default function UserCandidate() {
     updateCandidateInfo,
     setShowLogin,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    token,
   } = useContext(UserContext);
-
   const navigate = useNavigate(null);
 
   const [nameEmpty, setNameEmpty] = useState(false);
@@ -48,71 +49,97 @@ export default function UserCandidate() {
 
   const [ageErr, setAgeErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
+  const [categories, setCategories] = useState([]);
+  // const {user} = useSelector(state=>state.auths)
 
+  const getAllCategory = async (token) => {
+    const all = await fetch(
+      `https://xjob-mindx.herokuapp.com/api/users/category`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setCategories(data)
+      });
+    return all;
+  };
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    getAllCategory(user.token);
+  }, []);
   const handleClick = (event) => {
     event.preventDefault();
 
     if (!name || name == null) {
-      setNameEmpty(true)
-      return
+      setNameEmpty(true);
+      return;
     } else {
-      setNameEmpty(false)
+      setNameEmpty(false);
     }
 
     if (!gender || gender == null) {
-      setGenderEmpty(true)
-      return
+      setGenderEmpty(true);
+      return;
     } else {
-      setGenderEmpty(false)
+      setGenderEmpty(false);
     }
 
-    if(!age || age == null) {
-      setAgeEmpty(true)
-      return
+    if (!age || age == null) {
+      setAgeEmpty(true);
+      return;
     } else {
-      setAgeEmpty(false)
+      setAgeEmpty(false);
     }
 
     if (age < 18) {
-      setAgeErr(true)
-      return
+      setAgeErr(true);
+      return;
     } else {
-      setAgeErr(false)
+      setAgeErr(false);
     }
 
     if (!phone || phone == null) {
-      setPhoneEmpty(true)
-      return
+      setPhoneEmpty(true);
+      return;
     } else {
-      setPhoneEmpty(false)
+      setPhoneEmpty(false);
     }
 
     if (!isVietnamesePhoneNumberValid(phone)) {
-      setPhoneErr(true)
-      return
+      setPhoneErr(true);
+      return;
     } else {
-      setPhoneErr(false)
-    }
-    
-    if(!address || address == null) {
-      setAddressEmpty(true)
-      return
-    } else {
-      setAddressEmpty(false)
+      setPhoneErr(false);
     }
 
-    if(!category || category == null) {
-      setCategoryEmpty(true)
-      return
+    if (!address || address == null) {
+      setAddressEmpty(true);
+      return;
     } else {
-      setCategoryEmpty(false)
+      setAddressEmpty(false);
     }
 
-    if(!description || description == null) {
-      setDescriptEmpty(true)
-      return
+    if (!category || category == null) {
+      setCategoryEmpty(true);
+      return;
     } else {
-      setDescriptEmpty(false)
+      setCategoryEmpty(false);
+    }
+
+    if (!description || description == null) {
+      setDescriptEmpty(true);
+      return;
+    } else {
+      setDescriptEmpty(false);
 
       updateCandidateInfo();
       setShowLogin(false);
@@ -145,7 +172,9 @@ export default function UserCandidate() {
                       maxLength={100}
                       onChange={(event) => setName(event.target.value)}
                     />
-                  {nameEmpty && (<p className="text"> Họ và Tên không được để trống</p>)}
+                    {nameEmpty && (
+                      <p className="text"> Họ và Tên không được để trống</p>
+                    )}
                   </Row>
                 </Col>
 
@@ -161,7 +190,9 @@ export default function UserCandidate() {
                         <Form.Check
                           inline
                           label="Nam"
-                          value={currentUser?.info ? currentUser.info.gender : "Nam" }
+                          value={
+                            currentUser?.info ? currentUser.info.gender : "Nam"
+                          }
                           name="group1"
                           type={type}
                           id={`inline-${type}-1`}
@@ -177,7 +208,9 @@ export default function UserCandidate() {
                         />
                       </div>
                     ))}
-                    {genderEmpty && (<p className="text"> Giới tính không được để trống</p>)}
+                    {genderEmpty && (
+                      <p className="text"> Giới tính không được để trống</p>
+                    )}
                   </Row>
                 </Col>
               </Row>
@@ -197,8 +230,12 @@ export default function UserCandidate() {
                       max={100}
                       onChange={(event) => setAge(event.target.value)}
                     />
-                  {ageEmpty && (<p className="text"> Tuổi không được để trống</p>)}
-                  {ageErr && (<p className="text"> Tuổi không được nhỏ hơn 18</p>)}
+                    {ageEmpty && (
+                      <p className="text"> Tuổi không được để trống</p>
+                    )}
+                    {ageErr && (
+                      <p className="text"> Tuổi không được nhỏ hơn 18</p>
+                    )}
                   </Row>
                 </Col>
 
@@ -214,8 +251,12 @@ export default function UserCandidate() {
                       type="text"
                       onChange={(event) => setPhone(event.target.value)}
                     />
-                    {phoneEmpty && (<p className="text"> Số điện thoại không được để trống</p>)}
-                    {phoneErr && (<p className="text"> Hãy nhập số điện thoại Việt Nam</p>)}
+                    {phoneEmpty && (
+                      <p className="text"> Số điện thoại không được để trống</p>
+                    )}
+                    {phoneErr && (
+                      <p className="text"> Hãy nhập số điện thoại Việt Nam</p>
+                    )}
                   </Row>
                 </Col>
               </Row>
@@ -232,7 +273,9 @@ export default function UserCandidate() {
                   maxLength={200}
                   onChange={(event) => setAddress(event.target.value)}
                 />
-                {addressEmpty && (<p className="text"> Địa chỉ không được để trống</p>)}
+                {addressEmpty && (
+                  <p className="text"> Địa chỉ không được để trống</p>
+                )}
               </Row>
 
               <Row className="row-form">
@@ -245,10 +288,17 @@ export default function UserCandidate() {
                   onChange={(event) => setCategory(event.target.value)}
                 >
                   <option></option>
-                  <option value="Dev"> Dev</option>
-                  <option value="Tester"> Tester</option>
+                  {categories?.map((item, index) => {
+                    return (
+                      <option key={index} value={item._id}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
                 </Form.Select>
-                {categoryEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
+                {categoryEmpty && (
+                  <p className="text"> Lĩnh vực không được để trống</p>
+                )}
               </Row>
 
               <Row className="row-form">
@@ -264,7 +314,9 @@ export default function UserCandidate() {
                   maxLength={1000}
                   onChange={(event) => setDescription(event.target.value)}
                 />
-                {descriptEmpty && (<p className="text"> Mô tả không được để trống</p>)}
+                {descriptEmpty && (
+                  <p className="text"> Mô tả không được để trống</p>
+                )}
               </Row>
 
               <Row className="mt-5">

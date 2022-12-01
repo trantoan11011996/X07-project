@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
@@ -13,20 +13,18 @@ export default function UserRecruiter() {
   const {
     currentUser,
     setCurrentUser,
-    company,
-    setCompany,
-    website,
-    setWebsite,
     companyEmail,
-    setCompanyEmail,
+    companyName,
     companyPhone,
-    setCompanyPhone,
     companyAddress,
-    setCompanyAddress,
-    companyCareer,
-    setCompanyCareer,
     companyDescription,
+    operationSector,
+    setCompanyEmail,
+    setCompanyPhone,
+    setCompanyAddress,
+    setOperationSector,
     setCompanyDescription,
+    setCompanyName,
     updateRecruiterInfo,
     setShowLogin
   } = useContext(UserContext);
@@ -36,7 +34,7 @@ export default function UserRecruiter() {
   const [companyEmailEmpty, setCompanyEmailEmpty] = useState(false);
   const [phoneEmpty, setPhoneEmpty] = useState(false);
   const [addressEmpty, setAddressEmpty] = useState(false);
-  const [careerEmpty, setCareerEmpty] = useState(false);
+  const [operationSectorEmpty, setOperationSectorEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
 
   const [EmailErr, setEmailErr] = useState(false);
@@ -45,20 +43,12 @@ export default function UserRecruiter() {
   const handleClick = (event) => {
     event.preventDefault();
 
-    if (!company || company == null) {
+    if (!companyName || companyName == null) {
       setCompanyEmpty(true)
       return
     } else {
       setCompanyEmpty(false)
     }
-
-    if (!website || website == null) {
-      setWebsiteEmpty(true)
-      return
-    } else {
-      setWebsiteEmpty(false)
-    }
-
     if(!companyEmail || companyEmail == null) {
       setCompanyEmailEmpty(true)
       return
@@ -94,11 +84,11 @@ export default function UserRecruiter() {
       setAddressEmpty(false)
     }
 
-    if(!companyCareer || companyCareer == null) {
-      setCareerEmpty(true)
+    if(!operationSector || operationSector == null) {
+      setOperationSectorEmpty(true)
       return
     } else {
-      setCareerEmpty(false)
+      setOperationSectorEmpty(false)
     }
 
     if(!companyDescription || companyDescription == null) {
@@ -107,20 +97,38 @@ export default function UserRecruiter() {
     } else {
       setDescriptEmpty(false)
     
-      updateRecruiterInfo(
-        company,
-        website,
-        companyEmail,
-        companyPhone,
-        companyAddress,
-        companyCareer,
-        companyDescription
-      );
+      updateRecruiterInfo();
       setShowLogin(false);
       navigate("/");
     }
   };
+  const [operationSectorForm, setOperationSectorForm] = useState([]);
+  // const {user} = useSelector(state=>state.auths)
 
+  const getAllOperationSector = async (token) => {
+    const all = await fetch(
+      `https://xjob-mindx.herokuapp.com/api/users/operation-sector`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setOperationSectorForm(data)
+      });
+    return all;
+  };
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    getAllOperationSector(user.token);
+  }, []);
   return (
     <Container>
       <Row>
@@ -144,26 +152,10 @@ export default function UserRecruiter() {
                   type="text"
                   maxLength={100}
                   value={currentUser?.info ? currentUser.info.name : null }
-                  onChange={(event) => setCompany(event.target.value)}
+                  onChange={(event) => setCompanyName(event.target.value)}
                 />
                 {companyEmpty && <p className="text">Tên công ty không được để trống</p>}
               </Row>
-
-              <Row className="row-form">
-                <Form.Label />{" "}
-                <b>
-                  {" "}
-                  Website<span style={{ color: "red" }}>*</span>{" "}
-                </b>
-                <Form.Control
-                  className="input ms-2"
-                  type="text"
-                  value={currentUser?.info ? currentUser.info.website : null }
-                  onChange={(event) => setWebsite(event.target.value)}
-                />
-                {websiteEmpty && <p className="text">Website không được để trống</p>}
-              </Row>
-
               <Row className="mt-1">
                 <Col sm={6} md={6}>
                   <Row className="text-start">
@@ -226,14 +218,19 @@ export default function UserRecruiter() {
                 </b>
                 <Form.Select
                   className="input ms-2"
-                  onChange={(event) => setCompanyCareer(event.target.value)}
+                  onChange={(event) => setOperationSector(event.target.value)}
                   value={currentUser?.info ? currentUser.info.career : null }
                 >
-                  <option></option>
-                  <option value="Dev"> Dev</option>
-                  <option value="Tester"> Tester</option>
+                 <option></option>
+                  {operationSectorForm?.map((item, index) => {
+                    return (
+                      <option key={index} value={item._id}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
                 </Form.Select>
-                {careerEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
+                {operationSectorEmpty && (<p className="text"> Lĩnh vực không được để trống</p>)}
               </Row>
 
               <Row className="row-form">
