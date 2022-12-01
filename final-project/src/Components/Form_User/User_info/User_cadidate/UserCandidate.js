@@ -113,10 +113,11 @@ export default function UserCandidate() {
       return
     } else {
       setDescriptEmpty(false)
-
       updateCandidateInfo();
       setShowLogin(false);
-      navigate("/");
+      // navigate("/");
+      console.log(currentUser);
+
     }
   };
 

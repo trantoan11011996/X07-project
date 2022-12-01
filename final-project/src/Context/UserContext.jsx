@@ -88,8 +88,7 @@ const UserProvider = ({ children }) => {
       category,
       description
     );
-    console.log("info",info);
-    console.log('curent user',currentUser);
+   
     const user_info = await fetch(
       "https://xjob-mindx.herokuapp.com/api/users/update-profile",
       {
@@ -141,7 +140,7 @@ const UserProvider = ({ children }) => {
     let result = await fetch(
       "https://xjob-mindx.herokuapp.com/api/users/updateinfo",
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(item),
         headers: {
           "Content-Type": "application/json",

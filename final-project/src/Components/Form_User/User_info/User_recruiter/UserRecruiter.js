@@ -118,6 +118,7 @@ export default function UserRecruiter() {
       );
       setShowLogin(false);
       navigate("/");
+      console.log(currentUser)
     }
   };
 
