@@ -5,6 +5,7 @@ import "../HomePage/Homepage.css";
 import { UserContext } from "../../Context/UserContext";
 import HomeBanner from "./HomeBanner/HomeBanner";
 import HomeJobs from "./HomeJobs/HomeJobs";
+import { HomeCandidate } from "../HomeCandidate/HomeCandidate";
 export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
   console.log(user);
@@ -15,7 +16,8 @@ export default function HomePage() {
       <MetaData title="Home" />
       <div className="home-page">
         <HomeBanner />
-        <HomeJobs />
+        <HomeCandidate/>
+        {/* <HomeJobs /> */}
       </div>
     </>
   );

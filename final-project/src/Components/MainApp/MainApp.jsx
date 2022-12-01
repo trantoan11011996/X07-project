@@ -14,6 +14,7 @@ import { UserProvider } from "../../Context/UserContext";
 import CompanyPage from "../CompanyPage/CompanyPage";
 import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
+
 export default function MainApp() {
   return (
     <AuthContext.Provider>
@@ -37,6 +38,7 @@ export default function MainApp() {
               <Route path="/recruiter" element={<UserRecruiter />}></Route>
               <Route path="/company" element={<CompanyPage />}></Route>
               <Route path="/job&location" element={<JobAndLocation />}></Route>
+              {/* <Route path="/page_candidate" element={<CandidatePage/>}></Route> */}
             </Routes>
             <Footer />
           </div>
