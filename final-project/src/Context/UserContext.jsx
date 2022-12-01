@@ -31,6 +31,7 @@ const UserProvider = ({ children }) => {
   const [companyAddress, setCompanyAddress] = useState('');
   const [operationSector, setOperationSector] = useState('');
   const [companyDescription, setCompanyDescription] = useState('');
+  const [fieldActivity,setFieldActivity] = useState('')
 
   useEffect(()=>{
     setToken(user?.token)
@@ -57,6 +58,7 @@ const UserProvider = ({ children }) => {
       setCurrentUser(result);
       setToken(result.token)
       localStorage.setItem("currentUser", JSON.stringify(result));
+      localStorage.setItem("token",JSON.stringify(result.token))
     }
     return result;
   };
@@ -124,12 +126,13 @@ const UserProvider = ({ children }) => {
       companyPhone,
       companyAddress,
       companyDescription,
+      fieldActivity,
       operationSector,
     );
-    let result = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/updateinfo",
+    let user_info = await fetch(
+      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(info),
         headers: {
           "Content-Type": "application/json",
@@ -137,13 +140,15 @@ const UserProvider = ({ children }) => {
           authorization: `Bearer ${token}`,
         },
       }
-    );
-    result = await result.json();
-    if (!result.message) {
-      localStorage.setItem("currentUser", JSON.stringify(result));
-      return result;
-    }
-    return result;
+    ).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      localStorage.setItem('currentUser',JSON.stringify(data))
+      setCurrentUser(data)
+      console.log('data',data);
+      return data;
+    })
+    return user_info
   };
 
   const value = {
@@ -192,6 +197,7 @@ const UserProvider = ({ children }) => {
     setOperationSector,
     setCompanyDescription,
     setCompanyName,
+    setFieldActivity,
     token
 
   };

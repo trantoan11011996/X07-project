@@ -81,22 +81,9 @@ const AuthHeader = ({ mode }) => {
               <Menu.Item>
                 <UserOutlined /> Hồ Sơ
               </Menu.Item>
-              <Menu.Item key="/update_password">
-                <KeyOutlined /> Cập nhật mật khẩu người dùng
+              <Menu.Item key="/update_info">
+                <KeyOutlined /> Cập nhật thông tin
               </Menu.Item>
-              {(currentUser?.role === "candidate" ||
-                user?.user.role === "candidate") && (
-                <Menu.Item key={"/candidate"}>
-                  <FormOutlined /> Cập nhật thông tin ứng viên
-                </Menu.Item>
-              )}
-              {(currentUser?.role === "recruiter" ||
-                user?.user.role === "recruiter") && (
-                <Menu.Item key={"/recruiter"}>
-                  <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                </Menu.Item>
-              )}
-
               <Menu.Item onClick={handleLogOutUser} key={"/"}>
                 <LogoutOutlined /> Đăng xuất
               </Menu.Item>
