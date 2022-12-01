@@ -36,14 +36,15 @@ const candidateInfo = (
   return userInfo;
 };
 
-const recruiterInfo = (company, companyEmail, companyPhone, companyAddress, operationSector, companyDescription) => {
+const recruiterInfo = (company, companyEmail, companyPhone, companyAddress,fieldActivity,companyDescription, operationSector) => {
     const userInfo = {
         info : {
         name: company,
         email: companyEmail,
         phoneNumber: companyPhone,
         address: companyAddress,
-        description: companyDescription
+        description: companyDescription,
+        fieldActivity: fieldActivity
         },
         operationSector : operationSector
     }
@@ -56,6 +57,7 @@ const autoLogin = () => {
 };
 const logOut = () => {
   localStorage.removeItem("currentUser");
+  localStorage.removeItem("token")
 };
 
 const UserApis = {
