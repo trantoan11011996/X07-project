@@ -5,7 +5,11 @@ import {
   KeyOutlined,
   FormOutlined,
   LogoutOutlined,
+  BankOutlined,
   SearchOutlined,
+  GlobalOutlined,
+  LoginOutlined ,
+  AccountBookOutlined 
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
@@ -49,9 +53,11 @@ const AuthHeader = ({ mode }) => {
         </Menu.Item>
         <div style={{ width: 1400 }}></div>
         <Menu.Item key="/company" style={{ marginTop: 9 }}>
+          <BankOutlined  style={{ fontSize: '130%' , marginRight: '6px' }}/>
           Công ty
         </Menu.Item>
         <Menu.Item key="/job&location" style={{ marginTop: 9 }}>
+          <GlobalOutlined  style={{ fontSize: '130%' , marginRight: '6px' }}/>
           Ngành nghề/Địa điểm
         </Menu.Item>
         {isAuthenticated || showLogin == false || currentUser?.token ? (
@@ -62,7 +68,7 @@ const AuthHeader = ({ mode }) => {
                   <Avatar icon={<UserOutlined />} />
                 </>
               }
-            >
+              style={{ marginTop: 9 }}>
               <Menu.Item>
                 <UserOutlined /> Hồ Sơ
               </Menu.Item>
@@ -91,9 +97,11 @@ const AuthHeader = ({ mode }) => {
           <>
             <div style={{ width: 1600 }}></div>
             <Menu.Item key="/login" style={{ marginTop: 9 }}>
+            <LoginOutlined style = {{ fontSize: '130%' , marginRight: '6px' }} />
               Đăng nhập
             </Menu.Item>
             <Menu.Item key="/register" style={{ marginTop: 9 }}>
+            <AccountBookOutlined style={{ fontSize: '130%' , marginRight: '6px' }} />
               Đăng ký
             </Menu.Item>
           </>
