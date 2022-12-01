@@ -91,8 +91,7 @@ const UserProvider = ({ children }) => {
       category,
       description
     );
-    console.log("info",info);
-    console.log('curent user',currentUser);
+   
     const user_info = await fetch(
       "https://xjob-mindx.herokuapp.com/api/users/update-profile",
       {

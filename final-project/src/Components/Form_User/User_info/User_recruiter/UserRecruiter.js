@@ -101,6 +101,7 @@ export default function UserRecruiter() {
       updateRecruiterInfo();
       setShowLogin(false);
       navigate("/");
+      console.log(currentUser)
     }
   };
   // const {user} = useSelector(state=>state.auths)

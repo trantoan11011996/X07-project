@@ -132,6 +132,7 @@ export default function UserCandidate() {
       setCategoryEmpty(true);
       return;
     } else {
+      setDescriptEmpty(false)
       setCategoryEmpty(false);
     }
 
@@ -143,7 +144,9 @@ export default function UserCandidate() {
 
       updateCandidateInfo();
       setShowLogin(false);
-      navigate("/");
+      // navigate("/");
+      console.log(currentUser);
+
     }
   };
 
