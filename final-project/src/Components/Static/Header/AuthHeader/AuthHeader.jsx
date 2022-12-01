@@ -17,6 +17,7 @@ const AuthHeader = ({ mode }) => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const { showLogin, logOutUser, currentUser } = useContext(UserContext);
+  console.log('user',user);
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -69,13 +70,13 @@ const AuthHeader = ({ mode }) => {
                 <KeyOutlined /> Cập nhật mật khẩu người dùng
               </Menu.Item>
               {(currentUser?.role === "candidate" ||
-                user?.role === "candidate") && (
+                user?.user.role === "candidate") && (
                 <Menu.Item key={"/candidate"}>
                   <FormOutlined /> Cập nhật thông tin ứng viên
                 </Menu.Item>
               )}
               {(currentUser?.role === "recruiter" ||
-                user?.role === "recruiter") && (
+                user?.user.role === "recruiter") && (
                 <Menu.Item key={"/recruiter"}>
                   <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
                 </Menu.Item>
