@@ -38,21 +38,19 @@ export default function HomeJobs() {
 
             <Row>
                 <Col sm={8} md={8}>
-                    <Row className="navigate-header text-start">
+                    <Row className="navigate-header text-start m-3">
                         {user?.user.role == "candidate" && (
                             <>
                                 <Row>
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Xem tất cả</Button>
                                     </Col>
 
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Tin đã ứng tuyển</Button>
                                     </Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
+                                    <Col sm={8} md={8}></Col>
+                                   
                                 </Row>
 
                             </>
@@ -61,20 +59,19 @@ export default function HomeJobs() {
                         {user?.user.role == "recruiter" && (
                             <>
                                 <Row>
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Xem tất cả</Button>
                                     </Col>
 
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Tạo tin</Button>
                                     </Col>
 
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Tin đã tạo</Button>
                                     </Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
+                                    <Col sm={6} md={6}></Col>
+                                    
                                 </Row>
 
                             </>
@@ -83,14 +80,11 @@ export default function HomeJobs() {
                         {!user && (
                             <>
                                 <Row>
-                                    <Col>
+                                    <Col sm={2} md={2}>
                                         <Button> Xem tất cả</Button>
                                     </Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
-                                    <Col></Col>
+                                    <Col sm={10} md={10}></Col>
+                                    
                                 </Row>
                             </>
                         )}

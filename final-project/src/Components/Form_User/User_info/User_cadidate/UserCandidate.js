@@ -189,9 +189,6 @@ export default function UserCandidate() {
                     <Form.Check
                       inline
                       label="Nam"
-                      value={
-                        currentUser?.info ? currentUser.info.gender : "Nam"
-                      }
                       name="group1"
                       type={type}
                       id={`inline-${type}-1`}
