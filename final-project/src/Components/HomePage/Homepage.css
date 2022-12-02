@@ -7,7 +7,7 @@
 .home-jobs {
 }
 .job-item {
-  border: 1px solid black;
+  border: none;
 }
 .navigate-header {
   display: flex;
@@ -88,3 +88,4 @@
   height: 500px;
   width: 100%;
 }
+
