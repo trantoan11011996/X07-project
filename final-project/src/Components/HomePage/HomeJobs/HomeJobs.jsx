@@ -36,12 +36,12 @@ export default function HomeJobs() {
   return (
     <Container className="home-jobs">
       <Row>
-        <Col sm={8} md={8}>
+        <Col sm={12} md={12}>
           <Row className="navigate-header text-start m-3">
             {user?.user.role == "candidate" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col md={2}>
+                  <Col md={2} className="col-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
@@ -59,8 +59,8 @@ export default function HomeJobs() {
             {user?.user.role == "recruiter" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col sm={2} md={2} className="homejob-title homejob-title-header">
-                    <h1 >Việc làm hấp dẫn</h1>
+                  <Col sm={2} md={2} className="homejob-title">
+                    <h1 className="homejob-title-header" >Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
                     <Link className="homejob-title homejob-title-link">
