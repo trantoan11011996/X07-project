@@ -111,7 +111,7 @@ export default function HomeJobs() {
                 </Col>
 
                 <Col>
-                    <Image className="image ms-5" src="https://linkpower.vn/storage/photos/bai%20viet/h%C3%A0nh%20ch%C3%ADnh%20nh%C3%A2n%20s%E1%BB%B1/B%C3%ACa%20web%20tuy%E1%BB%83n%20d%E1%BB%A5ng.jpg"></Image>
+                    <Image className="image ms-5 mt-5" src="https://linkpower.vn/storage/photos/bai%20viet/h%C3%A0nh%20ch%C3%ADnh%20nh%C3%A2n%20s%E1%BB%B1/B%C3%ACa%20web%20tuy%E1%BB%83n%20d%E1%BB%A5ng.jpg"></Image>
                 </Col>
             </Row>
 
