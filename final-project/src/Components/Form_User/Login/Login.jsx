@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
+import Loading from "../../Loading/index";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -18,6 +19,7 @@ const Login = () => {
   };
   const [data, setData] = useState(initialState);
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,8 +39,10 @@ const Login = () => {
     if (!isEmail(email))
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
 
-    dispatch(loginUser(email, password, navigate));
-    
+    if (email && password) {
+      dispatch(loginUser(email, password, navigate));
+      setLoading(true);
+    }
   };
 
   return (
@@ -88,7 +92,13 @@ const Login = () => {
                 </div>
               </div>
               <div className={cx("login_btn")}>
-                <button type="submit">Đăng nhập</button>
+                {loading ? (
+                  <button type="submit" disabled>
+                    Loading ...
+                  </button>
+                ) : (
+                  <button type="submit">Đăng nhập</button>
+                )}
               </div>
             </form>
           </div>

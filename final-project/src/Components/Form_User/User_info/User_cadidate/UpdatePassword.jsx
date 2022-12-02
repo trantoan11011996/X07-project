@@ -20,6 +20,7 @@ const UpdatePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auths?.user);
+  console.log(token);
   const handleChangeCheckPassword = (e) => {
     setChecked(e.target.checked);
   };
