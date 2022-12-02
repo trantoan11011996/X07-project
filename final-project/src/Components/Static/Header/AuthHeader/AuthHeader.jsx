@@ -21,7 +21,8 @@ const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const { showLogin, logOutUser, currentUser } = useContext(UserContext);
+  const { showLogin, logOutUser, currentUser,setCurrentUser } = useContext(UserContext);
+
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -89,22 +90,9 @@ const AuthHeader = ({ mode }) => {
               <Menu.Item>
                 <UserOutlined /> Hồ Sơ
               </Menu.Item>
-              <Menu.Item key="/update_password">
-                <KeyOutlined /> Cập nhật mật khẩu người dùng
+              <Menu.Item key="/update_info">
+                <KeyOutlined /> Cập nhật thông tin
               </Menu.Item>
-              {(currentUser?.role === "candidate" ||
-                user?.role === "candidate") && (
-                <Menu.Item key={"/candidate"}>
-                  <FormOutlined /> Cập nhật thông tin ứng viên
-                </Menu.Item>
-              )}
-              {(currentUser?.role === "recruiter" ||
-                user?.role === "recruiter") && (
-                <Menu.Item key={"/recruiter"}>
-                  <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                </Menu.Item>
-              )}
-
               <Menu.Item onClick={handleLogOutUser} key={"/"}>
                 <LogoutOutlined /> Đăng xuất
               </Menu.Item>

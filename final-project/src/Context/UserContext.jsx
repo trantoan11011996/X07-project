@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
   const [role, setRole] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentUser, setCurrentUser] = useState({});
-  const [company, setCompany] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [website, setWebsite] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -29,8 +29,9 @@ const UserProvider = ({ children }) => {
   const { user } = useSelector((state) => state.auths);
   const [companyPhone, setCompanyPhone] = useState('');
   const [companyAddress, setCompanyAddress] = useState('');
-  const [companyCareer, setCompanyCareer] = useState('');
+  const [operationSector, setOperationSector] = useState('');
   const [companyDescription, setCompanyDescription] = useState('');
+  const [fieldActivity,setFieldActivity] = useState('')
 
   useEffect(()=>{
     setToken(user?.token)
@@ -55,7 +56,9 @@ const UserProvider = ({ children }) => {
     result = await result.json();
     if (result.token) {
       setCurrentUser(result);
+      setToken(result.token)
       localStorage.setItem("currentUser", JSON.stringify(result));
+      localStorage.setItem("token",JSON.stringify(result.token))
     }
     return result;
   };
@@ -66,7 +69,7 @@ const UserProvider = ({ children }) => {
       return;
     }
     setShowLogin(false);
-    setCurrentUser(user);
+    return user
   };
   const logOutUser = () => {
     UserApi.logOut();
@@ -74,8 +77,8 @@ const UserProvider = ({ children }) => {
     setCurrentUser(null);
   };
   useEffect(() => {
-    autologin();
-    
+    const current = autologin();
+    setCurrentUser(current)
   }, []);
 
   const updateCandidateInfo = async () => {
@@ -88,8 +91,7 @@ const UserProvider = ({ children }) => {
       category,
       description
     );
-    console.log("info",info);
-    console.log('curent user',currentUser);
+   
     const user_info = await fetch(
       "https://xjob-mindx.herokuapp.com/api/users/update-profile",
       {
@@ -118,44 +120,34 @@ const UserProvider = ({ children }) => {
 
   const updateRecruiterInfo = async () => {
     const info = UserApi.recruiterInfo(
-      company,
-      website,
       companyEmail,
-      phone,
-      address,
-      category,
-      description
+      companyEmail,
+      companyPhone,
+      companyAddress,
+      companyDescription,
+      fieldActivity,
+      operationSector,
     );
-    const updateInfo = { ...currentUser, user_info: info };
-    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
-
-    let item = {
-      name: company,
-      website: website,
-      email: companyEmail,
-      phoneNumber: phone,
-      address: address,
-      category: category,
-      description: description,
-    };
-    let result = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/updateinfo",
+    let user_info = await fetch(
+      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
       {
-        method: "POST",
-        body: JSON.stringify(item),
+        method: "PUT",
+        body: JSON.stringify(info),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          authorization: `Bearer ${updateInfo.token}`,
+          authorization: `Bearer ${token}`,
         },
       }
-    );
-    result = await result.json();
-    if (!result.message) {
-      localStorage.setItem("currentUser", JSON.stringify(result));
-      return result;
-    }
-    return result;
+    ).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      localStorage.setItem('currentUser',JSON.stringify(data))
+      setCurrentUser(data)
+      console.log('data',data);
+      return data;
+    })
+    return user_info
   };
 
   const value = {
@@ -170,13 +162,7 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
-    setCurrentUser,
-    company,
-    setCompany,
-    website,
-    setWebsite,
-    companyEmail,
-    setCompanyEmail,
+    setCurrentUser,   
     phone,
     setPhone,
     address,
@@ -198,14 +184,20 @@ const UserProvider = ({ children }) => {
     logOutUser,
     currentUser,
     setCurrentUser,
+    companyEmail,
+    companyName,
     companyPhone,
     companyAddress,
-    companyCareer,
     companyDescription,
+    operationSector,
+    setCompanyEmail,
     setCompanyPhone,
     setCompanyAddress,
-    setCompanyCareer,
+    setOperationSector,
     setCompanyDescription,
+    setCompanyName,
+    setFieldActivity,
+    token
 
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
