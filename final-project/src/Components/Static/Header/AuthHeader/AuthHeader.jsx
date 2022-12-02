@@ -5,11 +5,12 @@ import {
   KeyOutlined,
   FormOutlined,
   LogoutOutlined,
-  HomeOutlined ,
+  HomeOutlined,
   SearchOutlined,
   GlobalOutlined,
   LoginOutlined,
   AccountBookOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
@@ -53,7 +54,7 @@ const AuthHeader = ({ mode }) => {
         <div style={{ width: 1400 }}></div>
         <Menu.Item key="/company" style={{ marginTop: 9 }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
-          <HomeOutlined 
+            <HomeOutlined
               style={{ fontSize: "130%", marginRight: "6px", marginTop: 11.5 }}
             />
             Công ty
@@ -70,12 +71,20 @@ const AuthHeader = ({ mode }) => {
         {isAuthenticated || showLogin == false || currentUser?.token ? (
           <>
             <Menu.SubMenu
-              title={
-                <>
-                  <Avatar icon={<UserOutlined />} />
-                </>
+              icon={
+                <span style={{ fontSize: "18px", position:"relative"}}>
+               
+                  <Avatar shape="square" icon={<UserOutlined />} style={{marginRight: 12, height: "40px"}}  /> Đăng Nhập <DownOutlined />
+                </span>
               }
-              style={{ marginTop: 9 }}
+              style={{
+                marginTop: 8,
+                marginBottom: 5,
+                border: "1px groove black",
+                paddingLeft: 0,
+               
+               
+              }}
             >
               <Menu.Item>
                 <UserOutlined /> Hồ Sơ
@@ -105,17 +114,27 @@ const AuthHeader = ({ mode }) => {
           <>
             <div style={{ width: 1600 }}></div>
             <Menu.Item key="/login" style={{ marginTop: 9 }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <LoginOutlined style={{ fontSize: "130%", marginRight: "6px",  marginTop: 11.5 }} />
-              Đăng nhập
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <LoginOutlined
+                  style={{
+                    fontSize: "130%",
+                    marginRight: "6px",
+                    marginTop: 11.5,
+                  }}
+                />
+                Đăng nhập
               </div>
             </Menu.Item>
             <Menu.Item key="/register" style={{ marginTop: 9 }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <AccountBookOutlined
-                style={{ fontSize: "130%", marginRight: "6px",  marginTop: 11.5 }}
-              />
-              Đăng ký
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <AccountBookOutlined
+                  style={{
+                    fontSize: "130%",
+                    marginRight: "6px",
+                    marginTop: 11.5,
+                  }}
+                />
+                Đăng ký
               </div>
             </Menu.Item>
           </>
