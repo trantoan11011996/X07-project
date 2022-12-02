@@ -109,32 +109,12 @@ export default function HomeJobs() {
               </>
             )}
           </Row>
-
-          <Row>
-            <ListJobs />
-          </Row>
-          {/* 
-                    <Row>
-                        <Col md={3}>
-                            item
-                        </Col>
-                        <Col md={3}>
-                            item
-                        </Col>
-                        <Col md={3}>
-                            item
-                        </Col>
-                        <Col md={3}>
-                            item
-                        </Col>
-                    </Row> */}
         </Col>
-
+        <Col md={4}></Col>
+      </Row>
+      <Row>
         <Col>
-          <Image
-            className="image"
-            src="https://cdn.brvn.vn/editor_news/2020/02/19843_memes_2_1581047784.jpg"
-          ></Image>
+              <ListJobs/>
         </Col>
       </Row>
     </Container>

@@ -42,7 +42,7 @@ const UserProvider = ({ children }) => {
     setCurrentUser(newUser);
     // push lên API
     let item = { email: email, password: password, role: role };
-    let result = await fetch(
+    let registerUser = await fetch(
       "https://xjob-mindx.herokuapp.com/api/users/register",
       {
         method: "POST",
@@ -52,15 +52,18 @@ const UserProvider = ({ children }) => {
           Accept: "application/json",
         },
       }
-    );
-    result = await result.json();
-    if (result.token) {
-      setCurrentUser(result);
-      setToken(result.token)
-      localStorage.setItem("currentUser", JSON.stringify(result));
-      localStorage.setItem("token",JSON.stringify(result.token))
-    }
-    return result;
+    ).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      if(data.token){
+        setCurrentUser(registerUser);
+        setToken(registerUser.token)
+        localStorage.setItem("currentUser", JSON.stringify(registerUser));
+        localStorage.setItem("token",JSON.stringify(registerUser.token))
+      }
+      console.log('data,data');
+    })
+    return registerUser;
   };
 
   const autologin = () => {
