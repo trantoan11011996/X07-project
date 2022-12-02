@@ -1,38 +1,107 @@
 import { List } from "antd";
-import React from "react";
-import { Container, Row,Col} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import JobItem from "../JobItem/JobItem";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 
-export default function ListJobs (){
 
-    return (
-        <div className="list-jobs">
-          <Container>
-            <List
-              grid={{
-                gutter: 16,
-                xs: 1,
-                sm: 2,
-                md: 4,
-                lg: 4,
-                xl: 4,
-                xxl: 4,
-              }}
-              pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
-                pageSize: 10,
-              }}
-              // dataSource={}
-              renderItem={(job) => (
-                <List.Item>
-                  <JobItem job={job} />
-                </List.Item>
-              )}
-            ></List>
-          </Container>
-        </div>
-      );
+export default function ListJobs() {
+  // const [data, setData] = useState("")
+  
+  // useEffect(() => {
+  //   axios.get("https://xjob-mindx.herokuapp.com/api/recruiments/home-page").then((response) => {
+  //     setData(response.data);
+  //   });
+  // }, [])
+  const data = [{
+      title:"fresher nodejs",
+      name:"zeta",
+      description:"exam",
+      position:"developer",
+      type:"Fulltime",
+      level:"fresher",
+      age:"18-27",
+      experience:"1 year",
+      salary:"500$ - 800$ ",
+      numberApplicant:2,
+      location:"HN",
+      operationSector:"IT",
+      category:"IT",
+      createAt:"21/1/2022",
+      seadline:"21/5/2021"
+  },{
+    title:"fresher nodejs",
+      name:"zeta",
+      description:"exam",
+      position:"developer",
+      type:"Fulltime",
+      level:"fresher",
+      age:"18-27",
+      experience:"1 year",
+      salary:"500$ - 800$ ",
+      numberApplicant:2,
+      location:"HN",
+      operationSector:"IT",
+      category:"IT",
+      createAt:"21/1/2022",
+      seadline:"21/5/2021"
+  },{
+    title:"fresher nodejs",
+      name:"zeta",
+      description:"exam",
+      position:"developer",
+      type:"Fulltime",
+      level:"fresher",
+      age:"18-27",
+      experience:"1 year",
+      salary:"500$ - 800$ ",
+      numberApplicant:2,
+      location:"HN",
+      operationSector:"IT",
+      category:"IT",
+      createAt:"21/1/2022",
+      seadline:"21/5/2021"
+  },{
+    title:"fresher nodejs",
+      name:"zeta",
+      description:"exam",
+      position:"developer",
+      type:"Fulltime",
+      level:"fresher",
+      age:"18-27",
+      experience:"1 year",
+      salary:"500$ - 800$ ",
+      numberApplicant:2,
+      location:"HN",
+      operationSector:"IT",
+      category:"IT",
+      createAt:"21/1/2022",
+      seadline:"21/5/2021"
+  }]
+  console.log(data);
+
+  return (
+    <div className="list-jobs">
+      <Container>
+        <List
+          grid={{
+            gutter: 16,
+            xs: 2,
+            sm: 2,
+            md: 2,
+            lg: 2,
+            xl: 2,
+            xxl: 2,
+          }}
+          dataSource={data}
+          renderItem={(job) => (
+            <List.Item>
+              <JobItem job={job} />
+            </List.Item>
+          )}
+        ></List>
+      </Container>
+    </div>
+  );
 }
