@@ -45,7 +45,12 @@ export default function HomeJobs() {
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Button> Xem tất cả</Button>
+                    <Link className="homejob-title homejob-title-link">
+                      Xem tất cả{" "}
+                      <span>
+                        <AiOutlineArrowRight></AiOutlineArrowRight>
+                      </span>
+                    </Link>
                   </Col>
 
                   <Col sm={2} md={2}>
@@ -102,6 +107,14 @@ export default function HomeJobs() {
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
+                      </span>
+                    </Link>
+                  </Col>
+                  <Col sm={2} md={4}>
+                  <Link className="homejob-title homejob-title-link">
+                      Đăng tin tuyển dụng{" "}
+                      <span>
+                      <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
                   </Col>
