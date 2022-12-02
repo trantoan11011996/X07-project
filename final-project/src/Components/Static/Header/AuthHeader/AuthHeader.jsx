@@ -73,7 +73,7 @@ const AuthHeader = ({ mode }) => {
             Ngành nghề/Địa điểm
           </div>
         </Menu.Item>
-        {isAuthenticated || showLogin == false || currentUser?.token ? (
+        {isAuthenticated || showLogin == false || currentUser?.token  ? (
           <>
             <Menu.SubMenu
               className="menu-login"
