@@ -4,10 +4,11 @@
 .home-banner {
   height: 400px;
 }
-.home-jobs {
+.list-jobs {
+  margin-top: 15px;
 }
-.job-item {
-  border: none;
+.home-jobs{
+  margin-top: 40px;
 }
 .navigate-header {
   display: flex;
@@ -88,4 +89,30 @@
   height: 350px;
   width: 100%;
 }
-
+.homejob-title{
+  width: fit-content;
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+.homejob-title>h1{
+  margin: 0;
+  padding: 0;
+}
+.job-navigate-container{
+  display: flex;
+  align-items: center;
+}
+.homejob-title-header>h1{
+  font-size: 25px;
+  font-weight: 600;
+  text-align: left;
+}
+.homejob-title-header{
+  border-right: 1px solid #ccc;
+}
+.homejob-title-link{
+  color: rgb(0, 105, 219);
+}
+.homejob-title-link:hover{
+  text-decoration: underline;
+}

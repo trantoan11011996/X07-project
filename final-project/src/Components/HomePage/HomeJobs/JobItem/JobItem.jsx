@@ -1,21 +1,26 @@
+import { Row } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
+import { Card, Col, Container } from "react-bootstrap";
+import "../JobItem/JobItem.css";
+export default function JobItem({ job }) {
+  return (
+    <div className="job-item">
+      <Row className="job-container">
+        <div className="job-wrapper">
+          <Col md={4} className="company-logo">
+            LOGO
+          </Col>
 
-export default function JobItem({ job }){
-
-    return (
-        <Container className="job-item text-start">
-            <Card style={{width: '100%'}}> 
-                <Card.Body>
-                    <Card.Title>Title: {job.title}</Card.Title>
-                    <Card.Text>
-                        <h2> Company: {job.name}</h2>
-                        <p> Posititon: {job.position}</p>
-                        <p> Description:{job.description}</p>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        </Container>
-    )
+          <Col md={8}>
+            <div className="job-desctiption">
+              <h1 className="job-title">{job.title}</h1>
+              <p className="company-name">{job.name}</p>
+              <p className="job-location">{job.location}</p>
+            </div>
+          </Col>
+        </div>
+      </Row>
+    </div>
+  );
 }
