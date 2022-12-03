@@ -17,6 +17,8 @@ const cx = classNames.bind(styles);
 export const AllJob = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
+  const [selectedOptionsField, setSelectedOptionsField] = useState([]);
+  const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const itemsPerPage = 10;
   useEffect(() => {
@@ -38,17 +40,23 @@ export const AllJob = () => {
           <div className={cx("filter")}>
             <form action="">
               <div className={cx("form-group")}>
-                <input type="text" placeholder="Tên công ty, vị trí việc làm" />
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Tên công ty, vị trí việc làm"
+                />
                 <div className={cx("search-text")}>
                   <CiSearch />
                 </div>
               </div>
               <div className={cx("form-group")}>
                 <Select
-                  defaultValue={[]}
+                  defaultValue={selectedOptionsField}
                   isMulti
                   name="field"
                   options={colourOptions}
+                  onChange={(e) => setSelectedOptionsField(e)}
+                  isOptionDisabled={() => selectedOptionsField.length >= 2}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   placeholder="Lĩnh Vực"
@@ -56,12 +64,14 @@ export const AllJob = () => {
               </div>
               <div className={cx("form-group")}>
                 <Select
-                  defaultValue={[]}
+                  defaultValue={selectedOptionsAddress}
                   isMulti
                   name="address"
                   options={address}
                   isSearchable="true"
                   className="basic-multi-select"
+                  onChange={(e) => setSelectedOptionsAddress(e)}
+                  isOptionDisabled={() => selectedOptionsAddress.length >= 2}
                   classNamePrefix="select"
                   placeholder="Địa điểm"
                 />

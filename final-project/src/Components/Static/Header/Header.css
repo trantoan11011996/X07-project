@@ -16,6 +16,16 @@
     top: 0;
     left: 0;
     right: 0;
-    
-   
+}
+.icon-dropdown{
+    position: relative;
+    bottom: 4px;
+    left: 20px;
+    margin-left: 5px;
+}
+.menu-login{
+    font-weight: 600;
+}
+.menu-dropdown{
+    border : 1px solid red;
 }

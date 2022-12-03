@@ -107,13 +107,15 @@ export default function RegisterForm() {
     }
     if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
       const user = await registerUser();
-      if (user.message) {
-        setEmailExsistAlert(true)
-        return
-      } else {
-        setEmailExsistAlert(false)
-      }
-      checkRole(role)
+      console.log('user',user);
+      // if (user.message) {
+      //   setEmailExsistAlert(true)
+      //   return
+      // } else {
+      //   setEmailExsistAlert(false)
+      // }
+      // registerUser()
+      // checkRole(role)
 
     }
   };
