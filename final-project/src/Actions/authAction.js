@@ -11,7 +11,7 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "https://xjob-mindx.herokuapp.com/api/users/login",
+      "https://xjob-mindx.onrender.com/api/users/login",
       { email, password },
       config
     );

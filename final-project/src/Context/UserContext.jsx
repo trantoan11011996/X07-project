@@ -33,17 +33,15 @@ const UserProvider = ({ children }) => {
   const [companyDescription, setCompanyDescription] = useState('');
   const [fieldActivity,setFieldActivity] = useState('')
 
-  useEffect(()=>{
-    setToken(user?.token)
-  },[user])
+ 
   
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
     setCurrentUser(newUser);
     // push lên API
     let item = { email: email, password: password, role: role };
-    let registerUser = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/register",
+    let user = await fetch(
+      "https://xjob-mindx.onrender.com/api/users/register",
       {
         method: "POST",
         body: JSON.stringify(item),
@@ -55,15 +53,17 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
+      console.log('data',data);
       if(data.token){
-        setCurrentUser(registerUser);
-        setToken(registerUser.token)
-        localStorage.setItem("currentUser", JSON.stringify(registerUser));
-        localStorage.setItem("token",JSON.stringify(registerUser.token))
+        setCurrentUser(data);
+        setToken(data.token)
+        localStorage.setItem("currentUser", JSON.stringify(data));
+        localStorage.setItem("token",JSON.stringify(data.token))
+        return
       }
-      console.log('data,data');
+
     })
-    return registerUser;
+    return user;
   };
 
   const autologin = () => {
@@ -83,7 +83,14 @@ const UserProvider = ({ children }) => {
     const current = autologin();
     setCurrentUser(current)
   }, []);
-
+  useEffect(()=>{
+    setToken(user?.token)
+  },[user])
+  useEffect(()=>{
+    let getToken = localStorage.getItem('token')
+    getToken = JSON.parse(getToken)
+    setToken(getToken)
+  },[])
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(
       name,
@@ -96,7 +103,7 @@ const UserProvider = ({ children }) => {
     );
    
     const user_info = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      "https://xjob-mindx.onrender.com/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -123,16 +130,15 @@ const UserProvider = ({ children }) => {
 
   const updateRecruiterInfo = async () => {
     const info = UserApi.recruiterInfo(
-      companyEmail,
+      companyName,
       companyEmail,
       companyPhone,
       companyAddress,
       companyDescription,
-      fieldActivity,
       operationSector,
     );
     let user_info = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      "https://xjob-mindx.onrender.com/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),

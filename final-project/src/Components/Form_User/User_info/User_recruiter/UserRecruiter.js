@@ -42,7 +42,7 @@ export default function UserRecruiter() {
   const [phoneErr, setPhoneErr] = useState(false);
   const [operationSectorForm, setOperationSectorForm] = useState([]);
 
-  const handleClick = (event) => {
+  const handleSubmitUpdateRecruiter = (event) => {
     event.preventDefault();
 
     if (!companyName || companyName == null) {
@@ -101,14 +101,14 @@ export default function UserRecruiter() {
       updateRecruiterInfo();
       setShowLogin(false);
       navigate("/");
-      console.log(currentUser)
     }
   };
   // const {user} = useSelector(state=>state.auths)
 
   const getAllOperationSector = async (token) => {
+    console.log(token);
     const all = await fetch(
-      `https://xjob-mindx.herokuapp.com/api/users/operation-sector`,
+      `https://xjob-mindx.onrender.com/api/users/operation-sector`,
       {
         method: "GET",
         headers: {
@@ -126,13 +126,15 @@ export default function UserRecruiter() {
       });
     return all;
   };
+
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
     getAllOperationSector(token);
   }, []);
+
   return (
     <div className="form-container-recruiter">
-      <Form className="p-2 text-start form-recruiter">
+      <Form className="p-2 text-start form-recruiter" onSubmit={handleSubmitUpdateRecruiter}>
         <Form.Group>
           <h1 className="form-recruiter-header"> Thông Tin Nhà Tuyển Dụng</h1>
           <Row className="row-form">
@@ -211,21 +213,6 @@ export default function UserRecruiter() {
               <p className="text"> Địa chỉ không được để trống</p>
             )}
           </Row>
-
-          <Row className="row-form">
-            <Form.Label />{" "}
-            <b>
-              {" "}
-              Ngành Nghề<span style={{ color: "red" }}>*</span>{" "}
-            </b>
-            <Form.Control
-              className="input ms-2"
-              type="text"
-              maxLength={200}
-              onChange={(event) => setFieldActivity(event.target.value)}
-            />
-          </Row>
-
           <Row className="row-form">
             <Form.Label />{" "}
             <b>
@@ -273,7 +260,7 @@ export default function UserRecruiter() {
               {" "}
             </Col>
             <Col sm={3} md={3}>
-              <Button className="button" onClick={handleClick}>
+              <Button className="button" type="submit">
                 {" "}
                 Cập nhật{" "}
               </Button>

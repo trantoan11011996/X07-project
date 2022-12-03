@@ -15,8 +15,6 @@ import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
-import Swiper from "../Swiper";
-import SwiperApp from "../Swiper";
 
 export default function MainApp() {
   return (
