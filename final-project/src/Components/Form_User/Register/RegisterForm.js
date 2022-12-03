@@ -36,7 +36,7 @@ export default function RegisterForm() {
   
   const [isLoading, setIsLoading] = useState(false)
 
-  
+  console.log(currentUser);
   const checkRole = (role) => {
     if (role == "candidate") {
       navigate("/candidate");
@@ -55,7 +55,7 @@ export default function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log('submit');
     if (!email || email == null) {
       setEmailEmpty(true)
       return
@@ -106,8 +106,7 @@ export default function RegisterForm() {
       setEmailErr(false)
     }
     if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
-      const user = await registerUser();
-      console.log('user',user);
+      registerUser()
       // if (user.message) {
       //   setEmailExsistAlert(true)
       //   return
