@@ -5,7 +5,11 @@ import {
   KeyOutlined,
   FormOutlined,
   LogoutOutlined,
+  HomeOutlined ,
   SearchOutlined,
+  GlobalOutlined,
+  LoginOutlined,
+  AccountBookOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
@@ -16,7 +20,8 @@ const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const { showLogin, logOutUser, currentUser } = useContext(UserContext);
+  const { showLogin, logOutUser, currentUser,setCurrentUser } = useContext(UserContext);
+
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -48,10 +53,20 @@ const AuthHeader = ({ mode }) => {
         </Menu.Item>
         <div style={{ width: 1400 }}></div>
         <Menu.Item key="/company" style={{ marginTop: 9 }}>
-          Công ty
+          <div style={{ display: "flex", flexDirection: "row" }}>
+          <HomeOutlined 
+              style={{ fontSize: "130%", marginRight: "6px", marginTop: 11.5 }}
+            />
+            Công ty
+          </div>
         </Menu.Item>
         <Menu.Item key="/job&location" style={{ marginTop: 9 }}>
-          Ngành nghề/Địa điểm
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <GlobalOutlined
+              style={{ fontSize: "130%", marginRight: "6px", marginTop: 11.5 }}
+            />
+            Ngành nghề/Địa điểm
+          </div>
         </Menu.Item>
         {isAuthenticated || showLogin == false || currentUser?.token ? (
           <>
@@ -61,26 +76,14 @@ const AuthHeader = ({ mode }) => {
                   <Avatar icon={<UserOutlined />} />
                 </>
               }
+              style={{ marginTop: 9 }}
             >
               <Menu.Item>
                 <UserOutlined /> Hồ Sơ
               </Menu.Item>
-              <Menu.Item key="/update_password">
-                <KeyOutlined /> Cập nhật mật khẩu người dùng
+              <Menu.Item key="/update_info">
+                <KeyOutlined /> Cập nhật thông tin
               </Menu.Item>
-              {(currentUser?.role === "candidate" ||
-                user?.role === "candidate") && (
-                <Menu.Item key={"/candidate"}>
-                  <FormOutlined /> Cập nhật thông tin ứng viên
-                </Menu.Item>
-              )}
-              {(currentUser?.role === "recruiter" ||
-                user?.role === "recruiter") && (
-                <Menu.Item key={"/recruiter"}>
-                  <FormOutlined /> Cập nhật thông tin nhà tuyển dụng
-                </Menu.Item>
-              )}
-
               <Menu.Item onClick={handleLogOutUser} key={"/"}>
                 <LogoutOutlined /> Đăng xuất
               </Menu.Item>
@@ -90,10 +93,18 @@ const AuthHeader = ({ mode }) => {
           <>
             <div style={{ width: 1600 }}></div>
             <Menu.Item key="/login" style={{ marginTop: 9 }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <LoginOutlined style={{ fontSize: "130%", marginRight: "6px",  marginTop: 11.5 }} />
               Đăng nhập
+              </div>
             </Menu.Item>
             <Menu.Item key="/register" style={{ marginTop: 9 }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <AccountBookOutlined
+                style={{ fontSize: "130%", marginRight: "6px",  marginTop: 11.5 }}
+              />
               Đăng ký
+              </div>
             </Menu.Item>
           </>
         )}

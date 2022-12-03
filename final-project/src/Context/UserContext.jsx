@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const UserContext = createContext();
 
@@ -14,101 +14,141 @@ const UserProvider = ({ children }) => {
   const [role, setRole] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentUser, setCurrentUser] = useState({});
-  const [company, setCompany] = useState('');
-  const [website, setWebsite] = useState('');
-  const [companyEmail, setCompanyEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [career, setCareer] = useState('');
-  const [description, setDescription] = useState('');
+  const [companyName, setCompanyName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [showLogin,setShowLogin] = useState(true)
+  const [showLogin, setShowLogin] = useState(true);
+  const [token,setToken] = useState(null)
+  const { user } = useSelector((state) => state.auths);
+  const [companyPhone, setCompanyPhone] = useState('');
+  const [companyAddress, setCompanyAddress] = useState('');
+  const [operationSector, setOperationSector] = useState('');
+  const [companyDescription, setCompanyDescription] = useState('');
+  const [fieldActivity,setFieldActivity] = useState('')
 
+  useEffect(()=>{
+    setToken(user?.token)
+  },[user])
+  
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
-    setCurrentUser(newUser)
+    setCurrentUser(newUser);
     // push lên API
-    let item = { "email": email, "password": password, "role": role }
-    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/register', {
-      method: "POST",
-      body: JSON.stringify(item),
-      headers: {
-        "Content-Type": 'application/json',
-        "Accept": 'application/json'
+    let item = { email: email, password: password, role: role };
+    let result = await fetch(
+      "https://xjob-mindx.herokuapp.com/api/users/register",
+      {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       }
-    })
+    );
     result = await result.json();
-    if(result.token){
-      setCurrentUser(result)
-      localStorage.setItem("currentUser", JSON.stringify(result))
+    if (result.token) {
+      setCurrentUser(result);
+      setToken(result.token)
+      localStorage.setItem("currentUser", JSON.stringify(result));
+      localStorage.setItem("token",JSON.stringify(result.token))
     }
-    return result
+    return result;
   };
 
   const autologin = () => {
     let user = UserApi.autologin();
-    if(!user){
-      return
+    if (!user) {
+      return;
     }
-    setShowLogin(false)
-    setCurrentUser(user);
+    setShowLogin(false);
+    return user
   };
-  const logOutUser = ()=>{
-    UserApi.logOut()
-    setShowLogin(true)
-    setCurrentUser(null)
-  }
+  const logOutUser = () => {
+    UserApi.logOut();
+    setShowLogin(true);
+    setCurrentUser(null);
+  };
   useEffect(() => {
-    autologin();
+    const current = autologin();
+    setCurrentUser(current)
   }, []);
 
   const updateCandidateInfo = async () => {
-    const info = UserApi.candidateInfo(name, gender, age, phone, address, career, description);
-    const updateInfo = { ...currentUser, user_info: info };
-    setCurrentUser(updateInfo)
-    let item = { "name": name, "gender": gender, "age": age, "phoneNumber": phone, "address": address, "career": career, "description": description }
-    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
-        method: "POST",
-        body: JSON.stringify(item),
+    const info = UserApi.candidateInfo(
+      name,
+      gender,
+      age,
+      phone,
+      address,
+      category,
+      description
+    );
+   
+    const user_info = await fetch(
+      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      {
+        method: "PUT",
+        body: JSON.stringify(info),
         headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json',
-            authorization: `Bearer ${updateInfo.token}`,
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      localStorage.setItem('currentUser',JSON.stringify(data))
+      setCurrentUser(data)
+      console.log('data',data);
+      return data;
     })
-    result = await result.json();
-    if(result.token){
-      setCurrentUser(result)
-      localStorage.setItem("currentUser", JSON.stringify(result))
-    }
-    return
+    // if(user_info.token){
+    //   setCurrentUser(user_info)
+    //   localStorage.setItem("currentUser", JSON.stringify(user_info))
+    // }
+    return user_info;
   };
 
-  const updateRecruiterInfo = async() => {
-    const info = UserApi.recruiterInfo(company, website, companyEmail, phone, address, career, description);
-    const updateInfo = { ...currentUser, user_info: info };
-    localStorage.setItem("currentUser", JSON.stringify(updateInfo));
-
-    let item = { "name":company, "website":website, "email": companyEmail, "phoneNumber": phone, "address": address, "career": career, "description": description }
-    let result = await fetch('https://xjob-mindx.herokuapp.com/api/users/updateinfo', {
-        method: "POST",
-        body: JSON.stringify(item),
+  const updateRecruiterInfo = async () => {
+    const info = UserApi.recruiterInfo(
+      companyEmail,
+      companyEmail,
+      companyPhone,
+      companyAddress,
+      companyDescription,
+      fieldActivity,
+      operationSector,
+    );
+    let user_info = await fetch(
+      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      {
+        method: "PUT",
+        body: JSON.stringify(info),
         headers: {
-            "Content-Type": 'application/json',
-            "Accept": 'application/json',
-            authorization : `Bearer ${updateInfo.token}`
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      localStorage.setItem('currentUser',JSON.stringify(data))
+      setCurrentUser(data)
+      console.log('data',data);
+      return data;
     })
-    result = await result.json();
-    if(!result.message){
-      localStorage.setItem("currentUser", JSON.stringify(result))
-      return result
-    }
-    return result
-  }
-
+    return user_info
+  };
 
   const value = {
     userData,
@@ -122,19 +162,13 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
-    setCurrentUser,
-    company,
-    setCompany,
-    website,
-    setWebsite,
-    companyEmail,
-    setCompanyEmail,
+    setCurrentUser,   
     phone,
     setPhone,
     address,
     setAddress,
-    career,
-    setCareer,
+    category,
+    setCategory,
     description,
     setDescription,
     name,
@@ -149,7 +183,22 @@ const UserProvider = ({ children }) => {
     showLogin,
     logOutUser,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    companyEmail,
+    companyName,
+    companyPhone,
+    companyAddress,
+    companyDescription,
+    operationSector,
+    setCompanyEmail,
+    setCompanyPhone,
+    setCompanyAddress,
+    setOperationSector,
+    setCompanyDescription,
+    setCompanyName,
+    setFieldActivity,
+    token
+
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

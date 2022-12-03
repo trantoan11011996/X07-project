@@ -1,19 +1,24 @@
-.recruiter {
-    font-size: 25px;
-    font-weight: bold;
-    margin-bottom: 25px;
+.form-recruiter-header {
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 15px;
 }
-
-.input{
-    margin-top: 2%;
+.form-container-recruiter {
+  width: 100%;
 }
-.container-recruiter{
-    margin-top: 60px;
+.form-recruiter {
+  max-width: 600px;
+  margin: 0 auto;
 }
-.button{
-    background-color: rgb(253,61,87);
-    border: none;
+.button {
+  background-color: rgb(253, 61, 87);
+  border: none;
 }
-.row-form > .input{
-    width: 100%;
+.row-form > .input {
+  width: 100%;
+}
+.text {
+  color: red;
 }

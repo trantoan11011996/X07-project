@@ -8,6 +8,11 @@ import { BsChevronRight } from "react-icons/bs";
 import { images } from "../../img/index";
 import { datas } from "../DataJob/index";
 import JobItem from "./JobItem";
+import { CiSearch } from "react-icons/ci";
+import { colourOptions } from "../DataJob/data";
+import { address } from "../DataJob/data";
+import Select from "react-select";
+console.log(address);
 const cx = classNames.bind(styles);
 export const AllJob = () => {
   const [itemOffset, setItemOffset] = useState(0);
@@ -24,16 +29,55 @@ export const AllJob = () => {
     const newOffset = (event.selected * itemsPerPage) % datas.length;
     setItemOffset(newOffset);
   };
+
   return (
     <>
       <MetaData title="Danh sách tất cả việc làm" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
+          <div className={cx("filter")}>
+            <form action="">
+              <div className={cx("form-group")}>
+                <input type="text" placeholder="Tên công ty, vị trí việc làm" />
+                <div className={cx("search-text")}>
+                  <CiSearch />
+                </div>
+              </div>
+              <div className={cx("form-group")}>
+                <Select
+                  defaultValue={[]}
+                  isMulti
+                  name="field"
+                  options={colourOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="Lĩnh Vực"
+                />
+              </div>
+              <div className={cx("form-group")}>
+                <Select
+                  defaultValue={[]}
+                  isMulti
+                  name="address"
+                  options={address}
+                  isSearchable="true"
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="Địa điểm"
+                />
+              </div>
+              <div className={cx("form-group-button")}>
+                <button>
+                  <CiSearch />
+                </button>
+              </div>
+            </form>
+          </div>
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
-                  <h2>Việc làm hấp dẫn</h2>
+                  <h2>Tất cả tin tuyển dụng</h2>
                 </div>
                 <div className={cx("right")}>
                   <Link to="/">Danh sách việc làm đã ứng tuyển</Link>
