@@ -36,8 +36,10 @@ const UserProvider = ({ children }) => {
  
   
   const registerUser = async () => {
+    console.log('alooo');
     let newUser = UserApi.register(email, password, role);
-    setCurrentUser(newUser);
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    setCurrentUser(newUser)
     // push lên API
     let item = { email: email, password: password, role: role };
     let user = await fetch(
@@ -51,6 +53,7 @@ const UserProvider = ({ children }) => {
         },
       }
     ).then((res)=>{
+      console.log(res);
       return res.json()
     }).then((data)=>{
       console.log('data',data);
@@ -59,9 +62,7 @@ const UserProvider = ({ children }) => {
         setToken(data.token)
         localStorage.setItem("currentUser", JSON.stringify(data));
         localStorage.setItem("token",JSON.stringify(data.token))
-        return
       }
-
     })
     return user;
   };
