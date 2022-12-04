@@ -32,20 +32,21 @@ import ListJobs from "./ListJobs/ListJobs";
 
 export default function HomeJobs() {
   const { user } = useSelector((state) => state.auths);
+  const {currentUser} = useContext(UserContext)
 
   return (
     <Container className="home-jobs">
       <Row>
         <Col sm={12} md={12}>
           <Row className="navigate-header text-start m-3">
-            {user?.user.role == "candidate" && (
+            {(user?.user?.role || currentUser?.role) == "candidate" && (
               <>
                 <Row className="job-navigate-container">
                   <Col md={2} className="col-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link">
+                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
@@ -61,14 +62,14 @@ export default function HomeJobs() {
               </>
             )}
 
-            {user?.user.role == "recruiter" && (
+            {(user?.user?.role || currentUser?.role) == "recruiter" && (
               <>
                 <Row className="job-navigate-container">
                   <Col sm={2} md={2} className="homejob-title">
                     <h1 className="homejob-title-header" >Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link">
+                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
@@ -85,7 +86,7 @@ export default function HomeJobs() {
                   </Col>
 
                   <Col sm={2} md={4}>
-                  <Link className="homejob-title homejob-title-link">
+                  <Link to={"/upload"} className="homejob-title homejob-title-link">
                       Đăng tin tuyển dụng{" "}
                       <span>
                       <BsFillFilePostFill></BsFillFilePostFill>
@@ -96,25 +97,17 @@ export default function HomeJobs() {
               </>
             )}
 
-            {!user && (
+            {(!user?.user && !currentUser) && (
               <>
                  <Row className="job-navigate-container">
                   <Col sm={2} md={2} className="homejob-title homejob-title-header">
                     <h1 >Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link">
+                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
-                      </span>
-                    </Link>
-                  </Col>
-                  <Col sm={2} md={4}>
-                  <Link className="homejob-title homejob-title-link">
-                      Đăng tin tuyển dụng{" "}
-                      <span>
-                      <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
                   </Col>

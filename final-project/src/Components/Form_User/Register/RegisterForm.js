@@ -36,11 +36,11 @@ export default function RegisterForm() {
   
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log(currentUser);
   const checkRole = (role) => {
     if (role == "candidate") {
       navigate("/candidate");
     } if (role == "recruiter") {
+      console.log('alo');
       navigate("/recruiter");
     }
   };
@@ -55,7 +55,6 @@ export default function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('submit');
     if (!email || email == null) {
       setEmailEmpty(true)
       return
@@ -106,16 +105,15 @@ export default function RegisterForm() {
       setEmailErr(false)
     }
     if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
-      registerUser()
+      console.log('>>>>?????????');
+       registerUser()
+       navigate("/update_info")
+      // const user = await registerUser()
       // if (user.message) {
       //   setEmailExsistAlert(true)
-      //   return
       // } else {
       //   setEmailExsistAlert(false)
       // }
-      // registerUser()
-      // checkRole(role)
-
     }
   };
 
