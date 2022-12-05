@@ -37,7 +37,7 @@ export default function MainApp() {
               <Route path="/recruiter" element={<UserRecruiter />}></Route>
               <Route path="/company" element={<CompanyPage />}></Route>
               <Route path="/job&location" element={<JobAndLocation />}></Route>
-              <Route path="/a" element={<AllJob />}></Route>
+              <Route path="/all_job" element={<AllJob />}></Route>
               {/* <Route path="/page_candidate" element={<CandidatePage/>}></Route> */}
             </Routes>
             <Footer />
