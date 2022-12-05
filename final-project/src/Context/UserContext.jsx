@@ -43,7 +43,7 @@ const UserProvider = ({ children }) => {
     // push lên API
     let item = { email: email, password: password, role: role };
     let user = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/register",
+      "https://xjob-mindx-production.up.railway.app/api/users/register",
       {
         method: "POST",
         body: JSON.stringify(item),
@@ -104,7 +104,7 @@ const UserProvider = ({ children }) => {
     );
    
     const user_info = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -139,7 +139,7 @@ const UserProvider = ({ children }) => {
       operationSector,
     );
     let user_info = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
