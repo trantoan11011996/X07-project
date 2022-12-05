@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { isEmail, isEmpty } from "../../../utils/validate";
 import { loginUser } from "../../../Actions/authAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
@@ -20,7 +20,8 @@ const Login = () => {
   };
   const [data, setData] = useState(initialState);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading } = useSelector((state) => state.auths);
+  console.log(loading);
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,7 +43,6 @@ const Login = () => {
 
     if (email && password) {
       dispatch(loginUser(email, password, navigate));
-      setLoading(true);
     }
   };
 

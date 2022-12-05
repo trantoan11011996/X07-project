@@ -2,7 +2,7 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGOUT
+  LOGOUT,
 } from "../Constants/authConstant";
 
 const initialState = {
@@ -26,14 +26,15 @@ export const authReducer = (state = initialState, action) => {
       return {
         isAuthenticated: false,
         error: true,
+        loading: false,
         user: null,
       };
     case LOGOUT:
-      return{
-        isAuthenticated : false,
-        error : false,
+      return {
+        isAuthenticated: false,
+        error: false,
         user: null,
-      }
+      };
     default:
       return state;
   }

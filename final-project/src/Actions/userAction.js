@@ -13,7 +13,7 @@ export const updatePassword =
     try {
       dispatch({ type: UPDATE_PASSWORD_REQUEST });
       const data = await axios.put(
-        "https://xjob-mindx.herokuapp.com/api/users/updatepassword",
+        "https://xjob-mindx-production.up.railway.app/api/users/updatepassword",
         { currentPassword, newPassword },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -39,7 +39,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } };
 
     const data = await axios.post(
-      "https://xjob-mindx.herokuapp.com/api/users/forgotpassword",
+      "https://xjob-mindx-production.up.railway.app/api/users/forgotpassword",
       { email },
       config
     );

@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import React, { useContext } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import {BsFillFilePostFill} from "react-icons/bs"
+import { BsFillFilePostFill } from "react-icons/bs";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ import ListJobs from "./ListJobs/ListJobs";
 
 export default function HomeJobs() {
   const { user } = useSelector((state) => state.auths);
-  const {currentUser} = useContext(UserContext)
+  const { currentUser } = useContext(UserContext);
 
   return (
     <Container className="home-jobs">
@@ -46,7 +46,10 @@ export default function HomeJobs() {
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
+                    <Link
+                      to={"/allJob"}
+                      className="homejob-title homejob-title-link"
+                    >
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
@@ -66,10 +69,13 @@ export default function HomeJobs() {
               <>
                 <Row className="job-navigate-container">
                   <Col sm={2} md={2} className="homejob-title">
-                    <h1 className="homejob-title-header" >Việc làm hấp dẫn</h1>
+                    <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
+                    <Link
+                      to={"/allJob"}
+                      className="homejob-title homejob-title-link"
+                    >
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
@@ -78,18 +84,19 @@ export default function HomeJobs() {
                   </Col>
 
                   <Col sm={2} md={2}>
-                  <Link className="homejob-title homejob-title-link">
-                      Tin đã đăng{" "}
-                      <span>
-                      </span>
+                    <Link className="homejob-title homejob-title-link">
+                      Tin đã đăng <span></span>
                     </Link>
                   </Col>
 
                   <Col sm={2} md={4}>
-                  <Link to={"/upload"} className="homejob-title homejob-title-link">
+                    <Link
+                      to={"/upload"}
+                      className="homejob-title homejob-title-link"
+                    >
                       Đăng tin tuyển dụng{" "}
                       <span>
-                      <BsFillFilePostFill></BsFillFilePostFill>
+                        <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
                   </Col>
@@ -97,21 +104,28 @@ export default function HomeJobs() {
               </>
             )}
 
-            {(!user?.user && !currentUser) && (
+            {!user?.user && !currentUser && (
               <>
-                 <Row className="job-navigate-container">
-                  <Col sm={2} md={2} className="homejob-title homejob-title-header">
-                    <h1 >Việc làm hấp dẫn</h1>
+                <Row className="job-navigate-container">
+                  <Col
+                    sm={2}
+                    md={2}
+                    className="homejob-title homejob-title-header"
+                  >
+                    <h1>Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
-                    <Link to={"/allJob"} className="homejob-title homejob-title-link">
+                    <Link
+                      to={"/allJob"}
+                      className="homejob-title homejob-title-link"
+                    >
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
                       </span>
                     </Link>
                   </Col>
-                  </Row>
+                </Row>
               </>
             )}
           </Row>
@@ -120,7 +134,7 @@ export default function HomeJobs() {
       </Row>
       <Row>
         <Col>
-              <ListJobs/>
+          <ListJobs />
         </Col>
       </Row>
     </Container>

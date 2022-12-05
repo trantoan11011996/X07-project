@@ -37,13 +37,12 @@ export default function MainApp() {
               <Route path="/company" element={<CompanyPage />}></Route>
               <Route path="/job&location" element={<JobAndLocation />}></Route>
               <Route path="/allJob" element={<AllJob />}></Route>
-              <Route path="/upload" element={<UploadRecruiment/>}></Route>
+              <Route path="/upload" element={<UploadRecruiment />}></Route>
             </Routes>
             <Footer />
           </div>
         </BrowserRouter>
       </UserProvider>
     </AuthContext.Provider>
-  
   );
 }
