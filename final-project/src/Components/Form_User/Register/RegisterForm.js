@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
 import "../Register/register.css";
-import bannerRegister from "../../../img/image-banner.webp"
+import  logo  from "../../../img/loginbanner2.jpg";
 export default function RegisterForm() {
   const {
     setEmail,
@@ -121,7 +121,7 @@ export default function RegisterForm() {
     <Container fluid>
       <Row className="container-register">
         <Col className="container-register-banner" sm={4} md={6}>
-          <img className="register-banner" src={bannerRegister}></img>
+          <img className="register-banner" src={logo}></img>
         </Col>
         <Col className="form-container" sm={4} md={6}>
           <Form className="form-register text-start" onSubmit={handleSubmit}>

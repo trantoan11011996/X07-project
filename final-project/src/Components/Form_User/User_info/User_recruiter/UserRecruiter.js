@@ -108,7 +108,7 @@ export default function UserRecruiter() {
   const getAllOperationSector = async (token) => {
     console.log(token);
     const all = await fetch(
-      `https://xjob-mindx.onrender.com/api/users/operation-sector`,
+      `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
       {
         method: "GET",
         headers: {

@@ -57,6 +57,7 @@ export default function Footer() {
       <div className="container-footer-contact">
         <div className="logo-contact">
           <p>LOGO</p>
+        </div>
           <div className="contact-content">
             <p>
               Tuyển dụng, tìm kiếm việc làm trực tuyến tại MindxCareer.vn |
@@ -71,7 +72,6 @@ export default function Footer() {
               2007-2020 by https://www.mindxcareer.vn All rights reserved.
             </p>
           </div>
-        </div>
       </div>
     </div>
   );
