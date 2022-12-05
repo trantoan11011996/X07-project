@@ -2,24 +2,40 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { DatePicker, Space } from "antd";
 import "../UploadRecruiment/Upload.css";
+import {CKEditor} from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import pretty from "pretty"
 const { RangePicker } = DatePicker;
-
 export default function UploadRecruiment() {
   const [deadline, setDeadline] = useState([]);
   const [token, setToken] = useState("");
   const [selectedFile, setSelectedFile] = useState();
   const [imageData,setImageData] = useState('') 
-
+  const [ckEditorOutput,setCkEditorOutput] = useState(null)
+  const [disabled,setDisabled] = useState(false)
+  const [stringParse,setStringParse] = useState()
   useEffect(() => {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
   }, []);
+
   const getFile = (e) =>{
     setSelectedFile(e.target.files[0])
   }
+
+  const toggleDisabled = ()=>{
+    setDisabled(!disabled)
+  }
+
+  const handleCkEditorChanges = (event,editor) =>{
+    setCkEditorOutput(editor.getData())
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    const description = document.getElementById('description-upload')  
+    description.innerHTML = `
+    ${ckEditorOutput}
+    `
     const formData = new FormData();
 
 		formData.append('formFile', selectedFile);
@@ -37,12 +53,15 @@ export default function UploadRecruiment() {
         return res.json();
       })
       .then((data) => {
-        setImageData(data)
-        console.log(data);
+        const splitString  = data.path.split("/")
+        console.log("split 1 ",splitString[1]);
+        console.log("split 2",splitString[2]);
+        setImageData(splitString[1]+"/".concat(splitString[2]))
         return data;
       });
     return uploadImage;
   };
+  console.log(imageData);
   const showDate = (date, dateString) => {
     console.log("string", dateString);
     setDeadline(dateString);
@@ -52,12 +71,8 @@ export default function UploadRecruiment() {
     <div className="container-upload">
       <div className="form-container-upload">
         <h1 className="header-form-upload">Đăng tin tuyển dụng</h1>
-        <Form
-          className="form-upload"
-          // onSubmit={handleSubmit}
-          encType="multipart/form-data"
-          action="https://xjob-mindx-production.up.railway.app/
-/api/users/upload-single-file"
+        <Form className="form-upload"
+          onSubmit={handleSubmit}
         >
           <Form.Group className="mb-3">
             <Form.Label>Tiêu đề tuyển dụng</Form.Label>
@@ -78,7 +93,7 @@ export default function UploadRecruiment() {
             />
           </Form.Group>
 
-          <Form.Group>
+          <Form.Group className="form-deadline">
             <Form.Label>Thời hạn ứng tuyển</Form.Label>
             <Space direction="vertical" size={12}>
               <RangePicker
@@ -131,7 +146,7 @@ export default function UploadRecruiment() {
             <Form.Control
               maxLength={100}
               type="text"
-              placeholder="2.000.000-3.000.000"
+              placeholder="2.000.000VNĐ-3.000.000VNĐ"
               // required
             />
           </Form.Group>
@@ -156,25 +171,35 @@ export default function UploadRecruiment() {
               <span>&gt;</span> 5 năm
             </option>
           </Form.Select>
-          <button variant="primary" type="submit">
-            Submit
-          </button>
-        </Form>
-        <form
-          // enctype="multipart/form-data"
-          onSubmit={handleSubmit}
-          // method="POST"
-        >
+          <CKEditor
+          editor={ClassicEditor}
+          onChange={handleCkEditorChanges}
+          disabled={disabled}
+          style = {{padding : "20px"}}
+        />
+        <label>
+          <input type="checkbox" onChange={toggleDisabled} />
+          Disable
+        </label>
+        <div className="output-label">Output:</div>
+        <div className="output">{pretty(ckEditorOutput)}</div>
           <input
             type="file"
             name="formFile"
             onChange={getFile}
           ></input>
-          <button type="submit">submit</button>
-        </form>
+          <button className="btn-upload" variant="primary" type="submit">
+            Submit
+          </button>
+        </Form>
       </div>
-      <div className="image-data">
-        <img src={`/images/${imageData}`}></img>
+      {/* <div className="image-data">
+        <img src={`https://xjob-mindx-production.up.railway.app/${imageData}`}></img>
+      </div> */}
+      <div>
+      </div>
+      <div id="description-upload" className="description-upload">
+        {stringParse}
       </div>
     </div>
   );
