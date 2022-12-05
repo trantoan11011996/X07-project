@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
 import Loading from "../../Loading/index";
-import { images } from "../../../img/index";
+import  logo  from "../../../img/loginbanner2.jpg";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -52,6 +52,10 @@ const Login = () => {
       <MetaData title="Đăng nhập" />
       <div className={cx("container")}>
         <div className={cx("test")}>
+          <div className={cx("banner")}>
+            <img src={logo} alt="" />
+          </div>
+
           <div className={cx("left")}>
             <div className={cx("container_login")}>
               <div className={cx("wrapper")}>
@@ -106,10 +110,6 @@ const Login = () => {
                 </form>
               </div>
             </div>
-          </div>
-
-          <div className={cx("banner")}>
-            <img src={images.banner_login} alt="" />
           </div>
         </div>
       </div>

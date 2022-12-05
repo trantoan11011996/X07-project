@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
 import "../Register/register.css";
-import bannerRegister from "../../../img/image-banner.webp"
+import  logo  from "../../../img/loginbanner2.jpg";
 export default function RegisterForm() {
   const {
     setEmail,
@@ -36,11 +36,11 @@ export default function RegisterForm() {
   
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log(currentUser);
   const checkRole = (role) => {
     if (role == "candidate") {
       navigate("/candidate");
     } if (role == "recruiter") {
+      console.log('alo');
       navigate("/recruiter");
     }
   };
@@ -55,7 +55,6 @@ export default function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('submit');
     if (!email || email == null) {
       setEmailEmpty(true)
       return
@@ -106,16 +105,15 @@ export default function RegisterForm() {
       setEmailErr(false)
     }
     if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
-      registerUser()
+      console.log('>>>>?????????');
+       registerUser()
+       navigate("/update_info")
+      // const user = await registerUser()
       // if (user.message) {
       //   setEmailExsistAlert(true)
-      //   return
       // } else {
       //   setEmailExsistAlert(false)
       // }
-      // registerUser()
-      // checkRole(role)
-
     }
   };
 
@@ -123,7 +121,7 @@ export default function RegisterForm() {
     <Container fluid>
       <Row className="container-register">
         <Col className="container-register-banner" sm={4} md={6}>
-          <img className="register-banner" src={bannerRegister}></img>
+          <img className="register-banner" src={logo}></img>
         </Col>
         <Col className="form-container" sm={4} md={6}>
           <Form className="form-register text-start" onSubmit={handleSubmit}>

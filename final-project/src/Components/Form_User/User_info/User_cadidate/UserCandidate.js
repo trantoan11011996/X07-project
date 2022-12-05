@@ -54,7 +54,7 @@ export default function UserCandidate() {
 
   const getAllCategory = async (token) => {
     const all = await fetch(
-      `https://xjob-mindx.herokuapp.com/api/users/category`,
+      `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
         method: "GET",
         headers: {

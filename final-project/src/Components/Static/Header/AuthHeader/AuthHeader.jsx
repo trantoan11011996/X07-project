@@ -13,7 +13,7 @@ import {
   DownOutlined,
   FileDoneOutlined,
 } from "@ant-design/icons";
-import logo from "../../../../img/logoheader.png";
+import logo from "../../../../img/xcareerlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import InfoUserDropDown from "../InfoUserDropdown/InfoUserDropdown";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,8 +45,8 @@ const AuthHeader = ({ mode }) => {
             mode={mode}
             onClick={handleMenuClick}
             style={{
-              marginBottom: 15,
-              height: 60,
+              marginBottom: 10,
+              height: 70,
               fontSize: "18px",
               paddingRight: "40px",
             }}
@@ -55,7 +55,7 @@ const AuthHeader = ({ mode }) => {
               <img
                 src={logo}
                 alt="logo"
-                style={{ marginLeft: 20, height: 50, marginTop: 5 }}
+                style={{ marginLeft: 20, height: 50, marginTop: 10 }}
               ></img>
             </Menu.Item>
             <div style={{ width: 1400 }}></div>

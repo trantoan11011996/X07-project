@@ -36,12 +36,14 @@ const UserProvider = ({ children }) => {
  
   
   const registerUser = async () => {
+    console.log('alooo');
     let newUser = UserApi.register(email, password, role);
-    setCurrentUser(newUser);
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    setCurrentUser(newUser)
     // push lên API
     let item = { email: email, password: password, role: role };
     let user = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/register",
+      "https://xjob-mindx-production.up.railway.app/api/users/register",
       {
         method: "POST",
         body: JSON.stringify(item),
@@ -51,6 +53,7 @@ const UserProvider = ({ children }) => {
         },
       }
     ).then((res)=>{
+      console.log(res);
       return res.json()
     }).then((data)=>{
       console.log('data',data);
@@ -59,9 +62,7 @@ const UserProvider = ({ children }) => {
         setToken(data.token)
         localStorage.setItem("currentUser", JSON.stringify(data));
         localStorage.setItem("token",JSON.stringify(data.token))
-        return
       }
-
     })
     return user;
   };
@@ -103,7 +104,7 @@ const UserProvider = ({ children }) => {
     );
    
     const user_info = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -138,7 +139,7 @@ const UserProvider = ({ children }) => {
       operationSector,
     );
     let user_info = await fetch(
-      "https://xjob-mindx.onrender.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),

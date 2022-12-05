@@ -6,7 +6,7 @@ const register = (email, password, user_role) => {
     _id: uuid(),
     email: email,
     password: password,
-    user_role: user_role,
+    role: user_role,
     user_info: {},
     user_status: 0,
   };
