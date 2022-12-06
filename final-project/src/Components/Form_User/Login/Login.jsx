@@ -71,7 +71,7 @@ const Login = () => {
                       name="email"
                       onChange={handleChange}
                       className={cx("email")}
-                      placeholder="example@mail.com"
+                      placeholder="vidu@mail.com"
                     />
                   </div>
                   <div className={cx("group_input")}>

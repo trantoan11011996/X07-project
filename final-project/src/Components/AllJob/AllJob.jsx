@@ -26,7 +26,9 @@ export const AllJob = () => {
     setCurrentItems(datas.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(datas.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
-
+  // useEffect(()=>{
+  //   const datas = await fetch (``)
+  // },[])
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % datas.length;
     setItemOffset(newOffset);
