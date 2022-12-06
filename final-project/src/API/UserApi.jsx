@@ -6,7 +6,7 @@ const register = (email, password, user_role) => {
     _id: uuid(),
     email: email,
     password: password,
-    user_role: user_role,
+    role: user_role,
     user_info: {},
     user_status: 0,
   };
@@ -36,15 +36,14 @@ const candidateInfo = (
   return userInfo;
 };
 
-const recruiterInfo = (company, companyEmail, companyPhone, companyAddress,fieldActivity,companyDescription, operationSector) => {
+const recruiterInfo = (companyName, companyEmail, companyPhone, companyAddress,companyDescription, operationSector) => {
     const userInfo = {
         info : {
-        name: company,
+        name: companyName,
         email: companyEmail,
         phoneNumber: companyPhone,
         address: companyAddress,
         description: companyDescription,
-        fieldActivity: fieldActivity
         },
         operationSector : operationSector
     }

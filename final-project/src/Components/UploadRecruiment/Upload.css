@@ -1,0 +1,24 @@
+.container-upload{
+    padding-bottom: 50px;
+    height: 800px;
+}
+.form-container-upload{
+    width: 600px;
+    height: fit-content;
+    margin-top: 200px;
+    margin: 100px auto 0 auto;
+    height: 500px;
+}
+.form-upload{
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x : hidden;
+}
+.header-form-upload{
+    text-align: center;
+    font-size: 25px;
+}
+
+.image-data>img{
+    width: 200px;
+}

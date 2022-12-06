@@ -18,6 +18,7 @@ export default function UpdatePassword() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auths);
   const [token, setToken] = useState("");
+  console.log(token);
   useEffect(() => {
     const tokenValue = JSON.parse(localStorage.getItem("token"));
     setToken(tokenValue);
@@ -54,7 +55,7 @@ export default function UpdatePassword() {
   };
   return (
     <Fragment>
-      <ToastContainer/>
+      <ToastContainer />
       <div className="update-password">
         <div className="form-container">
           <form className="form" action="" onSubmit={updatePasswordSubmit}>

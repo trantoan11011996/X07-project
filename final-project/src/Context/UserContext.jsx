@@ -33,17 +33,17 @@ const UserProvider = ({ children }) => {
   const [companyDescription, setCompanyDescription] = useState('');
   const [fieldActivity,setFieldActivity] = useState('')
 
-  useEffect(()=>{
-    setToken(user?.token)
-  },[user])
+ 
   
   const registerUser = async () => {
+    console.log('alooo');
     let newUser = UserApi.register(email, password, role);
-    setCurrentUser(newUser);
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    setCurrentUser(newUser)
     // push lên API
     let item = { email: email, password: password, role: role };
-    let result = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/register",
+    let user = await fetch(
+      "https://xjob-mindx-production.up.railway.app/api/users/register",
       {
         method: "POST",
         body: JSON.stringify(item),
@@ -52,15 +52,19 @@ const UserProvider = ({ children }) => {
           Accept: "application/json",
         },
       }
-    );
-    result = await result.json();
-    if (result.token) {
-      setCurrentUser(result);
-      setToken(result.token)
-      localStorage.setItem("currentUser", JSON.stringify(result));
-      localStorage.setItem("token",JSON.stringify(result.token))
-    }
-    return result;
+    ).then((res)=>{
+      console.log(res);
+      return res.json()
+    }).then((data)=>{
+      console.log('data',data);
+      if(data.token){
+        setCurrentUser(data);
+        setToken(data.token)
+        localStorage.setItem("currentUser", JSON.stringify(data));
+        localStorage.setItem("token",JSON.stringify(data.token))
+      }
+    })
+    return user;
   };
 
   const autologin = () => {
@@ -80,7 +84,14 @@ const UserProvider = ({ children }) => {
     const current = autologin();
     setCurrentUser(current)
   }, []);
-
+  useEffect(()=>{
+    setToken(user?.token)
+  },[user])
+  useEffect(()=>{
+    let getToken = localStorage.getItem('token')
+    getToken = JSON.parse(getToken)
+    setToken(getToken)
+  },[])
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(
       name,
@@ -93,7 +104,7 @@ const UserProvider = ({ children }) => {
     );
    
     const user_info = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -120,16 +131,15 @@ const UserProvider = ({ children }) => {
 
   const updateRecruiterInfo = async () => {
     const info = UserApi.recruiterInfo(
-      companyEmail,
+      companyName,
       companyEmail,
       companyPhone,
       companyAddress,
       companyDescription,
-      fieldActivity,
       operationSector,
     );
     let user_info = await fetch(
-      "https://xjob-mindx.herokuapp.com/api/users/update-profile",
+      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),

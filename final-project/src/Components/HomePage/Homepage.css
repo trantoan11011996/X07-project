@@ -1,18 +1,21 @@
 .home-page {
   margin-top: 62px;
+  padding-bottom: 50px;
 }
 .home-banner {
   height: 400px;
 }
-.home-jobs {
+.list-jobs {
+  margin-top: 15px;
 }
-.job-item {
-  border: 1px solid black;
+.home-jobs{
+  margin-top: 40px;
 }
 .navigate-header {
   display: flex;
   gap: 20px;
-  margin-left: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0 !important;
 }
 .home-banner {
   position: relative;
@@ -87,4 +90,66 @@
 .image {
   height: 500px;
   width: 100%;
+}
+.homejob-title{
+  width: fit-content;
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+.homejob-title>h1{
+  margin: 0;
+  padding: 0;
+}
+.job-navigate-container{
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.homejob-title{
+  padding-left: 0 !important;
+  margin-right: 20px;
+}
+.homejob-title-header{
+  font-size: 25px;
+  font-weight: 600;
+  text-align: left;
+  position: relative;
+}
+.homejob-title-header::after{
+  content: "";
+  position: absolute;
+  background-color: #0087ca;
+  height: 4px;
+  width: 100%;
+  bottom: -12px;
+  left: -2px;
+}
+.homejob-title-link{
+  position: relative;
+  color: black;
+  opacity: 0.8;
+  font-size: 20px;
+}
+.homejob-title-link:hover{
+  position: relative;
+  color: black;
+  opacity: 1;
+  font-weight: 500;
+  font-size: 20px;
+}
+.homejob-title-link::after{
+  content: "" ;
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 4px;
+  bottom: -14px;
+  left: -4px;
+  background-color:#0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.homejob-title-link:hover::after{
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }

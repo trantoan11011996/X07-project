@@ -6,10 +6,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { isEmail, isEmpty } from "../../../utils/validate";
 import { loginUser } from "../../../Actions/authAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
+import Loading from "../../Loading/index";
+import  logo  from "../../../img/loginbanner2.jpg";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -18,6 +20,8 @@ const Login = () => {
   };
   const [data, setData] = useState(initialState);
   const [visible, setVisible] = useState(false);
+  const { loading } = useSelector((state) => state.auths);
+  console.log(loading);
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,8 +41,9 @@ const Login = () => {
     if (!isEmail(email))
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
 
-    dispatch(loginUser(email, password, navigate));
-    
+    if (email && password) {
+      dispatch(loginUser(email, password, navigate));
+    }
   };
 
   return (
@@ -46,51 +51,65 @@ const Login = () => {
       <ToastContainer />
       <MetaData title="Đăng nhập" />
       <div className={cx("container")}>
-        <div className={cx("container_login")}>
-          <div className={cx("wrapper")}>
-            <h1>Đăng nhập</h1>
-            <form className={cx("login")} onSubmit={handleSubmitLogin}>
-              <div className={cx("group_input")}>
-                <label htmlFor="email">
-                  Địa chỉ Email <span>*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  onChange={handleChange}
-                  className={cx("email")}
-                  placeholder="example@mail.com"
-                />
-              </div>
-              <div className={cx("group_input")}>
-                <label htmlFor="password">
-                  Mật khẩu <span>*</span>
-                  <div className={cx("input_icon")} onClick={handleClick}>
-                    {visible ? <MdVisibility /> : <MdVisibilityOff />}
+        <div className={cx("test")}>
+          <div className={cx("banner")}>
+            <img src={logo} alt="" />
+          </div>
+
+          <div className={cx("left")}>
+            <div className={cx("container_login")}>
+              <div className={cx("wrapper")}>
+                <h1>Đăng nhập</h1>
+                <form className={cx("login")} onSubmit={handleSubmitLogin}>
+                  <div className={cx("group_input")}>
+                    <label htmlFor="email">
+                      Địa chỉ Email <span>*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      onChange={handleChange}
+                      className={cx("email")}
+                      placeholder="example@mail.com"
+                    />
                   </div>
-                  <input
-                    type={visible ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    onChange={handleChange}
-                    className={cx("password")}
-                    placeholder="Mật khẩu"
-                  />
-                </label>
+                  <div className={cx("group_input")}>
+                    <label htmlFor="password">
+                      Mật khẩu <span>*</span>
+                      <div className={cx("input_icon")} onClick={handleClick}>
+                        {visible ? <MdVisibility /> : <MdVisibilityOff />}
+                      </div>
+                      <input
+                        type={visible ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        onChange={handleChange}
+                        className={cx("password")}
+                        placeholder="Mật khẩu"
+                      />
+                    </label>
+                  </div>
+                  <div className={cx("login_actions")}>
+                    <div className={cx("login_forgotPassword")}>
+                      <Link to={"/forgot_password"}>Quên mật khẩu?</Link>
+                    </div>
+                    <div className={cx("register")}>
+                      <Link to={"/register"}>Bạn chưa có tài khoản ?</Link>
+                    </div>
+                  </div>
+                  <div className={cx("login_btn")}>
+                    {loading ? (
+                      <button type="submit" disabled>
+                        Loading ...
+                      </button>
+                    ) : (
+                      <button type="submit">Đăng nhập</button>
+                    )}
+                  </div>
+                </form>
               </div>
-              <div className={cx("login_actions")}>
-                <div className={cx("login_forgotPassword")}>
-                  <Link to={"/forgot_password"}>Quên mật khẩu?</Link>
-                </div>
-                <div className={cx("register")}>
-                  <Link to={"/register"}>Bạn chưa có tài khoản ?</Link>
-                </div>
-              </div>
-              <div className={cx("login_btn")}>
-                <button type="submit">Đăng nhập</button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

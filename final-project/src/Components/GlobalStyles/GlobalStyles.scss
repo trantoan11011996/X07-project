@@ -8,7 +8,7 @@ a {
 }
 body {
   font-size: 16px;
-  font-family: var(--font-family);
+  font-family: var(--font-family, --font-roboto);
 }
 
 ol,
@@ -17,11 +17,11 @@ ul {
   padding-left: 0 !important;
 }
 :root {
-  --font-family: Poppins, sans-serif !important;
-
+  --font-family: "Poppins", sans-serif !important;
+  --font-roboto: "Roboto", sans-serif;
   --primary: #fd3d57;
   --white-color: #ffff;
   --blue-color: #0707f5;
-
+  --black-color: #000;
   --border-color: #e9e4e4;
 }

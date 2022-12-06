@@ -54,7 +54,7 @@ export default function UserCandidate() {
 
   const getAllCategory = async (token) => {
     const all = await fetch(
-      `https://xjob-mindx.herokuapp.com/api/users/category`,
+      `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
         method: "GET",
         headers: {
@@ -189,9 +189,6 @@ export default function UserCandidate() {
                     <Form.Check
                       inline
                       label="Nam"
-                      value={
-                        currentUser?.info ? currentUser.info.gender : "Nam"
-                      }
                       name="group1"
                       type={type}
                       id={`inline-${type}-1`}
