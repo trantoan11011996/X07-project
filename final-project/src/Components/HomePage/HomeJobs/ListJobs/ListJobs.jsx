@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../ListJobs/ListJob.css"
 
-export default function ListJobs() {
+export default function ListJobs({jobHomePage}) {
   // const [data, setData] = useState("")
 
   // useEffect(() => {
@@ -13,180 +13,7 @@ export default function ListJobs() {
   //     setData(response.data);
   //   });
   // }, [])
-  const data = [
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Intern nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Intern nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Fresher nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-    {
-      title: "Intern nodejs",
-      name: "ZETA GROUP",
-      description: "exam",
-      position: "Developer",
-      type: "Fulltime",
-      level: "fresher",
-      age: "18-27",
-      experience: "1 year",
-      salary: "500$ - 800$ ",
-      numberApplicant: 2,
-      location: "Hà Nội",
-      operationSector: "IT",
-      category: "IT",
-      createAt: "21/1/2022",
-      seadline: "21/5/2021",
-    },
-  ];
-  console.log(data);
-
+  console.log('jobs',jobHomePage);
   return (
     <div className="list-jobs">
       <Container>
@@ -207,13 +34,13 @@ export default function ListJobs() {
             },
             pageSize: 10,
           }}
-          dataSource={data}
+          dataSource={jobHomePage}
           renderItem={(job) => (
             <List.Item>
               <JobItem job={job} />
             </List.Item>
           )}
-        ></List>
+        ></List> 
       </Container>
     </div>
   );

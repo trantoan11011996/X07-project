@@ -17,31 +17,37 @@ import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
 import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
+import { JobProvider } from "../../Context/JobContext";
 
 export default function MainApp() {
   return (
     <AuthContext.Provider>
       <UserProvider>
-        <BrowserRouter>
-          <div className="main-app">
-            <Header />
-            <Routes>
-              <Route path="/" element={<HomePage />}></Route>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/update_info" element={<UpdateInfoUser />}></Route>
-              <Route
-                path="/forgot_password"
-                element={<ForgotPassword />}
-              ></Route>
-              <Route path="/register" element={<RegisterForm />}></Route>
-              <Route path="/company" element={<CompanyPage />}></Route>
-              <Route path="/job&location" element={<JobAndLocation />}></Route>
-              <Route path="/allJob" element={<AllJob />}></Route>
-              <Route path="/upload" element={<UploadRecruiment />}></Route>
-            </Routes>
-            <Footer />
-          </div>
-        </BrowserRouter>
+        <JobProvider>
+          <BrowserRouter>
+            <div className="main-app">
+              <Header />
+              <Routes>
+                <Route path="/" element={<HomePage />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/update_info" element={<UpdateInfoUser />}></Route>
+                <Route
+                  path="/forgot_password"
+                  element={<ForgotPassword />}
+                ></Route>
+                <Route path="/register" element={<RegisterForm />}></Route>
+                <Route path="/company" element={<CompanyPage />}></Route>
+                <Route
+                  path="/job&location"
+                  element={<JobAndLocation />}
+                ></Route>
+                <Route path="/allJob" element={<AllJob />}></Route>
+                <Route path="/upload" element={<UploadRecruiment />}></Route>
+              </Routes>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </JobProvider>
       </UserProvider>
     </AuthContext.Provider>
   );
