@@ -51,7 +51,14 @@ export default function UserCandidate() {
   const [phoneErr, setPhoneErr] = useState(false);
   const [categories, setCategories] = useState([]);
   // const {user} = useSelector(state=>state.auths)
+  const [userInfo,setUserInfo] = useState({})
+  const [operationSectorAuto,setOperationSectorAuto] = useState('')
 
+  useEffect(()=>{
+    const getInfo = JSON.parse(localStorage.getItem('currentUser'))
+    setOperationSectorAuto(getInfo.operationSector)
+    setUserInfo(getInfo.user.info)
+  },[])
   const getAllCategory = async (token) => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/category`,
@@ -169,6 +176,7 @@ export default function UserCandidate() {
                   className="input ms-2"
                   type="text"
                   maxLength={100}
+                  defaultValue={userInfo.fullName}
                   onChange={(event) => setName(event.target.value)}
                 />
                 {nameEmpty && (
