@@ -11,12 +11,12 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "https://xjob-mindx.herokuapp.com/api/users/login",
+      "https://xjob-mindx-production.up.railway.app/api/users/login",
       { email, password },
       config
     );
     localStorage.setItem("currentUser", JSON.stringify(data));
-    localStorage.setItem("token",JSON.stringify(data.token))
+    localStorage.setItem("token", JSON.stringify(data.token));
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {

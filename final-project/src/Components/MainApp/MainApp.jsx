@@ -15,6 +15,8 @@ import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
+import { AllJob } from "../AllJob/AllJob";
+import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
 
 export default function MainApp() {
   return (
@@ -26,20 +28,16 @@ export default function MainApp() {
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
               <Route path="/login" element={<Login />}></Route>
-              <Route
-                path="/update_info"
-                element={<UpdateInfoUser />}
-              ></Route>
+              <Route path="/update_info" element={<UpdateInfoUser />}></Route>
               <Route
                 path="/forgot_password"
                 element={<ForgotPassword />}
               ></Route>
               <Route path="/register" element={<RegisterForm />}></Route>
-              <Route path="/candidate" element={<UserCandidate />}></Route>
-              <Route path="/recruiter" element={<UserRecruiter />}></Route>
               <Route path="/company" element={<CompanyPage />}></Route>
               <Route path="/job&location" element={<JobAndLocation />}></Route>
-              {/* <Route path="/page_candidate" element={<CandidatePage/>}></Route> */}
+              <Route path="/allJob" element={<AllJob />}></Route>
+              <Route path="/upload" element={<UploadRecruiment />}></Route>
             </Routes>
             <Footer />
           </div>
