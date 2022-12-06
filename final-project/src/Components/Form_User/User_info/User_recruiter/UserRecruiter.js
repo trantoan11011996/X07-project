@@ -41,7 +41,15 @@ export default function UserRecruiter() {
   const [EmailErr, setEmailErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
   const [operationSectorForm, setOperationSectorForm] = useState([]);
+  const [userInfo,setUserInfo] = useState({})
+  const [operationSectorAuto,setOperationSectorAuto] = useState('')
 
+  useEffect(()=>{
+    const getInfo = JSON.parse(localStorage.getItem('currentUser'))
+    setOperationSector(getInfo.operationSector)
+    console.log(getInfo);
+    setUserInfo(getInfo.user.info)
+  },[])
   const handleSubmitUpdateRecruiter = (event) => {
     event.preventDefault();
 
@@ -147,6 +155,7 @@ export default function UserRecruiter() {
               className="input ms-2 "
               type="text"
               maxLength={100}
+              defaultValue={userInfo?.name}
               onChange={(event) => setCompanyName(event.target.value)}
             />
             {companyEmpty && (
@@ -164,6 +173,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="email"
+                  defaultValue={userInfo?.email}
                   onChange={(event) => setCompanyEmail(event.target.value)}
                 />
                 {companyEmailEmpty && (
@@ -185,6 +195,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  defaultValue={userInfo?.phoneNumber}
                   onChange={(event) => setCompanyPhone(event.target.value)}
                 />
                 {phoneEmpty && (
@@ -207,6 +218,7 @@ export default function UserRecruiter() {
               className="input ms-2"
               type="text"
               maxLength={200}
+              defaultValue={userInfo?.address}
               onChange={(event) => setCompanyAddress(event.target.value)}
             />
             {addressEmpty && (
@@ -222,8 +234,9 @@ export default function UserRecruiter() {
             <Form.Select
               className="input ms-2"
               onChange={(event) => setOperationSector(event.target.value)}
+              defaultValue={operationSectorAuto}
             >
-              <option></option>
+              <option>{operationSectorAuto}</option>
               {operationSectorForm?.map((item, index) => {
                 return (
                   <option key={index} value={item._id}>
@@ -248,6 +261,7 @@ export default function UserRecruiter() {
               as="textarea"
               rows={3}
               maxLength={1000}
+              defaultValue={userInfo?.description}
               onChange={(event) => setCompanyDescription(event.target.value)}
             />
             {descriptEmpty && (

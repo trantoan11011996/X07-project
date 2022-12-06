@@ -42,7 +42,7 @@ export default function HomeJobs() {
             {(user?.user?.role || currentUser?.role) == "candidate" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col md={2} className="col-title">
+                  <Col sm={2} md={2} className="homejob-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
@@ -57,10 +57,11 @@ export default function HomeJobs() {
                     </Link>
                   </Col>
 
-                  <Col sm={2} md={2}>
-                    <Button> Tin đã ứng tuyển</Button>
+                  <Col sm={2} md={4}>
+                    <Link className="homejob-title homejob-title-link">
+                      Công việc đã ứng tuyển <span></span>
+                    </Link>
                   </Col>
-                  <Col sm={6} md={6}></Col>
                 </Row>
               </>
             )}
