@@ -15,8 +15,10 @@ import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
+
 import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
+import RJDetails from "../RecruiterJobDetails/RJDetails";
 import { JobProvider } from "../../Context/JobContext";
 
 export default function MainApp() {
@@ -43,6 +45,8 @@ export default function MainApp() {
                 ></Route>
                 <Route path="/allJob" element={<AllJob />}></Route>
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
+                <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
+                {/** làm xong layout thì xóa */}
               </Routes>
               <Footer />
             </div>
