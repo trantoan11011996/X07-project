@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { DatePicker, Space } from "antd";
 import "../UploadRecruiment/Upload.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import pretty from "pretty";
+import { JobContext } from "../../Context/JobContext";
 const { RangePicker } = DatePicker;
 export default function UploadRecruiment() {
   const [deadline, setDeadline] = useState([]);
@@ -12,46 +13,18 @@ export default function UploadRecruiment() {
   const [selectedFile, setSelectedFile] = useState();
   const [imageData, setImageData] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
-  const [disabled, setDisabled] = useState(false);
-  const [stringParse, setStringParse] = useState();
+  const {allCategory,allLocation} = useContext(JobContext)
   useEffect(() => {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
   }, []);
-
+  
   const handleCkEditorChanges = (event, editor) => {
     setCkEditorOutput(editor.getData());
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const description = document.getElementById("description-upload");
-    description.innerHTML = `
-    ${ckEditorOutput}
-    `;
-    const formData = new FormData();
-
-    formData.append("formFile", selectedFile);
-    const uploadImage = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
-      {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        const splitString = data.path.split("/");
-        console.log("split 1 ", splitString[1]);
-        console.log("split 2", splitString[2]);
-        setImageData(splitString[1] + "/".concat(splitString[2]));
-        return data;
-      });
-    return uploadImage;
+    
   };
   console.log(imageData);
   const showDate = (date, dateString) => {
@@ -129,8 +102,20 @@ export default function UploadRecruiment() {
             <Form.Label>Lĩnh vực tuyển dụng <span style={{color:"red"}}>*</span></Form.Label>
             <Form.Select className="mb-3">
               <option></option>
-              <option value>Kể toán</option>
-              <option value>IT/phần mềm</option>
+              {allCategory?.map((item,index)=>{
+                return(
+                  <option value={item._id} key={index}>{item.name}</option>
+                )
+              })}
+            </Form.Select>
+            <Form.Label>Địa điểm tuyển dụng<span style={{color:"red"}}>*</span></Form.Label>
+            <Form.Select className="mb-3">
+              <option></option>
+              {allLocation?.map((item,index)=>{
+                return(
+                  <option value={item._id} key={index}>{item.name}</option>
+                )
+              })}
             </Form.Select>
             <Form.Group className="mb-3">
               <Form.Label>Mức Lương <span style={{color:"red"}}>*</span></Form.Label>
@@ -154,7 +139,7 @@ export default function UploadRecruiment() {
                 Mới tốt nghiệp/ chưa có kinh nghiệm
               </option>
               <option value="0 - 1 năm">
-                <span>&lt;</span>0 - 1 năm{" "}
+                0 - 1 năm{" "}
               </option>
               <option value="1 - 3 năm">1 - 3 năm</option>
               <option value="3 - 5 năm">3 - 5 năm</option>
@@ -166,7 +151,6 @@ export default function UploadRecruiment() {
             <CKEditor
               editor={ClassicEditor}
               onChange={handleCkEditorChanges}
-              disabled={disabled}
               style={{ padding: "20px" }}
             />
           </div>

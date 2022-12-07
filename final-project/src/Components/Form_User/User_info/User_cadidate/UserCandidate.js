@@ -37,6 +37,7 @@ export default function UserCandidate() {
     currentUser,
     setCurrentUser,
     token,
+    setToken
   } = useContext(UserContext);
   const navigate = useNavigate(null);
 
@@ -58,11 +59,13 @@ export default function UserCandidate() {
   const [imageData,setImageData] = useState("")
 
   useEffect(()=>{
-    const getInfo = JSON.parse(localStorage.getItem('currentUser'))
-    setOperationSectorAuto(getInfo.operationSector)
-    setUserInfo(getInfo.user.info)
-    const token = JSON.parse(localStorage.getItem("token"));
-    getAllCategory(token);
+    const getInfo = JSON.parse(localStorage.getItem("currentUser"));
+    const avatar = getInfo?.user?.avatar
+    const splitString  = avatar.split("/")
+    const imageString = splitString[1]+"/".concat(splitString[2])
+    setImageData(imageString)
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
   },[])
   const getAllCategory = async (token) => {
     const all = await fetch(
@@ -86,10 +89,12 @@ export default function UserCandidate() {
   };
   const getFile = (e) =>{
     setSelectedFile(e.target.files[0])
+    console.log(e.target.files[0]);
   }
 
   const handleSubmitAvarta = async (e) => {
     e.preventDefault();
+    console.log("token",token);
     const formData = new FormData();
 
 		formData.append('formFile', selectedFile);
@@ -108,8 +113,6 @@ export default function UserCandidate() {
       })
       .then((data) => {
         const splitString  = data.path.split("/")
-        console.log("split 1 ",splitString[1]);
-        console.log("split 2",splitString[2]);
         const imageString = splitString[1]+"/".concat(splitString[2])
         setImageData(imageString)
         localStorage.setItem('avarta',JSON.stringify(imageString))
@@ -186,7 +189,7 @@ export default function UserCandidate() {
 
       updateCandidateInfo();
       setShowLogin(false);
-      // navigate("/");
+      navigate("/");
       console.log(currentUser);
 
     }
@@ -228,7 +231,6 @@ export default function UserCandidate() {
                   className="input ms-2"
                   type="text"
                   maxLength={100}
-                  defaultValue={userInfo.fullName}
                   onChange={(event) => setName(event.target.value)}
                 />
                 {nameEmpty && (
@@ -250,17 +252,19 @@ export default function UserCandidate() {
                       inline
                       label="Nam"
                       name="group1"
+                      value="Nam"
                       type={type}
                       id={`inline-${type}-1`}
-                      onChange={(event) => setGender(event.target.value)}
+                      onChange={(e)=>setGender(e.target.value)}
                     />
                     <Form.Check
                       inline
                       label="Nữ"
                       name="group1"
+                      value="Nữ"
                       type={type}
                       id={`inline-${type}-2`}
-                      onChange={(event) => setGender(event.target.value)}
+                      onChange={(e)=>setGender(e.target.value)}
                     />
                   </div>
                 ))}

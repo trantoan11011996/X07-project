@@ -8,6 +8,8 @@ import {
 } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
 import {MdAccountCircle} from "react-icons/md"
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
@@ -46,17 +48,18 @@ export default function UserRecruiter() {
   const [selectedFile, setSelectedFile] = useState();
   const [imageData,setImageData] = useState("")
   const [token, setToken] = useState("");
+  const [ckEditorOutput, setCkEditorOutput] = useState(null);
 
 
   useEffect(() => {
     const getInfo = JSON.parse(localStorage.getItem("currentUser"));
     setOperationSector(getInfo.operationSector);
-    console.log(getInfo);
-    setUserInfo(getInfo.user.info);
+    const avatar = getInfo?.user?.avatar
+    const splitString  = avatar.split("/")
+    const imageString = splitString[1]+"/".concat(splitString[2])
+    setImageData(imageString)
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
-    const getAvarta = JSON.parse(localStorage.getItem('avarta'))
-    setImageData(getAvarta)
   }, []);
 
   const getFile = (e) =>{
@@ -144,18 +147,20 @@ export default function UserRecruiter() {
       setOperationSectorEmpty(false);
     }
 
-    if (!companyDescription || companyDescription == null) {
+    if (!ckEditorOutput || ckEditorOutput == null) {
       setDescriptEmpty(true);
       return;
     } else {
       setDescriptEmpty(false);
-      updateRecruiterInfo();
+      // updateRecruiterInfo();
       setShowLogin(false);
-      navigate("/");
+      // navigate("/");
     }
   };
 
-  // const {user} = useSelector(state=>state.auths)
+  const handleCkEditorChanges = (event, editor) => {
+    setCkEditorOutput(editor.getData());
+  };
 
   const getAllOperationSector = async (token) => {
     console.log(token);
@@ -314,18 +319,11 @@ export default function UserRecruiter() {
           </Row>
 
           <Row className="row-form">
-            <Form.Label />{" "}
-            <b>
-              {" "}
-              Mô tả<span style={{ color: "red" }}>*</span>{" "}
-            </b>
-            <Form.Control
-              className="input ms-2"
-              as="textarea"
-              rows={3}
-              maxLength={1000}
-              defaultValue={userInfo?.description}
-              onChange={(event) => setCompanyDescription(event.target.value)}
+          <Form.Label>Mô tả bổ sung <span style={{color:"red"}}>*</span></Form.Label>
+            <CKEditor
+              editor={ClassicEditor}
+              onChange={handleCkEditorChanges}
+              style={{ padding: "20px" }}
             />
             {descriptEmpty && (
               <p className="text"> Mô tả không được để trống</p>

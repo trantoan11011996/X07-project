@@ -7,6 +7,9 @@ const JobContext = createContext();
 const JobProvider = ({ children }) => {
   const [jobHomePage, setJobHomePage] = useState([]);
   const [jobList, setJobList] = useState([]);
+  const [allCategory,setAllCategory] = useState([])
+  const [allLocation,setAllLocation] = useState([])
+
 
   const getJobHomePage = async () => {
     const jobs = await fetch(
@@ -48,14 +51,30 @@ const JobProvider = ({ children }) => {
       return jobDetail;
     }
   };
-
+  /// fetch all category 
+  const getallCategory = async() =>{
+    const categories = await JobApi.categories()
+    setAllCategory(categories)
+  }
+  //fetch all location
+  const getallLocation= async() =>{
+    const locations = await JobApi.locations()
+    console.log('loca',locations);
+    setAllLocation(locations)
+  }
+  useEffect(()=>{
+    getallCategory()
+    getallLocation()
+  },[])
   const value = {
     getJobHomePage,
     setJobHomePage,
     jobHomePage,
     fetchJobDetail,
     fetchAllJobs,
-    jobList
+    jobList,
+    allCategory,
+    allLocation
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
