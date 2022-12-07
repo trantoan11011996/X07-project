@@ -46,6 +46,7 @@ export default function HomeJobs() {
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
+                  
                     <Link
                       to={"/allJob"}
                       className="homejob-title homejob-title-link"

@@ -17,14 +17,14 @@ import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
 import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
-import JobsDetailCandidate from "../JobAndLocation/Jobs-Candidate/JobsDetailCandidate";
+import RJDetails from "../RecruiterJobDetails/RJDetails";
 
 export default function MainApp() {
   return (
     <AuthContext.Provider>
       <UserProvider>
         <BrowserRouter>
-          {/* <div className="main-app">
+          <div className="main-app">
             <Header />
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
@@ -39,10 +39,10 @@ export default function MainApp() {
               <Route path="/job&location" element={<JobAndLocation />}></Route>
               <Route path="/allJob" element={<AllJob />}></Route>
               <Route path="/upload" element={<UploadRecruiment />}></Route>
+              <Route path="/rjdetails" element={<RJDetails/>}></Route> {/** làm xong layout thì xóa */}
             </Routes>
             <Footer />
-          </div> */}
-          <JobsDetailCandidate />
+          </div>
         </BrowserRouter>
       </UserProvider>
     </AuthContext.Provider>
