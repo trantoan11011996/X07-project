@@ -1,10 +1,21 @@
-
-import { Tab } from "bootstrap";
 import React from "react";
-import { Card, Container, Col, Row, Button, Tabs } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Container, Col, Row, Button, Tabs, Tab, Modal, Form } from "react-bootstrap";
 import "../Jobs-Candidate/Job.css"
 
 export default function JobItem() {
+
+    const [show, setShow] = useState('');
+    const [active, setActive] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleClick = (event) => {
+        event.preventDefault()
+        setActive(true)
+        handleClose()
+    }
 
     return (
         <Container>
@@ -36,7 +47,11 @@ export default function JobItem() {
 
                                 <Row className="mt-2">
                                     <Col sm={3} md={3}>
-                                        <Button className="job-button" variant="primary">Nộp đơn ngay</Button>
+                                        {!active
+                                        ? <Button className="job-button" variant="primary" onClick={handleShow}>Nộp đơn ngay</Button>
+                                        : <Button className="job-button" variant="primary" >Đã ứng tuyển</Button> 
+                                        }
+                                       
                                     </Col>
 
                                     <Col sm={3} md={3}>
@@ -62,6 +77,38 @@ export default function JobItem() {
 
                 </Col>
             </Row>
+
+
+
+
+            <Modal show={show} onHide={handleClose} className="job-modal">
+
+                <Modal.Header closeButton>
+                    <Modal.Title>Form Ứng Tuyển</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Form.Group>
+                        <Form.Label>Hồ sơ ứng tuyển</Form.Label>
+                        <Form.Control type="file" placeholder="Upload" />
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label className="mt-3"> Ghi chú</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
+                    </Form.Group>
+
+                    <Row className="mt-3">
+                        <Col sm={4} md={4}></Col>
+
+                        <Col sm={4} md={4}>
+                            <Button className="modal-button" variant="outline-primary" onClick={handleClick}> Gửi yêu cầu</Button>
+                        </Col>
+
+                        <Col sm={4} md={4}></Col>
+                    </Row>
+                </Modal.Body>
+            </Modal>
         </Container>
     )
 }

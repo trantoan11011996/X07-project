@@ -17,13 +17,14 @@ import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
 import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
+import JobsDetailCandidate from "../JobAndLocation/Jobs-Candidate/JobsDetailCandidate";
 
 export default function MainApp() {
   return (
     <AuthContext.Provider>
       <UserProvider>
         <BrowserRouter>
-          <div className="main-app">
+          {/* <div className="main-app">
             <Header />
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
@@ -40,7 +41,8 @@ export default function MainApp() {
               <Route path="/upload" element={<UploadRecruiment />}></Route>
             </Routes>
             <Footer />
-          </div>
+          </div> */}
+          <JobsDetailCandidate />
         </BrowserRouter>
       </UserProvider>
     </AuthContext.Provider>
