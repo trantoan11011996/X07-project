@@ -42,11 +42,32 @@ import axios from "axios";
         return res.data;
     }
  }
-
+ const getAllCategory = async() =>{
+    const categories = await fetch(`https://xjob-mindx-production.up.railway.app/api/users/category`,{
+      method :"GET"
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data
+    })
+    return categories
+  }
+  const getAllLocation = async() =>{
+    const locations = await fetch(`https://xjob-mindx-production.up.railway.app/api/users/location`,{
+      method :"GET"
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data
+    })
+    return locations
+  }
  const JobApi = {
     allJobs : fetchAllJobs,
     homepageJob: fetchJobHomepage,
-    jobDetail: fetchJobDetail
+    jobDetail: fetchJobDetail,
+    categories : getAllCategory,
+    locations:getAllLocation
  }
 
  export default JobApi;
