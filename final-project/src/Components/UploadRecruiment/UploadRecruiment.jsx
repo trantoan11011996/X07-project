@@ -79,7 +79,7 @@ export default function UploadRecruiment() {
               <Form.Control
                 maxLength={300}
                 type="text"
-                placeholder="Nhập vị trí công việc"
+                placeholder="ví dụ : Nhân Viên Kinh Doanh"
                 required
               />
             </Form.Group>
@@ -113,9 +113,9 @@ export default function UploadRecruiment() {
                 <Form.Group className="mb-3">
                   <Form.Control
                     min={18}
-                    type="number"
+                    type="text"
                     required
-                    placeholder="Từ"
+                    placeholder="ví dụ: 18-25"
                   />
                 </Form.Group>
               </Col>
@@ -137,7 +137,7 @@ export default function UploadRecruiment() {
               <Form.Control
                 maxLength={100}
                 type="text"
-                placeholder="2.000.000VNĐ-3.000.000VNĐ"
+                placeholder="2,000,000-3,000,000"
                 required
               />
             </Form.Group>
@@ -153,8 +153,8 @@ export default function UploadRecruiment() {
               <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
                 Mới tốt nghiệp/ chưa có kinh nghiệm
               </option>
-              <option value="< 1 năm">
-                <span>&lt;</span> 1 năm{" "}
+              <option value="0 - 1 năm">
+                <span>&lt;</span>0 - 1 năm{" "}
               </option>
               <option value="1 - 3 năm">1 - 3 năm</option>
               <option value="3 - 5 năm">3 - 5 năm</option>
