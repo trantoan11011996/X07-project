@@ -46,7 +46,6 @@ export default function MainApp() {
                 <Route path="/allJob" element={<AllJob />}></Route>
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
                 <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
-                {/** làm xong layout thì xóa */}
               </Routes>
               <Footer />
             </div>
