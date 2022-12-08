@@ -30,7 +30,7 @@ export default function MainApp() {
           <BrowserRouter>
             <div className="main-app">
               <Header />
-              <Routes>
+              {/* <Routes>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/update_info" element={<UpdateInfoUser />}></Route>
@@ -46,13 +46,13 @@ export default function MainApp() {
                 ></Route>
                 <Route path="/allJob" element={<AllJob />}></Route>
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
-                <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
+                <Route path="/rjdetails" element={<RJDetails />}></Route>{" "} */}
 
                 {/* <Route path="jobCandidate">
                   <Route path=":id" element={<CandidateJobDetail />}></Route>
                 </Route> */}
-              </Routes>
-              {/* <CandidateJobDetail /> */}
+              {/* </Routes> */}
+              <CandidateJobDetail />
               <Footer />
             </div>
           </BrowserRouter>

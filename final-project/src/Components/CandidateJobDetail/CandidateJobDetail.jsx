@@ -8,14 +8,18 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { BsFillCalendar2CheckFill } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineWork } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
+import { UserContext } from "../../Context/UserContext";
 import "../CandidateJobDetail/candidatejobdetail.css"
 import data from "./JobData";
 
 export default function CandidateJobDetail() {
 
     // const { fetchJobDetail } = useContext(JobContext);
+    const { user } = useSelector((state) => state.auths);
+    const { currentUser } = useContext(UserContext);
 
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
@@ -45,6 +49,15 @@ export default function CandidateJobDetail() {
     //     getJobDetail(id);
     // }, []);
 
+
+
+    useEffect(() => {
+        const description = document.getElementById("description")
+        description.innerHTML = `
+        ${jobData.description}
+    `
+    }, [jobData])
+
     return (
         <>
             {jobData && (
@@ -67,7 +80,7 @@ export default function CandidateJobDetail() {
                                     </Row>
 
                                     <div className="job-details">
-                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.name.info.address}</p>
+                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
                                         <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
                                         <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience}</p>
                                         <Row className="mt-2">
@@ -75,57 +88,108 @@ export default function CandidateJobDetail() {
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
-                                        <Row className="mt-2">
-                                            <Col sm={3} md={3}>
-                                                {!active
-                                                    ? <Button className="job-button" variant="primary" onClick={handleShow}>Nộp đơn ngay</Button>
-                                                    : <Button className="job-button" variant="primary" >Đã ứng tuyển</Button>
-                                                }
+                                        {(user?.user.role == "candidate" || currentUser?.role == "candidate") && (
+                                            <Row className="mt-2">
+                                                <Col sm={3} md={3}>
+                                                    {!active
+                                                        ? <Button className="job-button" variant="primary" onClick={handleShow}>Nộp đơn ngay</Button>
+                                                        : <Button className="job-button" variant="primary" >Đã ứng tuyển</Button>
+                                                    }
 
+                                                </Col>
+
+                                                <Col sm={3} md={3}>
+                                                    <Button className="job-button" variant="outline-primary">Lưu</Button>
+                                                </Col>
+                                            </Row>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-3">
+                                        <Row className="ms-2">
+                                            <Col sm={2} md={2}>
+                                                <a className="job-tab" href="#description"> Mô tả</a>
+                                            </Col>
+
+                                            <Col sm={2} md={2}>
+                                                <a className="job-tab" href="#require"> Yêu cầu</a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <Button className="job-button" variant="outline-primary">Lưu</Button>
+                                                <a className="job-tab" href="#info"> Thông tin liên hệ</a>
                                             </Col>
+
+                                            <Col sm={3} md={3}>
+                                                <a className="job-tab" href="#about"> Về công ty</a>
+                                            </Col>
+
+                                            <Col sm={2} md={2}></Col>
                                         </Row>
                                     </div>
 
                                     <div className="mt-3">
-                                            <Row className="ms-2">
-                                                <Col sm={2} md={2}>
-                                                    <a className="job-tab" href="#description"> Mô tả</a>
-                                                </Col>
-
-                                                <Col sm={2} md={2}>
-                                                    <a className="job-tab" href="#require"> Yêu cầu</a>
-                                                </Col>
-
-                                                <Col sm={3} md={3}>
-                                                    <a className="job-tab" href="#info"> Thông tin liên hệ</a>
-                                                </Col>
-
-                                                <Col sm={3} md={3}>
-                                                    <a className="job-tab" href="#about"> Về công ty</a>
-                                                </Col>
-
-                                                <Col sm={2} md={2}></Col>
-                                            </Row>
+                                        <h2 className="require-title"> Mô tả </h2>
+                                        <div id="description" className="mt-3"></div>
                                     </div>
 
-                                    <div id="description">
-                                        
+                                    <div id="require" className="mt-3">
+                                        <h2 className="require-title"> Yêu Cầu </h2>
+                                        <Row>
+                                            <div> </div>
+                                            <Col sm={6} md={6}>
+                                                <Card>
+                                                    <Card.Body>
+                                                        <div>
+                                                            <h3 className="require-text"> Vị trí</h3>
+                                                            <p className="ms-2"> {jobData?.position}</p>
+                                                        </div>
+
+                                                        <div className="mt-3">
+                                                            <h3 className="require-text"> Cấp bậc</h3>
+                                                            <p className="ms-2"> {jobData?.level}</p>
+                                                        </div>
+
+                                                        <div className="mt-3">
+                                                            <h3 className="require-text"> Thời gian làm việc</h3>
+                                                            <p className="ms-2"> {jobData?.type}</p>
+                                                        </div>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+
+                                            <Col sm={6} md={6}>
+                                                <Card>
+                                                    <Card.Body>
+                                                        <div>
+                                                            <h3 className="require-text">Kinh nghiệm</h3>
+                                                            <p className="ms-2"> {jobData?.experience}</p>
+                                                        </div>
+
+                                                        <div className="mt-3">
+                                                            <h3 className="require-text">Số lượng</h3>
+                                                            <p className="ms-2"> {jobData?.numberApplicant} nhân viên</p>
+                                                        </div>
+
+                                                        <div className="mt-3">
+                                                            <h3 className="require-text">Độ tuổi</h3>
+                                                            <p className="ms-2"> {jobData?.age}</p>
+                                                        </div>
+
+
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        </Row>
                                     </div>
 
-                                    <div id="require">
-                                        
+                                    <div id="info" className="mt-3">
+                                        <h2 className="require-title"> Thông tin liên hệ </h2>
+                                        <p className="ms-2"> email: {jobData?.name.info.email}</p>
+                                        <p className="ms-2"> sdt: {jobData?.name.info.phoneNumber}</p>
                                     </div>
 
-                                    <div id="info">
-                                        
-                                    </div>
+                                    <div id="about" className="mt-3">
 
-                                    <div id="about">
-                                        
                                     </div>
 
                                 </Card.Body>
@@ -140,7 +204,7 @@ export default function CandidateJobDetail() {
 
 
 
-                    <Modal show={show} onHide={handleClose} className="job-modal">
+                    <Modal show={show} onHide={handleClose} className="job-modal mt-5">
 
                         <Modal.Header closeButton>
                             <Modal.Title>Form Ứng Tuyển</Modal.Title>
