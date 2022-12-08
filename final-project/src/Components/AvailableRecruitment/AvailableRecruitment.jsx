@@ -13,11 +13,12 @@ import { colourOptions } from "../DataJob/data";
 import { address } from "../DataJob/data";
 import Select from "react-select";
 import { JobContext } from "../../Context/JobContext";
-
+import { List } from "antd";
+import JobListRecruitment from "./JobListRecruitment";
 const cx = classNames.bind(styles);
 
 export const AvailableRecruitment = () => {
-  const {getMyRecruitmentJobs,  myJobRecruitment, search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
+  const {getMyRecruitmentJobs, myJobRecruitment, search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
@@ -42,7 +43,13 @@ export const AvailableRecruitment = () => {
   useEffect(() => {
     getMyRecruitmentJobs(token)
   }, [search, category, page,fieldSort, typeSort])
-  console.log(myJobRecruitment)
+ 
+  useEffect(() => {
+    const getlocalToken = JSON.parse(localStorage.getItem('token'))
+    getMyRecruitmentJobs(getlocalToken)
+  },[])
+
+ 
 
   return (
     <>
@@ -120,14 +127,14 @@ export const AvailableRecruitment = () => {
                   </select>
                 </div>
               </div>
-              <div>
-                <button onClick={() =>  setCurrentItems(myJobRecruitment)}>Bấm Vào đây</button>
-                 {currentItems}
-              </div>
-              <ul className={cx("list_group_jobs")}>
-              
-                  <JobItemRecruitment  myJobRecruitment ={myJobRecruitment} />
             
+              {/* <ul className={cx("list_group_jobs")}> */}
+                  
+                <div>
+               <JobListRecruitment/>
+            
+
+                </div>
                 <div style={{ textAlign: "center" }}>
                   <ReactPaginate
                     className={cx("paginate")}
@@ -145,7 +152,7 @@ export const AvailableRecruitment = () => {
                     activeLinkClassName={cx("active")}
                   />
                 </div>
-              </ul>
+              {/* </ul> */}
             </div>
             <div className={cx("wrapper_banner")}>
               <img src={images.banner} alt="" />
