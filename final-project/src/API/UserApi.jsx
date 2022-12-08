@@ -57,6 +57,7 @@ const autoLogin = () => {
 const logOut = () => {
   localStorage.removeItem("currentUser");
   localStorage.removeItem("token")
+  localStorage.removeItem("myRcm")
 };
 
 const UserApis = {
