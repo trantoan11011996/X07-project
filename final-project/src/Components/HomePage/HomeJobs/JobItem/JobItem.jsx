@@ -7,7 +7,9 @@ import "../JobItem/JobItem.css";
 import logocompany from "../../../../img/logocompany.png"
 import { Link } from "react-router-dom";
 export default function JobItem({ job }) {
-  console.log('job', job?.location);
+  const image = job?.name?.avatar
+  const splitString  = image.split("/")
+  const imageString = splitString[1]+"/".concat(splitString[2])
   return (
     <div className="job-item">
       {/* <Link to={"/job/" + job._id}> */}
@@ -15,7 +17,7 @@ export default function JobItem({ job }) {
           <div className="job-wrapper">
             <Col md={2} className="company-logo">
               <div className="logo-wraper">
-                <img className="logo-company" src={logocompany}></img>
+                <img className="logo-company" src={`https://xjob-mindx-production.up.railway.app/${imageString}`}></img>
               </div>
             </Col>
 

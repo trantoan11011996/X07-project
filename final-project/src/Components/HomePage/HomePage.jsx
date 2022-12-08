@@ -12,6 +12,7 @@ export default function HomePage() {
   const { getJobHomePage, setJobHomePage, jobHomePage } =
     useContext(JobContext);
     useEffect(()=>{
+      getJobHomePage()
       const getJobs = JSON.parse(localStorage.getItem("jobHomePage"))
       setJobHomePage(getJobs)
     },[])
