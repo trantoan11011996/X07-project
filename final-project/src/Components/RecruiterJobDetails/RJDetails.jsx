@@ -1,45 +1,136 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios'
-import Button from "./atoms/Button";
-import InnerNavBar from "./atoms/InnerNavbar";
+import React from "react";
+import { useState } from "react";
+import {
+  Card,
+  Container,
+  Col,
+  Row,
+  Button,
+  Tabs,
+  Tab,
+  Modal,
+  Form,
+} from "react-bootstrap";
+import "../CandidateJobDetail/candidatejobdetail.css";
+
 export default function RJDetails() {
+  const [show, setShow] = useState("");
+  const [active, setActive] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleActive = (event) => {
+    event.preventDefault();
+    setActive(true);
+    handleClose();
+  };
+
   return (
-    <div className="w-full mt-[90px] flex flex-row">
-      <div className="w-2/3 flex flex-col m-3 shadow-md">
-        <img
-          className="w-full object-cover object-top pb-4 "
-          src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_0.svg"
-          alt="ảnh"
-        />
-        <div className="flex flex-row px-3 ">
-          <div>
-            <img src="https://flowbite.com/docs/images/logo.svg" alt="ảnh" />
-          </div>
-          <div className="flex flex-col justify-between ml-4 space-y-3">
-            <span className="font-bold text-gray-900 text-3xl ">Tiêu đề</span>
-            <span className="font-semibold text-gray-800 text-xl">Công ty</span>
-            <div className="font-medium text-gray-600 text-medium space-y-2">
-              <div>
-                <p className="mb-1">Địa điểm</p>
-                <p>Lương</p>
+    <Container>
+      <Row className="container">
+        <Col sm={8} md={8}>
+          <Card className="job-content m-3">
+            <Card.Img
+              className="job-banner"
+              variant="top"
+              src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg"
+            />
+
+            <Card.Body>
+              <Row className="titte m-2">
+                <Col className="logo" sm={3} md={3}>
+                  <img src="https://www.careerlink.vn/image/4da3ca9a9b8fd6454576840e74146541" />
+                </Col>
+
+                <Col className="company" sm={9} md={9}>
+                  <Card.Title> Tiêu đề</Card.Title>
+                  <h3> Tên công ty</h3>
+                </Col>
+              </Row>
+
+              <div className="job-details">
+                <p className="mt-2">địa điểm</p>
+                <p className="mt-2">lương</p>
+                <p className="mt-2">kinh nghiệm</p>
+                <Row className="mt-2">
+                  <Col sm={4} md={4}>
+                    Ngày đăng tuyển
+                  </Col>
+                  <Col sm={4} md={4}>
+                    Ngày hết hạn
+                  </Col>
+                </Row>
+
+                <Row className="mt-2">
+                  <Col sm={3} md={3}>
+                    <Button className="job-button" variant="primary"  onClick={handleShow}>
+                      Cập nhật{" "}
+                    </Button>
+                  </Col>
+
+                  <Col sm={3} md={3}>
+                    <Button className="job-button" variant="primary">
+                      Gỡ bỏ
+                    </Button>
+                  </Col>
+                  <Col sm={3} md={3}>
+                    <Button className="job-button" variant="primary">
+                      Danh sách ứng viên
+                    </Button>
+                  </Col>
+                </Row>
               </div>
-              <div className="flex flex-row space-x-60">
-                <span>Ngày đăng tuyển</span>
-                <span>Ngày hết hạn</span>
+
+              <div className="job-tabs mt-3">
+                <Tabs>
+                  <Tab eventKey="" title="Mô tả công việc"></Tab>
+                  <Tab eventKey="" title="Yêu cầu"></Tab>
+                  <Tab eventKey="" title="Mô tả bổ sung"></Tab>
+                  <Tab eventKey="" title="Về công ty"></Tab>
+                </Tabs>
               </div>
-              <div>
-                <p className="mb-1">Trạng thái tin tuyển dụng</p>
-                <p>Số lượng ứng viên đã tuyển dụng</p>
-              </div>
-            </div>
-            <Button />
-            <InnerNavBar />
-          </div>
-        </div>
-      </div>
-      <div className="w-1/3 shadow-md m-3 px-3">
-        <h1 className="mt-8">abc</h1>
-      </div>
-    </div>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col sm={4} md={4}></Col>
+      </Row>
+
+      <Modal show={show} onHide={handleClose} className="job-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Form Ứng Tuyển</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label>Hồ sơ ứng tuyển</Form.Label>
+            <Form.Control type="file" placeholder="Upload" />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label className="mt-3"> Ghi chú</Form.Label>
+            <Form.Control as="textarea" rows={3} />
+          </Form.Group>
+
+          <Row className="mt-3">
+            <Col sm={4} md={4}></Col>
+
+            <Col sm={4} md={4}>
+              <Button
+                className="modal-button"
+                variant="outline-primary"
+                onClick={handleActive}
+              >
+                {" "}
+                Gửi yêu cầu
+              </Button>
+            </Col>
+
+            <Col sm={4} md={4}></Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
+    </Container>
   );
 }

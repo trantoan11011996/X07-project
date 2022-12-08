@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import React, { useEffect, useState } from "react";
 // url
  const url = "https://xjob-mindx-production.up.railway.app";
  const allJobUrl = url + "/api/recruiments";
@@ -62,6 +62,9 @@ import axios from "axios";
     })
     return locations
   }
+
+ 
+
  const JobApi = {
     allJobs : fetchAllJobs,
     homepageJob: fetchJobHomepage,

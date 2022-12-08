@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import { createContext } from "react";
 import JobApi from "../API/ProductApi";
-
+import axios from "axios";
+import { useSelector } from "react-redux";
 const JobContext = createContext();
 
 const JobProvider = ({ children }) => {
@@ -9,6 +10,15 @@ const JobProvider = ({ children }) => {
   const [jobList, setJobList] = useState([]);
   const [allCategory,setAllCategory] = useState([])
   const [allLocation,setAllLocation] = useState([])
+  const [search, setSearch] = useState("")
+  const [category, setCategory] = useState("")
+  const [page, setPage] = useState("")
+  const [fieldSort, setFieldSort] = useState("")
+  const [typeSort, setTypeSort] = useState("")
+  const [token,setToken] = useState(null)
+
+  const [myJobRecruitment, setMyJobRecruitment] = useState("")
+
 
 
   const getJobHomePage = async () => {
@@ -25,17 +35,50 @@ const JobProvider = ({ children }) => {
         setJobHomePage(data);
         return data;
       });
+    
     return jobs;
+  
   };
   useEffect(() => {
     const getJobs = async () => {
       const jobs = await getJobHomePage();
-      console.log(jobs);
+      // console.log(jobs);
       localStorage.setItem("jobHomePage", JSON.stringify(jobs));
       setJobHomePage(jobs);
     };
     getJobs();
   }, []);
+
+  const getMyRecruitmentJobs = async (token) => {
+    
+    
+    await axios.get(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category}&page=${page}&fieldSort=${fieldSort}&typeSort=${typeSort}`,
+      { headers: {authorization: `Bearer ${token}`} },
+    
+    ).then((res) => {
+      const data = res.data;
+      setMyJobRecruitment(data.myRcm);
+      console.log('myRcm',data.myRcm)
+      if (!localStorage.getItem("myRcm")) {
+        localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
+      }
+    }).catch((error) => console.log(error.response));
+}
+  useEffect(() => {
+    let getToken = localStorage.getItem('token')
+    getToken = JSON.parse(getToken)
+    setToken(getToken)
+    console.log(getToken)
+    getMyRecruitmentJobs(getToken)
+  }, [])
+
+  // useEffect(() => {
+  //   getMyRecruitmentJobs()
+  // }, [search, category, page,fieldSort, typeSort])
+
+
+
   //fetch all Job
   const fetchAllJobs = async () => {
     let data = await JobApi.allJobs();
@@ -59,7 +102,7 @@ const JobProvider = ({ children }) => {
   //fetch all location
   const getallLocation= async() =>{
     const locations = await JobApi.locations()
-    console.log('loca',locations);
+    // console.log('loca',locations);
     setAllLocation(locations)
   }
   useEffect(()=>{
@@ -74,7 +117,13 @@ const JobProvider = ({ children }) => {
     fetchAllJobs,
     jobList,
     allCategory,
-    allLocation
+    allLocation,
+    getMyRecruitmentJobs,
+    myJobRecruitment,
+    setFieldSort,
+    setTypeSort,
+    search, category, page,fieldSort, typeSort,
+    token
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
