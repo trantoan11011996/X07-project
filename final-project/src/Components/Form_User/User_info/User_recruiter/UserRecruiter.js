@@ -20,11 +20,11 @@ export default function UserRecruiter() {
     companyPhone,
     companyAddress,
     companyDescription,
-    operationSector,
+    category,
     setCompanyEmail,
     setCompanyPhone,
     setCompanyAddress,
-    setOperationSector,
+    setCategory,
     setCompanyDescription,
     setCompanyName,
     setFieldActivity,
@@ -52,22 +52,23 @@ export default function UserRecruiter() {
 
 
   useEffect(() => {
-    const getInfo = JSON.parse(localStorage.getItem("currentUser"));
-    setOperationSector(getInfo.operationSector);
-    const avatar = getInfo?.user?.avatar
-    const splitString  = avatar.split("/")
+    getAllOperationSector()
+    const getToken = JSON.parse(localStorage.getItem("token"))
+    setToken(getToken)
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    const splitString  = user.user.avatar.split("/")
     const imageString = splitString[1]+"/".concat(splitString[2])
+    console.log(imageString);
     setImageData(imageString)
-    const getToken = JSON.parse(localStorage.getItem("token"));
-    setToken(getToken);
   }, []);
 
   const getFile = (e) =>{
     setSelectedFile(e.target.files[0])
   }
 
-  const handleSubmitAvarta = async (e) => {
+  const handleSubmitAvarta = async (e,editor) => {
     e.preventDefault();
+
     const formData = new FormData();
 
 		formData.append('formFile', selectedFile);
@@ -90,15 +91,17 @@ export default function UserRecruiter() {
         console.log("split 2",splitString[2]);
         const imageString = splitString[1]+"/".concat(splitString[2])
         setImageData(imageString)
-        localStorage.setItem('avarta',JSON.stringify(imageString))
+        let user = localStorage.getItem("currentUser")
+        user = JSON.parse(user)
+        user.user.avatar =  data.path
+        localStorage.setItem('currentUser',JSON.stringify(user))
         return data;
       });
     return uploadImage;
   };
 
-  const handleSubmitUpdateRecruiter = (event) => {
+  const handleSubmitUpdateRecruiter = (event,editor) => {
     event.preventDefault();
-
     if (!companyName || companyName == null) {
       setCompanyEmpty(true);
       return;
@@ -140,7 +143,7 @@ export default function UserRecruiter() {
       setAddressEmpty(false);
     }
 
-    if (!operationSector || operationSector == null) {
+    if (!category || category == null) {
       setOperationSectorEmpty(true);
       return;
     } else {
@@ -152,26 +155,22 @@ export default function UserRecruiter() {
       return;
     } else {
       setDescriptEmpty(false);
-      // updateRecruiterInfo();
+      console.log(ckEditorOutput);
+      updateRecruiterInfo(companyName,companyEmail,companyPhone,companyAddress,ckEditorOutput,category);
       setShowLogin(false);
       // navigate("/");
     }
   };
 
-  const handleCkEditorChanges = (event, editor) => {
-    setCkEditorOutput(editor.getData());
-  };
 
-  const getAllOperationSector = async (token) => {
-    console.log(token);
+  const getAllOperationSector = async () => {
     const all = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
+      `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          authorization: `Bearer ${token}`,
         },
       }
     )
@@ -301,7 +300,7 @@ export default function UserRecruiter() {
             </b>
             <Form.Select
               className="input ms-2"
-              onChange={(event) => setOperationSector(event.target.value)}
+              onChange={(event) => setCategory(event.target.value)}
               defaultValue={operationSectorAuto}
             >
               <option>{operationSectorAuto}</option>
@@ -319,10 +318,14 @@ export default function UserRecruiter() {
           </Row>
 
           <Row className="row-form">
-          <Form.Label>Mô tả bổ sung <span style={{color:"red"}}>*</span></Form.Label>
+          <Form.Label />{" "}
+                <b>
+                  {" "}
+                  Mô tả bổ sung<span style={{ color: "red" }}>*</span>{" "}
+                </b>
             <CKEditor
               editor={ClassicEditor}
-              onChange={handleCkEditorChanges}
+              onChange={(event,editor)=>setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
             {descriptEmpty && (

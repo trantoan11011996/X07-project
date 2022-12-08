@@ -36,8 +36,6 @@ export default function UserCandidate() {
     setShowLogin,
     currentUser,
     setCurrentUser,
-    token,
-    setToken
   } = useContext(UserContext);
   const navigate = useNavigate(null);
 
@@ -57,17 +55,18 @@ export default function UserCandidate() {
   const [operationSectorAuto,setOperationSectorAuto] = useState('')
   const [selectedFile, setSelectedFile] = useState();
   const [imageData,setImageData] = useState("")
-
+  const [token,setToken] = useState('')
   useEffect(()=>{
-    const getInfo = JSON.parse(localStorage.getItem("currentUser"));
-    const avatar = getInfo?.user?.avatar
-    const splitString  = avatar.split("/")
+    getAllCategory()
+    const getToken = JSON.parse(localStorage.getItem("token"))
+    setToken(getToken)
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    const splitString  = user.user.avatar.split("/")
     const imageString = splitString[1]+"/".concat(splitString[2])
+    console.log(imageString);
     setImageData(imageString)
-    const getToken = JSON.parse(localStorage.getItem("token"));
-    setToken(getToken);
   },[])
-  const getAllCategory = async (token) => {
+  const getAllCategory = async () => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
@@ -75,7 +74,6 @@ export default function UserCandidate() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          authorization: `Bearer ${token}`,
         },
       }
     )
@@ -113,9 +111,14 @@ export default function UserCandidate() {
       })
       .then((data) => {
         const splitString  = data.path.split("/")
+        console.log("split 1 ",splitString[1]);
+        console.log("split 2",splitString[2]);
         const imageString = splitString[1]+"/".concat(splitString[2])
         setImageData(imageString)
-        localStorage.setItem('avarta',JSON.stringify(imageString))
+        let user = localStorage.getItem("currentUser")
+        user = JSON.parse(user)
+        user.user.avatar =  data.path
+        localStorage.setItem('currentUser',JSON.stringify(user))
         return data;
       });
     return uploadImage;

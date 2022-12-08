@@ -24,7 +24,7 @@ export default function UploadRecruiment() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    console.log('ck',ckEditorOutput);
   };
   console.log(imageData);
   const showDate = (date, dateString) => {
@@ -44,7 +44,7 @@ export default function UploadRecruiment() {
                 maxLength={100}
                 type="text"
                 placeholder="Nhập tiêu đề tuyển dụng"
-                required
+                // required
               />
             </Form.Group>
             <Form.Label>Vị trí việc làm <span style={{color:"red"}}>*</span></Form.Label>
@@ -53,7 +53,7 @@ export default function UploadRecruiment() {
                 maxLength={300}
                 type="text"
                 placeholder="ví dụ : Nhân Viên Kinh Doanh"
-                required
+                // required
               />
             </Form.Group>
 
@@ -87,14 +87,14 @@ export default function UploadRecruiment() {
                   <Form.Control
                     min={18}
                     type="text"
-                    required
+                    // required
                     placeholder="ví dụ: 18-25"
                   />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  {/* <Form.Control type="number" required placeholder="Đến" /> */}
+                  <Form.Control type="number"  placeholder="Đến" />
                 </Form.Group>
               </Col>
             </Row>
@@ -123,13 +123,13 @@ export default function UploadRecruiment() {
                 maxLength={100}
                 type="text"
                 placeholder="2,000,000-3,000,000"
-                required
+                // required
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Số lượng ứng viên <span style={{color:"red"}}>*</span></Form.Label>
-              {/* <Form.Control max="10000" min="0" type="number" required /> */}
+              <Form.Control max="10000" min="0" type="number"  />
             </Form.Group>
 
             <Form.Label>Kinh nghiệm làm việc</Form.Label>
