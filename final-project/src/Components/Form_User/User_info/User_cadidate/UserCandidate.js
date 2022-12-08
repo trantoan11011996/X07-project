@@ -383,7 +383,7 @@ export default function UserCandidate() {
               {" "}
             </Col>
             <Col sm={3} md={3}>
-              <Button className="button" onClick={handleClick}>
+              <Button className="button" type="submit">
                                 {" "}
                 Cập nhật{" "}
               </Button>
