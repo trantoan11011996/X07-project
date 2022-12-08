@@ -2,7 +2,7 @@ import React, { useEffect, useState, } from "react";
 import { createContext } from "react";
 import JobApi from "../API/ProductApi";
 import axios from "axios";
-import { useSelector } from "react-redux";
+
 const JobContext = createContext();
 
 const JobProvider = ({ children }) => {
@@ -17,7 +17,7 @@ const JobProvider = ({ children }) => {
   const [typeSort, setTypeSort] = useState("")
   const [token,setToken] = useState(null)
 
-  const [myJobRecruitment, setMyJobRecruitment] = useState("")
+  const [myJobRecruitment, setMyJobRecruitment] = useState([])
 
 
 
@@ -50,8 +50,7 @@ const JobProvider = ({ children }) => {
   }, []);
 
   const getMyRecruitmentJobs = async (token) => {
-    
-    
+    console.log('token2', token)
     await axios.get(
       `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category}&page=${page}&fieldSort=${fieldSort}&typeSort=${typeSort}`,
       { headers: {authorization: `Bearer ${token}`} },
@@ -65,13 +64,7 @@ const JobProvider = ({ children }) => {
       }
     }).catch((error) => console.log(error.response));
 }
-  useEffect(() => {
-    let getToken = localStorage.getItem('token')
-    getToken = JSON.parse(getToken)
-    setToken(getToken)
-    console.log(getToken)
-    getMyRecruitmentJobs(getToken)
-  }, [])
+
 
   // useEffect(() => {
   //   getMyRecruitmentJobs()
@@ -119,11 +112,12 @@ const JobProvider = ({ children }) => {
     allCategory,
     allLocation,
     getMyRecruitmentJobs,
+    setMyJobRecruitment,
     myJobRecruitment,
     setFieldSort,
     setTypeSort,
     search, category, page,fieldSort, typeSort,
-    token
+    token,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
