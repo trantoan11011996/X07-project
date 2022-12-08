@@ -1,5 +1,5 @@
-[
-    {
+
+const data = {
         "_id": "638e29969136c6bf9c50ab09",
         "title": "RELATIONSHIP MANAGER – CHUYÊN VIÊN QUAN HỆ KHÁCH HÀNG CÁ NHÂN (KHỞI ĐIỂM 15TR + HOA HỒNG)",
         "name": {
@@ -30,5 +30,6 @@
         "createAt": "05/12/2022",
         "deadline": "03/02/2023",
         "__v": 0
-    }
-]
+}
+
+export default data

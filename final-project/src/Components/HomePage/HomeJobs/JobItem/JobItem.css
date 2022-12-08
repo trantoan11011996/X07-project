@@ -1,3 +1,6 @@
+.job-item{
+    cursor: pointer;
+}
 .job-container{
     border-bottom: 1px solid #ccc;
 }
@@ -20,17 +23,21 @@
     margin-left: 20px;
 }
 .job-title{
-    font-size: 16px;
+    font-size: 15px;
 }
 .company-name{
     color: #5d677a;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 15px;
 }
 .job-location{
     color: #5d677a;
     font-weight: 500;
     font-size: 14px;
+}
+.job-salary{
+    color: rgb(0,105,219);
+    font-weight: 500;
 }
 .logo-wraper{
     border : 1px solid red;
@@ -44,4 +51,9 @@
 }
 .logo-company{
     width: 100%;
+}
+.job-title:hover,
+.job-location:hover,
+.job-salary:hover{
+    text-decoration: underline;
 }

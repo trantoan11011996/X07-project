@@ -8,32 +8,11 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import ListJobs from "./ListJobs/ListJobs";
 
-// export default function HomeJobs (){
-//   const [jobs, setJobs] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const GetJobsForHp = async () => {
-//     await axios
-//       .get("https://xjob-mindx.herokuapp.com/api/recruiments/home-page")
-//       .then((res) => {
-//         const data = res.data;
-//         setJobs(data);
-//         setIsLoading(false);
-//         if (!localStorage.getItem("jobs")) {
-//           localStorage.setItem("jobs", JSON.stringify(data));
-//           console.log(jobs);
-//         }
-//       })
-//       .catch((error) => console.log(`error: ${error}`));
-//   };
-//   useEffect(() => {
-//     GetJobsForHp();
 
-//   }, []);
-
-export default function HomeJobs() {
+export default function HomeJobs({jobHomePage}) {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
-
+  
   return (
     <Container className="home-jobs">
       <Row>
@@ -136,7 +115,7 @@ export default function HomeJobs() {
       </Row>
       <Row>
         <Col>
-          <ListJobs />
+          <ListJobs jobHomePage = {jobHomePage}/>
         </Col>
       </Row>
     </Container>
