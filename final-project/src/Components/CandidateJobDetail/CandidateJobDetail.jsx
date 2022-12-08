@@ -1,8 +1,9 @@
+
 import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { Card, Container, Col, Row, Button, Tabs, Tab, Modal, Form } from "react-bootstrap";
+import { Card, Container, Col, Row, Button, Modal, Form, Nav } from "react-bootstrap";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { BsFillCalendar2CheckFill } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
@@ -60,7 +61,7 @@ export default function CandidateJobDetail() {
                                         </Col>
 
                                         <Col className="company" sm={9} md={9}>
-                                            <Card.Title> {jobData?.title}</Card.Title>
+                                            <Card.Title className="job-tittle"> {jobData?.title}</Card.Title>
                                             <h3> {jobData?.name.info.name}</h3>
                                         </Col>
                                     </Row>
@@ -89,13 +90,42 @@ export default function CandidateJobDetail() {
                                         </Row>
                                     </div>
 
-                                    <div className="job-tabs mt-3">
-                                        <Tabs>
-                                            <Tab eventKey="" title="Mô tả công việc"></Tab>
-                                            <Tab eventKey="" title="Yêu cầu"></Tab>
-                                            <Tab eventKey="" title="Thông tin liên hệ"></Tab>
-                                            <Tab eventKey="" title="Về công ty"></Tab>
-                                        </Tabs>
+                                    <div className="mt-3">
+                                            <Row className="ms-2">
+                                                <Col sm={2} md={2}>
+                                                    <a className="job-tab" href="#description"> Mô tả</a>
+                                                </Col>
+
+                                                <Col sm={2} md={2}>
+                                                    <a className="job-tab" href="#require"> Yêu cầu</a>
+                                                </Col>
+
+                                                <Col sm={3} md={3}>
+                                                    <a className="job-tab" href="#info"> Thông tin liên hệ</a>
+                                                </Col>
+
+                                                <Col sm={3} md={3}>
+                                                    <a className="job-tab" href="#about"> Về công ty</a>
+                                                </Col>
+
+                                                <Col sm={2} md={2}></Col>
+                                            </Row>
+                                    </div>
+
+                                    <div id="description">
+                                        
+                                    </div>
+
+                                    <div id="require">
+                                        
+                                    </div>
+
+                                    <div id="info">
+                                        
+                                    </div>
+
+                                    <div id="about">
+                                        
                                     </div>
 
                                 </Card.Body>

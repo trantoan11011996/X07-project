@@ -48,11 +48,11 @@ export default function MainApp() {
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
                 <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
 
-                {/* <Route path="jobs">
-                  <Route path="all" element={<AllJob />}></Route>
+                {/* <Route path="jobCandidate">
                   <Route path=":id" element={<CandidateJobDetail />}></Route>
                 </Route> */}
               </Routes>
+              {/* <CandidateJobDetail /> */}
               <Footer />
             </div>
           </BrowserRouter>
