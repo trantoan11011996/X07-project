@@ -45,7 +45,7 @@ export default function JobDetail() {
         return data
     };
 
-    getJobDetail()
+
     // useEffect(() => {
     //     getJobDetail(id);
     // }, [id]);
@@ -91,7 +91,7 @@ export default function JobDetail() {
                                     <div className="job-details">
                                         <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
                                         <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
-                                        <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience}</p>
+                                        <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsFillCalendar2CheckFill></BsFillCalendar2CheckFill> Ngày đăng tuyển: {jobData?.createAt}</Col>
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
@@ -193,8 +193,8 @@ export default function JobDetail() {
 
                                     <div id="info" className="mt-3">
                                         <h2 className="require-title"> Thông tin liên hệ </h2>
-                                        <p className="ms-2"> email: {jobData?.name.info.email}</p>
-                                        <p className="ms-2"> sdt: {jobData?.name.info.phoneNumber}</p>
+                                        <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
+                                        <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p>
                                     </div>
 
                                     <div id="about" className="mt-3">
