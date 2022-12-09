@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AuthContext } from "../../Context/Context";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../MainApp/mainapp.css";
@@ -48,17 +48,19 @@ export default function MainApp() {
                 <Route path="/allJob" element={<AllJob />}></Route>
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
                 <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
-
                 <Route path="jobDetail">
                   <Route path=":id" element={<JobDetail />}></Route>
                 </Route>
-                <Route path="/availablerecruitment" element={<AvailableRecruitment/>}></Route>{" "}
+                <Route
+                  path="/availablerecruitment"
+                  element={<AvailableRecruitment />}
+                ></Route>{" "}
               </Routes>
               <Footer />
             </div>
           </BrowserRouter>
         </JobProvider>
-      </UserProvider> 
+      </UserProvider>
     </AuthContext.Provider>
   );
 }

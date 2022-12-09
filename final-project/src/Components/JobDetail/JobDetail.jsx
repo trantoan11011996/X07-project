@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { Card, Container, Col, Row, Button, Modal, Form, Nav } from "react-bootstrap";
-import { AiFillDollarCircle } from "react-icons/ai";
-import { BsFillCalendar2CheckFill } from "react-icons/bs";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { BsBriefcase, BsCalendar2Check, BsClockHistory, BsDiagram3, BsHeadset, BsPerson, BsWhatsapp } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
-import { MdOutlineWork } from "react-icons/md";
+import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
@@ -41,11 +41,10 @@ export default function JobDetail() {
         if (data) {
             console.log('data', data);
             setJobData(data)
+            return
         }
         return data
     };
-
-
     // useEffect(() => {
     //     getJobDetail(id);
     // }, [id]);
@@ -55,8 +54,6 @@ export default function JobDetail() {
         }
         detailData()
     }, [id]);
-    console.log('job', jobData);
-    console.log(id);
 
 
 
@@ -89,11 +86,11 @@ export default function JobDetail() {
                                     </Row>
 
                                     <div className="job-details">
-                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
-                                        <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
-                                        <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience} kinh nghiệm</p>
+                                        <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
+                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
+                                        <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
-                                            <Col sm={5} md={5} ><BsFillCalendar2CheckFill></BsFillCalendar2CheckFill> Ngày đăng tuyển: {jobData?.createAt}</Col>
+                                            <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
@@ -114,7 +111,7 @@ export default function JobDetail() {
                                         )}
                                     </div>
 
-                                    <div className="mt-3">
+                                    <div className="tab-rows">
                                         <Row className="ms-2">
                                             <Col sm={2} md={2}>
                                                 <a className="job-tab" href="#description"> Mô tả</a>
@@ -149,17 +146,17 @@ export default function JobDetail() {
                                                 <Card>
                                                     <Card.Body>
                                                         <div>
-                                                            <h3 className="require-text"> Vị trí</h3>
+                                                            <h3 className="require-text"><BsBriefcase className="me-2"></BsBriefcase> Vị trí</h3>
                                                             <p className="ms-2"> {jobData?.position}</p>
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text"> Cấp bậc</h3>
+                                                            <h3 className="require-text"> <BsDiagram3 className="me-2"></BsDiagram3> Cấp bậc</h3>
                                                             <p className="ms-2"> {jobData?.level}</p>
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text"> Thời gian làm việc</h3>
+                                                            <h3 className="require-text"> <BsClockHistory className="me-2"></BsClockHistory> Thời gian làm việc</h3>
                                                             <p className="ms-2"> {jobData?.type}</p>
                                                         </div>
                                                     </Card.Body>
@@ -170,18 +167,18 @@ export default function JobDetail() {
                                                 <Card>
                                                     <Card.Body>
                                                         <div>
-                                                            <h3 className="require-text">Kinh nghiệm</h3>
-                                                            <p className="ms-2"> {jobData?.experience}</p>
+                                                            <h3 className="require-text"> <BsHeadset className="me-2"></BsHeadset>Kinh nghiệm</h3>
+                                                            <p className="ms-2"> {jobData?.experience}  kinh nghiệm</p>
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text">Số lượng</h3>
+                                                            <h3 className="require-text"> <BsPerson className="me-2"></BsPerson>Số lượng</h3>
                                                             <p className="ms-2"> {jobData?.numberApplicant} nhân viên</p>
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text">Độ tuổi</h3>
-                                                            <p className="ms-2"> {jobData?.age}</p>
+                                                            <h3 className="require-text"><BsWhatsapp className="me-2"></BsWhatsapp>Độ tuổi</h3>
+                                                            <p className="ms-2"> {jobData?.age} tuổi</p>
                                                         </div>
 
 
@@ -193,8 +190,8 @@ export default function JobDetail() {
 
                                     <div id="info" className="mt-3">
                                         <h2 className="require-title"> Thông tin liên hệ </h2>
-                                        <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
-                                        <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p>
+                                        {/* <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
+                                        <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p> */}
                                     </div>
 
                                     <div id="about" className="mt-3">

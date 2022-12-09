@@ -8,7 +8,7 @@ const Loading = ({ loading }) => {
         alignItems: "center",
         justifyContent: "center",
       }}
-      color="#d81111"
+      color="#000"
       loading={loading}
       size={50}
       aria-label="Loading Spinner"
