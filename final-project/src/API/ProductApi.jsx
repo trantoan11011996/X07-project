@@ -30,7 +30,7 @@ import React, { useEffect, useState } from "react";
  }
 
  const fetchJobDetail = async (id) => {
-    const JobDetailUrl = allJobUrl + "/" + id;
+    const JobDetailUrl = `https://xjob-mindx-production.up.railway.app/api/recruiments/detail/${id}`
 
     const res = await axios({
         method: "get",

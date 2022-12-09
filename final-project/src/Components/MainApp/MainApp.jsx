@@ -20,7 +20,7 @@ import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
 import RJDetails from "../RecruiterJobDetails/RJDetails";
 import { JobProvider } from "../../Context/JobContext";
-import CandidateJobDetail from "../CandidateJobDetail/CandidateJobDetail";
+import JobDetail from "../JobDetail/JobDetail";
 import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitment";
 
 export default function MainApp() {
