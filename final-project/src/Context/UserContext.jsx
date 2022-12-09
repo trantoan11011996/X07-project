@@ -29,7 +29,6 @@ const UserProvider = ({ children }) => {
   const { user } = useSelector((state) => state.auths);
   const [companyPhone, setCompanyPhone] = useState('');
   const [companyAddress, setCompanyAddress] = useState('');
-  const [operationSector, setOperationSector] = useState('');
   const [companyDescription, setCompanyDescription] = useState('');
   const [fieldActivity,setFieldActivity] = useState('')
 
@@ -117,9 +116,11 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
-      localStorage.setItem('currentUser',JSON.stringify(data))
-      setCurrentUser(data)
-      console.log('data',data);
+      let user = localStorage.getItem('currentUser')
+      user = JSON.parse(user)
+      user.user.info = data.info
+      localStorage.setItem('currentUser',JSON.stringify(user))
+      setCurrentUser(user)
       return data;
     })
     // if(user_info.token){
@@ -129,15 +130,16 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
-  const updateRecruiterInfo = async () => {
+  const updateRecruiterInfo = async (companyName,companyEmail,companyPhone,companyAddress,ckEditorOutput,category) => {
     const info = UserApi.recruiterInfo(
       companyName,
       companyEmail,
       companyPhone,
       companyAddress,
-      companyDescription,
-      operationSector,
+      ckEditorOutput,
+      category,
     );
+    console.log(info);
     let user_info = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
@@ -152,9 +154,12 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
-      localStorage.setItem('currentUser',JSON.stringify(data))
-      setCurrentUser(data)
       console.log('data',data);
+      let user = localStorage.getItem('currentUser')
+      user = JSON.parse(user)
+      user.user.info = data.info
+      localStorage.setItem('currentUser',JSON.stringify(user))
+      setCurrentUser(user)
       return data;
     })
     return user_info
@@ -199,11 +204,9 @@ const UserProvider = ({ children }) => {
     companyPhone,
     companyAddress,
     companyDescription,
-    operationSector,
     setCompanyEmail,
     setCompanyPhone,
     setCompanyAddress,
-    setOperationSector,
     setCompanyDescription,
     setCompanyName,
     setFieldActivity,

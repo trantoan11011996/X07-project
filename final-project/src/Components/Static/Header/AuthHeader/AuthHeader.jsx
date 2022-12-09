@@ -25,7 +25,6 @@ const AuthHeader = ({ mode }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const { showLogin, logOutUser, currentUser, setCurrentUser } =
     useContext(UserContext);
-  console.log("current", currentUser);
   const handleMenuClick = ({ key }) => {
     if (key) {
       navigate(key);
@@ -38,7 +37,7 @@ const AuthHeader = ({ mode }) => {
   };
   return (
     <>
-      {(user || currentUser ) ? (
+      {user || currentUser ? (
         <div>
           <Menu
             theme="white"
@@ -51,13 +50,15 @@ const AuthHeader = ({ mode }) => {
               paddingRight: "40px",
             }}
           >
-            <Menu.Item key={"/"}>
-              <img
-                src={logo}
-                alt="logo"
-                style={{ marginLeft: 20, height: 50, marginTop: 10 }}
-              ></img>
-            </Menu.Item>
+            <Link to={"/"}>
+              <Menu.Item>
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{ marginLeft: 20, height: 50, marginTop: 10 }}
+                ></img>
+              </Menu.Item>
+            </Link>
             <div style={{ width: 1400 }}></div>
             <Menu.Item key="/company" style={{ marginTop: 9 }}>
               <div style={{ display: "flex", flexDirection: "row" }}>
@@ -98,8 +99,10 @@ const AuthHeader = ({ mode }) => {
                           height: "30px",
                         }}
                       />
-                      {user?.user?.info ? user.user.info.name : user?.user?.email}
-                      {currentUser?.info ? currentUser.info.name : currentUser?.email}
+                      {currentUser?.info === "candidate" ||
+                      user?.user?.role === "candidate"
+                        ? `Ứng viên`
+                        : `Nhà tuyển dụng`}
                       <DownOutlined className="icon-dropdown" />
                     </span>
                   }
@@ -181,19 +184,21 @@ const AuthHeader = ({ mode }) => {
               paddingRight: "40px",
             }}
           >
-            <Menu.Item key={"/"}>
-              <img
-                src={logo}
-                alt="logo"
-                style={{ marginLeft: 20, height: 50, marginTop: 5 }}
-              ></img>
-            </Menu.Item>
+            <Link to={"/"}>
+              <Menu.Item>
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{ marginLeft: 20, height: 50, marginTop: 5 }}
+                ></img>
+              </Menu.Item>
+            </Link>
             <div style={{ width: 1400 }}></div>
             <Menu.Item key="/company" style={{ marginTop: 9 }}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <HomeOutlined
                   style={{
-                    fontSize: "130%",
+                    fontSize: "110%",
                     marginRight: "6px",
                     marginTop: 11.5,
                   }}
@@ -205,7 +210,7 @@ const AuthHeader = ({ mode }) => {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <GlobalOutlined
                   style={{
-                    fontSize: "130%",
+                    fontSize: "110%",
                     marginRight: "6px",
                     marginTop: 11.5,
                   }}
@@ -218,7 +223,7 @@ const AuthHeader = ({ mode }) => {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <LoginOutlined
                   style={{
-                    fontSize: "130%",
+                    fontSize: "110%",
                     marginRight: "6px",
                     marginTop: 11.5,
                   }}
@@ -227,10 +232,10 @@ const AuthHeader = ({ mode }) => {
               </div>
             </Menu.Item>
             <Menu.Item key="/register" style={{ marginTop: 9 }}>
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ display: "flex", flexDirection: "row" ,justifyContent:"center"}}>
                 <AccountBookOutlined
                   style={{
-                    fontSize: "130%",
+                    fontSize: "110%",
                     marginRight: "6px",
                     marginTop: 11.5,
                   }}

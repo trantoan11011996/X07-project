@@ -1,0 +1,19 @@
+.job-content {
+    width: 100%;
+    position: relative;
+}
+
+.job-button{
+    width: 100%;
+}
+
+.job-tittle {
+    color: red;
+}
+
+.job-tab {
+    color: black;
+}
+.container{
+    margin-top: 90px;
+}

@@ -7,7 +7,9 @@ import {
   isVietnamesePhoneNumberValid,
 } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
-
+import {MdAccountCircle} from "react-icons/md"
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
@@ -18,16 +20,17 @@ export default function UserRecruiter() {
     companyPhone,
     companyAddress,
     companyDescription,
-    operationSector,
+    category,
     setCompanyEmail,
     setCompanyPhone,
     setCompanyAddress,
-    setOperationSector,
+    setCategory,
     setCompanyDescription,
     setCompanyName,
     setFieldActivity,
     updateRecruiterInfo,
     setShowLogin,
+    
   } = useContext(UserContext);
 
   const [companyEmpty, setCompanyEmpty] = useState(false);
@@ -37,14 +40,68 @@ export default function UserRecruiter() {
   const [addressEmpty, setAddressEmpty] = useState(false);
   const [operationSectorEmpty, setOperationSectorEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
-
   const [EmailErr, setEmailErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
   const [operationSectorForm, setOperationSectorForm] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const [operationSectorAuto, setOperationSectorAuto] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [imageData,setImageData] = useState("")
+  const [token, setToken] = useState("");
+  const [ckEditorOutput, setCkEditorOutput] = useState(null);
 
-  const handleSubmitUpdateRecruiter = (event) => {
+
+  useEffect(() => {
+    getAllOperationSector()
+    const getToken = JSON.parse(localStorage.getItem("token"))
+    setToken(getToken)
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    const splitString  = user.user.avatar.split("/")
+    const imageString = splitString[1]+"/".concat(splitString[2])
+    console.log(imageString);
+    setImageData(imageString)
+  }, []);
+
+  const getFile = (e) =>{
+    setSelectedFile(e.target.files[0])
+  }
+
+  const handleSubmitAvarta = async (e,editor) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+		formData.append('formFile', selectedFile);
+    const uploadImage = await fetch(
+      "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
+      {
+        method: "POST",
+        body : formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        const splitString  = data.path.split("/")
+        console.log("split 1 ",splitString[1]);
+        console.log("split 2",splitString[2]);
+        const imageString = splitString[1]+"/".concat(splitString[2])
+        setImageData(imageString)
+        let user = localStorage.getItem("currentUser")
+        user = JSON.parse(user)
+        user.user.avatar =  data.path
+        localStorage.setItem('currentUser',JSON.stringify(user))
+        return data;
+      });
+    return uploadImage;
+  };
+
+  const handleSubmitUpdateRecruiter = (event,editor) => {
     event.preventDefault();
-
     if (!companyName || companyName == null) {
       setCompanyEmpty(true);
       return;
@@ -86,35 +143,34 @@ export default function UserRecruiter() {
       setAddressEmpty(false);
     }
 
-    if (!operationSector || operationSector == null) {
+    if (!category || category == null) {
       setOperationSectorEmpty(true);
       return;
     } else {
       setOperationSectorEmpty(false);
     }
 
-    if (!companyDescription || companyDescription == null) {
+    if (!ckEditorOutput || ckEditorOutput == null) {
       setDescriptEmpty(true);
       return;
     } else {
       setDescriptEmpty(false);
-      updateRecruiterInfo();
+      console.log(ckEditorOutput);
+      updateRecruiterInfo(companyName,companyEmail,companyPhone,companyAddress,ckEditorOutput,category);
       setShowLogin(false);
-      navigate("/");
+      // navigate("/");
     }
   };
-  // const {user} = useSelector(state=>state.auths)
 
-  const getAllOperationSector = async (token) => {
-    console.log(token);
+
+  const getAllOperationSector = async () => {
     const all = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
+      `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          authorization: `Bearer ${token}`,
         },
       }
     )
@@ -134,9 +190,28 @@ export default function UserRecruiter() {
 
   return (
     <div className="form-container-recruiter">
-      <Form className="p-2 text-start form-recruiter" onSubmit={handleSubmitUpdateRecruiter}>
+      <div className="form-recruiter-content">
+        <div className="form-recruiter-description">
+          <h1 className="form-recruiter-header"> Tài khoản</h1>
+          <p className="form-recruiter-header-content">
+            Hãy cập nhật thông tin mới nhất.
+          </p>
+        </div>
+        <div className="upload-avarta-container">
+          <div className="avarta">
+            {imageData ? <img className="image-avarta" src={`https://xjob-mindx-production.up.railway.app/${imageData}`}></img> : <MdAccountCircle className="icon-avarta"></MdAccountCircle>}
+          </div>
+        <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
+          <input type='file' name="formFile" onChange={getFile}></input>
+          <button className="submit-img" type="submit">Lưu</button>
+        </form>
+        </div>
+      </div>
+      <Form
+        className="p-2 text-start form-recruiter"
+        onSubmit={handleSubmitUpdateRecruiter}
+      >
         <Form.Group>
-          <h1 className="form-recruiter-header"> Thông Tin Nhà Tuyển Dụng</h1>
           <Row className="row-form">
             <Form.Label />{" "}
             <b>
@@ -147,6 +222,7 @@ export default function UserRecruiter() {
               className="input ms-2 "
               type="text"
               maxLength={100}
+              defaultValue={userInfo?.name}
               onChange={(event) => setCompanyName(event.target.value)}
             />
             {companyEmpty && (
@@ -164,6 +240,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="email"
+                  defaultValue={userInfo?.email}
                   onChange={(event) => setCompanyEmail(event.target.value)}
                 />
                 {companyEmailEmpty && (
@@ -185,6 +262,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  defaultValue={userInfo?.phoneNumber}
                   onChange={(event) => setCompanyPhone(event.target.value)}
                 />
                 {phoneEmpty && (
@@ -207,6 +285,7 @@ export default function UserRecruiter() {
               className="input ms-2"
               type="text"
               maxLength={200}
+              defaultValue={userInfo?.address}
               onChange={(event) => setCompanyAddress(event.target.value)}
             />
             {addressEmpty && (
@@ -221,9 +300,10 @@ export default function UserRecruiter() {
             </b>
             <Form.Select
               className="input ms-2"
-              onChange={(event) => setOperationSector(event.target.value)}
+              onChange={(event) => setCategory(event.target.value)}
+              defaultValue={operationSectorAuto}
             >
-              <option></option>
+              <option>{operationSectorAuto}</option>
               {operationSectorForm?.map((item, index) => {
                 return (
                   <option key={index} value={item._id}>
@@ -238,17 +318,15 @@ export default function UserRecruiter() {
           </Row>
 
           <Row className="row-form">
-            <Form.Label />{" "}
-            <b>
-              {" "}
-              Mô tả<span style={{ color: "red" }}>*</span>{" "}
-            </b>
-            <Form.Control
-              className="input ms-2"
-              as="textarea"
-              rows={3}
-              maxLength={1000}
-              onChange={(event) => setCompanyDescription(event.target.value)}
+          <Form.Label />{" "}
+                <b>
+                  {" "}
+                  Mô tả bổ sung<span style={{ color: "red" }}>*</span>{" "}
+                </b>
+            <CKEditor
+              editor={ClassicEditor}
+              onChange={(event,editor)=>setCkEditorOutput(editor.getData())}
+              style={{ padding: "20px" }}
             />
             {descriptEmpty && (
               <p className="text"> Mô tả không được để trống</p>

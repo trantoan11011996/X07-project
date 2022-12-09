@@ -8,32 +8,11 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import ListJobs from "./ListJobs/ListJobs";
 
-// export default function HomeJobs (){
-//   const [jobs, setJobs] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const GetJobsForHp = async () => {
-//     await axios
-//       .get("https://xjob-mindx.herokuapp.com/api/recruiments/home-page")
-//       .then((res) => {
-//         const data = res.data;
-//         setJobs(data);
-//         setIsLoading(false);
-//         if (!localStorage.getItem("jobs")) {
-//           localStorage.setItem("jobs", JSON.stringify(data));
-//           console.log(jobs);
-//         }
-//       })
-//       .catch((error) => console.log(`error: ${error}`));
-//   };
-//   useEffect(() => {
-//     GetJobsForHp();
 
-//   }, []);
-
-export default function HomeJobs() {
+export default function HomeJobs({jobHomePage}) {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
-
+  
   return (
     <Container className="home-jobs">
       <Row>
@@ -42,10 +21,11 @@ export default function HomeJobs() {
             {(user?.user?.role || currentUser?.role) == "candidate" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col md={2} className="col-title">
+                  <Col sm={2} md={2} className="homejob-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
                   <Col sm={2} md={2}>
+                  
                     <Link
                       to={"/allJob"}
                       className="homejob-title homejob-title-link"
@@ -57,10 +37,11 @@ export default function HomeJobs() {
                     </Link>
                   </Col>
 
-                  <Col sm={2} md={2}>
-                    <Button> Tin đã ứng tuyển</Button>
+                  <Col sm={2} md={4}>
+                    <Link className="homejob-title homejob-title-link">
+                      Công việc đã ứng tuyển <span></span>
+                    </Link>
                   </Col>
-                  <Col sm={6} md={6}></Col>
                 </Row>
               </>
             )}
@@ -84,7 +65,9 @@ export default function HomeJobs() {
                   </Col>
 
                   <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link">
+                    <Link className="homejob-title homejob-title-link"
+                      to={"/availablerecruitment"}
+                    >
                       Tin đã đăng <span></span>
                     </Link>
                   </Col>
@@ -134,7 +117,7 @@ export default function HomeJobs() {
       </Row>
       <Row>
         <Col>
-          <ListJobs />
+          <ListJobs jobHomePage = {jobHomePage}/>
         </Col>
       </Row>
     </Container>

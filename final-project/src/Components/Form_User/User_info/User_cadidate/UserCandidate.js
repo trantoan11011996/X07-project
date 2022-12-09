@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {MdAccountCircle} from "react-icons/md"
 import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
@@ -35,7 +36,6 @@ export default function UserCandidate() {
     setShowLogin,
     currentUser,
     setCurrentUser,
-    token,
   } = useContext(UserContext);
   const navigate = useNavigate(null);
 
@@ -51,8 +51,22 @@ export default function UserCandidate() {
   const [phoneErr, setPhoneErr] = useState(false);
   const [categories, setCategories] = useState([]);
   // const {user} = useSelector(state=>state.auths)
-
-  const getAllCategory = async (token) => {
+  const [userInfo,setUserInfo] = useState({})
+  const [operationSectorAuto,setOperationSectorAuto] = useState('')
+  const [selectedFile, setSelectedFile] = useState();
+  const [imageData,setImageData] = useState("")
+  const [token,setToken] = useState('')
+  useEffect(()=>{
+    getAllCategory()
+    const getToken = JSON.parse(localStorage.getItem("token"))
+    setToken(getToken)
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    const splitString  = user.user.avatar.split("/")
+    const imageString = splitString[1]+"/".concat(splitString[2])
+    console.log(imageString);
+    setImageData(imageString)
+  },[])
+  const getAllCategory = async () => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/category`,
       {
@@ -60,7 +74,6 @@ export default function UserCandidate() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          authorization: `Bearer ${token}`,
         },
       }
     )
@@ -72,11 +85,46 @@ export default function UserCandidate() {
       });
     return all;
   };
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    getAllCategory(token);
-  }, []);
-  const handleClick = (event) => {
+  const getFile = (e) =>{
+    setSelectedFile(e.target.files[0])
+    console.log(e.target.files[0]);
+  }
+
+  const handleSubmitAvarta = async (e) => {
+    e.preventDefault();
+    console.log("token",token);
+    const formData = new FormData();
+
+		formData.append('formFile', selectedFile);
+    const uploadImage = await fetch(
+      "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
+      {
+        method: "POST",
+        body : formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        const splitString  = data.path.split("/")
+        console.log("split 1 ",splitString[1]);
+        console.log("split 2",splitString[2]);
+        const imageString = splitString[1]+"/".concat(splitString[2])
+        setImageData(imageString)
+        let user = localStorage.getItem("currentUser")
+        user = JSON.parse(user)
+        user.user.avatar =  data.path
+        localStorage.setItem('currentUser',JSON.stringify(user))
+        return data;
+      });
+    return uploadImage;
+  };
+
+  const handleSubmitUpdateCandidate = (event) => {
     event.preventDefault();
 
     if (!name || name == null) {
@@ -144,7 +192,7 @@ export default function UserCandidate() {
 
       updateCandidateInfo();
       setShowLogin(false);
-      // navigate("/");
+      navigate("/");
       console.log(currentUser);
 
     }
@@ -152,7 +200,24 @@ export default function UserCandidate() {
 
   return (
     <div class="form-container-candidate">
-      <Form className="p-2 text-start form-candidate" autoComplete="on">
+      <div className="form-candidate-content">
+        <div className="form-candidate-description">
+          <h1 className="form-candidate-header"> Tài khoản</h1>
+          <p className="form-candidate-header-content">
+            Hãy cập nhật thông tin mới nhất.
+          </p>
+        </div>
+        <div className="upload-avarta-container">
+          <div className="avarta">
+            {imageData ? <img className="image-avarta" src={`https://xjob-mindx-production.up.railway.app/${imageData}`}></img> : <MdAccountCircle className="icon-avarta"></MdAccountCircle>}
+          </div>
+        <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
+          <input type='file' name="formFile" onChange={getFile}></input>
+          <button className="submit-img" type="submit">Lưu</button>
+        </form>
+        </div>
+      </div>
+      <Form className="p-2 text-start form-candidate" onSubmit={handleSubmitUpdateCandidate}>
         <Form.Group>
           <h1 className="form-candidate-header">
             {" "}
@@ -190,17 +255,19 @@ export default function UserCandidate() {
                       inline
                       label="Nam"
                       name="group1"
+                      value="Nam"
                       type={type}
                       id={`inline-${type}-1`}
-                      onChange={(event) => setGender(event.target.value)}
+                      onChange={(e)=>setGender(e.target.value)}
                     />
                     <Form.Check
                       inline
                       label="Nữ"
                       name="group1"
+                      value="Nữ"
                       type={type}
                       id={`inline-${type}-2`}
-                      onChange={(event) => setGender(event.target.value)}
+                      onChange={(e)=>setGender(e.target.value)}
                     />
                   </div>
                 ))}
@@ -316,8 +383,8 @@ export default function UserCandidate() {
               {" "}
             </Col>
             <Col sm={3} md={3}>
-              <Button className="button" onClick={handleClick}>
-                {" "}
+              <Button className="button" type="submit">
+                                {" "}
                 Cập nhật{" "}
               </Button>
             </Col>
