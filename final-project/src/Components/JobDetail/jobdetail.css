@@ -30,3 +30,8 @@
 .container{
     margin-top: 70px;
 }
+.tab-rows {
+    border-bottom: 1px solid grey;
+    margin-top: 1rem!important;
+    margin-bottom: 1rem!important;
+}

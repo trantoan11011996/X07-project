@@ -56,7 +56,6 @@ export default function MainApp() {
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
               </Routes>
-              {/* <CandidateJobDetail /> */}
               <Footer />
             </div>
           </BrowserRouter>
