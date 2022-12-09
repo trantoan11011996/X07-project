@@ -6,13 +6,13 @@ import { IoLocationSharp } from "react-icons/io5"
 import "../JobItem/JobItem.css";
 import logocompany from "../../../../img/logocompany.png"
 import { Link } from "react-router-dom";
-export default function JobItem({ job }) {
+export default function JobItem({ job,id }) {
   const image = job?.name?.avatar
   const splitString  = image.split("/")
   const imageString = splitString[1]+"/".concat(splitString[2])
   return (
     <div className="job-item">
-      {/* <Link to={"/jobCandidate/" + job._id}> */}
+      <Link to={"/jobDetail/" + id}>
         <Row className="job-container">
           <div className="job-wrapper">
             <Col md={2} className="company-logo">
@@ -31,7 +31,7 @@ export default function JobItem({ job }) {
             </Col>
           </div>
         </Row>
-      {/* </Link> */}
+      </Link>
     </div>
   );
 }

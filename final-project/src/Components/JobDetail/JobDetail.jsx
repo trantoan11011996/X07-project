@@ -11,6 +11,7 @@ import { MdOutlineWork } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
+<<<<<<< HEAD:final-project/src/Components/CandidateJobDetail/CandidateJobDetail.jsx
 import { UserContext } from "../../Context/UserContext";
 import "../CandidateJobDetail/candidatejobdetail.css"
 import data from "./JobData";
@@ -20,7 +21,14 @@ export default function CandidateJobDetail() {
     // const { fetchJobDetail } = useContext(JobContext);
     const { user } = useSelector((state) => state.auths);
     const { currentUser } = useContext(UserContext);
+=======
+import "./jobdetail.css"
+import data from "./JobData";
 
+export default function JobDetail() {
+>>>>>>> 6b2f35fa87622095ea7ce485be37ca842f627607:final-project/src/Components/JobDetail/JobDetail.jsx
+
+    const {fetchJobDetail} = useContext(JobContext)
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
 
@@ -34,20 +42,32 @@ export default function CandidateJobDetail() {
     }
 
 
-    // const { id } = useParams();
-    const [jobData, setJobData] = useState(data)
+    const { id } = useParams();
+    const [jobData, setJobData] = useState({})
 
-    // const getJobDetail = async (id) => {
-    //     let data = await fetchJobDetail(id)
+    const getJobDetail = async () => {
+        console.log('id job',id);
+        let data = await fetchJobDetail(id)
 
-    //     if (data) {
-    //         setJobData(data)
-    //     }
-    // };
+        if (data) {
+            console.log('data',data);
+            setJobData(data)
+        }
+        return data
+    };
 
+    getJobDetail()
     // useEffect(() => {
     //     getJobDetail(id);
-    // }, []);
+    // }, [id]);
+    useEffect(() => {
+        const detailData = async()=>{
+            await getJobDetail()
+        }
+        detailData()
+    }, [id]);
+    console.log('job',jobData);
+    console.log(id);
 
 
 
@@ -75,12 +95,16 @@ export default function CandidateJobDetail() {
 
                                         <Col className="company" sm={9} md={9}>
                                             <Card.Title className="job-tittle"> {jobData?.title}</Card.Title>
-                                            <h3> {jobData?.name.info.name}</h3>
+                                            <h3> {jobData?.name?.info?.name}</h3>
                                         </Col>
                                     </Row>
 
                                     <div className="job-details">
+<<<<<<< HEAD:final-project/src/Components/CandidateJobDetail/CandidateJobDetail.jsx
                                         <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
+=======
+                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.name?.info?.address}</p>
+>>>>>>> 6b2f35fa87622095ea7ce485be37ca842f627607:final-project/src/Components/JobDetail/JobDetail.jsx
                                         <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
                                         <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience}</p>
                                         <Row className="mt-2">

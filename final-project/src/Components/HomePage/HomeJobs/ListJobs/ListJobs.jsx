@@ -37,7 +37,7 @@ export default function ListJobs({jobHomePage}) {
           dataSource={jobHomePage}
           renderItem={(job) => (
             <List.Item>
-              <JobItem job={job} />
+              <JobItem job={job} id={job._id}/>
             </List.Item>
           )}
         ></List> 
