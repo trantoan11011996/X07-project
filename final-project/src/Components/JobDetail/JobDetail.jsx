@@ -69,8 +69,8 @@ export default function JobDetail() {
             {jobData && (
                 <Container>
                     <Row>
-                        <Col sm={8} md={8}>
-                            <Card className="job-content m-3">
+                        <Col sm={9} md={9}>
+                            <Card className="job-content mt-3 mb-3">
                                 <Card.Img className="job-banner" variant="top" src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg" />
 
                                 <Card.Body>
@@ -87,7 +87,7 @@ export default function JobDetail() {
 
                                     <div className="job-details">
                                         <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
-                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
+                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> <b>Lương</b>: {jobData?.salary} </p>
                                         <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
@@ -234,7 +234,7 @@ export default function JobDetail() {
                                     <Button className="modal-button" variant="outline-primary" onClick={handleActive}> Gửi yêu cầu</Button>
                                 </Col>
 
-                                <Col sm={4} md={4}></Col>
+                                <Col sm={3} md={3}></Col>
                             </Row>
                         </Modal.Body>
                     </Modal>
