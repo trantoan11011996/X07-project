@@ -11,24 +11,13 @@ import { MdOutlineWork } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
-<<<<<<< HEAD:final-project/src/Components/CandidateJobDetail/CandidateJobDetail.jsx
-import { UserContext } from "../../Context/UserContext";
-import "../CandidateJobDetail/candidatejobdetail.css"
-import data from "./JobData";
-
-export default function CandidateJobDetail() {
-
-    // const { fetchJobDetail } = useContext(JobContext);
-    const { user } = useSelector((state) => state.auths);
-    const { currentUser } = useContext(UserContext);
-=======
 import "./jobdetail.css"
 import data from "./JobData";
-
+import { UserContext } from "../../Context/UserContext";
 export default function JobDetail() {
->>>>>>> 6b2f35fa87622095ea7ce485be37ca842f627607:final-project/src/Components/JobDetail/JobDetail.jsx
-
-    const {fetchJobDetail} = useContext(JobContext)
+    const { user } = useSelector((state) => state.auths);
+    const { currentUser } = useContext(UserContext);
+    const { fetchJobDetail } = useContext(JobContext)
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
 
@@ -46,11 +35,11 @@ export default function JobDetail() {
     const [jobData, setJobData] = useState({})
 
     const getJobDetail = async () => {
-        console.log('id job',id);
+        console.log('id job', id);
         let data = await fetchJobDetail(id)
 
         if (data) {
-            console.log('data',data);
+            console.log('data', data);
             setJobData(data)
         }
         return data
@@ -61,12 +50,12 @@ export default function JobDetail() {
     //     getJobDetail(id);
     // }, [id]);
     useEffect(() => {
-        const detailData = async()=>{
+        const detailData = async () => {
             await getJobDetail()
         }
         detailData()
     }, [id]);
-    console.log('job',jobData);
+    console.log('job', jobData);
     console.log(id);
 
 
@@ -100,11 +89,7 @@ export default function JobDetail() {
                                     </Row>
 
                                     <div className="job-details">
-<<<<<<< HEAD:final-project/src/Components/CandidateJobDetail/CandidateJobDetail.jsx
                                         <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
-=======
-                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.name?.info?.address}</p>
->>>>>>> 6b2f35fa87622095ea7ce485be37ca842f627607:final-project/src/Components/JobDetail/JobDetail.jsx
                                         <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
                                         <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience}</p>
                                         <Row className="mt-2">
