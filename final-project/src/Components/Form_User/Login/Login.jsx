@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
-import Loading from "../../Loading/index";
-import  logo  from "../../../img/loginbanner2.jpg";
+import logo from "../../../img/loginbanner2.jpg";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {

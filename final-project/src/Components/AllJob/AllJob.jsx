@@ -6,30 +6,47 @@ import MetaData from "../MetaData/MetaData";
 import { Link } from "react-router-dom";
 import { BsChevronRight } from "react-icons/bs";
 import { images } from "../../img/index";
-import { datas } from "../DataJob/index";
 import JobItem from "./JobItem";
 import { CiSearch } from "react-icons/ci";
 import { colourOptions } from "../DataJob/data";
 import { address } from "../DataJob/data";
 import Select from "react-select";
-console.log(address);
+import { useDispatch, useSelector } from "react-redux";
+import { getAllJobs } from "../../Actions/jobAction";
+import moment from "moment";
+import Loading from "../Loading";
+
 const cx = classNames.bind(styles);
 export const AllJob = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
+  const [selects, setSelects] = useState();
   const [pageCount, setPageCount] = useState(0);
+  const dispatch = useDispatch();
+  const { recruiment, countDoc } = useSelector((state) => state.allJobs.jobs);
+  const { loading } = useSelector((state) => state.allJobs);
+  const [search, setSearch] = useState("");
   const itemsPerPage = 10;
+
   useEffect(() => {
+    dispatch(getAllJobs());
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(datas.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(datas.length / itemsPerPage));
+    setCurrentItems(recruiment.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(recruiment.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % datas.length;
+    const newOffset = (event.selected * itemsPerPage) % recruiment.length;
     setItemOffset(newOffset);
+  };
+  const handleChangeInput = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleSubmitSearchJob = (e) => {
+    e.preventDefault();
+    dispatch(getAllJobs(search.toLocaleUpperCase()));
   };
 
   return (
@@ -38,11 +55,12 @@ export const AllJob = () => {
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
           <div className={cx("filter")}>
-            <form action="">
+            <form action="" onSubmit={handleSubmitSearchJob}>
               <div className={cx("form-group")}>
                 <input
                   type="text"
                   name="search"
+                  onChange={handleChangeInput}
                   placeholder="Tên công ty, vị trí việc làm"
                 />
                 <div className={cx("search-text")}>
@@ -53,7 +71,7 @@ export const AllJob = () => {
                 <Select
                   defaultValue={selectedOptionsField}
                   isMulti
-                  name="field"
+                  // name="field"
                   options={colourOptions}
                   onChange={(e) => setSelectedOptionsField(e)}
                   isOptionDisabled={() => selectedOptionsField.length >= 2}
@@ -66,7 +84,7 @@ export const AllJob = () => {
                 <Select
                   defaultValue={selectedOptionsAddress}
                   isMulti
-                  name="address"
+                  // name="address"
                   options={address}
                   isSearchable="true"
                   className="basic-multi-select"
@@ -96,40 +114,46 @@ export const AllJob = () => {
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
                   <span>
-                    26 <span>việc làm</span>
+                    {countDoc} <span>việc làm</span>
                   </span>
                 </div>
                 <div className={cx("right")}>
                   <p>Sắp xếp</p>
                   <select className={cx("select_box")}>
-                    <option value="">Mới cập nhật</option>
-                    <option value="">Mới đăng </option>
-                    <option value="">Sắp hết hạn</option>
+                    <option>Mới cập nhật</option>
+                    <option>Mới đăng </option>
+                    <option>Ngày hết hạn</option>
+                    <option>Số lượng ứng viên</option>
                   </select>
                 </div>
               </div>
-              <ul className={cx("list_group_jobs")}>
-                {currentItems?.map((item) => (
-                  <JobItem key={item.id} data={item} />
-                ))}
-                <div style={{ textAlign: "center" }}>
-                  <ReactPaginate
-                    className={cx("paginate")}
-                    breakLabel="..."
-                    nextLabel=" >"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={3}
-                    pageCount={pageCount}
-                    previousLabel="< "
-                    renderOnZeroPageCount={null}
-                    containerClassName="pagination"
-                    pageLinkClassName={cx("page-num")}
-                    previousLinkClassName="page-nam"
-                    nextLinkClassName="page-num"
-                    activeLinkClassName={cx("active")}
-                  />
-                </div>
-              </ul>
+              {loading ? (
+                <Loading loading={loading} />
+              ) : (
+                <ul className={cx("list_group_jobs")}>
+                  {currentItems &&
+                    recruiment?.map((item) => (
+                      <JobItem key={item.id} data={item} />
+                    ))}
+                  <div style={{ textAlign: "center" }}>
+                    <ReactPaginate
+                      className={cx("paginate")}
+                      breakLabel="..."
+                      nextLabel=" >"
+                      onPageChange={handlePageClick}
+                      pageRangeDisplayed={3}
+                      pageCount={pageCount}
+                      previousLabel="< "
+                      renderOnZeroPageCount={null}
+                      containerClassName="pagination"
+                      pageLinkClassName={cx("page-num")}
+                      previousLinkClassName="page-nam"
+                      nextLinkClassName="page-num"
+                      activeLinkClassName={cx("active")}
+                    />
+                  </div>
+                </ul>
+              )}
             </div>
             <div className={cx("wrapper_banner")}>
               <img src={images.banner} alt="" />
