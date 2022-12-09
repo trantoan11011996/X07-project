@@ -190,8 +190,8 @@ export default function JobDetail() {
 
                                     <div id="info" className="mt-3">
                                         <h2 className="require-title"> Thông tin liên hệ </h2>
-                                        <p className="ms-2"> email: {jobData?.name.info.email}</p>
-                                        <p className="ms-2"> sdt: {jobData?.name.info.phoneNumber}</p>
+                                        <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
+                                        <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p>
                                     </div>
 
                                     <div id="about" className="mt-3">
