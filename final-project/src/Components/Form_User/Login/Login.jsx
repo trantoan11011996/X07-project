@@ -100,7 +100,7 @@ const Login = () => {
                   <div className={cx("login_btn")}>
                     {loading ? (
                       <button type="submit" disabled>
-                        Loading ...
+                        Chờ tí nha bạn...
                       </button>
                     ) : (
                       <button type="submit">Đăng nhập</button>

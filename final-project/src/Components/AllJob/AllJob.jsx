@@ -135,7 +135,7 @@ export const AllJob = () => {
                 <ul className={cx("list_group_jobs")}>
                   {currentItems &&
                     recruiment?.map((item) => (
-                      <JobItem key={item.id} data={item} />
+                      <JobItem key={item.id} data={item} id={item._id} />
                     ))}
                   <div style={{ textAlign: "center" }}>
                     <ReactPaginate

@@ -7,7 +7,7 @@ import styles from "./AllJob.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
-const JobItem = ({ data }) => {
+const JobItem = ({ data,id }) => {
   const day = moment(data.createAt, "DDMMYYYY").fromNow();
 
   const images = data?.name?.avatar;
@@ -15,6 +15,7 @@ const JobItem = ({ data }) => {
 
   return (
     <Fragment>
+      <Link to={"/jobDetail/" + id}>
       <li className={cx("list_group_item")}>
         <div className={cx("box_item")}>
           <div className={cx("images")}>
@@ -51,6 +52,7 @@ const JobItem = ({ data }) => {
           </div>
         </div>
       </li>
+    </Link>
     </Fragment>
   );
 };
