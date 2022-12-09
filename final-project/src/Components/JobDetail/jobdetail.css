@@ -14,6 +14,19 @@
 .job-tab {
     color: black;
 }
+
+.require-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1E40AF;
+    letter-spacing: 0.16px
+}
+
+.require-text {
+    font-weight: bold;
+    font-size: 18.72px;
+}
+
 .container{
     margin-top: 90px;
 }
