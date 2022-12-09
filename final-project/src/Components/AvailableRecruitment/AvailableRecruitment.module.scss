@@ -212,6 +212,14 @@
                     color: #9e9999;
                     line-height: 2;
                   }
+                  .small_detail{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                  }
+                  .update{
+                    line-height: 2;
+                  }
                 }
               }
             }
