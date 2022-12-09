@@ -41,11 +41,10 @@ export default function JobDetail() {
         if (data) {
             console.log('data', data);
             setJobData(data)
+            return
         }
         return data
     };
-
-    getJobDetail()
     // useEffect(() => {
     //     getJobDetail(id);
     // }, [id]);
@@ -55,8 +54,6 @@ export default function JobDetail() {
         }
         detailData()
     }, [id]);
-    console.log('job', jobData);
-    console.log(id);
 
 
 
@@ -89,7 +86,7 @@ export default function JobDetail() {
                                     </Row>
 
                                     <div className="job-details">
-                                        <p className="mt-2"> <CiLocationOn></CiLocationOn> {jobData?.location.name}</p>
+                                        <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn></CiLocationOn> {jobData?.location?.name}</p>
                                         <p className="mt-2"><AiFillDollarCircle></AiFillDollarCircle> {jobData?.salary}</p>
                                         <p className="mt-2"><MdOutlineWork></MdOutlineWork> {jobData?.experience}</p>
                                         <Row className="mt-2">
