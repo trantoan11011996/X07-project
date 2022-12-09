@@ -99,10 +99,9 @@ const AuthHeader = ({ mode }) => {
                           height: "30px",
                         }}
                       />
-                      {currentUser?.info === "candidate" ||
-                      user?.user?.role === "candidate"
-                        ? `Ứng viên`
-                        : `Nhà tuyển dụng`}
+                      {(currentUser?.role === "recruiter" ||
+                      user?.user?.role === "recruiter")
+                        ?  'Nhà tuyển dụng' : 'Ứng viên'}
                       <DownOutlined className="icon-dropdown" />
                     </span>
                   }
@@ -121,16 +120,15 @@ const AuthHeader = ({ mode }) => {
                     <KeyOutlined /> Cập nhật thông tin
                   </Menu.Item>
                   ''
-                  {(currentUser?.user?.role == "recruiter" ||
+                  {(currentUser?.role == "recruiter" ||
                     currentUser?.role == "recruiter" ||
                     user?.user.role == "recruiter") && (
                     <Menu.Item key="">
                       <FileDoneOutlined /> Công việc đã đăng tuyển
                     </Menu.Item>
                   )}
-                  {(currentUser?.user?.role == "candidate" ||
-                    currentUser?.role == "candidate" ||
-                    user?.user.role == "candidate") && (
+                  {(currentUser?.role === "candidate" ||
+                    user?.user.role === "candidate") && (
                     <Menu.Item key="">
                       <FileDoneOutlined /> Công việc đã ứng tuyển
                     </Menu.Item>

@@ -118,7 +118,7 @@ const UserProvider = ({ children }) => {
     }).then((data)=>{
       let user = localStorage.getItem('currentUser')
       user = JSON.parse(user)
-      user.user.info = data.info
+      user.info = data.info
       localStorage.setItem('currentUser',JSON.stringify(user))
       setCurrentUser(user)
       return data;
@@ -157,7 +157,12 @@ const UserProvider = ({ children }) => {
       console.log('data',data);
       let user = localStorage.getItem('currentUser')
       user = JSON.parse(user)
-      user.user.info = data.info
+      if(user){
+        user.info = data.info
+      }
+      if(user.user){
+        user.user.info = data.info
+      }
       localStorage.setItem('currentUser',JSON.stringify(user))
       setCurrentUser(user)
       return data;
