@@ -11,7 +11,7 @@ import {
   Modal,
   Form,
 } from "react-bootstrap";
-import "../CandidateJobDetail/candidatejobdetail.css";
+import "../JobDetail/jobdetail.css";
 
 export default function RJDetails() {
   const [show, setShow] = useState("");

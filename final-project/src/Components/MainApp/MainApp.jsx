@@ -20,7 +20,7 @@ import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
 import RJDetails from "../RecruiterJobDetails/RJDetails";
 import { JobProvider } from "../../Context/JobContext";
-import CandidateJobDetail from "../CandidateJobDetail/CandidateJobDetail";
+import JobDetail from "../JobDetail/JobDetail";
 import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitment";
 
 export default function MainApp() {
@@ -49,9 +49,9 @@ export default function MainApp() {
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
                 <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
 
-                {/* <Route path="jobCandidate">
-                  <Route path=":id" element={<CandidateJobDetail />}></Route>
-                </Route> */}
+                <Route path="jobDetail">
+                  <Route path=":id" element={<JobDetail />}></Route>
+                </Route>
                 <Route path="/availablerecruitment" element={<AvailableRecruitment/>}></Route>{" "}
               </Routes>
               {/* <CandidateJobDetail /> */}
