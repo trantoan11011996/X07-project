@@ -4,21 +4,21 @@ import styles from "./AvailableRecruitment.module.scss";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
 import { Link } from "react-router-dom";
-import { BsChevronRight } from "react-icons/bs";
+
 import { images } from "../../img/index";
 import { datas } from "../DataJob/index";
-import JobItemRecruitment from "./JobItemRecruitment";
+
 import { CiSearch } from "react-icons/ci";
 import { colourOptions } from "../DataJob/data";
 import { address } from "../DataJob/data";
 import Select from "react-select";
 import { JobContext } from "../../Context/JobContext";
-import { List } from "antd";
+
 import JobListRecruitment from "./JobListRecruitment";
 const cx = classNames.bind(styles);
 
 export const AvailableRecruitment = () => {
-  const {getMyRecruitmentJobs, myJobRecruitment, search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
+  const {getMyRecruitmentJobs, myJobRecruitment , search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
@@ -115,7 +115,7 @@ export const AvailableRecruitment = () => {
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
                   <span>
-                    26 <span>việc làm</span>
+                      {myJobRecruitment.length} <span>việc làm</span>
                   </span>
                 </div>
                 <div className={cx("right")}>
@@ -131,8 +131,9 @@ export const AvailableRecruitment = () => {
               {/* <ul className={cx("list_group_jobs")}> */}
                   
                 <div>
+                <ul className={cx("list_group_jobs")}>
                <JobListRecruitment/>
-            
+              </ul>
 
                 </div>
                 <div style={{ textAlign: "center" }}>

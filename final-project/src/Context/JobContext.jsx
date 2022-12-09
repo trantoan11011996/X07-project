@@ -57,8 +57,10 @@ const JobProvider = ({ children }) => {
     
     ).then((res) => {
       const data = res.data;
+    
       setMyJobRecruitment(data.myRcm);
       console.log('myRcm',data.myRcm)
+     
       if (!localStorage.getItem("myRcm")) {
         localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
       }
