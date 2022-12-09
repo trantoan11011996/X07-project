@@ -59,7 +59,7 @@ export default function MainApp() {
             </div>
           </BrowserRouter>
         </JobProvider>
-      </UserProvider>
+      </UserProvider> 
     </AuthContext.Provider>
   );
 }
