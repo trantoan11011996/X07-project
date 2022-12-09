@@ -65,7 +65,9 @@ export default function HomeJobs({jobHomePage}) {
                   </Col>
 
                   <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link">
+                    <Link className="homejob-title homejob-title-link"
+                      to={"/availablerecruitment"}
+                    >
                       Tin đã đăng <span></span>
                     </Link>
                   </Col>
