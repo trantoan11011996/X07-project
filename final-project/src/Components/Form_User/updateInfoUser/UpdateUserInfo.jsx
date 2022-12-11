@@ -19,11 +19,7 @@ export default function UpdateInfoUser() {
   const { currentUser } = useContext(UserContext);
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, []);
+;
   const handleActiveUpdatePass = () => {
     setActiveUpdatePass(true);
     setActiveUpdateCandidate(false);
