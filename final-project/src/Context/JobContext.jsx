@@ -68,10 +68,7 @@ const JobProvider = ({ children }) => {
 }
 
 
-  // useEffect(() => {
-  //   getMyRecruitmentJobs()
-  // }, [search, category, page,fieldSort, typeSort])
-
+  
 
 
   //fetch all Job

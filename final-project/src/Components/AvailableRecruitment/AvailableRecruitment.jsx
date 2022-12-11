@@ -1,12 +1,12 @@
 import React, { useEffect, useState , useContext} from "react";
-import ReactPaginate from "react-paginate";
+
 import styles from "./AvailableRecruitment.module.scss";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
 import { Link } from "react-router-dom";
 
 import { images } from "../../img/index";
-import { datas } from "../DataJob/index";
+
 
 import { CiSearch } from "react-icons/ci";
 import { colourOptions } from "../DataJob/data";
@@ -19,26 +19,9 @@ const cx = classNames.bind(styles);
 
 export const AvailableRecruitment = () => {
   const {getMyRecruitmentJobs, myJobRecruitment , search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
-  const [itemOffset, setItemOffset] = useState(0);
-  const [currentItems, setCurrentItems] = useState([]);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const itemsPerPage = 10;
   
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    
-    // setPageCount(Math.ceil(datas.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
-  // useEffect(()=>{
-  //   const datas = await fetch (``)
-  // },[])
-  
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % datas.length;
-    setItemOffset(newOffset);
-  };
 
   useEffect(() => {
     getMyRecruitmentJobs(token)
@@ -109,7 +92,7 @@ export const AvailableRecruitment = () => {
                   <h2>Tất cả tin tuyển dụng</h2>
                 </div>
                 <div className={cx("right")}>
-                  <Link to="/">Danh sách việc làm đã ứng tuyển</Link>
+                  <Link to="/">Đăng tin ứng tuyển</Link>
                 </div>
               </div>
               <div className={cx("recruit_title")}>
@@ -137,21 +120,7 @@ export const AvailableRecruitment = () => {
 
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <ReactPaginate
-                    className={cx("paginate")}
-                    breakLabel="..."
-                    nextLabel=" >"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={3}
-                    pageCount={pageCount}
-                    previousLabel="< "
-                    renderOnZeroPageCount={null}
-                    containerClassName="pagination"
-                    pageLinkClassName={cx("page-num")}
-                    previousLinkClassName="page-nam"
-                    nextLinkClassName="page-num"
-                    activeLinkClassName={cx("active")}
-                  />
+                  
                 </div>
               {/* </ul> */}
             </div>

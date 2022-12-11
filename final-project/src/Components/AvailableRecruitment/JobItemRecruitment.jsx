@@ -3,13 +3,15 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styles from "./AvailableRecruitment.module.scss";
 import classNames from "classnames/bind";
-
+import { IoLogoUsd } from "react-icons/io"
+import { IoLocationSharp } from "react-icons/io5"
 const cx = classNames.bind(styles);
 
-function JobItemRecruitment({ myJobRecruitment }) {
+function JobItemRecruitment({ myJobRecruitment, id }) {
   // console.log("jobR", myJobRecruitment);
 
   return (
+    <Link to={"/RJDetails/" + id}>
     <Fragment>
       <li className={cx("list_group_item")}>
         <div className={cx("box_item")}>
@@ -26,11 +28,11 @@ function JobItemRecruitment({ myJobRecruitment }) {
               </Link>
             </div>
             <div className={cx("address")}>
-              {myJobRecruitment.location.name}
+            <span><IoLocationSharp></IoLocationSharp>{myJobRecruitment.location.name} </span> 
             </div>
             <div className={cx("info_salary")}>
               <div className={cx("salary ")}>
-                <span> {myJobRecruitment.salary} </span>
+              <span><IoLogoUsd></IoLogoUsd></span>  <span> {myJobRecruitment.salary} </span>
               </div>
             </div>
             <div className={cx("category")}>
@@ -38,10 +40,10 @@ function JobItemRecruitment({ myJobRecruitment }) {
             </div>
             <div className={cx("small_detail")}>
               <div className={cx("deadline")}>
-                Ngày tạo: {myJobRecruitment.deadline}
+                Ngày tạo: {myJobRecruitment.createAt}
               </div>
               <div className={cx("deadline")}>
-                Ngày hết hạn: {myJobRecruitment.createAt}
+                Ngày hết hạn: {myJobRecruitment.deadline}
               </div>
               <div className={cx("update")}>
                 <a href="/#">
@@ -53,49 +55,11 @@ function JobItemRecruitment({ myJobRecruitment }) {
           </div>
         </div>
       </li>
-      {/* <li className={cx("list_group_item")}>
-      <div className={cx("box_item")}>
-          <div className={cx("images")}>
-            <img src={myJobRecruitment.name.info.avatar} alt="" />
-          </div>
-          <div className={cx("content")}>
-            <Link to="/" className={cx("title")}>
-              {myJobRecruitment.title}
-            </Link>
-            <div>
-
-            <Link to="/" className={cx("company")}>
-              {myJobRecruitment.name.info.name}
-            </Link>
-            </div>
-            <div className={cx("address")}>
-              {myJobRecruitment.name.location}
-            </div>
-            <div className={cx("info_salary")}>
-              <div className={cx("salary ")}>
-                {myJobRecruitment.salary}
-              </div>
-              <div className={cx("category")}>
-              {myJobRecruitment.category.name}
-            </div>
-            <div className={cx("deadline")}>
-              {myJobRecruitment.deadline}
-            </div>
-             <div className={cx("deadline")}>
-              {myJobRecruitment.createAt}
-            </div>
-              <div className={cx("save ")}>
-                {" "}
-                <a href="/#">
-                  <AiOutlineHeart />
-                  Lưu
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        </li> */}
+      
+     
     </Fragment>
+    
+</Link>
   );
 }
 
