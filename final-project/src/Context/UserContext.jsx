@@ -35,7 +35,6 @@ const UserProvider = ({ children }) => {
  
   
   const registerUser = async () => {
-    console.log('alooo');
     let newUser = UserApi.register(email, password, role);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     setCurrentUser(newUser)
@@ -91,6 +90,7 @@ const UserProvider = ({ children }) => {
     getToken = JSON.parse(getToken)
     setToken(getToken)
   },[])
+  
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(
       name,

@@ -61,7 +61,7 @@ import React, { useEffect, useState } from "react";
       return data
     })
     return locations
-  }
+  };
 
  
 
