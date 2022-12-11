@@ -20,7 +20,6 @@ const Login = () => {
   const [data, setData] = useState(initialState);
   const [visible, setVisible] = useState(false);
   const { loading } = useSelector((state) => state.auths);
-  console.log(loading);
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();

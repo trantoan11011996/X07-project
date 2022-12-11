@@ -98,8 +98,6 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         const splitString  = data.path.split("/")
-        console.log("split 1 ",splitString[1]);
-        console.log("split 2",splitString[2]);
         const imageString = splitString[1]+"/".concat(splitString[2])
         setImageData(imageString)
         let user = localStorage.getItem("currentUser")
