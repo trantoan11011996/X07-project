@@ -64,7 +64,7 @@ const JobProvider = ({ children }) => {
   const getMyRecruitmentJobs = async (token) => {
     console.log('token2', token)
     await axios.get(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category}&page=${page}&fieldSort=${fieldSort}&typeSort=${typeSort}`,
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category}&page=${page}&fieldSort=${deadline}&typeSort=${typeSort}`,
       { headers: {authorization: `Bearer ${token}`} },
     
     ).then((res) => {
@@ -169,6 +169,7 @@ const JobProvider = ({ children }) => {
     myJobRecruitment,
     setFieldSort,
     setTypeSort,
+    setSearch,
     search, category, page,fieldSort, typeSort,
     token,
     postCV,
