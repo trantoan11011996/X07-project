@@ -107,18 +107,15 @@ const JobProvider = ({ children }) => {
 
   //post CV
   const postCV = async ( id, file, token) => {
-    let item = {
-      params: id,
-      body: file
-    };
+
+    const CvData = new FormData();
+		CvData.append('CV', file);
 
     let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
     {
       method: "POST",
-      body: JSON.stringify(item),
+      body: CvData,
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
         authorization: `Bearer ${token}`,
       }
     }).then((res)=>{

@@ -223,7 +223,7 @@ export default function JobDetail() {
                         <Modal.Body>
                             <Form.Group>
                                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
-                                <Form.Control type="file" placeholder="Upload" onChange={(event=> setFile(event.target.value))} />
+                                <Form.Control type="file" onChange={(event=> setFile(event.target.files[0]))} />
                             </Form.Group>
 
                             <Form.Group>
