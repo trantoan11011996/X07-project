@@ -13,6 +13,7 @@ const JobProvider = ({ children }) => {
   const [search, setSearch] = useState("")
   const [myJobRecruitment, setMyJobRecruitment] = useState([])
   const [category, setCategory] = useState("")
+  const [operationSector,setOperationSector] = useState("")
   const [page, setPage] = useState("")
   const [fieldSort, setFieldSort] = useState("")
   const [typeSort, setTypeSort] = useState("")
@@ -123,6 +124,7 @@ const JobProvider = ({ children }) => {
       numberApplicant,
       location,
       category,
+      operationSector,
       createAt,
       deadline
     )
