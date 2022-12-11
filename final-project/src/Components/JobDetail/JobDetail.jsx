@@ -49,9 +49,7 @@ export default function JobDetail() {
         }
         return data
     };
-    // useEffect(() => {
-    //     getJobDetail(id);
-    // }, [id]);
+   
     useEffect(() => {
         const detailData = async () => {
             await getJobDetail()
