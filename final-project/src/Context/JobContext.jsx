@@ -106,7 +106,7 @@ const JobProvider = ({ children }) => {
   },[])
 
   //post CV
-  const postCV = async ( id, file) => {
+  const postCV = async ( id, file, token) => {
     let item = {
       params: id,
       body: file

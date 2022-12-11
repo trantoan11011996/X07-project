@@ -18,7 +18,7 @@ import { UserContext } from "../../Context/UserContext";
 export default function JobDetail() {
     const { user } = useSelector((state) => state.auths);
     const { currentUser } = useContext(UserContext);
-    const { fetchJobDetail } = useContext(JobContext)
+    const { fetchJobDetail, postCV } = useContext(JobContext)
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
 
@@ -27,16 +27,17 @@ export default function JobDetail() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    
+    
+    const { id } = useParams();
+    const [jobData, setJobData] = useState({})
+    
     const handleActive = (event) => {
         event.preventDefault()
         setActive(true)
         handleClose()
+        postCV( currentUser.user._id, file, currentUser.token)
     }
-
-
-    const { id } = useParams();
-    const [jobData, setJobData] = useState({})
-
     const getJobDetail = async () => {
         console.log('id job', id);
         let data = await fetchJobDetail(id)
