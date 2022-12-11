@@ -96,7 +96,7 @@ export default function JobDetail() {
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
-                                        {(user?.user.role == "candidate" || currentUser?.role == "candidate") && (
+                                        {(user?.role == "candidate" || currentUser?.role == "candidate") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
                                                     {!active

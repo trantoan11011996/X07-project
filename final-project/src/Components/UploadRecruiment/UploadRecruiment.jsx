@@ -6,12 +6,26 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import pretty from "pretty";
 import { JobContext } from "../../Context/JobContext";
+import { isTitle } from "../../utils/validate";
 const { RangePicker } = DatePicker;
 export default function UploadRecruiment() {
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
   const [alert, setAlert] = useState(false);
   const [alerToday, setAlerToday] = useState(false);
+  const [warningTitle, setWarningTitle] = useState(false);
+  const [warningDescription, setWarningDescription] = useState(false);
+  const [warningType, setWarningType] = useState(false);
+  const [warningLevel, setWarningLevel] = useState(false);
+  const [warningAge, setWarningAge] = useState(false);
+  const [warningExp, setWarningExp] = useState(false);
+  const [warningSalary, setWarningSalary] = useState(false);
+  const [warningNumberApplicant, setWarningNumberApplicant] = useState(false);
+  const [warningLocation, setWarningLocaion] = useState(false);
+  const [warningCategory, setWarningCategory] = useState(false);
+  const [warningCreateAt, setWarningCreateAt] = useState(false);
+  const [warningDeadling, setWarningDeadling] = useState(false);
+
   const {
     allCategory,
     allLocation,
@@ -45,7 +59,6 @@ export default function UploadRecruiment() {
     deadline,
     createRecruiment,
   } = useContext(JobContext);
-  const [warining, setWarning] = useState(false);
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -64,7 +77,11 @@ export default function UploadRecruiment() {
 
   const submitRecruiment = (e, dateCompare) => {
     e.preventDefault();
-    console.log(createAt < formattedToday);
+
+    if (!isTitle(title)) {
+      setWarningTitle(true);
+      return;
+    }
     if (createAt < formattedToday || createAt > formattedToday) {
       setAlerToday(true);
       return;
@@ -72,39 +89,6 @@ export default function UploadRecruiment() {
     if (deadline <= createAt) {
       setAlerToday(false);
       setAlert(true);
-      return;
-    }
-    if (
-      !title ||
-      !name ||
-      !description ||
-      !position ||
-      !type ||
-      !level ||
-      !age ||
-      !experience ||
-      !salary ||
-      !numberApplicant ||
-      !location ||
-      !category ||
-      !createAt ||
-      !deadline ||
-      (title ||
-        name ||
-        description ||
-        position ||
-        type ||
-        level ||
-        age ||
-        experience ||
-        salary ||
-        numberApplicant ||
-        location ||
-        category ||
-        createAt ||
-        deadline) === null
-    ) {
-      setWarning(true);
       return;
     }
     setAlert(false);
@@ -127,9 +111,9 @@ export default function UploadRecruiment() {
                 onChange={(e) => setTitle(e.target.value)}
                 // required
               />
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
+              {warningTitle && (
+                <Form.Text className="text-danger">
+                  <a>Đây là trường bắt buộc không được bỏ trống</a>
                 </Form.Text>
               )}
             </Form.Group>
@@ -144,9 +128,9 @@ export default function UploadRecruiment() {
                 onChange={(e) => setPosition(e.target.value)}
                 // required
               />
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
+              {warningTitle && (
+                <Form.Text className="text-danger">
+                  <a>Đây là trường bắt buộc không được bỏ trống</a>
                 </Form.Text>
               )}
             </Form.Group>
@@ -188,48 +172,41 @@ export default function UploadRecruiment() {
                 </Form.Text>
               )}
             </Row>
-            <Form.Label>
-              Hình thức làm việc <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                onChange={(e) => setType(e.target.value)}
-              >
-                <option></option>
-                <option value="fulltime">Toàn thời gian</option>
-                <option value="parttime">bán thời gian</option>
-              </Form.Select>
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-            <Form.Label>
-              Cấp bậc <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                onChange={(e) => setLevel(e.target.value)}
-              >
-                <option></option>
-                <option value="Thực tập">Thực Tập</option>
-                <option value="nhân viên">Nhân Viên</option>
-                <option value="trường phòng">Trường Phòng</option>
-                {warining && (
-                  <Form.Text className="text-danger link-wrong-pass">
-                    <a>Đây là trường bắt buộc không được để trống</a>
+            <Row className="mb-3">
+              <Col>
+                <Form.Label>
+                  Hình thức làm việc <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Select onChange={(e) => setType(e.target.value)}>
+                  <option></option>
+                  <option value="fulltime">Toàn thời gian</option>
+                  <option value="parttime">bán thời gian</option>
+                </Form.Select>
+                {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
                 )}
-              </Form.Select>
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Label>
+                  Cấp bậc <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Select onChange={(e) => setLevel(e.target.value)}>
+                  <option></option>
+                  <option value="Thực tập">Thực Tập</option>
+                  <option value="nhân viên">Nhân Viên</option>
+                  <option value="trường phòng">Trường Phòng</option>
+                </Form.Select>
+                {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
+              </Col>
+            </Row>
 
             <Form.Label>
               Độ tuổi yêu cầu <span style={{ color: "red" }}>*</span>
@@ -241,57 +218,58 @@ export default function UploadRecruiment() {
                 placeholder="ví dụ: 18-25"
                 onChange={(e) => setAge(e.target.value)}
               />
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
+              {warningTitle && (
+                <Form.Text className="text-danger">
+                  <a>Đây là trường bắt buộc không được bỏ trống</a>
                 </Form.Text>
               )}
             </Form.Group>
 
-            <Form.Label>
-              Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-        <Form.Group>
-        <Form.Select
-              className="mb-3"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option></option>
-              {allCategory?.map((item, index) => {
-                return (
-                  <option value={item._id} key={index}>
-                    {item.name}
-                  </option>
-                );
-              })}
-            </Form.Select>
-            {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
-        </Form.Group>
-            <Form.Label>
-              Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Select
-              className="mb-3"
-              onChange={(e) => setLocation(e.target.value)}
-            >
-              <option></option>
-              {allLocation?.map((item, index) => {
-                return (
-                  <option value={item._id} key={index}>
-                    {item.name}
-                  </option>
-                );
-              })}
-            </Form.Select>
-            {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
+            <Row className="mb-3">
+              <Col>
+                <Form.Label>
+                  Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Select onChange={(e) => setCategory(e.target.value)}>
+                  <option></option>
+                  {allCategory?.map((item, index) => {
+                    return (
+                      <option value={item._id} key={index}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+                {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col>
+                <Form.Label>
+                  Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Select onChange={(e) => setLocation(e.target.value)}>
+                  <option></option>
+                  {allLocation?.map((item, index) => {
+                    return (
+                      <option value={item._id} key={index}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
+                </Form.Select>
+                {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
+              </Col>
+            </Row>
             <Form.Group className="mb-3">
               <Form.Label>
                 Mức Lương <span style={{ color: "red" }}>*</span>
@@ -303,11 +281,11 @@ export default function UploadRecruiment() {
                 onChange={(e) => setSalary(e.target.value)}
                 // required
               />
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
+              {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -320,36 +298,36 @@ export default function UploadRecruiment() {
                 type="number"
                 onChange={(e) => setNumberApplicant(e.target.value)}
               />
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
+              {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
             </Form.Group>
-
-            <Form.Label>Kinh nghiệm làm việc</Form.Label>
-            <Form.Group>
-              <Form.Select
-                className="mb-3"
-                onChange={(e) => setExperience(e.target.value)}
-              >
-                <option></option>
-                <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
-                  Mới tốt nghiệp/ chưa có kinh nghiệm
-                </option>
-                <option value="0 - 1 năm">0 - 1 năm </option>
-                <option value="1 - 3 năm">1 - 3 năm</option>
-                <option value="3 - 5 năm">3 - 5 năm</option>
-                <option value="> 5 năm">
-                  <span>&gt;</span> 5 năm
-                </option>
-              </Form.Select>
-              {warining && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Đây là trường bắt buộc không được để trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
+            <Row   className="mb-3">
+              <Col>
+                <Form.Label>Kinh nghiệm làm việc</Form.Label>
+                <Form.Select
+                  onChange={(e) => setExperience(e.target.value)}
+                >
+                  <option></option>
+                  <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
+                    Mới tốt nghiệp/ chưa có kinh nghiệm
+                  </option>
+                  <option value="0 - 1 năm">0 - 1 năm </option>
+                  <option value="1 - 3 năm">1 - 3 năm</option>
+                  <option value="3 - 5 năm">3 - 5 năm</option>
+                  <option value="> 5 năm">
+                    <span>&gt;</span> 5 năm
+                  </option>
+                </Form.Select>
+                {warningTitle && (
+                  <Form.Text className="text-danger">
+                    <a>Đây là trường bắt buộc không được bỏ trống</a>
+                  </Form.Text>
+                )}
+              </Col>
+            </Row>
             <Form.Label>
               Mô tả bổ sung <span style={{ color: "red" }}>*</span>
             </Form.Label>
@@ -358,11 +336,6 @@ export default function UploadRecruiment() {
               onChange={handleCkEditorChanges}
               style={{ padding: "20px" }}
             />
-            {warining && (
-              <Form.Text className="text-danger link-wrong-pass">
-                <a>Đây là trường bắt buộc không được để trống</a>
-              </Form.Text>
-            )}
           </div>
           <button className="btn-upload" variant="primary" type="submit">
             Submit

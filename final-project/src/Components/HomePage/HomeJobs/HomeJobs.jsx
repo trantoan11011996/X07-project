@@ -18,7 +18,7 @@ export default function HomeJobs({jobHomePage}) {
       <Row>
         <Col sm={12} md={12}>
           <Row className="navigate-header text-start m-3">
-            {(user?.user?.role || currentUser?.role) == "candidate" && (
+            {(user?.role || currentUser?.role) == "candidate" && (
               <>
                 <Row className="job-navigate-container">
                   <Col sm={2} md={2} className="homejob-title">
@@ -46,7 +46,7 @@ export default function HomeJobs({jobHomePage}) {
               </>
             )}
 
-            {(user?.user?.role || currentUser?.role) == "recruiter" && (
+            {(user?.role || currentUser?.role) == "recruiter" && (
               <>
                 <Row className="job-navigate-container">
                   <Col sm={2} md={2} className="homejob-title">
@@ -87,7 +87,7 @@ export default function HomeJobs({jobHomePage}) {
               </>
             )}
 
-            {!user?.user && !currentUser && (
+            {!user && !currentUser && (
               <>
                 <Row className="job-navigate-container">
                   <Col

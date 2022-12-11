@@ -44,3 +44,86 @@ export const isMathUpdatePassword = (newPassword, confirmPassword) => {
 export const isVietnamesePhoneNumberValid = (phone) => {
   return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone);
 };
+
+const whiteSpaceCheck = /\s/g
+export const isTitle = (title)=>{
+  if(!title || whiteSpaceCheck.test(title)){
+    return false
+  }
+  return true
+}
+export const isDescription = (description)=>{
+  if(!description || whiteSpaceCheck.test(description)){
+    return false
+  }
+  return true
+}
+export const isPosition = (position)=>{
+  if(!position){
+    return false
+  }
+  return true
+}
+export const isType = (type)=>{
+  if(!type){
+    return false
+  }
+  return true
+}
+export const isLevel = (level)=>{
+  if(!level){
+    return true
+  }
+  return false
+}
+
+export const isAge = (age)=>{
+  if(!age || whiteSpaceCheck.test(age)){
+    return true
+  }
+  return false
+}
+export const isExperience = (experience)=>{
+  if(!experience || whiteSpaceCheck.test(experience)){
+    return true
+  }
+  return false
+}
+export const isSalary = (salary)=>{
+  if(!salary || whiteSpaceCheck.test(salary)){
+    return true
+  }
+  return false
+}
+
+export const isNumberApplicant = (numberApplicant) =>{
+  if(!numberApplicant){
+    return true
+  }
+  return false
+}
+export const isLocation = (location)=>{
+  if(!location){
+    return true
+  }
+  return false
+}
+
+export const isCategory = (category)=>{
+  if(!category){
+    return true
+  }
+  return false
+}
+export const isCreateAt = (createAt) =>{
+  if(!createAt) {
+    return true
+  }
+  return false
+}
+export const isDeadline = (deadline) =>{
+  if(!deadline) {
+    return true
+  }
+  return false
+}
