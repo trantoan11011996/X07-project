@@ -60,7 +60,6 @@ export default function RegisterForm() {
       return
     } else {
       setEmailEmpty(false)
-      setEmailExsistAlert(false)
     }
 
     if (!password || password== null) {
@@ -105,9 +104,14 @@ export default function RegisterForm() {
       setEmailErr(false)
     }
     if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
-      console.log('>>>>?????????');
-       registerUser()
-       navigate("/update_info")
+       const userAlert = await registerUser()
+       console.log('user',userAlert);
+       if(!userAlert){
+        setEmailExsistAlert(true)
+       }else{
+        setEmailExsistAlert(false)
+        navigate("/update_info")
+       }
       // const user = await registerUser()
       // if (user.message) {
       //   setEmailExsistAlert(true)

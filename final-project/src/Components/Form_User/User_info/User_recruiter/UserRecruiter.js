@@ -7,7 +7,7 @@ import {
   isVietnamesePhoneNumberValid,
 } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
-import {MdAccountCircle} from "react-icons/md"
+import { MdAccountCircle } from "react-icons/md";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default function UserRecruiter() {
@@ -30,7 +30,6 @@ export default function UserRecruiter() {
     setFieldActivity,
     updateRecruiterInfo,
     setShowLogin,
-    
   } = useContext(UserContext);
 
   const [companyEmpty, setCompanyEmpty] = useState(false);
@@ -46,48 +45,38 @@ export default function UserRecruiter() {
   const [userInfo, setUserInfo] = useState({});
   const [operationSectorAuto, setOperationSectorAuto] = useState("");
   const [selectedFile, setSelectedFile] = useState();
-  const [imageData,setImageData] = useState("")
+  const [imageData, setImageData] = useState("");
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
 
-
   useEffect(() => {
-    getAllOperationSector()
-    const getToken = JSON.parse(localStorage.getItem("token"))
-    setToken(getToken)
-    const user = JSON.parse(localStorage.getItem('currentUser'))
-    if(!user.avatar && !user.user.avatar){
-      return
-    }
-    else if(user.avatar){
-      const splitString  = user?.avatar.split("/")
-      const imageString = splitString[1]+"/".concat(splitString[2])
-      setImageData(imageString)
-      return
-    }
-    else if(user.user.avatar){
-      const splitString  = user.user.avatar.split("/")
-      const imageString = splitString[1]+"/".concat(splitString[2])
-      setImageData(imageString)
-      return
+    getAllOperationSector();
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if(user.avatar){
+      const splitString = user?.avatar?.split("/");
+      const imageString = splitString[1] + "/".concat(splitString[2]);
+      setImageData(imageString);
+      return;
     }
   }, []);
 
-  const getFile = (e) =>{
-    setSelectedFile(e.target.files[0])
-  }
+  const getFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
-  const handleSubmitAvarta = async (e,editor) => {
+  const handleSubmitAvarta = async (e, editor) => {
     e.preventDefault();
-
+    console.log(token);
     const formData = new FormData();
 
-		formData.append('formFile', selectedFile);
+    formData.append("formFile", selectedFile);
     const uploadImage = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
       {
         method: "POST",
-        body : formData,
+        body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -97,25 +86,20 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        const splitString  = data.path.split("/")
-        const imageString = splitString[1]+"/".concat(splitString[2])
-        setImageData(imageString)
-        let user = localStorage.getItem("currentUser")
-        user = JSON.parse(user)
-        if(!user.user){
-          user.avatar =  data.path
-        }
-        else if(user.user){
-          user.user.avatar = data.path
-        }
-        console.log('user',user);
-        localStorage.setItem('currentUser',JSON.stringify(user))
+        console.log('data',data.path);
+        const splitString = data.path.split("/");
+        const imageString = splitString[1] + "/".concat(splitString[2]);
+        setImageData(imageString);
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.avatar = data.path;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;
   };
 
-  const handleSubmitUpdateRecruiter = (event,editor) => {
+  const handleSubmitUpdateRecruiter = (event, editor) => {
     event.preventDefault();
     if (!companyName || companyName == null) {
       setCompanyEmpty(true);
@@ -171,12 +155,18 @@ export default function UserRecruiter() {
     } else {
       setDescriptEmpty(false);
       console.log(ckEditorOutput);
-      updateRecruiterInfo(companyName,companyEmail,companyPhone,companyAddress,ckEditorOutput,category);
+      updateRecruiterInfo(
+        companyName,
+        companyEmail,
+        companyPhone,
+        companyAddress,
+        ckEditorOutput,
+        category
+      );
       setShowLogin(false);
       // navigate("/");
     }
   };
-
 
   const getAllOperationSector = async () => {
     const all = await fetch(
@@ -214,12 +204,21 @@ export default function UserRecruiter() {
         </div>
         <div className="upload-avarta-container">
           <div className="avarta">
-            {imageData ? <img className="image-avarta" src={`https://xjob-mindx-production.up.railway.app/${imageData}`}></img> : <MdAccountCircle className="icon-avarta"></MdAccountCircle>}
+            {imageData ? (
+              <img
+                className="image-avarta"
+                src={`https://xjob-mindx-production.up.railway.app/${imageData}`}
+              ></img>
+            ) : (
+              <MdAccountCircle className="icon-avarta"></MdAccountCircle>
+            )}
           </div>
-        <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
-          <input type='file' name="formFile" onChange={getFile}></input>
-          <button className="submit-img" type="submit">Lưu</button>
-        </form>
+          <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
+            <input type="file" name="formFile" onChange={getFile}></input>
+            <button className="submit-img" type="submit">
+              Lưu
+            </button>
+          </form>
         </div>
       </div>
       <Form
@@ -333,14 +332,14 @@ export default function UserRecruiter() {
           </Row>
 
           <Row className="row-form">
-          <Form.Label />{" "}
-                <b>
-                  {" "}
-                  Mô tả bổ sung<span style={{ color: "red" }}>*</span>{" "}
-                </b>
+            <Form.Label />{" "}
+            <b>
+              {" "}
+              Mô tả bổ sung<span style={{ color: "red" }}>*</span>{" "}
+            </b>
             <CKEditor
               editor={ClassicEditor}
-              onChange={(event,editor)=>setCkEditorOutput(editor.getData())}
+              onChange={(event, editor) => setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
             {descriptEmpty && (
