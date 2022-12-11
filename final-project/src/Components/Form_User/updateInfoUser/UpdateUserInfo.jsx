@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { UserContext } from "../../../Context/UserContext";
@@ -8,6 +8,7 @@ import UserCandidate from "../User_info/User_cadidate/UserCandidate";
 import UserRecruiter from "../User_info/User_recruiter/UserRecruiter";
 import MetaData from "../../MetaData/MetaData";
 import UpdatePassword from "../UpdatePassword/UpdatePassword";
+import { useNavigate } from "react-router-dom";
 export default function UpdateInfoUser() {
   const [activeUpdatePass, setActiveUpdatePass] = useState(true);
   const [activeUpdateCandidate, setActiveUpdateCandidate] = useState(false);
@@ -17,7 +18,12 @@ export default function UpdateInfoUser() {
   const [formRecruiter, setFormRecruiter] = useState(false);
   const { currentUser } = useContext(UserContext);
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
   const handleActiveUpdatePass = () => {
     setActiveUpdatePass(true);
     setActiveUpdateCandidate(false);

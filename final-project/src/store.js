@@ -5,13 +5,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
-import { jobReducer } from "./Reducers/jobReducer";
+import { categoryJobReducer, jobReducer } from "./Reducers/jobReducer";
 
 const reducer = combineReducers({
   auths: authReducer,
   profiles: profileReducer,
   forgotPassword: forgotPasswordReducer,
   allJobs: jobReducer,
+  categories: categoryJobReducer,
 });
 const persistConfig = {
   key: "root",

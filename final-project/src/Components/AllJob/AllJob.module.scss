@@ -132,6 +132,9 @@
           }
         }
         .list_group_jobs {
+          .list-container {
+            width: 100%;
+          }
           .list_group_item {
             background: #f5fcff;
             margin-bottom: 20px;

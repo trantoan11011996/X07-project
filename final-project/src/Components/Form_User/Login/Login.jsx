@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../../MetaData/MetaData";
 import { UserContext } from "../../../Context/UserContext";
 import logo from "../../../img/loginbanner2.jpg";
+import Loading from "../../Loading";
 const cx = classNames.bind(styles);
 const Login = () => {
   const initialState = {
@@ -99,7 +100,7 @@ const Login = () => {
                   <div className={cx("login_btn")}>
                     {loading ? (
                       <button type="submit" disabled>
-                        Chờ tí nha bạn...
+                        <Loading loading={loading} color={"#fff"} size={20} />
                       </button>
                     ) : (
                       <button type="submit">Đăng nhập</button>
