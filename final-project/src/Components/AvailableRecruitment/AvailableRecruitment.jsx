@@ -18,10 +18,10 @@ import JobListRecruitment from "./JobListRecruitment";
 const cx = classNames.bind(styles);
 
 export const AvailableRecruitment = () => {
-  const {getMyRecruitmentJobs, myJobRecruitment , search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
+  const {getMyRecruitmentJobs, myJobRecruitment , search, category, page,fieldSort, typeSort, token, setSearch} = useContext(JobContext)
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
-  
+  const [searchResults, setSearchResults] = useState("");
 
   useEffect(() => {
     getMyRecruitmentJobs(token)
@@ -32,7 +32,10 @@ export const AvailableRecruitment = () => {
     getMyRecruitmentJobs(getlocalToken)
   },[])
 
- 
+  const handleSearch = (e) => {
+      setSearch(e.target.value)
+      console.log(search)
+  }
 
   return (
     <>
@@ -44,8 +47,10 @@ export const AvailableRecruitment = () => {
               <div className={cx("form-group")}>
                 <input
                   type="text"
-                  name="search"
-                  placeholder="Tên công ty, vị trí việc làm"
+                  name={search}
+                  placeholder="Tìm việc làm"
+                  value= {search}
+                  onChange={handleSearch}
                 />
                 <div className={cx("search-text")}>
                   <CiSearch />
@@ -104,7 +109,6 @@ export const AvailableRecruitment = () => {
                 <div className={cx("right")}>
                   <p>Sắp xếp</p>
                   <select className={cx("select_box")}>
-                    <option value="">Mới cập nhật</option>
                     <option value="">Mới đăng </option>
                     <option value="">Sắp hết hạn</option>
                   </select>
