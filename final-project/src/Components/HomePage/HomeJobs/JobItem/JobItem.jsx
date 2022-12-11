@@ -25,7 +25,7 @@ export default function JobItem({ job,id }) {
               <div className="job-desctiption">
                 <h1 className="job-title">{job?.title}</h1>
                 <p className="company-name">{job?.name?.info.name}</p>
-                <p className="job-salary"><span><IoLogoUsd></IoLogoUsd></span> Lương : {job?.salary}</p>
+                <p className="job-salary"><span><IoLogoUsd></IoLogoUsd></span> Lương : {job?.salary} (VNĐ)</p>
                 <p className="job-location"><span><IoLocationSharp></IoLocationSharp></span>{job?.location.name}</p>
               </div>
             </Col>
