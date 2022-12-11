@@ -33,10 +33,10 @@ export default function JobDetail() {
     const [jobData, setJobData] = useState({})
     
     const handleActive = (event) => {
-        event.preventDefault()
-        setActive(true)
-        handleClose()
-        postCV( currentUser.user._id, file, currentUser.token)
+        event.preventDefault();
+        setActive(true);
+        postCV( id, file, currentUser.token);
+        handleClose();
     }
     const getJobDetail = async () => {
         console.log('id job', id);
