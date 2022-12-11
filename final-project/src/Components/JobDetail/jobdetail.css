@@ -13,6 +13,7 @@
 
 .job-tab {
     color: black;
+    cursor: pointer;
 }
 
 .require-title {
@@ -34,5 +35,5 @@
     border-bottom: 1px solid #ccc;
     margin-top: 1rem!important;
     margin-bottom: 1rem!important;
-    
+    padding: 12 0 15;
 }

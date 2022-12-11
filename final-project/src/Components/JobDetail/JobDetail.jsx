@@ -116,21 +116,21 @@ export default function JobDetail() {
                                     </div>
 
                                     <div className="tab-rows">
-                                        <Row className="ms-2">
+                                        <Row className="ms-2 p-2">
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#description"> Mô tả</a>
+                                                <a className="job-tab" href="#description" data-target="#description"> Mô tả</a>
                                             </Col>
 
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#require"> Yêu cầu</a>
+                                                <a className="job-tab" href="#require" data-target="#require"> Yêu cầu</a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#info"> Thông tin liên hệ</a>
+                                                <a className="job-tab" href="#info" data-target="#info"> Thông tin liên hệ</a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#about"> Về công ty</a>
+                                                <a className="job-tab" href="#about" data-target="#about"> Về công ty</a>
                                             </Col>
 
                                             <Col sm={2} md={2}></Col>
