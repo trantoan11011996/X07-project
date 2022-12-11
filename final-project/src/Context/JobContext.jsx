@@ -104,6 +104,31 @@ const JobProvider = ({ children }) => {
     getallCategory()
     getallLocation()
   },[])
+
+  //post CV
+  const postCV = async ( id, file) => {
+    let item = {
+      params: id,
+      body: file
+    };
+
+    let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
+    {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      }
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data.json
+    })
+    return userCV
+  }
+
   const value = {
     getJobHomePage,
     setJobHomePage,
@@ -120,6 +145,7 @@ const JobProvider = ({ children }) => {
     setTypeSort,
     search, category, page,fieldSort, typeSort,
     token,
+    postCV,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

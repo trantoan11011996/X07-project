@@ -7,12 +7,13 @@ import { Card, Container, Col, Row, Button, Modal, Form, Nav } from "react-boots
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsBriefcase, BsCalendar2Check, BsClockHistory, BsDiagram3, BsHeadset, BsPerson, BsWhatsapp } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
+import { TiFlowChildren } from "react-icons/ti";
+import { RxAvatar } from "react-icons/rx";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css"
-import data from "./JobData";
 import { UserContext } from "../../Context/UserContext";
 export default function JobDetail() {
     const { user } = useSelector((state) => state.auths);
@@ -20,6 +21,8 @@ export default function JobDetail() {
     const { fetchJobDetail } = useContext(JobContext)
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
+
+    const [file, setFile] = useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -167,7 +170,7 @@ export default function JobDetail() {
                                                 <Card>
                                                     <Card.Body>
                                                         <div>
-                                                            <h3 className="require-text"> <BsHeadset className="me-2"></BsHeadset>Kinh nghiệm</h3>
+                                                            <h3 className="require-text"> <RxAvatar className="me-2"></RxAvatar>Kinh nghiệm</h3>
                                                             <p className="ms-2"> {jobData?.experience}  kinh nghiệm</p>
                                                         </div>
 
@@ -177,7 +180,7 @@ export default function JobDetail() {
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text"><BsWhatsapp className="me-2"></BsWhatsapp>Độ tuổi</h3>
+                                                            <h3 className="require-text"> <TiFlowChildren className="me-2" >Độ tuổi </TiFlowChildren></h3>
                                                             <p className="ms-2"> {jobData?.age} tuổi</p>
                                                         </div>
 
@@ -219,7 +222,7 @@ export default function JobDetail() {
                         <Modal.Body>
                             <Form.Group>
                                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
-                                <Form.Control type="file" placeholder="Upload" />
+                                <Form.Control type="file" placeholder="Upload" onChange={(event=> setFile(event.target.value))} />
                             </Form.Group>
 
                             <Form.Group>

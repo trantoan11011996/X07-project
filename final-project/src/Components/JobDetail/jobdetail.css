@@ -31,7 +31,8 @@
     margin-top: 70px;
 }
 .tab-rows {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #ccc;
     margin-top: 1rem!important;
     margin-bottom: 1rem!important;
+    
 }
