@@ -64,13 +64,47 @@ import React, { useEffect, useState } from "react";
   };
 
  
-
+  const createRecruiment = (
+    title,
+    name,
+    description,
+    position,
+    type,
+    level,
+    age,
+    experience,
+    salary,
+    numberApplicant,
+    location,
+    category,
+    createAt,
+    deadline
+  ) => {
+    const recruimentInfo = {
+      title: title,
+      name: name,
+      description: description,
+      position: position,
+      type: type,
+      level: level,
+      age: age,
+      experience: experience,
+      salary: salary,
+      numberApplicant: numberApplicant,
+      location: location,
+      category: category,
+      createAt: createAt,
+      deadline: deadline,
+    };
+    return recruimentInfo;
+  };
  const JobApi = {
     allJobs : fetchAllJobs,
     homepageJob: fetchJobHomepage,
     jobDetail: fetchJobDetail,
     categories : getAllCategory,
-    locations:getAllLocation
+    locations:getAllLocation,
+    recruiment : createRecruiment
  }
 
  export default JobApi;

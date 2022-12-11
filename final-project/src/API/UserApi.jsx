@@ -31,23 +31,30 @@ const candidateInfo = (
       address: address,
       description: description,
     },
-    category : category,
+    category: category,
   };
   return userInfo;
 };
 
-const recruiterInfo = (companyName, companyEmail, companyPhone, companyAddress,companyDescription, operationSector) => {
-    const userInfo = {
-        info : {
-        name: companyName,
-        email: companyEmail,
-        phoneNumber: companyPhone,
-        address: companyAddress,
-        description: companyDescription,
-        },
-        operationSector : operationSector
-    }
-    return userInfo
+const recruiterInfo = (
+  companyName,
+  companyEmail,
+  companyPhone,
+  companyAddress,
+  companyDescription,
+  operationSector
+) => {
+  const userInfo = {
+    info: {
+      name: companyName,
+      email: companyEmail,
+      phoneNumber: companyPhone,
+      address: companyAddress,
+      description: companyDescription,
+    },
+    operationSector: operationSector,
+  };
+  return userInfo;
 };
 
 const autoLogin = () => {
@@ -56,8 +63,8 @@ const autoLogin = () => {
 };
 const logOut = () => {
   localStorage.removeItem("currentUser");
-  localStorage.removeItem("token")
-  localStorage.removeItem("myRcm")
+  localStorage.removeItem("token");
+  localStorage.removeItem("myRcm");
 };
 
 const UserApis = {

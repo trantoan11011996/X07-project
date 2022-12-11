@@ -33,7 +33,19 @@ const UserProvider = ({ children }) => {
   const [fieldActivity,setFieldActivity] = useState('')
 
  
-  
+  useEffect(() => {
+    const current = autologin();
+    setCurrentUser(current)
+  }, []);
+  useEffect(()=>{
+    setToken(user?.token)
+  },[user])
+  useEffect(()=>{
+    let getToken = localStorage.getItem('token')
+    getToken = JSON.parse(getToken)
+    setToken(getToken)
+  },[])
+
   const registerUser = async () => {
     let newUser = UserApi.register(email, password, role);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
@@ -54,7 +66,6 @@ const UserProvider = ({ children }) => {
       console.log(res);
       return res.json()
     }).then((data)=>{
-      console.log('data',data);
       if(data.token){
         setCurrentUser(data);
         setToken(data.token)
@@ -78,18 +89,6 @@ const UserProvider = ({ children }) => {
     setShowLogin(true);
     setCurrentUser(null);
   };
-  useEffect(() => {
-    const current = autologin();
-    setCurrentUser(current)
-  }, []);
-  useEffect(()=>{
-    setToken(user?.token)
-  },[user])
-  useEffect(()=>{
-    let getToken = localStorage.getItem('token')
-    getToken = JSON.parse(getToken)
-    setToken(getToken)
-  },[])
   
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(
@@ -154,7 +153,6 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
-      console.log('data',data);
       let user = localStorage.getItem('currentUser')
       user = JSON.parse(user)
       if(user){
