@@ -47,16 +47,17 @@ export default function MainApp() {
                 ></Route>
                 <Route path="/allJob" element={<AllJob />}></Route>
                 <Route path="/upload" element={<UploadRecruiment />}></Route>
-                <Route path="/rjdetails" element={<RJDetails />}></Route>{" "}
-                {/* <Route path="jobCandidate">
-                  <Route path=":id" element={<CandidateJobDetail />}></Route>
-                </Route> */}
+                <Route path="RJDetails" >
+                    <Route path=":id" element={<RJDetails />}></Route>
+                </Route>
+                <Route path="jobDetail">
+                  <Route path=":id" element={<JobDetail />}></Route>
+                </Route>
                 <Route
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
               </Routes>
-              {/* <CandidateJobDetail /> */}
               <Footer />
             </div>
           </BrowserRouter>

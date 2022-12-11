@@ -64,7 +64,7 @@ export const AllJob = () => {
     let arrField = e;
     console.log(arrField);
     if (arrField.length === 0) {
-      dispatch(getAllJobs())
+      dispatch(getAllJobs());
     } else {
       const id = arrField.map((i) => i.id);
       if (id) {

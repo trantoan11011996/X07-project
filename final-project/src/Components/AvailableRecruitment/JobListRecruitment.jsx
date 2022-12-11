@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import { List } from "antd";
 import JobItemRecruitment from "./JobItemRecruitment";
 import { JobContext } from "../../Context/JobContext";
 function JobListRecruitment(){
-    const {getMyRecruitmentJobs, myJobRecruitment, search, category, page,fieldSort, typeSort, token} = useContext(JobContext)
+    const { myJobRecruitment} = useContext(JobContext)
     return(
         <List
         grid={{
@@ -24,7 +24,7 @@ function JobListRecruitment(){
         dataSource={myJobRecruitment}
         renderItem={(myJobRecruitment) => (
           <List.Item>
-            <JobItemRecruitment myJobRecruitment={myJobRecruitment} />
+            <JobItemRecruitment myJobRecruitment={myJobRecruitment} id={myJobRecruitment._id} />
           </List.Item>
         )}
       ></List>

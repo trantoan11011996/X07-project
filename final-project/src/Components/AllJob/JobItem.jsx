@@ -14,42 +14,44 @@ const JobItem = ({ data }) => {
 
   return (
     <Fragment>
-      <li className={cx("list_group_item")}>
-        <div className={cx("box_item")}>
-          <div className={cx("images")}>
-            <img
-              src={`https://xjob-mindx-production.up.railway.app/${result}`}
-              alt="logo"
-            />
-          </div>
-          <div className={cx("content")}>
-            <Link to="/" className={cx("title")}>
-              {data.title}
-            </Link>
-            <Link to="/" className={cx("company")}>
-              {data.name.info.name}
-            </Link>
-            <div className={cx("address")}>
-              <a href="/#">{data.location.name}</a>
-              <span>
-                Cập nhật : <span>{day}</span>
-              </span>
+      <Link to={"/jobDetail/" + id}>
+        <li className={cx("list_group_item")}>
+          <div className={cx("box_item")}>
+            <div className={cx("images")}>
+              <img
+                src={`https://xjob-mindx-production.up.railway.app/${result}`}
+                alt="logo"
+              />
             </div>
-            <div className={cx("info_salary")}>
-              <div className={cx("salary ")}>
-                <span>{data.salary} VND</span>
+            <div className={cx("content")}>
+              <Link to="/" className={cx("title")}>
+                {data.title}
+              </Link>
+              <Link to="/" className={cx("company")}>
+                {data.name.info.name}
+              </Link>
+              <div className={cx("address")}>
+                <a href="/#">{data.location.name}</a>
+                <span>
+                  Cập nhật : <span>{day}</span>
+                </span>
               </div>
-              <div className={cx("save ")}>
-                {" "}
-                <a href="/#">
-                  <AiOutlineHeart />
-                  Lưu
-                </a>
+              <div className={cx("info_salary")}>
+                <div className={cx("salary ")}>
+                  <span>{data.salary} VND</span>
+                </div>
+                <div className={cx("save ")}>
+                  {" "}
+                  <a href="/#">
+                    <AiOutlineHeart />
+                    Lưu
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </Link>
     </Fragment>
   );
 };

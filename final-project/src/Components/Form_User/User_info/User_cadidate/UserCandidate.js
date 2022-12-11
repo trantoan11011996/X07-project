@@ -61,10 +61,19 @@ export default function UserCandidate() {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    const splitString = user.user.avatar?.split("/");
-    const imageString = splitString[1] + "/".concat(splitString[2]);
-    console.log(imageString);
-    setImageData(imageString);
+    if (!user.avatar && !user.user.avatar) {
+      return;
+    } else if (user.avatar) {
+      const splitString = user?.avatar.split("/");
+      const imageString = splitString[1] + "/".concat(splitString[2]);
+      setImageData(imageString);
+      return;
+    } else if (user.user.avatar) {
+      const splitString = user.user.avatar.split("/");
+      const imageString = splitString[1] + "/".concat(splitString[2]);
+      setImageData(imageString);
+      return;
+    }
   }, []);
   const getAllCategory = async () => {
     const all = await fetch(
@@ -117,7 +126,13 @@ export default function UserCandidate() {
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.user.avatar = data.path;
+        console.log("user", user);
+        if (!user.user) {
+          user.avatar = data.path;
+        }
+        if (user.user) {
+          user.user.avatar = data.path;
+        }
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });

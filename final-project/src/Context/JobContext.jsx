@@ -11,13 +11,25 @@ const JobProvider = ({ children }) => {
   const [allCategory,setAllCategory] = useState([])
   const [allLocation,setAllLocation] = useState([])
   const [search, setSearch] = useState("")
+  const [myJobRecruitment, setMyJobRecruitment] = useState([])
   const [category, setCategory] = useState("")
   const [page, setPage] = useState("")
   const [fieldSort, setFieldSort] = useState("")
   const [typeSort, setTypeSort] = useState("")
   const [token,setToken] = useState(null)
-
-  const [myJobRecruitment, setMyJobRecruitment] = useState([])
+  const [title,setTitle] = useState('')
+  const [name,setName] = useState('')
+  const [description,setDescription]= useState('')
+  const [position,setPosition] = useState('')
+  const [type,setType] = useState('')
+  const [level,setLevel] = useState('')
+  const [age,setAge] = useState('')
+  const [experience,setExperience] = useState('')
+  const [salary,setSalary] = useState('')
+  const [numberApplicant,setNumberApplicant] = useState('')
+  const [location,setLocation] = useState('')
+  const [createAt,setCreatAt] = useState('')
+  const [deadline,setDeadline] = useState('')
 
 
 
@@ -59,7 +71,6 @@ const JobProvider = ({ children }) => {
       const data = res.data;
     
       setMyJobRecruitment(data.myRcm);
-      console.log('myRcm',data.myRcm)
      
       if (!localStorage.getItem("myRcm")) {
         localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
@@ -68,10 +79,7 @@ const JobProvider = ({ children }) => {
 }
 
 
-  // useEffect(() => {
-  //   getMyRecruitmentJobs()
-  // }, [search, category, page,fieldSort, typeSort])
-
+  
 
 
   //fetch all Job
@@ -100,10 +108,53 @@ const JobProvider = ({ children }) => {
     // console.log('loca',locations);
     setAllLocation(locations)
   }
+  //create recruiment
+  const createRecruiment =  (description) =>{
+    const newRecruiment = JobApi.recruiment(
+      title,
+      name,
+      description,
+      position,
+      type,
+      level,
+      age,
+      experience,
+      salary,
+      numberApplicant,
+      location,
+      category,
+      createAt,
+      deadline
+    )
+    console.log('new',newRecruiment);
+    return newRecruiment
+  }
   useEffect(()=>{
     getallCategory()
     getallLocation()
   },[])
+
+  //post CV
+  const postCV = async ( id, file, token) => {
+
+    const CvData = new FormData();
+		CvData.append('CV', file);
+
+    let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
+    {
+      method: "POST",
+      body: CvData,
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data.json
+    })
+    return userCV
+  }
+
   const value = {
     getJobHomePage,
     setJobHomePage,
@@ -120,6 +171,37 @@ const JobProvider = ({ children }) => {
     setTypeSort,
     search, category, page,fieldSort, typeSort,
     token,
+    postCV,
+    createRecruiment,
+    setTitle,
+    setName,
+    setDescription,
+    setPosition,
+    setType,
+    setLevel,
+    setAge,
+    setExperience,
+    setSalary,
+    setNumberApplicant,
+    setLocation,
+    setCategory,
+    setCreatAt,
+    setDeadline,
+    title,
+    name,
+    description,
+    position,
+    type,
+    level,
+    age,
+    experience,
+    salary,
+    numberApplicant,
+    location,
+    category,
+    createAt,
+    deadline
+  
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
