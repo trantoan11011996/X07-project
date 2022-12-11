@@ -92,7 +92,7 @@ export default function RJDetails() {
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
-                                        {(user?.user.role == "recruiter" || currentUser?.role == "recruiter") && (
+                                        {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
                                                          <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>

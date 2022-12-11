@@ -14,7 +14,7 @@ const JobItem = ({ data }) => {
 
   return (
     <Fragment>
-      <Link to={"/jobDetail/" + id}>
+      <Link to={"/jobDetail/" + data._id}>
         <li className={cx("list_group_item")}>
           <div className={cx("box_item")}>
             <div className={cx("images")}>
