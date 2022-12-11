@@ -89,7 +89,7 @@ export default function JobDetail() {
 
                                     <div className="job-details">
                                         <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
-                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> <b>Lương</b>: {jobData?.salary} </p>
+                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> <b>Lương</b>: {jobData?.salary} (VNĐ) </p>
                                         <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
@@ -179,7 +179,7 @@ export default function JobDetail() {
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text"> <TiFlowChildren className="me-2" >Độ tuổi </TiFlowChildren></h3>
+                                                            <h3 className="require-text"> <TiFlowChildren className="me-2" ></TiFlowChildren>Độ tuổi </h3>
                                                             <p className="ms-2"> {jobData?.age} tuổi</p>
                                                         </div>
 
