@@ -2,14 +2,13 @@ import React, { Fragment, useEffect } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
+import vi from "moment/locale/vi";
 import styles from "./AllJob.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 const JobItem = ({ data }) => {
-  const day = moment(data.createAt, "DDMMYYYY").fromNow();
-
+  const day = moment(data?.createAt, "DDMMYYYY").locale("vi", vi).fromNow();
   const images = data?.name?.avatar;
   const result = images?.split("/")[1] + "/".concat(images?.split("/")[2]);
 

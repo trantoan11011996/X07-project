@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {MdAccountCircle} from "react-icons/md"
+import { MdAccountCircle } from "react-icons/md";
 import { UserContext } from "../../../../Context/UserContext";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
@@ -51,21 +51,21 @@ export default function UserCandidate() {
   const [phoneErr, setPhoneErr] = useState(false);
   const [categories, setCategories] = useState([]);
   // const {user} = useSelector(state=>state.auths)
-  const [userInfo,setUserInfo] = useState({})
-  const [operationSectorAuto,setOperationSectorAuto] = useState('')
+  const [userInfo, setUserInfo] = useState({});
+  const [operationSectorAuto, setOperationSectorAuto] = useState("");
   const [selectedFile, setSelectedFile] = useState();
-  const [imageData,setImageData] = useState("")
-  const [token,setToken] = useState('')
-  useEffect(()=>{
-    getAllCategory()
-    const getToken = JSON.parse(localStorage.getItem("token"))
-    setToken(getToken)
-    const user = JSON.parse(localStorage.getItem('currentUser'))
-    const splitString  = user.user.avatar.split("/")
-    const imageString = splitString[1]+"/".concat(splitString[2])
+  const [imageData, setImageData] = useState("");
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    getAllCategory();
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const splitString = user.user.avatar?.split("/");
+    const imageString = splitString[1] + "/".concat(splitString[2]);
     console.log(imageString);
-    setImageData(imageString)
-  },[])
+    setImageData(imageString);
+  }, []);
   const getAllCategory = async () => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/category`,
@@ -85,22 +85,22 @@ export default function UserCandidate() {
       });
     return all;
   };
-  const getFile = (e) =>{
-    setSelectedFile(e.target.files[0])
+  const getFile = (e) => {
+    setSelectedFile(e.target.files[0]);
     console.log(e.target.files[0]);
-  }
+  };
 
   const handleSubmitAvarta = async (e) => {
     e.preventDefault();
-    console.log("token",token);
+    console.log("token", token);
     const formData = new FormData();
 
-		formData.append('formFile', selectedFile);
+    formData.append("formFile", selectedFile);
     const uploadImage = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
       {
         method: "POST",
-        body : formData,
+        body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -110,15 +110,15 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        const splitString  = data.path.split("/")
-        console.log("split 1 ",splitString[1]);
-        console.log("split 2",splitString[2]);
-        const imageString = splitString[1]+"/".concat(splitString[2])
-        setImageData(imageString)
-        let user = localStorage.getItem("currentUser")
-        user = JSON.parse(user)
-        user.user.avatar =  data.path
-        localStorage.setItem('currentUser',JSON.stringify(user))
+        const splitString = data.path.split("/");
+        console.log("split 1 ", splitString[1]);
+        console.log("split 2", splitString[2]);
+        const imageString = splitString[1] + "/".concat(splitString[2]);
+        setImageData(imageString);
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.user.avatar = data.path;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;
@@ -180,7 +180,7 @@ export default function UserCandidate() {
       setCategoryEmpty(true);
       return;
     } else {
-      setDescriptEmpty(false)
+      setDescriptEmpty(false);
       setCategoryEmpty(false);
     }
 
@@ -194,7 +194,6 @@ export default function UserCandidate() {
       setShowLogin(false);
       navigate("/");
       console.log(currentUser);
-
     }
   };
 
@@ -209,20 +208,29 @@ export default function UserCandidate() {
         </div>
         <div className="upload-avarta-container">
           <div className="avarta">
-            {imageData ? <img className="image-avarta" src={`https://xjob-mindx-production.up.railway.app/${imageData}`}></img> : <MdAccountCircle className="icon-avarta"></MdAccountCircle>}
+            {imageData ? (
+              <img
+                className="image-avarta"
+                src={`https://xjob-mindx-production.up.railway.app/${imageData}`}
+              ></img>
+            ) : (
+              <MdAccountCircle className="icon-avarta"></MdAccountCircle>
+            )}
           </div>
-        <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
-          <input type='file' name="formFile" onChange={getFile}></input>
-          <button className="submit-img" type="submit">Lưu</button>
-        </form>
+          <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
+            <input type="file" name="formFile" onChange={getFile}></input>
+            <button className="submit-img" type="submit">
+              Lưu
+            </button>
+          </form>
         </div>
       </div>
-      <Form className="p-2 text-start form-candidate" onSubmit={handleSubmitUpdateCandidate}>
+      <Form
+        className="p-2 text-start form-candidate"
+        onSubmit={handleSubmitUpdateCandidate}
+      >
         <Form.Group>
-          <h1 className="form-candidate-header">
-            {" "}
-            Thông tin ứng viên{" "}
-          </h1>
+          <h1 className="form-candidate-header"> Thông tin ứng viên </h1>
           <Row>
             <Col sm={6} md={6}>
               <Row className="text-start">
@@ -258,7 +266,7 @@ export default function UserCandidate() {
                       value="Nam"
                       type={type}
                       id={`inline-${type}-1`}
-                      onChange={(e)=>setGender(e.target.value)}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                     <Form.Check
                       inline
@@ -267,7 +275,7 @@ export default function UserCandidate() {
                       value="Nữ"
                       type={type}
                       id={`inline-${type}-2`}
-                      onChange={(e)=>setGender(e.target.value)}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                   </div>
                 ))}
@@ -384,7 +392,7 @@ export default function UserCandidate() {
             </Col>
             <Col sm={3} md={3}>
               <Button className="button" type="submit">
-                                {" "}
+                {" "}
                 Cập nhật{" "}
               </Button>
             </Col>

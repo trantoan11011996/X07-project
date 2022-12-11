@@ -3,9 +3,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import JobItem from "../JobItem/JobItem";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "../ListJobs/ListJob.css"
+import "../ListJobs/ListJob.css";
 
-export default function ListJobs({jobHomePage}) {
+export default function ListJobs({ jobHomePage }) {
   // const [data, setData] = useState("")
 
   // useEffect(() => {
@@ -13,12 +13,11 @@ export default function ListJobs({jobHomePage}) {
   //     setData(response.data);
   //   });
   // }, [])
-  console.log('jobs',jobHomePage);
   return (
     <div className="list-jobs">
       <Container>
         <List
-        className="list-container"
+          className="list-container"
           grid={{
             gutter: 16,
             xs: 2,
@@ -37,10 +36,10 @@ export default function ListJobs({jobHomePage}) {
           dataSource={jobHomePage}
           renderItem={(job) => (
             <List.Item>
-              <JobItem job={job} id={job._id}/>
+              <JobItem job={job} id={job._id} />
             </List.Item>
           )}
-        ></List> 
+        ></List>
       </Container>
     </div>
   );

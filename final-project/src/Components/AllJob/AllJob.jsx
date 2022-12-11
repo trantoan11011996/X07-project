@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
+
 import styles from "./AllJob.module.scss";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
 import { Link } from "react-router-dom";
-import { BsChevronRight } from "react-icons/bs";
+
+import { List } from "antd";
+
 import { images } from "../../img/index";
 import JobItem from "./JobItem";
 import { CiSearch } from "react-icons/ci";
@@ -12,45 +14,64 @@ import { colourOptions } from "../DataJob/data";
 import { address } from "../DataJob/data";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllJobs } from "../../Actions/jobAction";
-import moment from "moment";
+import { getAllJobCategory, getAllJobs } from "../../Actions/jobAction";
+
 import Loading from "../Loading";
 
 const cx = classNames.bind(styles);
 export const AllJob = () => {
-  const [itemOffset, setItemOffset] = useState(0);
-  const [currentItems, setCurrentItems] = useState([]);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
-  const [selects, setSelects] = useState();
-  const [pageCount, setPageCount] = useState(0);
-  const dispatch = useDispatch();
   const { recruiment, countDoc } = useSelector((state) => state.allJobs.jobs);
+  const { categories } = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.allJobs);
   const [search, setSearch] = useState("");
-  const itemsPerPage = 10;
-
+  // const [createAt, setCreateAt] = useState("");
+  // const [deadline, setDeadline] = useState("");
+  // const [defaults, setDefaults] = useState("");
+  const [id, setId] = useState("");
+  const listCategory = categories?.map((item) => {
+    return {
+      id: item._id,
+      label: item.name,
+    };
+  });
   useEffect(() => {
     dispatch(getAllJobs());
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(recruiment.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(recruiment.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
-  // useEffect(()=>{
-  //   const datas = await fetch (``)
-  // },[])
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % recruiment.length;
-    setItemOffset(newOffset);
-  };
+    dispatch(getAllJobCategory());
+  }, [dispatch]);
+
   const handleChangeInput = (e) => {
     setSearch(e.target.value);
   };
   const handleSubmitSearchJob = (e) => {
     e.preventDefault();
-    dispatch(getAllJobs(search.toLocaleUpperCase()));
+    dispatch(getAllJobs(search.toLocaleUpperCase(), "", "", "", id[0]));
   };
-
+  const handleSortDate = (e) => {
+    if (e.target.value === "createAt") {
+      dispatch(getAllJobs(search, e.target.value));
+    }
+    if (e.target.value === "deadline") {
+      dispatch(getAllJobs(search, e.target.value));
+    }
+    if (e.target.value === "defaults") {
+      dispatch(getAllJobs(search, e.target.value));
+    }
+  };
+  const handleChangeField = (e) => {
+    let arrField = e;
+    console.log(arrField);
+    if (arrField.length === 0) {
+      dispatch(getAllJobs())
+    } else {
+      const id = arrField.map((i) => i.id);
+      if (id) {
+        setId(id);
+      }
+    }
+  };
   return (
     <>
       <MetaData title="Danh sách tất cả việc làm" />
@@ -71,11 +92,12 @@ export const AllJob = () => {
               </div>
               <div className={cx("form-group")}>
                 <Select
-                  defaultValue={selectedOptionsField}
+                  // defaultValue={selectedOptionsField}
                   isMulti
                   // name="field"
-                  options={colourOptions}
-                  onChange={(e) => setSelectedOptionsField(e)}
+                  onChange={handleChangeField}
+                  options={listCategory}
+                  // onChange={(e) => setSelectedOptionsField(e)}
                   isOptionDisabled={() => selectedOptionsField.length >= 2}
                   className="basic-multi-select"
                   classNamePrefix="select"
@@ -115,45 +137,51 @@ export const AllJob = () => {
               </div>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
-                  <span>
+                  <div style={{ marginBottom: "15px" }}>
                     {countDoc} <span>việc làm</span>
-                  </span>
+                  </div>
+                  {/* <div className={cx("right")}>
+                    <p>Sắp xếp</p>
+                    <select
+                      className={cx("select_box")}
+                      onChange={handleSortDate}
+                    >
+                      <option value="newUpdate">-- Sắp xếp --</option>
+                      <option value="createAt">Tăng dần </option>
+                      <option value="deadline">Giảm dần</option>
+                    </select>
+                  </div> */}
                 </div>
+
                 <div className={cx("right")}>
                   <p>Sắp xếp</p>
-                  <select className={cx("select_box")}>
-                    <option>Mới cập nhật</option>
-                    <option>Mới đăng </option>
-                    <option>Ngày hết hạn</option>
-                    <option>Số lượng ứng viên</option>
+                  <select
+                    className={cx("select_box")}
+                    onChange={handleSortDate}
+                  >
+                    <option value="defaults">-- Sắp xếp theo --</option>
+                    <option value="createAt">Mới đăng </option>
+                    <option value="deadline">Ngày hết hạn</option>
+                    <option value="numberApplicant">Số lượng ứng viên</option>
                   </select>
                 </div>
               </div>
+
               {loading ? (
-                <Loading loading={loading} />
+                <div style={{ textAlign: "center" }}>
+                  {" "}
+                  <Loading loading={loading} color={"#6800fa"} size={"35"} />
+                </div>
               ) : (
                 <ul className={cx("list_group_jobs")}>
-                  {currentItems &&
-                    recruiment?.map((item) => (
-                      <JobItem key={item.id} data={item} />
-                    ))}
-                  <div style={{ textAlign: "center" }}>
-                    <ReactPaginate
-                      className={cx("paginate")}
-                      breakLabel="..."
-                      nextLabel=" >"
-                      onPageChange={handlePageClick}
-                      pageRangeDisplayed={3}
-                      pageCount={pageCount}
-                      previousLabel="< "
-                      renderOnZeroPageCount={null}
-                      containerClassName="pagination"
-                      pageLinkClassName={cx("page-num")}
-                      previousLinkClassName="page-nam"
-                      nextLinkClassName="page-num"
-                      activeLinkClassName={cx("active")}
-                    />
-                  </div>
+                  <List
+                    className={cx("list-container")}
+                    pagination={{
+                      pageSize: 6,
+                    }}
+                    dataSource={recruiment}
+                    renderItem={(item) => <JobItem key={item.id} data={item} />}
+                  ></List>
                 </ul>
               )}
             </div>
