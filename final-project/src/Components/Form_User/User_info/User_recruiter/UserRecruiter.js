@@ -41,7 +41,7 @@ export default function UserRecruiter() {
   const [descriptEmpty, setDescriptEmpty] = useState(false);
   const [EmailErr, setEmailErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
-  const [operationSectorForm, setOperationSectorForm] = useState([]);
+  const [categoryForm, setCategoryForm] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [operationSectorAuto, setOperationSectorAuto] = useState("");
   const [selectedFile, setSelectedFile] = useState();
@@ -50,15 +50,22 @@ export default function UserRecruiter() {
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
 
   useEffect(() => {
-    getAllOperationSector();
-    const getToken = JSON.parse(localStorage.getItem("token"));
-    setToken(getToken);
+    getAllCategory();
+    const getToken =  JSON.parse(localStorage.getItem("token"));
+    setToken(getToken)
     const user = JSON.parse(localStorage.getItem("currentUser"));
+    setUserInfo(user)
     if(user.avatar){
       const splitString = user?.avatar?.split("/");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
-      return;
+    }
+    if(user.info){
+      setCompanyName(user.info.name)
+      setCompanyEmail(user.info.email)
+      setCompanyPhone(user.info.phoneNumber)
+      setCompanyAddress(user.info.address)
+      return
     }
   }, []);
 
@@ -68,14 +75,13 @@ export default function UserRecruiter() {
 
   const handleSubmitAvarta = async (e, editor) => {
     e.preventDefault();
-    console.log(token);
     const formData = new FormData();
-
     formData.append("formFile", selectedFile);
+    console.log('token',token);
     const uploadImage = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
       {
-        method: "POST",
+        method: "post",
         body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,7 +93,7 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         console.log('data',data);
-        const splitString = data.path.split("/");
+        const splitString = data.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
@@ -168,14 +174,14 @@ export default function UserRecruiter() {
     }
   };
 
-  const getAllOperationSector = async () => {
+  const getAllCategory = async () => {
     const all = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/users/category`,
+      `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          Accept: "application/json"
         },
       }
     )
@@ -183,15 +189,11 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        setOperationSectorForm(data);
+        setCategoryForm(data)
       });
     return all;
   };
 
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    getAllOperationSector(token);
-  }, []);
 
   return (
     <div className="form-container-recruiter">
@@ -214,8 +216,8 @@ export default function UserRecruiter() {
             )}
           </div>
           <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
-            <input type="file" name="formFile" onChange={getFile}></input>
-            <button className="submit-img" type="submit">
+            <input type="file" name="formFile" enctype="multipart/form-data" onChange={getFile}></input>
+            <button className="submit-img" type="submit"  name="image" id="image">
               Lưu
             </button>
           </form>
@@ -236,7 +238,7 @@ export default function UserRecruiter() {
               className="input ms-2 "
               type="text"
               maxLength={100}
-              defaultValue={userInfo?.name}
+              defaultValue={userInfo?.info?.name}
               onChange={(event) => setCompanyName(event.target.value)}
             />
             {companyEmpty && (
@@ -254,7 +256,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="email"
-                  defaultValue={userInfo?.email}
+                  defaultValue={userInfo?.info?.email}
                   onChange={(event) => setCompanyEmail(event.target.value)}
                 />
                 {companyEmailEmpty && (
@@ -276,7 +278,7 @@ export default function UserRecruiter() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
-                  defaultValue={userInfo?.phoneNumber}
+                  defaultValue={userInfo?.info?.phoneNumber}
                   onChange={(event) => setCompanyPhone(event.target.value)}
                 />
                 {phoneEmpty && (
@@ -299,7 +301,7 @@ export default function UserRecruiter() {
               className="input ms-2"
               type="text"
               maxLength={200}
-              defaultValue={userInfo?.address}
+              defaultValue={userInfo?.info?.address}
               onChange={(event) => setCompanyAddress(event.target.value)}
             />
             {addressEmpty && (
@@ -315,10 +317,9 @@ export default function UserRecruiter() {
             <Form.Select
               className="input ms-2"
               onChange={(event) => setCategory(event.target.value)}
-              defaultValue={operationSectorAuto}
             >
-              <option>{operationSectorAuto}</option>
-              {operationSectorForm?.map((item, index) => {
+              <option></option>
+              {categoryForm?.map((item, index) => {
                 return (
                   <option key={index} value={item._id}>
                     {item.name}

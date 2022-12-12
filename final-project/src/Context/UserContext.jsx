@@ -99,7 +99,7 @@ const UserProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
-  const updateCandidateInfo = async () => {
+  const updateCandidateInfo = async (description) => {
     const info = UserApi.candidateInfo(
       name,
       gender,
@@ -126,9 +126,11 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        console.log('data',data);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.info = data.info;
+        user.category = data.caterogry
         localStorage.setItem("currentUser", JSON.stringify(user));
         setCurrentUser(user);
         return data;
@@ -146,7 +148,7 @@ const UserProvider = ({ children }) => {
     companyPhone,
     companyAddress,
     ckEditorOutput,
-    category
+    operationSector
   ) => {
     const info = UserApi.recruiterInfo(
       companyName,
@@ -154,9 +156,9 @@ const UserProvider = ({ children }) => {
       companyPhone,
       companyAddress,
       ckEditorOutput,
-      category
+      operationSector
     );
-    console.log(info);
+    console.log("info",info);
     let user_info = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
@@ -173,9 +175,11 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        console.log("data",data);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.info = data.info;
+        user.operationSector = data.operationSector
         localStorage.setItem("currentUser", JSON.stringify(user));
         setCurrentUser(user);
         return data;

@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import { UserContext } from "../../../../Context/UserContext";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 
@@ -46,26 +48,32 @@ export default function UserCandidate() {
   const [addressEmpty, setAddressEmpty] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
-
   const [ageErr, setAgeErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
   const [categories, setCategories] = useState([]);
-  // const {user} = useSelector(state=>state.auths)
   const [userInfo, setUserInfo] = useState({});
-  const [operationSectorAuto, setOperationSectorAuto] = useState("");
   const [selectedFile, setSelectedFile] = useState();
   const [imageData,setImageData] = useState("")
   const [token,setToken] = useState('')
+  const [ckEditorOutput, setCkEditorOutput] = useState(null);
+
   useEffect(()=>{
     getAllCategory()
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
     const user = JSON.parse(localStorage.getItem("currentUser"));
+    setUserInfo(user)
     if(user.avatar){
       const splitString = user?.avatar?.split("/");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
       return;
+    }if(user.info){
+      setName(user.info.fullName)
+      setAge(user.info.age)
+      setPhone(user.info.phoneNumber)
+      setAddress(user.info.address)
+      return
     }
   },[])
   const getAllCategory = async () => {
@@ -112,6 +120,7 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
+        console.log('data',data);
         const splitString = data.path.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
@@ -184,18 +193,11 @@ export default function UserCandidate() {
       setDescriptEmpty(false);
       setCategoryEmpty(false);
     }
-
-    if (!description || description == null) {
-      setDescriptEmpty(true);
-      return;
-    } else {
       setDescriptEmpty(false);
 
-      updateCandidateInfo();
+      updateCandidateInfo(ckEditorOutput);
       setShowLogin(false);
-      navigate("/");
-      console.log(currentUser);
-    }
+      // navigate("/");
   };
 
   return (
@@ -243,6 +245,7 @@ export default function UserCandidate() {
                   className="input ms-2"
                   type="text"
                   maxLength={100}
+                  defaultValue={userInfo?.info?.fullName}
                   onChange={(event) => setName(event.target.value)}
                 />
                 {nameEmpty && (
@@ -300,6 +303,7 @@ export default function UserCandidate() {
                   type="number"
                   min={18}
                   max={100}
+                  defaultValue={userInfo?.info?.age}
                   onChange={(event) => setAge(event.target.value)}
                 />
                 {ageEmpty && <p className="text"> Tuổi không được để trống</p>}
@@ -317,6 +321,7 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  defaultValue={userInfo?.info?.phoneNumber}
                   onChange={(event) => setPhone(event.target.value)}
                 />
                 {phoneEmpty && (
@@ -339,6 +344,7 @@ export default function UserCandidate() {
               className="input ms-2"
               type="text"
               maxLength={200}
+              defaultValue={userInfo?.info?.address}
               onChange={(event) => setAddress(event.target.value)}
             />
             {addressEmpty && (
@@ -373,20 +379,20 @@ export default function UserCandidate() {
             <Form.Label />{" "}
             <b>
               {" "}
-              Mô tả bản thân<span style={{ color: "red" }}>*</span>{" "}
+              Mô tả bổ sung<span style={{ color: "red" }}>*</span>{" "}
             </b>
-            <Form.Control
-              className="input ms-2"
-              as="textarea"
-              rows={3}
-              maxLength={1000}
-              onChange={(event) => setDescription(event.target.value)}
+            <CKEditor
+              editor={ClassicEditor}
+              onChange={(event, editor) => setCkEditorOutput(editor.getData())}
+              style={{ padding: "20px" }}
             />
-            {descriptEmpty && (
+            {/* {descriptEmpty && (
               <p className="text"> Mô tả không được để trống</p>
             )}
+            {descriptEmpty && (
+              <p className="text"> Mô tả không được để trống</p>
+            )} */}
           </Row>
-
           <Row className="mt-5">
             <Col sm={3} md={3}>
               {" "}

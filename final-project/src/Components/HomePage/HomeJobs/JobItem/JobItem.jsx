@@ -11,7 +11,8 @@ export default function JobItem({ job,id }) {
   const image = job?.name?.avatar
   const splitString  = image.split("/")
   const imageString = splitString[1]+"/".concat(splitString[2])
-  console.log('image',imageString);
+  
+ 
   return (
     <div className="job-item">
       <Link to={"/jobDetail/" + id}>
@@ -19,7 +20,7 @@ export default function JobItem({ job,id }) {
           <div className="job-wrapper">
             <Col md={2} className="company-logo">
               <div className="logo-wraper">
-                <img className="logo-company" src={`https://xjob-mindx-production.up.railway.app/${imageString}`}></img>
+              <img className="logo-company" src={`https://xjob-mindx-production.up.railway.app/${imageString}`}></img>
               </div>
             </Col>
 
