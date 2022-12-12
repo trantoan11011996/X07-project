@@ -152,7 +152,7 @@ const JobProvider = ({ children }) => {
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      return data.json
+      return data
     })
     return userCV
   }

@@ -11,7 +11,6 @@ const JobItem = ({ data }) => {
   const day = moment(data?.createAt, "DDMMYYYY").locale("vi", vi).fromNow();
   const images = data?.name?.avatar;
   const result = images?.split("/")[1] + "/".concat(images?.split("/")[2]);
-
   return (
     <Fragment>
       <Link to={"/jobDetail/" + data._id}>
