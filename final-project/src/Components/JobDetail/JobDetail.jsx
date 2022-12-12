@@ -21,7 +21,8 @@ export default function JobDetail() {
     const { fetchJobDetail, postCV } = useContext(JobContext)
     const [show, setShow] = useState('');
     const [active, setActive] = useState(false);
-
+    const [logo, setLogo] = useState('')
+ 
     const [file, setFile] = useState("");
 
     const handleClose = () => setShow(false);
@@ -38,14 +39,14 @@ export default function JobDetail() {
         postCV( id, file, currentUser.token);
         handleClose();
     }
-    const getJobDetail = async () => {
-        console.log('id job', id);
-        let data = await fetchJobDetail(id)
 
+    const getJobDetail = async () => {
+        let data = await fetchJobDetail(id)
         if (data) {
-            console.log('data', data);
             setJobData(data)
-            return
+            const splitString = data.name.avatar.split("/");
+            const imageString = splitString[1] + "/".concat(splitString[2]);
+            return setLogo(imageString);
         }
         return data
     };
@@ -76,12 +77,12 @@ export default function JobDetail() {
                                 <Card.Img className="job-banner" variant="top" src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg" />
 
                                 <Card.Body>
-                                    <Row className="titte m-2">
-                                        <Col className="logo" sm={3} md={3}>
-                                            <img src="https://www.careerlink.vn/image/4da3ca9a9b8fd6454576840e74146541" />
+                                    <Row className="titte m-2 ">
+                                        <Col sm={2} md={2}>
+                                            <img className="logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
                                         </Col>
 
-                                        <Col className="company" sm={9} md={9}>
+                                        <Col className="company mt-4" sm={10} md={10}>
                                             <Card.Title className="job-tittle"> {jobData?.title}</Card.Title>
                                             <h3> {jobData?.name?.info?.name}</h3>
                                         </Col>
@@ -96,7 +97,7 @@ export default function JobDetail() {
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
-                                        {(user?.role == "candidate" || currentUser?.role == "candidate") && (
+                                        {(user?.user.role == "candidate" || currentUser?.role == "candidate") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
                                                     {!active
