@@ -86,7 +86,7 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data.path);
+        console.log('data',data);
         const splitString = data.path.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);

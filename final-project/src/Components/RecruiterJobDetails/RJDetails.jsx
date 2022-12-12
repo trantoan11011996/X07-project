@@ -20,6 +20,8 @@ export default function RJDetails() {
     const { currentUser } = useContext(UserContext);
     const { fetchJobDetail } = useContext(JobContext)
     const [show, setShow] = useState('');
+    const [logo, setLogo] = useState('')
+
     // const [active, setActive] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -37,11 +39,11 @@ export default function RJDetails() {
 
     const getJobDetail = async () => {
         let data = await fetchJobDetail(id)
-
         if (data) {
-            console.log('data', data);
             setJobData(data)
-            return
+            const splitString = data.name.avatar.split("/");
+            const imageString = splitString[1] + "/".concat(splitString[2]);
+            return setLogo(imageString);
         }
         return data
     };
@@ -74,7 +76,7 @@ export default function RJDetails() {
                                 <Card.Body>
                                     <Row className="titte m-2">
                                         <Col className="logo" sm={3} md={3}>
-                                            <img src="https://www.careerlink.vn/image/4da3ca9a9b8fd6454576840e74146541" />
+                                            <img src={`https://xjob-mindx-production.up.railway.app/${logo}`} />
                                         </Col>
 
                                         <Col className="company" sm={9} md={9}>
