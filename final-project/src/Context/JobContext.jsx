@@ -34,18 +34,28 @@ const JobProvider = ({ children }) => {
 
 
 
-  const getJobHomePage = async () => {
+  const getJobHomePage = async (categoryId) => {
+    console.log('id',categoryId);
+    const user_category = {"categoryId"  : categoryId }
+    console.log('user_category',user_category);
     const jobs = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page`,
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+
+        },
       }
     )
       .then((res) => {
         return res.json();
       })
       .then((data) => {
+        console.log('data',data);
         setJobHomePage(data);
+        localStorage.setItem("jobHomePage", JSON.stringify(data));
         return data;
       });
     
@@ -53,13 +63,10 @@ const JobProvider = ({ children }) => {
   
   };
   useEffect(() => {
-    const getJobs = async () => {
-      const jobs = await getJobHomePage();
-      // console.log(jobs);
-      localStorage.setItem("jobHomePage", JSON.stringify(jobs));
-      setJobHomePage(jobs);
-    };
-    getJobs();
+    getallCategory()
+    getallLocation()
+    const getToken = JSON.parse(localStorage.getItem('token'))
+    setToken(getToken)
   }, []);
 
   const getMyRecruitmentJobs = async (token) => {
@@ -110,7 +117,7 @@ const JobProvider = ({ children }) => {
     setAllLocation(locations)
   }
   //create recruiment
-  const createRecruiment =  (description) =>{
+  const createRecruiment = async (description) =>{
     const newRecruiment = JobApi.recruiment(
       title,
       name,
@@ -128,20 +135,27 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     )
-    console.log('new',newRecruiment);
-    return newRecruiment
+    const createRecruiment = await (`https://xjob-mindx-production.up.railway.app/api/recruiments/new`,{
+      method: "post",
+      body: JSON.stringify(newRecruiment),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      console.log('data',data);
+    })
+    return createRecruiment
   }
-  useEffect(()=>{
-    getallCategory()
-    getallLocation()
-  },[])
 
   //post CV
   const postCV = async ( id, file, token) => {
 
     const CvData = new FormData();
 		CvData.append('CV', file);
-
     let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
     {
       method: "POST",

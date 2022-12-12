@@ -95,7 +95,7 @@ export default function JobDetail() {
                 <Card.Body>
                   <Row className="titte m-2">
                     <Col className="logo" sm={2} md={2}>
-                      <img src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
+                      <img className="image-logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
                     </Col>
 
                     <Col className="company mt-4" sm={10} md={10}>

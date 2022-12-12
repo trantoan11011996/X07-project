@@ -12,7 +12,7 @@ import ListJobs from "./ListJobs/ListJobs";
 export default function HomeJobs({jobHomePage}) {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
-  
+    console.log('homepage',jobHomePage);
   return (
     <Container className="home-jobs">
       <Row>
