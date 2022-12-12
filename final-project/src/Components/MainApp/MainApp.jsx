@@ -34,7 +34,7 @@ export default function MainApp() {
               <Routes>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="/login" element={<Login />}></Route>
-                <Route path="/update_info" element={<UpdateInfoUser />}></Route>
+                <Route path="/update_info" element={<UpdateInfoUser/>}></Route>
                 <Route
                   path="/forgot_password"
                   element={<ForgotPassword />}

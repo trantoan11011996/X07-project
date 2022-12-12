@@ -130,7 +130,7 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {(user?.user.role == "candidate" ||
+                    {(user?.user?.role == "candidate" ||
                       currentUser?.role == "candidate") && (
                       <Row className="mt-2">
                         <Col sm={3} md={3}>

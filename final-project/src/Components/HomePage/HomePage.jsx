@@ -11,17 +11,17 @@ export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
   const { getJobHomePage, setJobHomePage, jobHomePage } =
     useContext(JobContext);
-    useEffect(()=>{
-      getJobHomePage()
-      const getJobs = JSON.parse(localStorage.getItem("jobHomePage"))
-      setJobHomePage(getJobs)
-    },[])
-    return (
+  useEffect(() => {
+    getJobHomePage();
+    const getJobs = JSON.parse(localStorage.getItem("jobHomePage"));
+    setJobHomePage(getJobs);
+  }, []);
+  return (
     <>
-      <MetaData title="Home" />
+      <MetaData title="Trang chủ" />
       <div className="home-page">
         <HomeBanner />
-        <HomeJobs jobHomePage = {jobHomePage}/>
+        <HomeJobs jobHomePage={jobHomePage} />
       </div>
     </>
   );

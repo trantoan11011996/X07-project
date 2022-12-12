@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Card, Container, Col, Row, Button, Modal, Form} from "react-bootstrap";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsBriefcase, BsCalendar2Check, BsClockHistory, BsDiagram3, BsHeadset, BsPerson, BsWhatsapp } from "react-icons/bs";
+import { RxAvatar } from "react-icons/rx";
+import { TiFlowChildren } from "react-icons/ti";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -90,7 +92,7 @@ export default function RJDetails() {
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
                                         </Row>
 
-                                        {(user?.user.role == "recruiter" || currentUser?.role == "recruiter") && (
+                                        {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
                                                          <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>
@@ -162,7 +164,7 @@ export default function RJDetails() {
                                                 <Card>
                                                     <Card.Body>
                                                         <div>
-                                                            <h3 className="require-text"> <BsHeadset className="me-2"></BsHeadset>Kinh nghiệm</h3>
+                                                            <h3 className="require-text"> <RxAvatar className="me-2"></RxAvatar>Kinh nghiệm</h3>
                                                             <p className="ms-2"> {jobData?.experience}  kinh nghiệm</p>
                                                         </div>
 
@@ -172,7 +174,7 @@ export default function RJDetails() {
                                                         </div>
 
                                                         <div className="mt-3">
-                                                            <h3 className="require-text"><BsWhatsapp className="me-2"></BsWhatsapp>Độ tuổi</h3>
+                                                            <h3 className="require-text"><TiFlowChildren className="me-2" >Độ tuổi </TiFlowChildren></h3>
                                                             <p className="ms-2"> {jobData?.age} tuổi</p>
                                                         </div>
 
@@ -204,7 +206,7 @@ export default function RJDetails() {
 
 
 
-                    <Modal show={show} onHide={handleClose} className="job-modal mt-5">
+                    {/* <Modal show={show} onHide={handleClose} className="job-modal mt-5">
 
                         <Modal.Header closeButton>
                             <Modal.Title>Form Ứng Tuyển</Modal.Title>
@@ -231,7 +233,7 @@ export default function RJDetails() {
                                 <Col sm={4} md={4}></Col>
                             </Row>
                         </Modal.Body>
-                    </Modal>
+                    </Modal> */}
                 </Container>
             )}
         </>

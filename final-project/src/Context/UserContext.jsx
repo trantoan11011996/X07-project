@@ -25,31 +25,31 @@ const UserProvider = ({ children }) => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [showLogin, setShowLogin] = useState(true);
-  const [token,setToken] = useState(null)
+  const [token, setToken] = useState(null);
   const { user } = useSelector((state) => state.auths);
-  const [companyPhone, setCompanyPhone] = useState('');
-  const [companyAddress, setCompanyAddress] = useState('');
-  const [companyDescription, setCompanyDescription] = useState('');
-  const [fieldActivity,setFieldActivity] = useState('')
+  const [companyPhone, setCompanyPhone] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyDescription, setCompanyDescription] = useState("");
+  const [fieldActivity, setFieldActivity] = useState("");
 
- 
   useEffect(() => {
     const current = autologin();
-    setCurrentUser(current)
+    setCurrentUser(current);
   }, []);
-  useEffect(()=>{
-    setToken(user?.token)
-  },[user])
-  useEffect(()=>{
-    let getToken = localStorage.getItem('token')
-    getToken = JSON.parse(getToken)
-    setToken(getToken)
-  },[])
+  useEffect(() => {
+    setToken(user?.token);
+  }, [user]);
+  useEffect(() => {
+    let getToken = localStorage.getItem("token");
+    if (getToken) {
+      getToken = JSON.parse(getToken);
+      setToken(getToken);
+      return;
+    }
+    return;
+  }, []);
 
   const registerUser = async () => {
-    let newUser = UserApi.register(email, password, role);
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
-    setCurrentUser(newUser)
     // push lên API
     let item = { email: email, password: password, role: role };
     let user = await fetch(
@@ -62,17 +62,26 @@ const UserProvider = ({ children }) => {
           Accept: "application/json",
         },
       }
-    ).then((res)=>{
-      console.log(res);
-      return res.json()
-    }).then((data)=>{
-      if(data.token){
-        setCurrentUser(data);
-        setToken(data.token)
-        localStorage.setItem("currentUser", JSON.stringify(data));
-        localStorage.setItem("token",JSON.stringify(data.token))
-      }
-    })
+    )
+      .then((res) => {
+        if (res.status === "400") {
+          throw new Error(`loi 400`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if(!data.message){
+          setCurrentUser(data);
+          setToken(data.token);
+          localStorage.setItem("currentUser", JSON.stringify(data));
+          localStorage.setItem("token", JSON.stringify(data.token));
+          return data
+        }
+        return 
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return user;
   };
 
@@ -82,14 +91,14 @@ const UserProvider = ({ children }) => {
       return;
     }
     setShowLogin(false);
-    return user
+    return user;
   };
   const logOutUser = () => {
     UserApi.logOut();
     setShowLogin(true);
     setCurrentUser(null);
   };
-  
+
   const updateCandidateInfo = async () => {
     const info = UserApi.candidateInfo(
       name,
@@ -100,7 +109,7 @@ const UserProvider = ({ children }) => {
       category,
       description
     );
-   
+
     const user_info = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
@@ -112,16 +121,18 @@ const UserProvider = ({ children }) => {
           authorization: `Bearer ${token}`,
         },
       }
-    ).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      let user = localStorage.getItem('currentUser')
-      user = JSON.parse(user)
-      user.info = data.info
-      localStorage.setItem('currentUser',JSON.stringify(user))
-      setCurrentUser(user)
-      return data;
-    })
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.info = data.info;
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        setCurrentUser(user);
+        return data;
+      });
     // if(user_info.token){
     //   setCurrentUser(user_info)
     //   localStorage.setItem("currentUser", JSON.stringify(user_info))
@@ -129,14 +140,21 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
-  const updateRecruiterInfo = async (companyName,companyEmail,companyPhone,companyAddress,ckEditorOutput,category) => {
+  const updateRecruiterInfo = async (
+    companyName,
+    companyEmail,
+    companyPhone,
+    companyAddress,
+    ckEditorOutput,
+    category
+  ) => {
     const info = UserApi.recruiterInfo(
       companyName,
       companyEmail,
       companyPhone,
       companyAddress,
       ckEditorOutput,
-      category,
+      category
     );
     console.log(info);
     let user_info = await fetch(
@@ -150,22 +168,19 @@ const UserProvider = ({ children }) => {
           authorization: `Bearer ${token}`,
         },
       }
-    ).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      let user = localStorage.getItem('currentUser')
-      user = JSON.parse(user)
-      if(user){
-        user.info = data.info
-      }
-      if(user.user){
-        user.user.info = data.info
-      }
-      localStorage.setItem('currentUser',JSON.stringify(user))
-      setCurrentUser(user)
-      return data;
-    })
-    return user_info
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.info = data.info;
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        setCurrentUser(user);
+        return data;
+      });
+    return user_info;
   };
 
   const value = {
@@ -180,7 +195,7 @@ const UserProvider = ({ children }) => {
     setConfirmPassword,
     confirmPassword,
     currentUser,
-    setCurrentUser,   
+    setCurrentUser,
     phone,
     setPhone,
     address,
@@ -213,8 +228,7 @@ const UserProvider = ({ children }) => {
     setCompanyDescription,
     setCompanyName,
     setFieldActivity,
-    token
-
+    token,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

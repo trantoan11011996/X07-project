@@ -71,7 +71,7 @@ export default function UpdateInfoUser() {
               </Col>
               <Col md={12}>
                 {(currentUser?.role === "candidate" ||
-                  user?.user.role === "candidate") && (
+                  user?.role === "candidate") && (
                   <div
                     className={
                       activeUpdateCandidate
@@ -87,7 +87,7 @@ export default function UpdateInfoUser() {
               </Col>
               <Col md={12}>
                 {(currentUser?.role === "recruiter" ||
-                  user?.user.role === "recruiter") && (
+                  user?.role === "recruiter") && (
                   <div
                     className={
                       activeUpdateRecruiter

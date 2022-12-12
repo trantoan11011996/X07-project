@@ -77,6 +77,7 @@ import React, { useEffect, useState } from "react";
     numberApplicant,
     location,
     category,
+    operationSector,
     createAt,
     deadline
   ) => {
@@ -93,6 +94,7 @@ import React, { useEffect, useState } from "react";
       numberApplicant: numberApplicant,
       location: location,
       category: category,
+      operationSector : "",
       createAt: createAt,
       deadline: deadline,
     };
