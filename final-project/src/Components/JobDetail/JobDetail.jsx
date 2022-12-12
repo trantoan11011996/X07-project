@@ -38,7 +38,7 @@ export default function JobDetail() {
   const { fetchJobDetail, postCV } = useContext(JobContext);
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
-
+  const [logo, setLogo] = useState('')
   const [file, setFile] = useState("");
 
   const handleClose = () => setShow(false);
@@ -54,17 +54,15 @@ export default function JobDetail() {
     handleClose();
   };
   const getJobDetail = async () => {
-    console.log("id job", id);
-    let data = await fetchJobDetail(id);
-
+    let data = await fetchJobDetail(id)
     if (data) {
-      console.log("data", data);
-      setJobData(data);
-      return;
+        setJobData(data)
+        const splitString = data.name.avatar.split("/");
+        const imageString = splitString[1] + "/".concat(splitString[2]);
+        return setLogo(imageString);
     }
-    return data;
-  };
-
+    return data
+};
   useEffect(() => {
     const detailData = async () => {
       await getJobDetail();
@@ -96,11 +94,11 @@ export default function JobDetail() {
 
                 <Card.Body>
                   <Row className="titte m-2">
-                    <Col className="logo" sm={3} md={3}>
-                      <img src="https://www.careerlink.vn/image/4da3ca9a9b8fd6454576840e74146541" />
+                    <Col className="logo" sm={2} md={2}>
+                      <img src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
                     </Col>
 
-                    <Col className="company" sm={9} md={9}>
+                    <Col className="company mt-4" sm={10} md={10}>
                       <Card.Title className="job-tittle">
                         {" "}
                         {jobData?.title}
@@ -133,10 +131,10 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {(user?.user?.role == "candidate" ||
+                    {(user?.role == "candidate" ||
                       currentUser?.role == "candidate") && (
                       <Row className="mt-2">
-                        <Col sm={3} md={3}>
+                        <Col sm={2} md={3}>
                           {!active ? (
                             <Button
                               className="job-button"
@@ -152,7 +150,7 @@ export default function JobDetail() {
                           )}
                         </Col>
 
-                        <Col sm={3} md={3}>
+                        <Col sm={2} md={2}>
                           <Button
                             className="job-button"
                             variant="outline-primary"
@@ -160,6 +158,7 @@ export default function JobDetail() {
                             Lưu
                           </Button>
                         </Col>
+                        <Col sm={7} md={7}></Col>
                       </Row>
                     )}
                   </div>
