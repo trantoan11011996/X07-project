@@ -51,7 +51,7 @@ export default function UpdateInfoUser() {
   };
   return (
     <div className="update-info-user">
-      <MetaData title="Update user info" />
+      <MetaData title="Cập nhật hồ sơ" />
       <Container>
         <Row>
           <Col md={4}>

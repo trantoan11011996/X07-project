@@ -180,7 +180,7 @@ export const AllJob = () => {
                   <List
                     className={cx("list-container")}
                     pagination={{
-                      pageSize: 6,
+                      pageSize: 10,
                     }}
                     dataSource={recruiment}
                     renderItem={(item) => <JobItem key={item.id} data={item} />}

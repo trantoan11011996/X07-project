@@ -31,6 +31,7 @@ import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
+import MetaData from "../MetaData/MetaData";
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -69,6 +70,7 @@ export default function JobDetail() {
       await getJobDetail();
     };
     detailData();
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [id]);
 
   useEffect(() => {
@@ -80,6 +82,7 @@ export default function JobDetail() {
 
   return (
     <>
+      <MetaData title="Chi tiết tin tuyển dụng" />
       {jobData && (
         <Container>
           <Row>
