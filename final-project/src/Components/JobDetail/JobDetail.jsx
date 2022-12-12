@@ -40,6 +40,7 @@ export default function JobDetail() {
   const [active, setActive] = useState(false);
 
   const [file, setFile] = useState("");
+   const [logo, setLogo] = useState('')
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,9 +59,10 @@ export default function JobDetail() {
     let data = await fetchJobDetail(id);
 
     if (data) {
-      console.log("data", data);
-      setJobData(data);
-      return;
+      setJobData(data)
+            const splitString = data.name.avatar.split("/");
+            const imageString = splitString[1] + "/".concat(splitString[2]);
+            return setLogo(imageString);
     }
     return data;
   };
@@ -96,11 +98,11 @@ export default function JobDetail() {
 
                 <Card.Body>
                   <Row className="titte m-2">
-                    <Col className="logo" sm={3} md={3}>
-                      <img src="https://www.careerlink.vn/image/4da3ca9a9b8fd6454576840e74146541" />
+                    <Col className="logo" sm={2} md={2}>
+                        <img className="logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
                     </Col>
 
-                    <Col className="company" sm={9} md={9}>
+                    <Col className="company  mt-4" sm={10} md={10}>
                       <Card.Title className="job-tittle">
                         {" "}
                         {jobData?.title}
