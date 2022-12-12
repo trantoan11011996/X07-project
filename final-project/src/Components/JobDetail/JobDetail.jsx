@@ -304,6 +304,8 @@ export default function JobDetail() {
             <Col sm={4} md={4}></Col>
           </Row>
 
+
+
           <Modal show={show} onHide={handleClose} className="job-modal mt-5">
             <Modal.Header closeButton>
               <Modal.Title>Form Ứng Tuyển</Modal.Title>
