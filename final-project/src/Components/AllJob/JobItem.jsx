@@ -11,10 +11,9 @@ const JobItem = ({ data }) => {
   const day = moment(data?.createAt, "DDMMYYYY").locale("vi", vi).fromNow();
   const images = data?.name?.avatar;
   const result = images?.split("/")[1] + "/".concat(images?.split("/")[2]);
-
   return (
     <Fragment>
-      <Link to={"/jobDetail/" + id}>
+      <Link to={"/jobDetail/" + data._id}>
         <li className={cx("list_group_item")}>
           <div className={cx("box_item")}>
             <div className={cx("images")}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./AllJob.module.scss";
 import classNames from "classnames/bind";
@@ -27,9 +27,7 @@ export const AllJob = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.allJobs);
   const [search, setSearch] = useState("");
-  // const [createAt, setCreateAt] = useState("");
-  // const [deadline, setDeadline] = useState("");
-  // const [defaults, setDefaults] = useState("");
+
   const [id, setId] = useState("");
   const listCategory = categories?.map((item) => {
     return {
@@ -40,15 +38,19 @@ export const AllJob = () => {
   useEffect(() => {
     dispatch(getAllJobs());
     dispatch(getAllJobCategory());
-  }, [dispatch]);
 
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [dispatch]);
+  //change input Search
   const handleChangeInput = (e) => {
     setSearch(e.target.value);
   };
+  //submitSearch when click button
   const handleSubmitSearchJob = (e) => {
     e.preventDefault();
     dispatch(getAllJobs(search.toLocaleUpperCase(), "", "", "", id[0]));
   };
+  //sort by select
   const handleSortDate = (e) => {
     if (e.target.value === "createAt") {
       dispatch(getAllJobs(search, e.target.value));
@@ -60,6 +62,7 @@ export const AllJob = () => {
       dispatch(getAllJobs(search, e.target.value));
     }
   };
+  //filters field by value
   const handleChangeField = (e) => {
     let arrField = e;
     console.log(arrField);
