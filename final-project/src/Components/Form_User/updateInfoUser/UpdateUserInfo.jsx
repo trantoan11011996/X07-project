@@ -19,7 +19,12 @@ export default function UpdateInfoUser() {
   const { currentUser } = useContext(UserContext);
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const navigate = useNavigate();
-;
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
   const handleActiveUpdatePass = () => {
     setActiveUpdatePass(true);
     setActiveUpdateCandidate(false);
@@ -46,7 +51,7 @@ export default function UpdateInfoUser() {
   };
   return (
     <div className="update-info-user">
-      <MetaData title="Update user info" />
+      <MetaData title="Cập nhật hồ sơ" />
       <Container>
         <Row>
           <Col md={4}>

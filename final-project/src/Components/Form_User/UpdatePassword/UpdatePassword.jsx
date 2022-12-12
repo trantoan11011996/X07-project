@@ -9,6 +9,7 @@ import MetaData from "../../MetaData/MetaData";
 import { updatePassword } from "../../../Actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import "./UpdatePassword.css";
+import Loading from "../../Loading";
 export default function UpdatePassword() {
   const [checked, setChecked] = useState(false);
 
@@ -17,6 +18,7 @@ export default function UpdatePassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auths);
+  const { loading } = useSelector((state) => state.profiles);
   const [token, setToken] = useState("");
   console.log(token);
   useEffect(() => {
@@ -109,7 +111,14 @@ export default function UpdatePassword() {
               <label htmlFor="check_password">Hiển thị mật khẩu</label>
             </div>
             <div className="group_input">
-              <button type="submit">Cập nhật mật khẩu</button>
+              {loading ? (
+                <button type="submit">
+                  {" "}
+                  <Loading loading={loading} size={20} color={"#fff"} />
+                </button>
+              ) : (
+                <button type="submit">Cập nhật mật khẩu</button>
+              )}
             </div>
           </form>
         </div>
