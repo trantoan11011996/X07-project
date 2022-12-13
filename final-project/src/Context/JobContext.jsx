@@ -31,6 +31,7 @@ const JobProvider = ({ children }) => {
   const [location,setLocation] = useState('')
   const [createAt,setCreatAt] = useState('')
   const [deadline,setDeadline] = useState('')
+  const [apply, setApply] = useState("")
 
 
 
@@ -140,11 +141,7 @@ const JobProvider = ({ children }) => {
   const postCV = async ( id, file, token) => {
 
     const CvData = new FormData();
-    const item = {
-      recruiment_id: id,
-      file: file
-    }
-		CvData.append('formFile', item);
+		CvData.append('formFile', file);
 
     let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
     {
@@ -156,7 +153,9 @@ const JobProvider = ({ children }) => {
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      return data
+      console.log(data);
+      return data;
+      
     })
     return userCV
   }
