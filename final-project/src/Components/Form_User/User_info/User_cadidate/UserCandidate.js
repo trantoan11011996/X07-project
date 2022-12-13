@@ -68,6 +68,8 @@ export default function UserCandidate() {
       return;
     }
   },[])
+
+
   const getAllCategory = async () => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/category`,

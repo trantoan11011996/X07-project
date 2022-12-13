@@ -94,8 +94,8 @@ export default function JobDetail() {
 
                 <Card.Body>
                   <Row className="titte m-2">
-                    <Col className="logo" sm={2} md={2}>
-                      <img src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
+                    <Col sm={2} md={2}>
+                      <img  className="logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
                     </Col>
 
                     <Col className="company mt-4" sm={10} md={10}>
@@ -316,6 +316,7 @@ export default function JobDetail() {
                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
                 <Form.Control
                   type="file"
+                  name="formFile"
                   onChange={(event) => setFile(event.target.files[0])}
                 />
               </Form.Group>

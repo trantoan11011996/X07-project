@@ -140,7 +140,11 @@ const JobProvider = ({ children }) => {
   const postCV = async ( id, file, token) => {
 
     const CvData = new FormData();
-		CvData.append('CV', file);
+    const item = {
+      recruiment_id: id,
+      file: file
+    }
+		CvData.append('formFile', item);
 
     let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
     {

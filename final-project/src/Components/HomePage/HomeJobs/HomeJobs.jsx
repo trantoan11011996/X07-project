@@ -13,6 +13,7 @@ export default function HomeJobs({jobHomePage}) {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
   
+  
   return (
     <Container className="home-jobs">
       <Row>
