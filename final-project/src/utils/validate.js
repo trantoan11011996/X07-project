@@ -52,12 +52,6 @@ export const isTitle = (title)=>{
   }
   return true
 }
-export const isDescription = (description)=>{
-  if(!description || whiteSpaceCheck.test(description)){
-    return false
-  }
-  return true
-}
 export const isPosition = (position)=>{
   if(!position){
     return false
@@ -72,58 +66,64 @@ export const isType = (type)=>{
 }
 export const isLevel = (level)=>{
   if(!level){
-    return true
+    return false
   }
-  return false
+  return true
 }
 
-export const isAge = (age)=>{
-  if(!age || whiteSpaceCheck.test(age)){
-    return true
+export const isAge = (ageFrom,ageTo)=>{
+  if(!ageFrom || whiteSpaceCheck.test(ageFrom)){
+    return false
   }
-  return false
+  return true
 }
 export const isExperience = (experience)=>{
-  if(!experience || whiteSpaceCheck.test(experience)){
-    return true
+  if(!experience){
+    return false
   }
-  return false
+  return true
 }
 export const isSalary = (salary)=>{
   if(!salary || whiteSpaceCheck.test(salary)){
-    return true
+    return false
   }
-  return false
+  return true
 }
 
 export const isNumberApplicant = (numberApplicant) =>{
   if(!numberApplicant){
-    return true
+    return false
   }
-  return false
+  return true
 }
 export const isLocation = (location)=>{
   if(!location){
-    return true
+    return false
   }
-  return false
+  return true
 }
 
 export const isCategory = (category)=>{
   if(!category){
-    return true
+    return false
   }
-  return false
+  return true
+}
+export const isDescription = (description)=>{
+  if(!description){
+    return false
+  }
+  return true
 }
 export const isCreateAt = (createAt) =>{
   if(!createAt) {
-    return true
+    return false
   }
-  return false
+  return true
 }
 export const isDeadline = (deadline) =>{
   if(!deadline) {
-    return true
+    return false
   }
-  return false
+  return true
 }

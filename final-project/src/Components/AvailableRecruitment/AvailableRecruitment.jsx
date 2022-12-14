@@ -3,7 +3,7 @@ import React, { useEffect, useState , useContext} from "react";
 import styles from "./AvailableRecruitment.module.scss";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { images } from "../../img/index";
 
@@ -18,25 +18,51 @@ import JobListRecruitment from "./JobListRecruitment";
 const cx = classNames.bind(styles);
 
 export const AvailableRecruitment = () => {
-  const {getMyRecruitmentJobs, myJobRecruitment , search, category, page,fieldSort, typeSort, token, setSearch} = useContext(JobContext)
+  const {getMyRecruitmentJobs, myJobRecruitment , search, allCategory, page,fieldSort, typeSort, token, setSearch} = useContext(JobContext)
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
   const [searchResults, setSearchResults] = useState("");
+  const [params,setParams]=useSearchParams()
 
+
+  const setParamsKey = (key, value) => {
+    // => biến 1 mảng  thành 1 object (param là 1 object đặc biệt)
+    let currentParams = Object.fromEntries([...params]);
+    setParams({ ...currentParams, [key]: value });
+  };
   useEffect(() => {
-    getMyRecruitmentJobs(token)
-  }, [search, category, page,fieldSort, typeSort])
+    const search = params.get('search')
+    const category = params.get('category')
+    const date = params.get('date')
+    getMyRecruitmentJobs(token,search,category,"",date)
+  }, [params])
  
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem('token'))
-    getMyRecruitmentJobs(getlocalToken)
+    getMyRecruitmentJobs(getlocalToken,"","","","")
   },[])
 
-  const handleSearch = (e) => {
-      setSearch(e.target.value)
-      console.log(search)
+  const listCategory = allCategory?.map((item)=>{
+    return{
+      id : item._id,
+      label : item.name
+    }
+  })
+  const handlSelectCategory = (e)=>{
+    let arrField = e
+    console.log(arrField);
+    if(arrField.length==0){
+      console.log("....");
+      setParamsKey('category',"")
+    }else{
+      const id = arrField.map((item)=>{
+        return item.id
+      })
+      if(id){
+        setParamsKey('category',id)
+      }
+    }
   }
-
   return (
     <>
       <MetaData title="Danh sách tất cả việc làm" />
@@ -47,10 +73,8 @@ export const AvailableRecruitment = () => {
               <div className={cx("form-group")}>
                 <input
                   type="text"
-                  name={search}
                   placeholder="Tìm việc làm"
-                  value= {search}
-                  onChange={handleSearch}
+                  onChange={(e)=>setParamsKey('search',e.target.value)}
                 />
                 <div className={cx("search-text")}>
                   <CiSearch />
@@ -58,11 +82,9 @@ export const AvailableRecruitment = () => {
               </div>
               <div className={cx("form-group")}>
                 <Select
-                  defaultValue={selectedOptionsField}
                   isMulti
-                  name="field"
-                  options={colourOptions}
-                  onChange={(e) => setSelectedOptionsField(e)}
+                  options={listCategory}
+                  onChange={handlSelectCategory}
                   isOptionDisabled={() => selectedOptionsField.length >= 2}
                   className="basic-multi-select"
                   classNamePrefix="select"
@@ -103,14 +125,14 @@ export const AvailableRecruitment = () => {
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
                   <span>
-                      {myJobRecruitment.length} <span>việc làm</span>
+                      {myJobRecruitment?.length} <span>việc làm</span>
                   </span>
                 </div>
                 <div className={cx("right")}>
                   <p>Sắp xếp</p>
-                  <select className={cx("select_box")}>
-                    <option value="">Mới đăng </option>
-                    <option value="">Sắp hết hạn</option>
+                  <select className={cx("select_box")} onChange={(e)=>setParamsKey('date',e.target.value)}>
+                    <option value="createAt">Mới đăng </option>
+                    <option value="deadline">Sắp hết hạn</option>
                   </select>
                 </div>
               </div>

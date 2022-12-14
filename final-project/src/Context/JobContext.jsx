@@ -24,16 +24,25 @@ const JobProvider = ({ children }) => {
   const [position,setPosition] = useState('')
   const [type,setType] = useState('')
   const [level,setLevel] = useState('')
-  const [age,setAge] = useState('')
+  const [ageFrom,setAgeFrom] = useState('')
+  const [ageTo,setAgeTo] = useState('')
   const [experience,setExperience] = useState('')
   const [salary,setSalary] = useState('')
   const [numberApplicant,setNumberApplicant] = useState('')
   const [location,setLocation] = useState('')
-  const [createAt,setCreatAt] = useState('')
-  const [deadline,setDeadline] = useState('')
+  const [date,setDate] = useState([])
 
+  const [createAt,setCreateAt] = useState('')
+  const [deadline,setDeadline] = useState('') 
+  const [categoryId,setCategoryId] = useState('')
 
-
+  useEffect(() => {
+    getallCategory()
+    getallLocation()
+    const getToken = JSON.parse(localStorage.getItem('token'))
+    setToken(getToken)
+  }, []);
+  
   const getJobHomePage = async (categoryId) => {
     console.log('id',categoryId);
     const user_category = {"categoryId"  : categoryId }
@@ -62,17 +71,11 @@ const JobProvider = ({ children }) => {
     return jobs;
   
   };
-  useEffect(() => {
-    getallCategory()
-    getallLocation()
-    const getToken = JSON.parse(localStorage.getItem('token'))
-    setToken(getToken)
-  }, []);
+  
 
-  const getMyRecruitmentJobs = async (token) => {
-    console.log('token2', token)
+  const getMyRecruitmentJobs = async (token,search,category,page,date) => {
     await axios.get(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category}&page=${page}&fieldSort=${deadline}&typeSort=${typeSort}`,
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category ?? ""}&page=${page}&fieldSort=${date}`,
       { headers: {authorization: `Bearer ${token}`} },
     
     ).then((res) => {
@@ -117,10 +120,12 @@ const JobProvider = ({ children }) => {
     setAllLocation(locations)
   }
   //create recruiment
-  const createRecruiment = async (description) =>{
+  const createRecruiment = async (description,createAt,deadline,age) =>{
+    const getUserId = JSON.parse(localStorage.getItem('currentUser'))
+    const userId = getUserId.id
     const newRecruiment = JobApi.recruiment(
       title,
-      name,
+      userId,
       description,
       position,
       type,
@@ -131,11 +136,10 @@ const JobProvider = ({ children }) => {
       numberApplicant,
       location,
       category,
-      operationSector,
       createAt,
       deadline
     )
-    const createRecruiment = await (`https://xjob-mindx-production.up.railway.app/api/recruiments/new`,{
+    const createRecruiment = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/new`,{
       method: "post",
       body: JSON.stringify(newRecruiment),
       headers: {
@@ -196,28 +200,28 @@ const JobProvider = ({ children }) => {
     setPosition,
     setType,
     setLevel,
-    setAge,
+    setAgeFrom,
+    setAgeTo,
     setExperience,
     setSalary,
     setNumberApplicant,
     setLocation,
     setCategory,
-    setCreatAt,
-    setDeadline,
+    setDate,
     title,
     name,
     description,
     position,
     type,
     level,
-    age,
+    ageFrom,
+    ageTo,
     experience,
     salary,
     numberApplicant,
     location,
     category,
-    createAt,
-    deadline
+    date
   
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;

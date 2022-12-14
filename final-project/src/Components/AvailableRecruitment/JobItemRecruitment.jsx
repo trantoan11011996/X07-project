@@ -8,7 +8,7 @@ import { IoLocationSharp } from "react-icons/io5"
 const cx = classNames.bind(styles);
 
 function JobItemRecruitment({ myJobRecruitment, id }) {
-  // console.log("jobR", myJobRecruitment);
+  console.log("jobR", myJobRecruitment);
 
   return (
     <Link to={"/RJDetails/" + id}>
