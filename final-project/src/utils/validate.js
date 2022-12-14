@@ -47,7 +47,7 @@ export const isVietnamesePhoneNumberValid = (phone) => {
 
 const whiteSpaceCheck = /\s/g
 export const isTitle = (title)=>{
-  if(!title || whiteSpaceCheck.test(title)){
+  if(!title){
     return false
   }
   return true
