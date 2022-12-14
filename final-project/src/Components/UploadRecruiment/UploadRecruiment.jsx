@@ -314,9 +314,9 @@ export default function UploadRecruiment() {
                   <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
                     Mới tốt nghiệp/ chưa có kinh nghiệm
                   </option>
-                  <option value="0 - 1 năm">0 - 1 năm </option>
-                  <option value="1 - 3 năm">1 - 3 năm</option>
-                  <option value="3 - 5 năm">3 - 5 năm</option>
+                  <option value="0 - 1 năm kinh nghiệm">0 - 1 năm</option>
+                  <option value="1 - 3 năm kinh nghiệm">1 - 3 năm</option>
+                  <option value="3 - 5 năm kinh nghiệm">3 - 5 năm</option>
                   <option value="> 5 năm">
                     <span>&gt;</span> 5 năm
                   </option>

@@ -66,6 +66,10 @@ export default function CandidateList() {
                         )
                     })}
                 </Col>
+
+                <Col>
+                    <img src="http://localhost:3000/static/media/baners.a9e8174e5fcc2f1443a1.png" />
+                </Col>
             </Row>
         </Container>
     )

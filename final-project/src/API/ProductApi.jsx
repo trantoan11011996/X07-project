@@ -62,7 +62,7 @@ import React, { useEffect, useState } from "react";
     })
     return locations
   };
-
+  
  
   const createRecruiment = (
     title,
