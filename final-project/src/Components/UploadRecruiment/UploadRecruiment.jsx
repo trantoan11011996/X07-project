@@ -6,7 +6,21 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import pretty from "pretty";
 import { JobContext } from "../../Context/JobContext";
-import { isTitle } from "../../utils/validate";
+import {
+  isAge,
+  isCategory,
+  isDescription,
+  isExperience,
+  isLevel,
+  isLocation,
+  isNumberApplicant,
+  isPosition,
+  isSalary,
+  isTitle,
+  isType,
+} from "../../utils/validate";
+import create from "@ant-design/icons/lib/components/IconFont";
+import { loginUser } from "../../Actions/authAction";
 const { RangePicker } = DatePicker;
 export default function UploadRecruiment() {
   const [token, setToken] = useState("");
@@ -15,6 +29,7 @@ export default function UploadRecruiment() {
   const [alerToday, setAlerToday] = useState(false);
   const [warningTitle, setWarningTitle] = useState(false);
   const [warningDescription, setWarningDescription] = useState(false);
+  const [warningPosition, setWarningPosition] = useState(false);
   const [warningType, setWarningType] = useState(false);
   const [warningLevel, setWarningLevel] = useState(false);
   const [warningAge, setWarningAge] = useState(false);
@@ -23,8 +38,6 @@ export default function UploadRecruiment() {
   const [warningNumberApplicant, setWarningNumberApplicant] = useState(false);
   const [warningLocation, setWarningLocaion] = useState(false);
   const [warningCategory, setWarningCategory] = useState(false);
-  const [warningCreateAt, setWarningCreateAt] = useState(false);
-  const [warningDeadling, setWarningDeadling] = useState(false);
 
   const {
     allCategory,
@@ -35,28 +48,28 @@ export default function UploadRecruiment() {
     setPosition,
     setType,
     setLevel,
-    setAge,
+    setAgeFrom,
+    setAgeTo,
     setExperience,
     setSalary,
     setNumberApplicant,
     setLocation,
     setCategory,
-    setCreatAt,
-    setDeadline,
+    setDate,
     title,
     name,
     description,
     position,
     type,
     level,
-    age,
+    ageFrom,
+    ageTo,
     experience,
     salary,
     numberApplicant,
     location,
     category,
-    createAt,
-    deadline,
+    date,
     createRecruiment,
   } = useContext(JobContext);
 
@@ -77,23 +90,69 @@ export default function UploadRecruiment() {
 
   const submitRecruiment = (e, dateCompare) => {
     e.preventDefault();
-
+    let stringAge = `${ageFrom}-${ageTo}`;
     if (!isTitle(title)) {
       setWarningTitle(true);
       return;
     }
-    if (createAt < formattedToday || createAt > formattedToday) {
+    if (!isPosition(position)) {
+      setWarningPosition(true);
+      return false;
+    }
+    if (!isType(type)) {
+      setWarningType(true);
+      return;
+    }
+    if (!isLevel(level)) {
+      setWarningLevel(true);
+      return;
+    }
+    if (!isSalary(salary)) {
+      setWarningSalary(true);
+      return;
+    }
+    if (!isNumberApplicant(numberApplicant)) {
+      setWarningNumberApplicant(true);
+      return;
+    }
+    if (!isExperience(experience)) {
+      setWarningExp(true);
+      return;
+    }
+    if (!isAge(ageFrom)) {
+      setWarningAge(true);
+      return;
+    }
+    if (!isCategory(category)) {
+      setWarningCategory(true);
+      return;
+    }
+    if (!isLocation(location)) {
+      setWarningLocaion(true);
+      return;
+    }
+    if (!isDescription(ckEditorOutput)) {
+      setWarningDescription(true);
+      return;
+    }
+    if (date[0] < formattedToday || date[0] > formattedToday) {
       setAlerToday(true);
       return;
     }
-    if (deadline <= createAt) {
-      setAlerToday(false);
-      setAlert(true);
-      return;
-    }
-    setAlert(false);
-    createRecruiment(ckEditorOutput);
+    setWarningTitle(false);
+    setWarningPosition(false);
+    setWarningType(false);
+    setWarningLevel(false);
+    setWarningAge(false);
+    setWarningExp(false);
+    setWarningNumberApplicant(false);
+    setWarningSalary(false);
+    setWarningCategory(false);
+    setWarningLocaion(false);
+    setWarningDescription(false);
+    createRecruiment(ckEditorOutput, date[0], date[1], stringAge);
   };
+
   return (
     <div className="container-upload">
       <div className="form-container-upload">
@@ -128,7 +187,7 @@ export default function UploadRecruiment() {
                 onChange={(e) => setPosition(e.target.value)}
                 // required
               />
-              {warningTitle && (
+              {warningPosition && (
                 <Form.Text className="text-danger">
                   <a>Đây là trường bắt buộc không được bỏ trống</a>
                 </Form.Text>
@@ -139,33 +198,15 @@ export default function UploadRecruiment() {
                 <Form.Group className="form-deadline">
                   <Form.Label>Thời hạn ứng tuyển từ: </Form.Label>
                   <Space direction="vertical" size={12}>
-                    <DatePicker
+                    <RangePicker
                       format={"DD/MM/YYYY"}
-                      id="startDate"
-                      name="startDate"
-                      onChange={(e, dateString) => setCreatAt(dateString)}
+                      id="date"
+                      name="date"
+                      onChange={(e, dateString) => setDate(dateString)}
                     />
                   </Space>
                 </Form.Group>
               </Col>
-              <Col>
-                <Form.Group className="form-deadline">
-                  <Form.Label>Đến: </Form.Label>
-                  <Space direction="vertical" size={12}>
-                    <DatePicker
-                      format={"DD/MM/YYYY"}
-                      id="endDate"
-                      name="endDate"
-                      onChange={(e, dateString) => setDeadline(dateString)}
-                    />
-                  </Space>
-                </Form.Group>
-              </Col>
-              {alert && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Ngày kết thúc phải lớn hơn ngày tạo</a>
-                </Form.Text>
-              )}
               {alerToday && (
                 <Form.Text className="text-danger link-wrong-pass">
                   <a>Ngày khởi tạo phải bằng ngày hiện tại</a>
@@ -182,7 +223,7 @@ export default function UploadRecruiment() {
                   <option value="fulltime">Toàn thời gian</option>
                   <option value="parttime">bán thời gian</option>
                 </Form.Select>
-                {warningTitle && (
+                {warningType && (
                   <Form.Text className="text-danger">
                     <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
@@ -200,31 +241,47 @@ export default function UploadRecruiment() {
                   <option value="nhân viên">Nhân Viên</option>
                   <option value="trường phòng">Trường Phòng</option>
                 </Form.Select>
-                {warningTitle && (
+                {warningLevel && (
                   <Form.Text className="text-danger">
                     <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
                 )}
               </Col>
             </Row>
-
-            <Form.Label>
-              Độ tuổi yêu cầu <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                // required
-                placeholder="ví dụ: 18-25"
-                onChange={(e) => setAge(e.target.value)}
-              />
-              {warningTitle && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-
+            <Row>
+              <Col>
+                <Form.Label>
+                  Độ tuổi yêu cầu từ: <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="number"
+                    min={18}
+                    placeholder="18"
+                    onChange={(e) => setAgeFrom(e.target.value)}
+                  />
+                  {warningAge && (
+                    <Form.Text className="text-danger">
+                      <a>Đây là trường bắt buộc không được bỏ trống</a>
+                    </Form.Text>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Label>
+                  Độ tuổi yêu cầu đến: <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="number"
+                    min={20}
+                    max={80}
+                    placeholder="20"
+                    onChange={(e) => setAgeTo(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
             <Row className="mb-3">
               <Col>
                 <Form.Label>
@@ -240,7 +297,7 @@ export default function UploadRecruiment() {
                     );
                   })}
                 </Form.Select>
-                {warningTitle && (
+                {warningCategory && (
                   <Form.Text className="text-danger">
                     <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
@@ -263,7 +320,7 @@ export default function UploadRecruiment() {
                     );
                   })}
                 </Form.Select>
-                {warningTitle && (
+                {warningLocation && (
                   <Form.Text className="text-danger">
                     <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
@@ -281,11 +338,11 @@ export default function UploadRecruiment() {
                 onChange={(e) => setSalary(e.target.value)}
                 // required
               />
-              {warningTitle && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
+              {warningSalary && (
+                <Form.Text className="text-danger">
+                  <a>Đây là trường bắt buộc không được bỏ trống</a>
+                </Form.Text>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -298,18 +355,16 @@ export default function UploadRecruiment() {
                 type="number"
                 onChange={(e) => setNumberApplicant(e.target.value)}
               />
-              {warningTitle && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
+              {warningNumberApplicant && (
+                <Form.Text className="text-danger">
+                  <a>Đây là trường bắt buộc không được bỏ trống</a>
+                </Form.Text>
+              )}
             </Form.Group>
-            <Row   className="mb-3">
+            <Row className="mb-3">
               <Col>
                 <Form.Label>Kinh nghiệm làm việc</Form.Label>
-                <Form.Select
-                  onChange={(e) => setExperience(e.target.value)}
-                >
+                <Form.Select onChange={(e) => setExperience(e.target.value)}>
                   <option></option>
                   <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
                     Mới tốt nghiệp/ chưa có kinh nghiệm
@@ -321,7 +376,7 @@ export default function UploadRecruiment() {
                     <span>&gt;</span> 5 năm
                   </option>
                 </Form.Select>
-                {warningTitle && (
+                {warningExp && (
                   <Form.Text className="text-danger">
                     <a>Đây là trường bắt buộc không được bỏ trống</a>
                   </Form.Text>
@@ -336,6 +391,11 @@ export default function UploadRecruiment() {
               onChange={handleCkEditorChanges}
               style={{ padding: "20px" }}
             />
+            {warningDescription && (
+              <Form.Text className="text-danger">
+                <a>Đây là trường bắt buộc không được bỏ trống</a>
+              </Form.Text>
+            )}
           </div>
           <button className="btn-upload" variant="primary" type="submit">
             Submit
