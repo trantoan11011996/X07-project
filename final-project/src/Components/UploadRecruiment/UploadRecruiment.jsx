@@ -97,7 +97,7 @@ export default function UploadRecruiment() {
     }
     if (!isPosition(position)) {
       setWarningPosition(true);
-      return false;
+      return ;
     }
     if (!isType(type)) {
       setWarningType(true);
@@ -366,13 +366,13 @@ export default function UploadRecruiment() {
                 <Form.Label>Kinh nghiệm làm việc</Form.Label>
                 <Form.Select onChange={(e) => setExperience(e.target.value)}>
                   <option></option>
-                  <option value="Mới tốt nghiệp/ chưa có kinh nghiệm">
+                  <option value="Mới tốt nghiệp/ chưa có">
                     Mới tốt nghiệp/ chưa có kinh nghiệm
                   </option>
-                  <option value="0 - 1 năm kinh nghiệm">0 - 1 năm</option>
-                  <option value="1 - 3 năm kinh nghiệm">1 - 3 năm</option>
-                  <option value="3 - 5 năm kinh nghiệm">3 - 5 năm</option>
-                  <option value="> 5 năm">
+                  <option value="0 - 1 năm">0 - 1 năm</option>
+                  <option value="1 - 3 năm">1 - 3 năm</option>
+                  <option value="3 - 5 năm">3 - 5 năm</option>
+                  <option value="> 5">
                     <span>&gt;</span> 5 năm
                   </option>
                 </Form.Select>

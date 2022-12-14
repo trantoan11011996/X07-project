@@ -8,7 +8,10 @@ import { IoLocationSharp } from "react-icons/io5"
 const cx = classNames.bind(styles);
 
 function JobItemRecruitment({ myJobRecruitment, id }) {
-  console.log("jobR", myJobRecruitment);
+
+  const image = myJobRecruitment?.name?.avatar
+  const splitString  = image.split("/")
+  const imageString = splitString[1]+"/".concat(splitString[2])
 
   return (
     <Link to={"/RJDetails/" + id}>
@@ -16,7 +19,7 @@ function JobItemRecruitment({ myJobRecruitment, id }) {
       <li className={cx("list_group_item")}>
         <div className={cx("box_item")}>
           <div className={cx("images")}>
-            <img src={myJobRecruitment.name.avatar} alt="" />
+            <img src={`https://xjob-mindx-production.up.railway.app/${imageString}`} alt="" />
           </div>
           <div className={cx("content")}>
             <Link to="/" className={cx("title")}>
