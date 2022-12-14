@@ -19,3 +19,7 @@
 .list-item:hover{
     box-shadow: 0 3px 6px 0 rgb(0 86 145 / 31%);
 }
+
+.banner {
+    width:100%;
+}
