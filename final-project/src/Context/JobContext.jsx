@@ -159,7 +159,8 @@ const JobProvider = ({ children }) => {
   const postCV = async ( id, file, token) => {
 
     const CvData = new FormData();
-		CvData.append('CV', file);
+		CvData.append('formFile', file);
+
     let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
     {
       method: "POST",
@@ -170,7 +171,9 @@ const JobProvider = ({ children }) => {
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      return data
+      console.log(data);
+      return data;
+      
     })
     return userCV
   }

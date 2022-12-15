@@ -115,19 +115,19 @@ export default function JobDetail() {
                     </p>
                     <p className="mt-2">
                       <AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle>{" "}
-                      <b>Lương</b>: {jobData?.salary} (VNĐ){" "}
+                      <b>Lương</b>:  <span className="salary">{jobData?.salary} (VNĐ){" "}</span>
                     </p>
                     <p className="mt-2">
                       <MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline>{" "}
-                      {jobData?.experience} kinh nghiệm
+                       <b>Yêu cầu kinh nghiệm: </b> <span>{jobData?.experience} </span>
                     </p>
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>{" "}
-                        Ngày đăng tuyển: {jobData?.createAt}
+                        <b>Ngày đăng tuyển:</b> <span> {jobData?.createAt}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        Ngày hết hạn: {jobData?.deadline}
+                        <b>Ngày hết hạn:</b> <span>{jobData?.deadline}</span>
                       </Col>
                     </Row>
 
@@ -137,14 +137,14 @@ export default function JobDetail() {
                         <Col sm={2} md={3}>
                           {!active ? (
                             <Button
-                              className="job-button"
+                              className="job-button button-apply"
                               variant="primary"
                               onClick={handleShow}
                             >
                               Nộp đơn ngay
                             </Button>
                           ) : (
-                            <Button className="job-button" variant="primary">
+                            <Button className="job-button button-confirm" variant="primary">
                               Đã ứng tuyển
                             </Button>
                           )}
@@ -152,7 +152,7 @@ export default function JobDetail() {
 
                         <Col sm={2} md={2}>
                           <Button
-                            className="job-button"
+                            className="job-button button-save"
                             variant="outline-primary"
                           >
                             Lưu
@@ -251,7 +251,7 @@ export default function JobDetail() {
                       </Col>
 
                       <Col sm={6} md={6}>
-                        <Card>
+                        <Card className="require-table2">
                           <Card.Body>
                             <div>
                               <h3 className="require-text">
@@ -316,6 +316,7 @@ export default function JobDetail() {
                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
                 <Form.Control
                   type="file"
+                  name="formFile"
                   onChange={(event) => setFile(event.target.files[0])}
                 />
               </Form.Group>

@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { Card, Container, Col, Row, Button, Modal, Form} from "react-bootstrap";
+import { Card, Container, Col, Row, Button, Modal, Form } from "react-bootstrap";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsBriefcase, BsCalendar2Check, BsClockHistory, BsDiagram3, BsHeadset, BsPerson, BsWhatsapp } from "react-icons/bs";
 import { RxAvatar } from "react-icons/rx";
@@ -11,7 +11,7 @@ import { TiFlowChildren } from "react-icons/ti";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./RJDetails.css"
 import { UserContext } from "../../Context/UserContext";
@@ -47,7 +47,7 @@ export default function RJDetails() {
         }
         return data
     };
-   
+
     useEffect(() => {
         const detailData = async () => {
             await getJobDetail()
@@ -86,7 +86,7 @@ export default function RJDetails() {
                                     </Row>
 
                                     <div className="job-details">
-                                        <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
+                                        <p className="mt-2" style={{ fontWeight: "bolder" }}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
                                         <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
                                         <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
@@ -97,14 +97,16 @@ export default function RJDetails() {
                                         {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
-                                                         <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>
+                                                    <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>
                                                 </Col>
 
                                                 <Col sm={3} md={3}>
                                                     <Button className="job-button" variant="outline-danger">Gỡ bỏ</Button>
                                                 </Col>
                                                 <Col sm={3} md={3}>
-                                                    <Button className="job-button" variant="outline-primary">Danh sách ứng viên</Button>
+                                                    <Link to="/CandidateList">
+                                                        <Button className="job-button" variant="outline-primary">Danh sách ứng viên</Button>
+                                                    </Link>
                                                 </Col>
                                             </Row>
                                         )}
@@ -189,7 +191,7 @@ export default function RJDetails() {
 
                                     <div id="info" className="mt-3">
                                         <h2 className="require-title"> Thông tin liên hệ </h2>
-                                      
+
                                     </div>
 
                                     <div id="about" className="mt-3">
