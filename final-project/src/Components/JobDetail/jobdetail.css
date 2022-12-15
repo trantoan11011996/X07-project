@@ -44,3 +44,15 @@
     width: 100%;
     height: 100%;
 }
+.salary {
+    color: #0069DB !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .button-save {
+        margin-top: 10px;
+    }
+    .require-table2{
+        margin-top: 10px !important;
+    }
+}

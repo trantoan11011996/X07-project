@@ -13,7 +13,7 @@ export default function HomePage() {
     useContext(JobContext);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('currentUser'))
-    if(user.category){
+    if(user?.category){
       getJobHomePage(user?.category?._id);
       const getJobs = JSON.parse(localStorage.getItem("jobHomePage"));
       setJobHomePage(getJobs);
