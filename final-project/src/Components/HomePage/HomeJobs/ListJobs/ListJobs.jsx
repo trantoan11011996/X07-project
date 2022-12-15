@@ -15,13 +15,13 @@ export default function ListJobs({ jobHomePage }) {
   // }, [])
   return (
     <div className="list-jobs">
-      <Container>
+      <Container className="container-list-jobs">
         <List
           className="list-container"
           grid={{
             gutter: 16,
-            xs: 2,
-            sm: 2,
+            xs: 1,
+            sm: 1,
             md: 2,
             lg: 2,
             xl: 2,

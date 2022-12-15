@@ -1,11 +1,20 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Container, Form, Row, Button, InputGroup, Modal } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Button,
+  InputGroup,
+  Modal,
+} from "react-bootstrap";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import { isEmail, isEmpty, isMatch, isPassword } from "../../../utils/validate";
 import "../Register/register.css";
-import  logo  from "../../../img/loginbanner2.jpg";
+import logo from "../../../img/loginbanner2.jpg";
 export default function RegisterForm() {
   const {
     setEmail,
@@ -19,13 +28,13 @@ export default function RegisterForm() {
     registerUser,
     currentUser,
     setShowLogin,
-    showLogin
+    showLogin,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  const [emailExsistAlert, setEmailExsistAlert] = useState(false)
+  const [emailExsistAlert, setEmailExsistAlert] = useState(false);
   const [passErr, setPassErr] = useState(false);
   const [EmailErr, setEmailErr] = useState(false);
   const [confirmPassErr, setConfirmPassErr] = useState(false);
@@ -33,10 +42,9 @@ export default function RegisterForm() {
   const [passEmpty, setPassEmpty] = useState(false);
   const [confirmEmpty, setConfirmEmpty] = useState(false);
   const [roleEmpty, setRoleEmpty] = useState(false);
-  
-  const [isLoading, setIsLoading] = useState(false)
 
- 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClick1 = () => {
     setVisible1(!visible1);
   };
@@ -48,63 +56,67 @@ export default function RegisterForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!email || email == null) {
-      setEmailEmpty(true)
-      return
+      setEmailEmpty(true);
+      return;
     } else {
-      setEmailEmpty(false)
+      setEmailEmpty(false);
     }
 
-    if (!password || password== null) {
-      setPassEmpty(true)
-      return
+    if (!password || password == null) {
+      setPassEmpty(true);
+      return;
     } else {
-      setPassEmpty(false)
+      setPassEmpty(false);
     }
 
     if (!confirmPassword || confirmPassword == null) {
-      setConfirmEmpty(true)
-      return
+      setConfirmEmpty(true);
+      return;
     } else {
-      setConfirmEmpty(false)
+      setConfirmEmpty(false);
     }
 
     if (!isMatch(password, confirmPassword)) {
-      setConfirmPassErr(true)
-      return
+      setConfirmPassErr(true);
+      return;
     } else {
-      setConfirmPassErr(false)
+      setConfirmPassErr(false);
     }
 
     if (!role || role == null) {
-      setRoleEmpty(true)
-      return
+      setRoleEmpty(true);
+      return;
     } else {
-      setRoleEmpty(false)
+      setRoleEmpty(false);
     }
 
     if (!isPassword(password)) {
-      setPassErr(true)
-      return
+      setPassErr(true);
+      return;
     } else {
-      setPassErr(false)
+      setPassErr(false);
     }
 
     if (!isEmail(email)) {
-      setEmailErr(true)
-      return
+      setEmailErr(true);
+      return;
     } else {
-      setEmailErr(false)
+      setEmailErr(false);
     }
-    if (isEmail(email) && isPassword(password) && isMatch(password, confirmPassword)) {
-       const userAlert = await registerUser()
-       if(!userAlert){
-        setEmailExsistAlert(true)
-        return
-       }else{
-        setEmailExsistAlert(false)
-        navigate("/update_info")
-        return
-       }
+    if (
+      isEmail(email) &&
+      isPassword(password) &&
+      isMatch(password, confirmPassword)
+    ) {
+      const userAlert = await registerUser();
+      if (!userAlert) {
+        setEmailExsistAlert(true);
+        return;
+      } else {
+        setEmailExsistAlert(false);
+        navigate("/update_info");
+        return;
+      }
       // const user = await registerUser()
       // if (user.message) {
       //   setEmailExsistAlert(true)
@@ -117,10 +129,21 @@ export default function RegisterForm() {
   return (
     <Container fluid>
       <Row className="container-register">
-        <Col className="container-register-banner" sm={4} md={6}>
-          <img className="register-banner" src={logo}></img>
+        <div className="circle-form"></div>
+        <Col className="container-register-banner" md={4}>
+          <h1 className="header-banner-register text-white">
+            Xây dựng{" "} <br/>
+            <b>
+              Sự nghiệp <br />
+              <span className="text-warning">thành công</span>
+            </b>
+            {" "}
+            <br />
+            cùng Xjob.Mindx
+          </h1>
+          <div className="circle-light-register"></div>
         </Col>
-        <Col className="form-container" sm={4} md={6}>
+        <Col className="form-container-register" md={8}>
           <Form className="form-register text-start" onSubmit={handleSubmit}>
             <Form.Group>
               <h1 className="register mt-2 text-center form-register-header">
@@ -140,8 +163,12 @@ export default function RegisterForm() {
                   />
                 </InputGroup>
                 {emailExsistAlert && <p className="text">Email đã tồn tại</p>}
-                {emailEmpty && <p className="text">Email không được để trống</p>}
-                {EmailErr && <p className="text"> Hãy nhập email đúng định dạng</p>}
+                {emailEmpty && (
+                  <p className="text">Email không được để trống</p>
+                )}
+                {EmailErr && (
+                  <p className="text"> Hãy nhập email đúng định dạng</p>
+                )}
               </Row>
 
               <Row>
@@ -162,8 +189,15 @@ export default function RegisterForm() {
                     {visible1 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
-                {passEmpty && (<p className="text">Mật khẩu không được để trống</p>)}
-                {passErr && (<p className="text">Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa, 1 chữ thường</p>)}
+                {passEmpty && (
+                  <p className="text">Mật khẩu không được để trống</p>
+                )}
+                {passErr && (
+                  <p className="text">
+                    Mật khẩu phải bao gồm 1 chữ số, 1 ký tự đặc biệt, 1 chữ hoa,
+                    1 chữ thường
+                  </p>
+                )}
               </Row>
 
               <Row>
@@ -184,8 +218,14 @@ export default function RegisterForm() {
                     {visible2 ? <MdVisibility /> : <MdVisibilityOff />}
                   </InputGroup.Text>
                 </InputGroup>
-                {confirmEmpty && (<p className="text">Xác nhận mật khẩu không được để trống</p>)}
-                {confirmPassErr && (<p className="text">Mật khẩu và xác nhận mật khẩu phải trùng khớp</p>)}
+                {confirmEmpty && (
+                  <p className="text">Xác nhận mật khẩu không được để trống</p>
+                )}
+                {confirmPassErr && (
+                  <p className="text">
+                    Mật khẩu và xác nhận mật khẩu phải trùng khớp
+                  </p>
+                )}
               </Row>
 
               <Row>
@@ -220,9 +260,10 @@ export default function RegisterForm() {
                     </Row>
                   </div>
                 ))}
-                {roleEmpty && (<p className="text">Vai trò không được để trống</p>)}
+                {roleEmpty && (
+                  <p className="text">Vai trò không được để trống</p>
+                )}
               </Row>
-
 
               <Row className="text-center">
                 <Link to={"/login"}> Đã có tài khoản? </Link>
@@ -231,10 +272,9 @@ export default function RegisterForm() {
               <Row className="mt-2">
                 <Button className="button-submit" type="submit">
                   {" "}
-                 Đăng kí{" "}
+                  Đăng kí{" "}
                 </Button>
               </Row>
-
             </Form.Group>
           </Form>
         </Col>

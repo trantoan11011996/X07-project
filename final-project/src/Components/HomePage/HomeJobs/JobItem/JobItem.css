@@ -1,9 +1,8 @@
 .job-item{
     cursor: pointer;
-}
-.job-container{
     border-bottom: 1px solid #ccc;
 }
+
 .job-wrapper{
     display: flex;
     width: 100%;
@@ -21,9 +20,21 @@
     flex-direction: column;
     align-items: flex-start;
     margin-left: 20px;
+    max-width: 500px;
 }
 .job-title{
     font-size: 15px;
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.div-job-title{
+    width: 300px;
+    text-overflow: ellipsis !important;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .company-name{
     color: #5d677a;
@@ -49,9 +60,23 @@
 }
 .logo-company{
     width: 100%;
+    height: auto;
 }
 .job-title:hover,
 .job-location:hover,
 .job-salary:hover{
     text-decoration: underline;
+}
+
+@media only screen and  (max-width : 770px) {
+    .job-item{
+        margin-bottom: 40px;
+    }
+    .logo-company{
+        height: 100%;
+        width: 100%;
+    }
+}
+.all-job-navigate{
+    flex: 1;
 }

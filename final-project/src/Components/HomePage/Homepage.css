@@ -1,24 +1,23 @@
 .home-page {
   margin-top: 62px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 }
 .home-banner {
   height: 400px;
-}
-.list-jobs {
-  margin-top: 15px;
 }
 .home-jobs{
   margin-top: 40px;
 }
 .navigate-header {
   display: flex;
-  gap: 20px;
-  border-bottom: 1px solid #ccc;
+  gap: 10px;
   padding-left: 0 !important;
 }
 .home-banner {
   position: relative;
+}
+.container-list-jobs{
+  margin-top: 20px !important;
 }
 .home-banner::before {
   content: "";
@@ -103,7 +102,6 @@
 .job-navigate-container{
   display: flex;
   align-items: center;
-  padding-bottom: 10px;
 }
 .homejob-title{
   padding-left: 0 !important;
@@ -153,3 +151,58 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+@media only screen and (max-width : 770px){
+  .home-jobs{
+    padding-right: 0 !important;
+    padding-left: 20px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 20px !important;
+  }
+}
+@media only screen and (max-width : 1000px){
+  .content-banner-inside{
+    display: none;
+  }
+  .container-home-banner{
+    width: 100%;
+    padding: 0 50px;
+  }
+  .content-banner-top{
+    margin-top: 130px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 20;
+  }
+  .header-content-banner-top{
+    font-size: 30px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 650;
+  }
+  .search-inside{
+    height: 50px;
+  }
+}
+@media only screen and (min-width : 1001px){
+  .content-banner-inside{
+    display: block;
+  }
+  .content-banner-top{
+    display: none;
+  }
+  .container-home-banner{
+    width: 100%;
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width : 765px){
+  .content-banner-inside{
+    display: none;
+  }
+  .container-home-banner{
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+

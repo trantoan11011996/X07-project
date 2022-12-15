@@ -52,10 +52,20 @@ const Login = () => {
       <div className={cx("container")}>
         <div className={cx("test")}>
           <div className={cx("banner")}>
-            <img src={logo} alt="" />
+            <h1 className={cx("header-banner-login")}>
+              Xây dựng {" "}
+              <b>Sự nghiệp <br/><span className={cx("text-primary")}>thành công</span></b>
+              {" "}
+              cùng
+              <br/>
+              Xjob.Mindx
+            </h1>
+            <div className={cx("yellow-circle")}></div>
+            <img className={cx("image-banner-login")} src='https://dxwd4tssreb4w.cloudfront.net/web/images/pages/login/banner.png' alt="" />
           </div>
 
           <div className={cx("left")}>
+            <div className={cx("circle-light")}></div>
             <div className={cx("container_login")}>
               <div className={cx("wrapper")}>
                 <h1>Đăng nhập</h1>
