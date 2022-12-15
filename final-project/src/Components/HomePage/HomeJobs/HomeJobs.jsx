@@ -21,10 +21,10 @@ export default function HomeJobs({jobHomePage}) {
             {(user?.role || currentUser?.role) == "candidate" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col sm={2} md={2} className="homejob-title">
+                  <Col sm={12} md={2} className="homejob-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
-                  <Col sm={2} md={2}>
+                  <Col sm={12} md={8}>
                   
                     <Link
                       to={"/allJob"}
@@ -37,11 +37,11 @@ export default function HomeJobs({jobHomePage}) {
                     </Link>
                   </Col>
 
-                  <Col sm={2} md={4}>
+                  {/* <Col sm={2} md={4}>
                     <Link className="homejob-title homejob-title-link">
                       Công việc đã ứng tuyển <span></span>
                     </Link>
-                  </Col>
+                  </Col> */}
                 </Row>
               </>
             )}
@@ -49,10 +49,10 @@ export default function HomeJobs({jobHomePage}) {
             {(user?.role || currentUser?.role) == "recruiter" && (
               <>
                 <Row className="job-navigate-container">
-                  <Col sm={2} md={2} className="homejob-title">
+                  <Col sm={12} md={2} className="homejob-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
-                  <Col sm={2} md={2}>
+                  <Col sm={12} md={8} className="all-job-navigate">
                     <Link
                       to={"/allJob"}
                       className="homejob-title homejob-title-link"
@@ -64,7 +64,7 @@ export default function HomeJobs({jobHomePage}) {
                     </Link>
                   </Col>
 
-                  <Col sm={2} md={2}>
+                  {/* <Col sm={2} md={2}>
                     <Link className="homejob-title homejob-title-link"
                       to={"/availablerecruitment"}
                     >
@@ -82,7 +82,7 @@ export default function HomeJobs({jobHomePage}) {
                         <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
-                  </Col>
+                  </Col> */}
                 </Row>
               </>
             )}
@@ -113,10 +113,7 @@ export default function HomeJobs({jobHomePage}) {
             )}
           </Row>
         </Col>
-        <Col md={4}></Col>
-      </Row>
-      <Row>
-        <Col>
+        <Col sm={12} md={12}>
           <ListJobs jobHomePage = {jobHomePage}/>
         </Col>
       </Row>
