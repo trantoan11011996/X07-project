@@ -6,6 +6,8 @@ import { UserContext } from "../../Context/UserContext";
 import HomeBanner from "./HomeBanner/HomeBanner";
 import HomeJobs from "../HomePage/HomeJobs/HomeJobs";
 import { JobContext } from "../../Context/JobContext";
+import HomeCategory from "./HomeCategory/HomeCategory";
+import JobNotification from "./JobNotification/JobNotification";
 
 export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
@@ -30,6 +32,8 @@ export default function HomePage() {
       <div className="home-page">
         <HomeBanner />
         <HomeJobs jobHomePage={jobHomePage} />
+        <HomeCategory/> 
+        <JobNotification/>
       </div>
     </>
   );
