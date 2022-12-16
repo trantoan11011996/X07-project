@@ -19,10 +19,10 @@ export default function CandidateListItem(data) {
             <Row className="button-row mb-2">
                 <Col sm={6} md={6}>
                     <Space wrap>
-                        <Button className="candiate-button ms-2">
+                        <Button className="apply-button ms-2">
                             Xác nhận
                         </Button>
-                        <Button className="candiate-button">
+                        <Button className="denied-button">
                             Từ chối
                         </Button>
                         <Button className="candiate-button">
