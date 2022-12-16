@@ -5,15 +5,18 @@ p{
     height: fit-content;
     padding-bottom: 20px;
 }
+.row-footer-content{
+    height: fit-content;
+}
 .container-footer-content{
-    height: 400px;
+    height: fit-content;
     background-color: rgb(0,13,44);
 }
 .footer-content{
     width: 80%;
-    height: 100%;
     margin : 0 auto;
     padding-top: 40px;
+    padding-bottom: 40px;
 }
 .wrap-content-item{
     margin-top: 15px;

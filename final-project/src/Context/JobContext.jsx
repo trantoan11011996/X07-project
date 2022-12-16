@@ -62,14 +62,11 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data);
         setJobHomePage(data);
         localStorage.setItem("jobHomePage", JSON.stringify(data));
         return data;
       });
-    
     return jobs;
-  
   };
   
 

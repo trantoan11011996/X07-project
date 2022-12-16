@@ -24,7 +24,7 @@ export default function HomeJobs({jobHomePage}) {
                   <Col sm={12} md={2} className="homejob-title">
                     <h1 className="homejob-title-header">Việc làm hấp dẫn</h1>
                   </Col>
-                  <Col sm={12} md={8}>
+                  <Col sm={12} md={8} className="all-job-navigate">
                   
                     <Link
                       to={"/allJob"}
@@ -91,13 +91,13 @@ export default function HomeJobs({jobHomePage}) {
               <>
                 <Row className="job-navigate-container">
                   <Col
-                    sm={2}
+                    sm={12}
                     md={2}
                     className="homejob-title homejob-title-header"
                   >
                     <h1>Việc làm hấp dẫn</h1>
                   </Col>
-                  <Col sm={2} md={2}>
+                  <Col sm={12} md={8} className="all-job-navigate">
                     <Link
                       to={"/allJob"}
                       className="homejob-title homejob-title-link"
