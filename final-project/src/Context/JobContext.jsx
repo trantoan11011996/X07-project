@@ -158,7 +158,7 @@ const JobProvider = ({ children }) => {
     const CvData = new FormData();
 		CvData.append('formFile', file);
 
-    let userCV = await fetch ("https://xjob-mindx-production.up.railway.app/api/recruiments/apply",
+    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/apply/${id}`,
     {
       method: "POST",
       body: CvData,
@@ -168,7 +168,6 @@ const JobProvider = ({ children }) => {
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      console.log(data);
       return data;
       
     })
