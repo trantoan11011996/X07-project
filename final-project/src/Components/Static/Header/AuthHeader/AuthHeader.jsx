@@ -40,7 +40,7 @@ const AuthHeader = ({ mode }) => {
 
   return (
     <>
-      {user || currentUser ? (
+      {/* {user || currentUser ? (
         <div>
           <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <div className="navbar-brand">
@@ -85,7 +85,7 @@ const AuthHeader = ({ mode }) => {
                       />
                       Ngành nghề/Địa điểm
                     </div>
-                  </NavLink>
+                  </NavLink> */}
 
                   {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -100,12 +100,12 @@ const AuthHeader = ({ mode }) => {
       Separated link
     </NavDropdown.Item>
   </NavDropdown> * */}
-                </Nav>
+                {/* </Nav>
               </div>
             </Navbar.Collapse>
           </Navbar>
           {isAuthenticated || showLogin == false || currentUser?.token ? (
-            <>
+            <> */}
               {/* <Menu.SubMenu
                 className="menu-login"
                 icon={
@@ -158,7 +158,7 @@ const AuthHeader = ({ mode }) => {
                   <LogoutOutlined /> Đăng xuất
                 </Menu.Item>
               </Menu.SubMenu> */}
-              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -167,7 +167,7 @@ const AuthHeader = ({ mode }) => {
                   Something
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
+                <NavDropdown.Item onClick={handleLogOutUser} href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
@@ -269,7 +269,7 @@ const AuthHeader = ({ mode }) => {
                     />
                     Đăng Ký
                   </div>
-                </NavLink>
+                </NavLink> */}
                 {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -283,13 +283,13 @@ const AuthHeader = ({ mode }) => {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown> * */}
-              </Nav>
+              {/* </Nav>
             </div>
           </Navbar.Collapse>
         </Navbar>
-      )}
+      )} */}
 
-      {/* <Navbar collapseOnSelect expand="md" bg="light" variant="light">
+      <Navbar collapseOnSelect expand="md" bg="light" variant="light">
 
             <div className="navbar-brand">
               <Navbar.Brand href="/">
@@ -372,13 +372,13 @@ const AuthHeader = ({ mode }) => {
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
-              </NavDropdown> }
+                      </NavDropdown> */}
                 </Nav>
             </div>
               </Navbar.Collapse>
    
         </Navbar>
-               */}
+              
     </>
   );
 };

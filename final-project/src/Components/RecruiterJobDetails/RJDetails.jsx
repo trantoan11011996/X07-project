@@ -86,13 +86,8 @@ export default function RJDetails() {
                                     </Row>
 
                                     <div className="job-details">
-<<<<<<< Updated upstream
                                         <p className="mt-2" style={{ fontWeight: "bolder" }}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
                                         <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
-=======
-                                        <p className="mt-2" style={{fontWeight:"bolder"}}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
-                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle>  <b>Lương</b>: {jobData?.salary} (VNĐ)</p>
->>>>>>> Stashed changes
                                         <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
