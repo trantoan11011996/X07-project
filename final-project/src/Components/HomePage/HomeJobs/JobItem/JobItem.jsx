@@ -7,7 +7,7 @@ import "../JobItem/JobItem.css";
 import logocompany from "../../../../img/logocompany.png"
 import { Link } from "react-router-dom";
 export default function JobItem({ job,id }) {
-  console.log('job',job);
+  // console.log('job',job);
   const image = job?.name?.avatar
   const splitString  = image.split("/")
   const imageString = splitString[1]+"/".concat(splitString[2])
