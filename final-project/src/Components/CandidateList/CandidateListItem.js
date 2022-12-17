@@ -2,7 +2,7 @@ import { Button, Space } from "antd";
 import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
-export default function CandidateListItem(data) {
+export default function CandidateListItem({data}) {
     return (
         <Card className="list-item mt-3 mb-3">
             <Row>
@@ -18,19 +18,20 @@ export default function CandidateListItem(data) {
 
             <Row className="button-row mb-2">
                 <Col sm={6} md={6}>
-                    <Space wrap>
+                </Col>
+                <Col sm={6} md={6}>
+                <Space wrap>
                         <Button className="apply-button ms-2">
                             Xác nhận
                         </Button>
                         <Button className="denied-button">
                             Từ chối
                         </Button>
-                        <Button className="candiate-button">
+                        <Button className="view-button">
                             Xem thông tin ứng viên
                         </Button>
                     </Space>
                 </Col>
-                <Col sm={6} md={6}></Col>
             </Row>
         </Card>
     )
