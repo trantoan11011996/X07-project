@@ -13,6 +13,7 @@ export default function ListJobs({ jobHomePage }) {
   //     setData(response.data);
   //   });
   // }, [])
+  console.log('home page',jobHomePage);
   return (
     <div className="list-jobs">
       <Container className="container-list-jobs">
