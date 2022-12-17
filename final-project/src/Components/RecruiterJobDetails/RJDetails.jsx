@@ -69,17 +69,17 @@ export default function RJDetails() {
             {jobData && (
                 <Container>
                     <Row>
-                        <Col sm={8} md={8}>
-                            <Card className="job-content m-3">
+                        <Col sm={9} md={9}>
+                            <Card className="job-content mt-3 mb-3">
                                 <Card.Img className="job-banner" variant="top" src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg" />
 
                                 <Card.Body>
                                     <Row className="titte m-2">
-                                        <Col className="logo" sm={3} md={3}>
-                                            <img src={`https://xjob-mindx-production.up.railway.app/${logo}`} />
+                                        <Col className="logo" sm={2} md={2}>
+                                            <img className="image-logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`} />
                                         </Col>
 
-                                        <Col className="company" sm={9} md={9}>
+                                        <Col className="company" sm={10} md={10}>
                                             <Card.Title className="job-tittle"> {jobData?.title}</Card.Title>
                                             <h3> {jobData?.name?.info?.name}</h3>
                                         </Col>
@@ -113,21 +113,21 @@ export default function RJDetails() {
                                     </div>
 
                                     <div className="tab-rows">
-                                        <Row className="ms-2">
+                                        <Row className="ms-2 p-2">
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#description"> Mô tả</a>
+                                                <a className="job-tab" href="#description"  data-target="#description"> Mô tả</a>
                                             </Col>
 
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#require"> Yêu cầu </a>
+                                                <a className="job-tab" href="#require"  data-target="#require"> Yêu cầu </a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#info"> Mô tả bổ sung</a>
+                                                <a className="job-tab" href="#info" data-target="#info"> Mô tả bổ sung</a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#about"> Về công ty</a>
+                                                <a className="job-tab" href="#about" data-target="#about"> Về công ty</a>
                                             </Col>
 
                                             <Col sm={2} md={2}></Col>

@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <div className="header">
-      <AuthHeader mode={"horizontal"} />
+      <AuthHeader />
     </div>
   );
 }
