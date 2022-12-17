@@ -15,13 +15,13 @@ import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
 import UpdateInfoUser from "../Form_User/updateInfoUser/UpdateUserInfo";
-
 import { AllJob } from "../AllJob/AllJob";
 import UploadRecruiment from "../UploadRecruiment/UploadRecruiment";
 import RJDetails from "../RecruiterJobDetails/RJDetails";
 import { JobProvider } from "../../Context/JobContext";
 import JobDetail from "../JobDetail/JobDetail";
 import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitment";
+import CandidateList from "../CandidateList/CandidateList";
 
 export default function MainApp() {
   return (
@@ -57,6 +57,8 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
+
+                <Route path="/CandidateList" element={<CandidateList />} />
               </Routes>
               <Footer />
             </div>
