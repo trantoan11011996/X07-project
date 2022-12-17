@@ -22,7 +22,7 @@ let useClickOutside = (handler) => {
 export default function HomeBanner() {
   const [isOpen, setIsOpen] = useState(false);
   let boxRef = useRef();
-
+  
   useEffect(() => {
     let handler = (e) => {
       if (!boxRef.current?.contains(e.target)) {
