@@ -78,6 +78,16 @@ export default function JobDetail() {
     `;
   }, [jobData]);
 
+  const scrollToElement = (elementID) => {
+      const element = document.getElementById(elementID);
+      const offsetTop = element.offsetTop;
+      console.log(offsetTop);
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth"
+      })
+  }
+
   return (
     <>
       <MetaData title="Chi tiết tin tuyển dụng" />
@@ -168,8 +178,8 @@ export default function JobDetail() {
                       <Col sm={2} md={2}>
                         <a
                           className="job-tab"
-                          href="#description"
-                          data-target="#description"
+                          // href="#"
+                          onClick={() => scrollToElement("des-title")}
                         >
                           {" "}
                           Mô tả
@@ -179,8 +189,8 @@ export default function JobDetail() {
                       <Col sm={2} md={2}>
                         <a
                           className="job-tab"
-                          href="#require"
-                          data-target="#require"
+                          // href="#"
+                          onClick={() => scrollToElement("require")}
                         >
                           {" "}
                           Yêu cầu
@@ -209,7 +219,7 @@ export default function JobDetail() {
                     </Row>
                   </div>
 
-                  <div className="mt-3">
+                  <div id="des-title">
                     <h2 className="require-title"> Mô tả </h2>
                     <div id="description" className="mt-3"></div>
                   </div>
