@@ -23,3 +23,13 @@
 .banner {
     width:100%;
 }
+
+.apply-button {
+    color: #fff !important;
+    background-color: #0069DB !important;
+}
+
+.denied-button {
+    background-color: #fd3d57 !important;
+    color: #fff !important;
+}
