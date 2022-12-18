@@ -98,7 +98,8 @@ export default function UserRecruiter() {
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.avatar = data.path;
+        user.avatar = data;
+        console.log('user',user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });

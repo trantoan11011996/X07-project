@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import classNames from "classnames/bind";
 import styles from "../Footer/Footer.module.css";
-
+import logo from "../../../img/xcareerlogo.png"
 import { SiVerizon } from "react-icons/si";
 import { JobContext } from "../../../Context/JobContext";
 const cx = classNames.bind(styles);
@@ -120,7 +120,7 @@ export default function Footer() {
       </div>
       <div className={cx("container-footer-contact")}>
         <div className={cx("logo-contact")}>
-          <p>LOGO</p>
+          <img className={cx('image-logo-footer')} src={logo}/>
         </div>
         <div className={cx("contact-content")}>
           <p>

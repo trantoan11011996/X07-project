@@ -37,11 +37,11 @@ export default function HomeJobs({jobHomePage}) {
                     </Link>
                   </Col>
 
-                  {/* <Col sm={2} md={4}>
-                    <Link className="homejob-title homejob-title-link">
+                  <Col sm={2} md={4}>
+                    <Link  className="homejob-title homejob-title-link">
                       Công việc đã ứng tuyển <span></span>
                     </Link>
-                  </Col> */}
+                  </Col>
                 </Row>
               </>
             )}
@@ -64,7 +64,7 @@ export default function HomeJobs({jobHomePage}) {
                     </Link>
                   </Col>
 
-                  {/* <Col sm={2} md={2}>
+                  <Col sm={2} md={2}>
                     <Link className="homejob-title homejob-title-link"
                       to={"/availablerecruitment"}
                     >
@@ -82,7 +82,7 @@ export default function HomeJobs({jobHomePage}) {
                         <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
-                  </Col> */}
+                  </Col>
                 </Row>
               </>
             )}

@@ -97,7 +97,7 @@ export default function UploadRecruiment() {
     }
     if (!isPosition(position)) {
       setWarningPosition(true);
-      return ;
+      return;
     }
     if (!isType(type)) {
       setWarningType(true);

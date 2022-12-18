@@ -13,10 +13,11 @@ export default function ListJobs({ jobHomePage }) {
   //     setData(response.data);
   //   });
   // }, [])
+  console.log('home page',jobHomePage);
   return (
     <div className="list-jobs">
       <Container className="container-list-jobs">
-        {/* <List
+        <List
           className="list-container"
           grid={{
             gutter: 16,
@@ -39,7 +40,7 @@ export default function ListJobs({ jobHomePage }) {
               <JobItem job={job} id={job._id} />
             </List.Item>
           )}
-        ></List> */}
+        ></List>
       </Container>
     </div>
   );
