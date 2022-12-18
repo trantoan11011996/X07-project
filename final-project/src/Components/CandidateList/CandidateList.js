@@ -3,7 +3,7 @@ import { images } from "../../img/index";
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Form, Row, Col, Card, } from "react-bootstrap";
 import "./CandidateList.css"
-import data from "./data";
+
 import CandidateListItem from "./CandidateListItem";
 import { CiSearch } from "react-icons/ci";
 import { UserContext } from "../../Context/UserContext";
@@ -14,16 +14,16 @@ export default function CandidateList() {
 
     const {currentUser, getCandidateList} = useContext(UserContext)
     const {id} = useParams();
-    // const [data, setData] = useState("");
+    const [data, setData] = useState("");
 
 
-    // useEffect(() => {
-    //     const listData = async () => {
-    //         await getCandidateList(id, currentUser.token)
-    //     };
-    //     const result = listData();
-    //     setData(result)
-    // }, [id])
+    useEffect(() => {
+        const listData = async () => {
+           const listCandidate = await getCandidateList(id, currentUser.token)
+           setData(listCandidate)
+        };
+        listData()
+    }, [id, currentUser.token])
 
     return (
         <Container>
@@ -60,14 +60,17 @@ export default function CandidateList() {
                 <Col sm={9} md={9}>
                     <h1 className="list-title mt-3 mb-1"> Danh sách ứng viên</h1>
 
-                    <List
+                    { data.length == 0 
+                    ? <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
+                    : <List
                         pagination={{
                             pageSize: 10,
                         }}
                         dataSource={data}
                         renderItem={(item => <CandidateListItem data={item} arr={data} />)}
                     >
-                    </List>
+                    </List>}
+                  
                 </Col>
 
                 <Col>

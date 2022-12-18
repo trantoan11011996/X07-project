@@ -50,7 +50,7 @@ const JobProvider = ({ children }) => {
     const jobs = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
