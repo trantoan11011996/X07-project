@@ -1,16 +1,29 @@
 import { Button, List, Space } from "antd";
 import { images } from "../../img/index";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Form, Row, Col, Card, } from "react-bootstrap";
 import "./CandidateList.css"
 import data from "./data";
 import CandidateListItem from "./CandidateListItem";
 import { CiSearch } from "react-icons/ci";
 import { UserContext } from "../../Context/UserContext";
+import { useParams } from "react-router";
+
 
 export default function CandidateList() {
 
-    const {currentUser} = useContext(UserContext)
+    const {currentUser, getCandidateList} = useContext(UserContext)
+    const {id} = useParams();
+    // const [data, setData] = useState("");
+
+
+    // useEffect(() => {
+    //     const listData = async () => {
+    //         await getCandidateList(id, currentUser.token)
+    //     };
+    //     const result = listData();
+    //     setData(result)
+    // }, [id])
 
     return (
         <Container>
@@ -30,9 +43,9 @@ export default function CandidateList() {
                             className="sort"
                         >
                             <option value="defaults">-- Trạng thái --</option>
-                            <option value="createAt">Xác nhận</option>
-                            <option value="createAt">Từ chối </option>
-                            <option value="createAt">Đang chờ </option>
+                            <option value="createAt">Accepted</option>
+                            <option value="createAt">Denied </option>
+                            <option value="createAt">Pending </option>
                         </select>
                     </Col>
 
@@ -52,7 +65,7 @@ export default function CandidateList() {
                             pageSize: 10,
                         }}
                         dataSource={data}
-                        renderItem={(item => <CandidateListItem data={item} />)}
+                        renderItem={(item => <CandidateListItem data={item} arr={data} />)}
                     >
                     </List>
                 </Col>
