@@ -30,12 +30,9 @@ export const AvailableRecruitment = () => {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
-  useEffect(() => {
-    const search = params.get('search')
-    const category = params.get('category')
-    const date = params.get('date')
-    getMyRecruitmentJobs(token,search,category,"",date)
-  }, [params])
+    const searchParams = params.get('search')
+    const categoryParams = params.get('category')
+    const dateParams = params.get('date')
  
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem('token'))
@@ -63,13 +60,19 @@ export const AvailableRecruitment = () => {
       }
     }
   }
+
+  const onSubmitSearch = (e)=>{
+    e.preventDefault()
+    getMyRecruitmentJobs(token,searchParams.toLocaleUpperCase(),categoryParams,"",dateParams)
+
+  }
   return (
     <>
       <MetaData title="Danh sách tất cả việc làm" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
           <div className={cx("filter")}>
-            <form action="">
+            <form action="" onSubmit={onSubmitSearch}>
               <div className={cx("form-group")}>
                 <input
                   type="text"

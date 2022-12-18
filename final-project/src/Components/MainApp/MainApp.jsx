@@ -57,7 +57,7 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
-
+                  
                 <Route path="/CandidateList" element={<CandidateList />} />
               </Routes>
               <Footer />

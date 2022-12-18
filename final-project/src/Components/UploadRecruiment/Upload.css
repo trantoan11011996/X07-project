@@ -10,7 +10,9 @@
   height: 500px;
   padding: 0 40px;
 }
-
+.form-upload{
+  height: 500px;
+}
 .form-group-container{
   height: 500px;
   overflow-y: scroll;
@@ -59,4 +61,9 @@
 .description-upload{
   border : 1px solid red;
   padding-left: 50px;
+}
+@media only screen and (max-width : 735px){
+  .form-container-upload{
+    width: 100%;
+  }
 }
