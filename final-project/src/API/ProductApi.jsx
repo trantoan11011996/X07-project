@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
         method: "get",
         url: allJobUrl,
         type: "json",
+        
     });
 
     if (res.status === 200) {
@@ -42,6 +43,11 @@ import React, { useEffect, useState } from "react";
         return res.data;
     }
  }
+
+
+
+
+
  const getAllCategory = async() =>{
     const categories = await fetch(`https://xjob-mindx-production.up.railway.app/api/users/category`,{
       method :"GET"
@@ -104,7 +110,8 @@ import React, { useEffect, useState } from "react";
     jobDetail: fetchJobDetail,
     categories : getAllCategory,
     locations:getAllLocation,
-    recruiment : createRecruiment
+    recruiment : createRecruiment,
+   
  }
 
  export default JobApi;
