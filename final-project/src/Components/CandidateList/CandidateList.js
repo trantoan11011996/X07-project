@@ -1,17 +1,21 @@
 import { Button, List, Space } from "antd";
 import { images } from "../../img/index";
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Form, Row, Col, Card, } from "react-bootstrap";
 import "./CandidateList.css"
 import data from "./data";
 import CandidateListItem from "./CandidateListItem";
 import { CiSearch } from "react-icons/ci";
+import { UserContext } from "../../Context/UserContext";
 
 export default function CandidateList() {
+
+    const {currentUser} = useContext(UserContext)
+
     return (
         <Container>
             <Form className="select-bar">
-                <Row>
+                <Row className="mt-3">
                     <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
                         <select
                             className="sort"
@@ -28,12 +32,12 @@ export default function CandidateList() {
                             <option value="defaults">-- Trạng thái --</option>
                             <option value="createAt">Xác nhận</option>
                             <option value="createAt">Từ chối </option>
-                            <option value="createAt">Pending </option>
+                            <option value="createAt">Đang chờ </option>
                         </select>
                     </Col>
 
                     <Col sm={2} md={2}>
-                        <button className="confirm mt-3 mb-3"> <CiSearch /></button>
+                        <button className="confirm mt-3 mb-3 ms-2"> <CiSearch /></button>
                     </Col>
                     <Col sm={4} md={4} ></Col>
                 </Row>

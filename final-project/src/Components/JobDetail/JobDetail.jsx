@@ -81,7 +81,6 @@ export default function JobDetail() {
   const scrollToElement = (elementID) => {
       const element = document.getElementById(elementID);
       const offsetTop = element.offsetTop;
-      console.log(offsetTop);
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth"
