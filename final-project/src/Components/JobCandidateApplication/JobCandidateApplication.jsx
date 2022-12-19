@@ -66,7 +66,6 @@ export const JobCandidateApplication = () => {
               <img src={images.banner} alt="" />
             </div>
           </div>
-        <HomeCategory/>
         </div>
       </div>
     </>

@@ -40,7 +40,7 @@ export default function JobDetail() {
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState('')
   const [file, setFile] = useState("");
-
+  const [isApplied, setIsApplied] = useState(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
