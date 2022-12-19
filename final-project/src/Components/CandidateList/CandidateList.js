@@ -16,14 +16,17 @@ export default function CandidateList() {
     const {id} = useParams();
     const [data, setData] = useState("");
 
+    const token = localStorage.getItem('token');
+    const userToken = JSON.parse(token)
 
+    console.log(currentUser);
     useEffect(() => {
         const listData = async () => {
-           const listCandidate = await getCandidateList(id, currentUser.token)
+           const listCandidate = await getCandidateList(id, userToken)
            setData(listCandidate)
         };
         listData()
-    }, [id, currentUser.token])
+    }, [id, userToken])
 
     return (
         <Container>
