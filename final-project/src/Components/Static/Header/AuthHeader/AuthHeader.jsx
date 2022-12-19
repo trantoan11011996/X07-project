@@ -173,7 +173,7 @@ const AuthHeader = ({ mode }) => {
                 {(currentUser?.role == "candidate" ||
                   user?.role == "candidate") && (
                   <div className="account-action">
-                    <Link to={"/"}>
+                    <Link to={"/CandidateApplication"}>
                       <p className="content-action">Công việc đã ứng tuyển</p>
                     </Link>
                     <Link to={"/update_info"}>
