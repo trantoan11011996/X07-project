@@ -4,7 +4,7 @@
 }
 .container-register{
     position: relative;
-    height: 680px;
+    height: 720px;
 }
 .circle-form{
     height: 40vw;
@@ -75,6 +75,8 @@
     justify-content: center;
     align-items: center;
     padding: 0px 20px 0px 20px;
+    position: relative;
+    overflow: hidden;
 }
 .form-register{
     width: 450px;
@@ -85,18 +87,12 @@
     border-radius: 5px; */
 
 }
-.input {
-    width: 500px;
-    margin-top: 2%;
-    border-radius: 0%;
-    position: relative;
-    height: 40px;
-}
+
+
 .input_icon {
     background-color: white;
     border-left: none;
     border-radius: 0%;
-    margin-top: 2%;
     border-radius: 0%;
     height: 40px;
 }

@@ -21,14 +21,15 @@
     align-items: center;
     display: flex;
     overflow: hidden;
+    position: relative;
     .circle-light{
       height: 40vw;
       width: 40vw;
       border-radius: 50%;
       background-color: rgba(255,255,255,0.08);
       position: absolute;
-      top: -20vw;
-      right: -10vw;
+      top: -15vw;
+      right: -20vw;
     }
   }
   .banner {

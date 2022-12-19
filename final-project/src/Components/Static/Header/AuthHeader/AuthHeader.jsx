@@ -24,7 +24,6 @@ const AuthHeader = ({ mode }) => {
   const [showSideBar, setShowSideBar] = useState(false);
   useEffect(() => {
     const closeUserBox = (e) => {
-      console.log(e.path[1]);
       if (e.path[1].className !== "navbar-content account-user") {
         setShowUserBox(false);
       }
@@ -34,38 +33,34 @@ const AuthHeader = ({ mode }) => {
   });
 
   let imageString;
-  const checkUser = () => {
-    if (user || currentUser) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  if (checkUser()) {
-    if (user.hasOwnProperty('avatar')) {
+  if (user) {
+    if (user.hasOwnProperty("avatar")) {
       const image = user.avatar;
       const splitString = image.split("/");
       imageString = splitString[1] + "/".concat(splitString[2]);
-    }else{
-      imageString = ""
+    } else {
+      imageString = "";
     }
   }
-  // if(checkUser()){
-  //   if(user.avatar){
-  //   const image = user.avatar
-  //   const splitString = image.split("/")
-  //   imageString = splitString[1]+"/".concat(splitString[2])
-  //   return
+  if (currentUser) {
+    if (currentUser.hasOwnProperty("avatar")) {
+      const image = user.avatar;
+      const splitString = image.split("/");
+      imageString = splitString[1] + "/".concat(splitString[2]);
+    } else {
+      imageString = "";
+    }
+  }
+  // if (flag) {
+  //   console.log(flag);
+  //   if (user.hasOwnProperty('avatar')) {
+  //     const image = user.avatar;
+  //     const splitString = image.split("/");
+  //     imageString = splitString[1] + "/".concat(splitString[2]);
+  //     console.log(imageString);
+  //   }else{
+  //     imageString = ""
   //   }
-  //   if(currentUser.avarta){
-  //     console.log();
-  //   const image = currentUser.avatar
-  //   const splitString = image.split("/")
-  //   imageString = splitString[1]+"/".concat(splitString[2])
-  //   return
-  //   }
-  // }else{
-  //   return
   // }
 
   const handleLogOutUser = () => {
@@ -125,16 +120,22 @@ const AuthHeader = ({ mode }) => {
               id="control-account"
             >
               <div className="btn-control-account">
-                <Link to={"/login"} className="link-btn-header">
-                  <button className="btn-login-header btn-header">
-                    Đăng nhập
-                  </button>
-                </Link>
-                <Link to={"/register"} className="link-btn-header">
-                  <button className="btn-signin-header btn-header">
-                    Đăng ký
-                  </button>
-                </Link>
+                {(user || currentUser) ? (
+                  <></>
+                ) : (
+                  <>
+                    <Link to={"/login"} className="link-btn-header">
+                      <button className="btn-login-header btn-header">
+                        Đăng nhập
+                      </button>
+                    </Link>
+                    <Link to={"/register"} className="link-btn-header">
+                      <button className="btn-signin-header btn-header">
+                        Đăng ký
+                      </button>
+                    </Link>
+                  </>
+                )}
               </div>
               <div
                 className={
@@ -185,21 +186,21 @@ const AuthHeader = ({ mode }) => {
               {(currentUser || user) && (
                 <div className="account-info-header">
                   <Link to={"/update_info"}>
-                  <div className="account-info-content">
-                    {imageString ? (
-                      <img
-                      src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
-                      className="logo-user"
-                      />
+                    <div className="account-info-content">
+                      {imageString ? (
+                        <img
+                          src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                          className="logo-user"
+                        />
                       ) : (
                         <RxAvatar className="icon-avatar" />
-                        )}
-                    <div className="content-info-user">
-                      {/* {((currentUser?.role === "recruiter")||(user?.role === "recruiter")) && <p className="user-name">{currentUser.info.name}</p>}
+                      )}
+                      <div className="content-info-user">
+                        {/* {((currentUser?.role === "recruiter")||(user?.role === "recruiter")) && <p className="user-name">{currentUser.info.name}</p>}
                       {((currentUser.role === "candidate")||(user.role === "candidate")) && <p className="user-name">{currentUser.info.fullName}</p>} */}
-                      <span>Tài khoản</span>
+                        <span>Tài khoản</span>
+                      </div>
                     </div>
-                  </div>
                   </Link>
                   <div
                     className="wrap-btn-logout"

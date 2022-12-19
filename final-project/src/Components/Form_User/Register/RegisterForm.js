@@ -129,7 +129,6 @@ export default function RegisterForm() {
   return (
     <Container fluid>
       <Row className="container-register">
-        <div className="circle-form"></div>
         <Col className="container-register-banner" md={4}>
           <h1 className="header-banner-register text-white">
             Xây dựng{" "} <br/>
@@ -155,9 +154,9 @@ export default function RegisterForm() {
                 <b>
                   Địa chỉ Email <span style={{ color: "red" }}>*</span>
                 </b>
-                <InputGroup className="input-group">
+                <InputGroup className="input-group-register">
                   <Form.Control
-                    className="input"
+                    className="input-register"
                     type="email"
                     onChange={(event) => setEmail(event.target.value)}
                   />
@@ -176,9 +175,9 @@ export default function RegisterForm() {
                 <b>
                   Mật khẩu <span style={{ color: "red" }}>*</span>
                 </b>
-                <InputGroup className="input-group">
+                <InputGroup className="input-group-register">
                   <Form.Control
-                    className="input border-right"
+                    className="input-register"
                     type={visible1 ? "text" : "password"}
                     onChange={(event) => setPassword(event.target.value)}
                   />
@@ -205,13 +204,13 @@ export default function RegisterForm() {
                 <b>
                   Xác nhận mật khẩu <span style={{ color: "red" }}>*</span>
                 </b>
-                <InputGroup className="input-group">
+                <InputGroup className="input-group-register">
                   <Form.Control
-                    className="input border-right"
+                    className="input-register"
                     type={visible2 ? "text" : "password"}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                   />
-                  <InputGroup.Text
+                   <InputGroup.Text
                     className="input_icon"
                     onClick={handleClick2}
                   >
