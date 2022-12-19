@@ -36,12 +36,6 @@ export default function HomeJobs({jobHomePage}) {
                       </span>
                     </Link>
                   </Col>
-
-                  <Col sm={2} md={4}>
-                    <Link  className="homejob-title homejob-title-link">
-                      Công việc đã ứng tuyển <span></span>
-                    </Link>
-                  </Col>
                 </Row>
               </>
             )}
@@ -60,26 +54,6 @@ export default function HomeJobs({jobHomePage}) {
                       Xem tất cả{" "}
                       <span>
                         <AiOutlineArrowRight></AiOutlineArrowRight>
-                      </span>
-                    </Link>
-                  </Col>
-
-                  <Col sm={2} md={2}>
-                    <Link className="homejob-title homejob-title-link"
-                      to={"/availablerecruitment"}
-                    >
-                      Tin đã đăng <span></span>
-                    </Link>
-                  </Col>
-
-                  <Col sm={2} md={4}>
-                    <Link
-                      to={"/upload"}
-                      className="homejob-title homejob-title-link"
-                    >
-                      Đăng tin tuyển dụng{" "}
-                      <span>
-                        <BsFillFilePostFill></BsFillFilePostFill>
                       </span>
                     </Link>
                   </Col>
