@@ -123,12 +123,12 @@ export default function UserCandidate() {
       })
       .then((data) => {
         console.log('data',data);
-        const splitString = data.path.split("/");
+        const splitString = data.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.avatar = data.path;
+        user.avatar = data;
         console.log("user", user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;

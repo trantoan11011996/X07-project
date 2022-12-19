@@ -1,87 +1,276 @@
-
-
-.navbar-brand{
-    padding-left: 20px;
-  
+.header {
+  width: 100%;
+  height: 65px;
+  background-color: white;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  position: fixed;
 }
-.nav-li{
+.header-logo {
+  cursor: pointer;
+}
+.image-header {
+}
+
+/* ----------------- */
+.header-navbar {
+  display: flex;
+  gap: 50px;
+}
+.navbar-content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+.company-navbar {
+}
+.company-navbar > .icon-navbar {
+  font-weight: 800;
+  font-size: 20px;
+}
+.locatin-navbar {
+}
+.location-navbar > .icon-navbar {
+  font-size: 20px;
+}
+.account-user {
+  border: 1px solid #ccc;
+  width: fit-content;
+  padding: 2px 0px 2px 0;
+  border-radius: 30px;
+  display: flex;
+  position: relative;
+}
+.account-user>.content{
+    font-weight: 600;
+}
+.account-user > .icon-navbar {
+  margin-right: 5px;
+  font-size: 35px;
+  opacity: 0.6;
+}
+.account-user > .icon-dropdown-user {
+  font-size: 35px;
+  justify-self: flex-start;
+}
+.icon-navbar {
+}
+.content {
+}
+/* ------------------ */
+.control-account {
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  top: 53px;
+  left: calc(-12vw - 10px);
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  padding: 0 0 10px 0;
+}
+.btn-control-account {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 15px;
+  margin-top: 17px !important;
+  padding: 0 0 14px 0;
+  width: 90%;
+  border-bottom: 1px solid #ccc;
+}
+.link-btn-header {
+}
+.btn-header {
+  padding: 8px 25px;
+  border-radius: 16px;
+  color: white;
+}
+.btn-login-header {
+  background-color: #0069db;
+}
+.btn-signin-header {
+  background-color: white;
+  color: #0069db;
+  border: 1px solid #0069db;
+}
+.btn-signin-header:hover {
+  background-color: #0069db;
+  color: white;
+}
+.btn-login-header:hover {
+  background-color: #0356ad;
+}
+.account-action-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 0px 15px 15px;
+  margin: 0 10px;
+}
+.border-bottom{
+    border-bottom: 1px solid #ccc;
+}
+.account-info-logo {
+  margin-top: 15px;
+  margin-left: 25px;
+  height: 50px;
+  cursor: pointer;
+  padding: 0 18px 15px 0;
+}
+.border-right{
+    height: 120px !important;
+    border-right: 1px solid #ccc;
+}
+.account-info-logo > .info-icon {
+  color: #0069db;
+  font-size: 45px;
+}
+.account-info-logo > p {
+  color: #0069db;
+}
+.account-action {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0.8;
+}
+.content-action {
+  padding: 5px 10px;
+}
+.content-action:hover {
+  background-color: rgb(232, 241, 245);
+}
+.account-info-header {
+  padding: 0 10px;
+}
+.account-info-content {
+}
+.account-info-content:hover {
+  background-color: rgb(232, 241, 245);
+}
+.wrap-btn-logout {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-logout {
+  margin-top: 18px;
+  padding: 5px 8px;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  align-items: center;
+  width: fit-content;
+}
+.btn-logout:hover {
+  cursor: pointer;
+  background-color: rgb(232, 241, 245);
+}
+.btn-logout > button:hover {
+  background-color: rgb(232, 241, 245);
+}
+.btn-logout > button {
+  background-color: white;
+  color: black;
+  opacity: 0.8;
+}
+.icon-logout {
+}
+.logout {
+}
+.container-icon-sidebar{
+    cursor: pointer;
+    font-size: 25px;
+    color: #0069db;
+}
+.navbar-sidebar{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    z-index: 2;
+    width: 50%;
+}
+.show-sidebar{
+    display: none;
+}
+.modal-header {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.btn-sidebar-container{
+    padding : 15px 20px;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    border-bottom: 1px solid #ccc;
 }
-.a-list{
-    font-size: 15px
-}
-
-
-
-.navbar-wrapper{
-    width: 100%;
+.close-sidebar-container{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-
+    justify-content: flex-end;
+    margin-top: 10px;
+    align-items: center;
+    cursor: pointer;
 }
-
-@media only screen and (min-width: 1240px) {
-   
-    .a-list{
-        font-size: 15px
-    }
-    
+.close-icon-sidebar{
+    font-size: 23px;
+    margin-right: 30px;
 }
-
-@media only screen and (max-device-width: 992px) {
-    .a-list{
-        font-size: 14px
-    }
-    .middle{
-        width: 170px;
-    }
-    .navbar-brand{
-        padding-left: 0px;
-    }
-   .nav-li{
-    padding-left: 20px;
-   }
- }
-
- 
-
- @media only screen and (max-device-width: 1407px) {
-    .middle{
-        width: 350px;
-    }
- }
-
- @media only screen and (max-device-width: 1307px) {
-    .middle{
-        width: 300px;
-    }
- }
- @media only screen and (max-device-width: 1257px) {
-    .middle{
-        width: 250px;
-    }
- }
- @media only screen and (max-device-width: 1207px) {
-    .middle{
-        width: 200px;
-    }
- }
- @media only screen and (max-device-width: 1157px) {
-    .middle{
-        width: 150px;
-    }
- }
- @media only screen and (max-device-width: 1107px) {
-    .middle{
-        width: 100px;
-    }
- }
- @media only screen and (max-device-width: 1057px) {
-    .middle{
-        width: 30px;
-
-    }
- }
+.navbar-sidebar-content{
+    margin-left: 30px;
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.close-modal{
+    display: none;
+}
+.close-sidebar{
+    transform: translateX(100%);
+    transition: all ease 0.5s;
+}
+.open-sidebar{
+    transform: translateX(0);
+    transition: all ease 0.5s;
+}
+@media only screen and (max-width: 1100px) {
+  .header-navbar {
+    display: none;
+  }
+  .container-icon-sidebar {
+    display: block;
+  }
+  .show-sidebar {
+    display: block;
+  }
+  .header{
+    padding-right: 20px;
+  }
+}
+@media only screen and (min-width: 1101px) {
+  .header-navbar {
+    display: flex;
+    gap: 50px;
+  }
+  .container-icon-sidebar{
+    display: none;
+    border: 1px solid red;
+  }
+  .navbar-sidebar {
+    display: none;
+    border: 1px solid red;
+  }
+}

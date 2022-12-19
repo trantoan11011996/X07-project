@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../Context/UserContext";
 import ListJobs from "./ListJobs/ListJobs";
 
-
+ 
 export default function HomeJobs({jobHomePage}) {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -37,11 +37,11 @@ export default function HomeJobs({jobHomePage}) {
                     </Link>
                   </Col>
 
-                  {/* <Col sm={2} md={4}>
-                    <Link className="homejob-title homejob-title-link">
+                  <Col sm={2} md={4}>
+                    <Link  className="homejob-title homejob-title-link">
                       Công việc đã ứng tuyển <span></span>
                     </Link>
-                  </Col> */}
+                  </Col>
                 </Row>
               </>
             )}

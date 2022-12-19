@@ -31,6 +31,7 @@ const JobProvider = ({ children }) => {
   const [numberApplicant,setNumberApplicant] = useState('')
   const [location,setLocation] = useState('')
   const [date,setDate] = useState([])
+  const [jobCandidateApplication, setJobCandidateApplication] = useState([])
 
   const [createAt,setCreateAt] = useState('')
   const [deadline,setDeadline] = useState('') 
@@ -40,6 +41,7 @@ const JobProvider = ({ children }) => {
     getallCategory()
     getallLocation()
     const getToken = JSON.parse(localStorage.getItem('token'))
+    console.log('current-token', getToken)
     setToken(getToken)
   }, []);
   
@@ -87,8 +89,26 @@ const JobProvider = ({ children }) => {
 }
 
 
+  const getJobCandidateApplication = async (token) => {
+    await axios.get(
+        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application`,
+        { headers: {authorization: `Bearer ${token}`} },
+    ).then((res) => {
+      const data = res.data;
+      setJobCandidateApplication(data);
+      // console.log('data', (data[0].recruimentId))
+      if (!localStorage.getItem("C-applied")) {
+        localStorage.setItem("C-applied", JSON.stringify(data));
+      }
+    }).catch((error) => console.log(error.response));
+  }
   
-
+  const fetchCandidateApplication = async (id) => {
+    let applicationDetail = await JobApi.CandidateApplicationDetail(id)
+    if(applicationDetail){
+      return applicationDetail
+    }
+  }
 
   //fetch all Job
   const fetchAllJobs = async () => {
@@ -180,6 +200,7 @@ const JobProvider = ({ children }) => {
     jobHomePage,
     fetchJobDetail,
     fetchAllJobs,
+    fetchCandidateApplication,
     jobList,
     allCategory,
     allLocation,
@@ -191,6 +212,8 @@ const JobProvider = ({ children }) => {
     setSearch,
     search, category, page,fieldSort, typeSort,
     token,
+    getJobCandidateApplication,
+    jobCandidateApplication,
     postCV,
     createRecruiment,
     setTitle,

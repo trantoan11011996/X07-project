@@ -1,385 +1,202 @@
-import React, { useContext, useEffect } from "react";
-import { Menu, Avatar } from "antd";
-import {
-  UserOutlined,
-  toOutlined,
-  FormOutlined,
-  LogoutOutlined,
-  HomeOutlined,
-  SearchOutlined,
-  GlobalOutlined,
-  LoginOutlined,
-  AccountBookOutlined,
-  DownOutlined,
-  FileDoneOutlined,
-  BarsOutlined,
-} from "@ant-design/icons";
-import { Nav, NavLink, Navbar, NavDropdown, Container } from "react-bootstrap";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import logo from "../../../../img/xcareerlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import "./AuthHeader.css";
+import { BsBuilding, BsSearch } from "react-icons/bs";
+import { MdAccountCircle } from "react-icons/md";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { FaSuitcase } from "react-icons/fa";
+import { BiLogOut } from "react-icons/bi";
+import { FaBars } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../../../Context/UserContext";
 import { logoutUser } from "../../../../Actions/authAction";
+
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const { showLogin, logOutUser, currentUser, setCurrentUser } =
     useContext(UserContext);
-  const handleMenuClick = ({ to }) => {
-    if (to) {
-      navigate(to);
-    }
-  };
+  const [showUserBox, setShowUserBox] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  useEffect(() => {
+    const closeUserBox = (e) => {
+      console.log(e.path[1]);
+      if (e.path[1].className !== "navbar-content account-user") {
+        setShowUserBox(false);
+      }
+    };
+    document.body.addEventListener("click", closeUserBox);
+    return () => document.body.addEventListener("click", closeUserBox);
+  });
+
   const handleLogOutUser = () => {
     logOutUser();
-    navigate("/login");
+    navigate("/");
     dispatch(logoutUser(navigate));
+  };
+  // handleLogOutUser()
+  const toggleUserBox = (e) => {
+    setShowUserBox((prev) => !prev);
+  };
+
+  const openSidebar = () => {
+    setShowSideBar(true);
+  };
+  const closeSideBar = () => {
+    setShowSideBar(false);
   };
 
   return (
-    <>
-      {/* {user || currentUser ? (
-        <div>
-          <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-            <div className="navbar-brand">
-              <Navbar.Brand href="/">
-                <img
-                  src={logo}
-                  alt="logo"
-                  style={{ marginLeft: 20, height: 35, marginTop: 5 }}
-                ></img>
-              </Navbar.Brand>
-            </div>
-
-            <div className="middle"></div>
-            <Navbar.Toggle
-              aria-controls="navbarScroll"
-              data-bs-target="#navbarScroll"
-            />
-
-            <Navbar.Collapse id="navbarScroll">
-              <div className="a-list">
-                <Nav>
-                  <NavLink as={Link} to={"/company"}>
-                    <div className="nav-li">
-                      <HomeOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "5px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Công ty
-                    </div>
-                  </NavLink>
-                  <NavLink as={Link} to={"/job&location"}>
-                    <div className="nav-li">
-                      <GlobalOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "5px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Ngành nghề/Địa điểm
-                    </div>
-                  </NavLink> */}
-
-                  {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-    <NavDropdown.Item href="#action/3.2">
-      Another action
-    </NavDropdown.Item>
-    <NavDropdown.Item href="#action/3.3">
-      Something
-    </NavDropdown.Item>
-    <NavDropdown.Divider />
-    <NavDropdown.Item href="#action/3.4">
-      Separated link
-    </NavDropdown.Item>
-  </NavDropdown> * */}
-                {/* </Nav>
+    <div className="header">
+      <div className="header-logo">
+        <Link to={"/"}>
+          <img className="image-header" src={logo}></img>
+        </Link>
+      </div>
+      <div className="header-navbar">
+        <div className="navbar-content company-navbar">
+          <BsBuilding className="icon-navbar"></BsBuilding>
+          <p className="content">Danh sách công ty</p>
+        </div>
+        <div className="navbar-content location-navbar">
+          <BsSearch className="icon-navbar"></BsSearch>
+          <p className="content">Địa điểm/Ngành nghề</p>
+        </div>
+        <div
+          className="navbar-content account-user"
+          onClick={() => toggleUserBox()}
+        >
+          <MdAccountCircle className="icon-navbar"></MdAccountCircle>
+          {!currentUser && !user && <p className="content">Đăng ký</p>}
+          {currentUser?.role === "recruiter" ||
+            (user?.role === "recruiter" && (
+              <p className="content">Nhà tuyển dụng</p>
+            ))}
+          {currentUser?.role === "candidate" ||
+            (user?.role === "candidate" && (
+              <p className="content">Người tìm việc</p>
+            ))}
+          <RiArrowDropDownLine className="icon-dropdown-user"></RiArrowDropDownLine>
+          {showUserBox && (
+            <div className="control-account" id="control-account">
+              <div className="btn-control-account">
+                <Link to={"/login"} className="link-btn-header">
+                  <button className="btn-login-header btn-header">
+                    Đăng nhập
+                  </button>
+                </Link>
+                <Link to={"/register"} className="link-btn-header">
+                  <button className="btn-signin-header btn-header">
+                    Đăng ký
+                  </button>
+                </Link>
               </div>
-            </Navbar.Collapse>
-          </Navbar>
-          {isAuthenticated || showLogin == false || currentUser?.token ? (
-            <> */}
-              {/* <Menu.SubMenu
-                className="menu-login"
-                icon={
-                  <span style={{ fontSize: "18px" }}>
-                    <Avatar
-                      shape="circle"
-                      icon={<UserOutlined />}
-                      style={{
-                        marginRight: 12,
-                        marginLeft: 12,
-                        height: "30px",
-                      }}
-                    />
-                    {currentUser?.role === "recruiter" ||
-                    user?.role === "recruiter"
-                      ? "Nhà tuyển dụng"
-                      : "Ứng viên"}
-                    <DownOutlined className="icon-dropdown" />
-                  </span>
+              <div
+                className={
+                  user || currentUser
+                    ? "account-action-header border-bottom"
+                    : "account-action-header"
                 }
-                style={{
-                  marginTop: 8,
-                  marginBottom: 5,
-                  border: "1px solid #ccc",
-                  borderRadius: "20px",
-                  paddingLeft: 0,
-                }}
               >
-                <Menu.Item>
-                  <UserOutlined /> Hồ Sơ
-                </Menu.Item>
-                <Menu.Item to="/update_info">
-                  <toOutlined /> Cập nhật thông tin
-                </Menu.Item>
-                ''
-                {(currentUser?.role == "recruiter" ||
-                  currentUser?.role == "recruiter" ||
-                  user?.role == "recruiter") && (
-                  <Menu.Item to="">
-                    <FileDoneOutlined /> Công việc đã đăng tuyển
-                  </Menu.Item>
-                )}
-                {(currentUser?.role === "candidate" ||
-                  user?.role === "candidate") && (
-                  <Menu.Item to="">
-                    <FileDoneOutlined /> Công việc đã ứng tuyển
-                  </Menu.Item>
-                )}
-                <Menu.Item onClick={handleLogOutUser} to={"/"}>
-                  <LogoutOutlined /> Đăng xuất
-                </Menu.Item>
-              </Menu.SubMenu> */}
-              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogOutUser} href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
-            </>
-          ) : (
-            <>
-               <NavLink as={Link} to={"/login"}>
-                  <div className="nav-li">
-                    <LoginOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "5px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Đăng Nhập
+                <Link>
+                  <div
+                    className={
+                      currentUser || user
+                        ? "account-info-logo border-right"
+                        : "account-info-logo"
+                    }
+                  >
+                    <FaSuitcase className="info-icon" />
+                    <p>My UltimateCareer</p>
                   </div>
-                </NavLink>
-                <NavLink as={Link} to={"/register"}>
-                  <div className="nav-li">
-                    <AccountBookOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "6px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Đăng Ký
+                </Link>
+                {!currentUser && !user && (
+                  <></>
+                )}
+                {currentUser?.role == "recuiter" ||
+                  (user?.role == "recruiter" && (
+                    <div className="account-action">
+                      <Link to={"/availablerecruitment"}>
+                        <p className="content-action">Tin tuyển dụng đã đăng</p>
+                      </Link>
+                      <Link to={"/upload"}>
+                        <p className="content-action">Đăng tin tuyển dụng</p>
+                      </Link>
+                      <Link to={"/update_info"}>
+                        <p className="content-action">Cập nhật thông tin</p>
+                      </Link>
+                    </div>
+                  ))}{" "}
+                {currentUser?.role == "candidate" ||
+                  (user?.role == "candidate" && (
+                    <div className="account-action">
+                      <Link to={"/"}>
+                        <p className="content-action">Công việc đã ứng tuyển</p>
+                      </Link>
+                      <Link to={"/update_info"}>
+                        <p className="content-action">Cập nhật thông tin</p>
+                      </Link>
+                    </div>
+                  ))}
+              </div>
+              {(currentUser || user) && (
+                <div className="account-info-header">
+                  <div className="account-info-content">
+                    <p className="logo-user">LOGO USER</p>
+                    <p className="user-name">USER NAME</p>
                   </div>
-                </NavLink>
-            </>
+                  <div
+                    className="wrap-btn-logout"
+                    onClick={() => handleLogOutUser()}
+                  >
+                    <div className="btn-logout">
+                      <BiLogOut className="icon-logout"></BiLogOut>
+                      <div className="logout">Đăng xuất</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
         </div>
-      ) : (
-        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-          <div className="navbar-brand">
-            <Navbar.Brand href="/">
-              <img
-                src={logo}
-                alt="logo"
-                style={{ marginLeft: 20, height: 35, marginTop: 5 }}
-              ></img>
-            </Navbar.Brand>
+      </div>
+      {/* ------------- */}
+      <div className="container-icon-sidebar" onClick={() => openSidebar()}>
+        <FaBars className="icon-open-sidebar"></FaBars>
+      </div>
+      <div
+        className={
+          showSideBar
+            ? "navbar-sidebar show-sidebar open-sidebar"
+            : "navbar-sidebar show-sidebar close-sidebar"
+        }
+      >
+        <div className="close-sidebar-container" onClick={() => closeSideBar()}>
+          <AiOutlineClose className="close-icon-sidebar"></AiOutlineClose>
+        </div>
+        <div className="btn-sidebar-container show-btn-sidebar">
+          <button className="btn-login-header btn-header">Đăng nhập</button>
+          <button className="btn-signin-header btn-header">Đăng ký</button>
+        </div>
+        <div className="navbar-sidebar-content show-content-sidebar">
+          <div className="navbar-content company-navbar">
+            <BsBuilding className="icon-navbar"></BsBuilding>
+            <p className="content">Danh sách công ty</p>
           </div>
-
-          <div className="middle"></div>
-          <Navbar.Toggle
-            aria-controls="navbarScroll"
-            data-bs-target="#navbarScroll"
-          />
-
-          <Navbar.Collapse id="navbarScroll">
-            <div className="a-list">
-              <Nav>
-                <NavLink as={Link} to={"/company"}>
-                  <div className="nav-li">
-                    <HomeOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "5px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Công ty
-                  </div>
-                </NavLink>
-                <NavLink as={Link} to={"/job&location"}>
-                  <div className="nav-li">
-                    <GlobalOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "5px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Ngành nghề/Địa điểm
-                  </div>
-                </NavLink>
-                <NavLink as={Link} to={"/login"}>
-                  <div className="nav-li">
-                    <LoginOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "5px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Đăng Nhập
-                  </div>
-                </NavLink>
-                <NavLink as={Link} to={"/register"}>
-                  <div className="nav-li">
-                    <AccountBookOutlined
-                      style={{
-                        fontSize: "120%",
-                        marginRight: "6px",
-                        marginTop: 3,
-                      }}
-                    />
-                    Đăng Ký
-                  </div>
-                </NavLink> */}
-                {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown> * */}
-              {/* </Nav>
-            </div>
-          </Navbar.Collapse>
-        </Navbar>
-      )} */}
-
-      <Navbar collapseOnSelect expand="md" bg="light" variant="light">
-
-            <div className="navbar-brand">
-              <Navbar.Brand href="/">
-                <img
-                  src={logo}
-                  alt="logo"
-                  style={{ marginLeft: 20, height: 35, marginTop: 5 }}
-                ></img>
-              </Navbar.Brand>
-            </div>
-          
-          <div className="middle">
-            
+          <div className="navbar-content location-navbar">
+            <BsSearch className="icon-navbar"></BsSearch>
+            <p className="content">Địa điểm/Ngành nghề</p>
           </div>
-            <Navbar.Toggle
-              aria-controls="navbarScroll"
-              data-bs-target="#navbarScroll"
-            />
-       
-              <Navbar.Collapse id="navbarScroll">
-            <div className="a-list">
-                <Nav>
-                  <NavLink as={Link} to={"/company"}>
-                    <div className="nav-li">
-                      <HomeOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "5px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Công ty
-                    </div>
-                  </NavLink>
-                  <NavLink as={Link} to={"/job&location"}>
-                    <div className="nav-li">
-                      <GlobalOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "5px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Ngành nghề/Địa điểm
-                    </div>
-                  </NavLink>
-                  <NavLink as={Link} to={"/login"}>
-                    <div className="nav-li">
-                      <LoginOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "5px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Đăng Nhập
-                    </div>
-                  </NavLink>
-                  <NavLink as={Link} to={"/register"}>
-                    <div className="nav-li">
-                      <AccountBookOutlined
-                        style={{
-                          fontSize: "120%",
-                          marginRight: "6px",
-                          marginTop: 3,
-                        }}
-                      />
-                      Đăng Ký
-                    </div>
-                  </NavLink>
-                  {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-                      </NavDropdown> */}
-                </Nav>
-            </div>
-              </Navbar.Collapse>
-   
-        </Navbar>
-              
-    </>
+        </div>
+      </div>
+      <div
+        className={showSideBar ? "modal-header" : "close-modal modal-header"}
+      ></div>
+    </div>
   );
 };
 
