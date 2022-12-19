@@ -59,10 +59,9 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
-                  
-                <Route path="/CandidateList" element={<CandidateList />} />
+
+                <Route path="/CandidateList/:id" element={<CandidateList />} />
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
-         
               </Routes>
               <Footer />
             </div>
