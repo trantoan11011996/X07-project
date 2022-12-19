@@ -68,7 +68,6 @@ export default function JobDetail() {
       await getJobDetail();
     };
     detailData();
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [id]);
 
   useEffect(() => {
@@ -81,7 +80,6 @@ export default function JobDetail() {
   const scrollToElement = (elementID) => {
       const element = document.getElementById(elementID);
       const offsetTop = element.offsetTop;
-      console.log(offsetTop);
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth"
