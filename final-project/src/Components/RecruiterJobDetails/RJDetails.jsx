@@ -104,7 +104,7 @@ export default function RJDetails() {
                                                     <Button className="job-button" variant="outline-danger">Gỡ bỏ</Button>
                                                 </Col>
                                                 <Col sm={3} md={3}>
-                                                    <Link to={`/CandidateList/${id}`}>
+                                                    <Link to="/CandidateList">
                                                         <Button className="job-button" variant="outline-primary">Danh sách ứng viên</Button>
                                                     </Link>
                                                 </Col>

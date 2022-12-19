@@ -4,7 +4,6 @@ import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { async } from "q";
 
 const UserContext = createContext();
 
@@ -188,25 +187,6 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
-  const getCandidateList = async (id, token) => {
-    console.log("id", id);
-    console.log("token", token);
-    const candidateList = await fetch (
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        }
-      }
-    ).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      return data;
-    })
-    return candidateList
-  }
-
   const value = {
     userData,
     registerUser,
@@ -253,7 +233,6 @@ const UserProvider = ({ children }) => {
     setCompanyName,
     setFieldActivity,
     token,
-    getCandidateList
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
