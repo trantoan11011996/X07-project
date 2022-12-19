@@ -8,6 +8,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaSuitcase } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
+import { RxAvatar } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../../../Context/UserContext";
@@ -21,7 +22,6 @@ const AuthHeader = ({ mode }) => {
     useContext(UserContext);
   const [showUserBox, setShowUserBox] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-
   useEffect(() => {
     const closeUserBox = (e) => {
       console.log(e.path[1]);
@@ -32,6 +32,41 @@ const AuthHeader = ({ mode }) => {
     document.body.addEventListener("click", closeUserBox);
     return () => document.body.addEventListener("click", closeUserBox);
   });
+
+  let imageString;
+  const checkUser = () => {
+    if (user || currentUser) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  if (checkUser()) {
+    if (user.hasOwnProperty('avatar')) {
+      const image = user.avatar;
+      const splitString = image.split("/");
+      imageString = splitString[1] + "/".concat(splitString[2]);
+    }else{
+      imageString = ""
+    }
+  }
+  // if(checkUser()){
+  //   if(user.avatar){
+  //   const image = user.avatar
+  //   const splitString = image.split("/")
+  //   imageString = splitString[1]+"/".concat(splitString[2])
+  //   return
+  //   }
+  //   if(currentUser.avarta){
+  //     console.log();
+  //   const image = currentUser.avatar
+  //   const splitString = image.split("/")
+  //   imageString = splitString[1]+"/".concat(splitString[2])
+  //   return
+  //   }
+  // }else{
+  //   return
+  // }
 
   const handleLogOutUser = () => {
     logOutUser();
@@ -49,7 +84,6 @@ const AuthHeader = ({ mode }) => {
   const closeSideBar = () => {
     setShowSideBar(false);
   };
-
   return (
     <div className="header">
       <div className="header-logo">
@@ -71,18 +105,25 @@ const AuthHeader = ({ mode }) => {
           onClick={() => toggleUserBox()}
         >
           <MdAccountCircle className="icon-navbar"></MdAccountCircle>
-          {!currentUser && !user && <p className="content">Đăng ký</p>}
-          {currentUser?.role === "recruiter" ||
-            (user?.role === "recruiter" && (
-              <p className="content">Nhà tuyển dụng</p>
-            ))}
-          {currentUser?.role === "candidate" ||
-            (user?.role === "candidate" && (
-              <p className="content">Người tìm việc</p>
-            ))}
+          {!user && <p className="content">Đăng ký</p>}
+          {(currentUser?.role === "recruiter" ||
+            user?.role === "recruiter") && (
+            <p className="content">Nhà tuyển dụng</p>
+          )}
+          {(currentUser?.role === "candidate" ||
+            user?.role === "candidate") && (
+            <p className="content">Người tìm việc</p>
+          )}
           <RiArrowDropDownLine className="icon-dropdown-user"></RiArrowDropDownLine>
           {showUserBox && (
-            <div className="control-account" id="control-account">
+            <div
+              className={
+                !user && !currentUser
+                  ? "control-account  control-account-position"
+                  : "control-account"
+              }
+              id="control-account"
+            >
               <div className="btn-control-account">
                 <Link to={"/login"} className="link-btn-header">
                   <button className="btn-login-header btn-header">
@@ -114,41 +155,52 @@ const AuthHeader = ({ mode }) => {
                     <p>My UltimateCareer</p>
                   </div>
                 </Link>
-                {!currentUser && !user && (
-                  <></>
+                {!currentUser && user === [] && <></>}
+                {(currentUser?.role == "recuiter" ||
+                  user?.role == "recruiter") && (
+                  <div className="account-action">
+                    <Link to={"/availablerecruitment"}>
+                      <p className="content-action">Tin tuyển dụng đã đăng</p>
+                    </Link>
+                    <Link to={"/upload"}>
+                      <p className="content-action">Đăng tin tuyển dụng</p>
+                    </Link>
+                    <Link to={"/update_info"}>
+                      <p className="content-action">Cập nhật thông tin</p>
+                    </Link>
+                  </div>
+                )}{" "}
+                {(currentUser?.role == "candidate" ||
+                  user?.role == "candidate") && (
+                  <div className="account-action">
+                    <Link to={"/"}>
+                      <p className="content-action">Công việc đã ứng tuyển</p>
+                    </Link>
+                    <Link to={"/update_info"}>
+                      <p className="content-action">Cập nhật thông tin</p>
+                    </Link>
+                  </div>
                 )}
-                {currentUser?.role == "recuiter" ||
-                  (user?.role == "recruiter" && (
-                    <div className="account-action">
-                      <Link to={"/availablerecruitment"}>
-                        <p className="content-action">Tin tuyển dụng đã đăng</p>
-                      </Link>
-                      <Link to={"/upload"}>
-                        <p className="content-action">Đăng tin tuyển dụng</p>
-                      </Link>
-                      <Link to={"/update_info"}>
-                        <p className="content-action">Cập nhật thông tin</p>
-                      </Link>
-                    </div>
-                  ))}{" "}
-                {currentUser?.role == "candidate" ||
-                  (user?.role == "candidate" && (
-                    <div className="account-action">
-                      <Link to={"/"}>
-                        <p className="content-action">Công việc đã ứng tuyển</p>
-                      </Link>
-                      <Link to={"/update_info"}>
-                        <p className="content-action">Cập nhật thông tin</p>
-                      </Link>
-                    </div>
-                  ))}
               </div>
               {(currentUser || user) && (
                 <div className="account-info-header">
+                  <Link to={"/update_info"}>
                   <div className="account-info-content">
-                    <p className="logo-user">LOGO USER</p>
-                    <p className="user-name">USER NAME</p>
+                    {imageString ? (
+                      <img
+                      src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                      className="logo-user"
+                      />
+                      ) : (
+                        <RxAvatar className="icon-avatar" />
+                        )}
+                    <div className="content-info-user">
+                      {/* {((currentUser?.role === "recruiter")||(user?.role === "recruiter")) && <p className="user-name">{currentUser.info.name}</p>}
+                      {((currentUser.role === "candidate")||(user.role === "candidate")) && <p className="user-name">{currentUser.info.fullName}</p>} */}
+                      <span>Tài khoản</span>
+                    </div>
                   </div>
+                  </Link>
                   <div
                     className="wrap-btn-logout"
                     onClick={() => handleLogOutUser()}
@@ -164,7 +216,7 @@ const AuthHeader = ({ mode }) => {
           )}
         </div>
       </div>
-      {/* ------------- */}
+
       <div className="container-icon-sidebar" onClick={() => openSidebar()}>
         <FaBars className="icon-open-sidebar"></FaBars>
       </div>

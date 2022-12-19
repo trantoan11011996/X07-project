@@ -68,11 +68,14 @@
   border-radius: 5px;
   background-color: white;
   top: 53px;
-  left: calc(-12vw - 10px);
+  left: -100%;
   display: flex;
   flex-direction: column;
   width: 440px;
   padding: 0 0 10px 0;
+}
+.control-account-position{
+  left: -175% !important;
 }
 .btn-control-account {
   display: flex;
@@ -149,6 +152,24 @@
   padding: 0 10px;
 }
 .account-info-content {
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  align-items: center;
+}
+.logo-user{
+  height: 70px;
+  width: 70px;
+  margin-right: 20px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+.icon-avatar{
+
+}
+
+.user-name{
+  color: #0069db;
 }
 .account-info-content:hover {
   background-color: rgb(232, 241, 245);
