@@ -32,6 +32,7 @@ import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
 import MetaData from "../MetaData/MetaData";
+import { Space } from "antd";
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -41,13 +42,17 @@ export default function JobDetail() {
   const [logo, setLogo] = useState('')
   const [file, setFile] = useState("");
   const [check, setCheck] = useState(false);
+  const { id } = useParams();
+  const [jobData, setJobData] = useState({});
+  const [token, setToken] = useState("")
 
   const handleClose = () => setShow(false);
 
-  const res = localStorage.getItem("currentUser");
-  const userCurrent = JSON.parse(res);
-
   const handleShow = () => {
+
+    const res = localStorage.getItem("currentUser");
+    const userCurrent = JSON.parse(res);
+
     if (userCurrent.info == null) {
       setCheck(true)
       return
@@ -57,14 +62,19 @@ export default function JobDetail() {
     }
   }
 
-  const { id } = useParams();
-  const [jobData, setJobData] = useState({});
+ 
+
+  useEffect(() => {
+    const localToken = localStorage.getItem("token")
+    const userToken = JSON.parse(localToken)
+    setToken(userToken)
+  }, []);
 
   const handleActive = (event) => {
     event.preventDefault();
     setCheck(false)
     setActive(true);
-    postCV(id, file, currentUser.token);
+    postCV(id, file, token);
     handleClose();
   };
 
@@ -99,7 +109,9 @@ export default function JobDetail() {
       top: offsetTop,
       behavior: "smooth"
     })
-  }
+  };
+
+
 
 
   return (
@@ -151,8 +163,7 @@ export default function JobDetail() {
 
                     {(user?.role == "candidate" ||
                       currentUser?.role == "candidate") && (
-                        <Row className="mt-2">
-                          <Col sm={3} md={3}>
+                        <Space wrap>
                             {!active ? (
                                 <Button
                                   className="job-button button-apply"
@@ -166,19 +177,14 @@ export default function JobDetail() {
                                 Đã ứng tuyển
                               </Button>
                             )}
-                          </Col>
-
-                          <Col sm={2} md={2}>
                             <Button
                               className="job-button button-save"
                               variant="outline-primary"
                             >
                               Lưu
                             </Button>
-                          </Col>
-                          <Col sm={7} md={7}></Col>
                           {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
-                        </Row>
+                        </Space>
                       )}
                   </div>
 

@@ -1,3 +1,4 @@
+
 .list-title{
     font-weight: bold;
     font-size: 30px;
@@ -52,6 +53,10 @@
     font-size: 19px;
     background: #00b2a3;
     border-radius: 5px;
+}
+
+.select-bar{
+    margin-top: 80px !important;
 }
 
 @media only screen and (max-width: 900px) {

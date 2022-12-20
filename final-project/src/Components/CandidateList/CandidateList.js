@@ -30,8 +30,8 @@ export default function CandidateList() {
 
     return (
         <Container>
-            <Form className="select-bar">
-                <Row className="mt-3">
+            <Form>
+                <Row className="select-bar">
                     <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
                         <select
                             className="sort"
@@ -46,8 +46,8 @@ export default function CandidateList() {
                             className="sort"
                         >
                             <option value="defaults">-- Trạng thái --</option>
-                            <option value="">Xác nhận</option>
-                            <option value="">Từ chối </option>
+                            <option value="">Đã xác nhận</option>
+                            <option value="">Đã từ chối </option>
                             <option value="">Đang chờ </option>
                         </select>
                     </Col>
