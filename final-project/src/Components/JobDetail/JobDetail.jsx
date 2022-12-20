@@ -40,29 +40,44 @@ export default function JobDetail() {
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState('')
   const [file, setFile] = useState("");
-  const [isApplied, setIsApplied] = useState(false)
+  const [check, setCheck] = useState(false);
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const res = localStorage.getItem("currentUser");
+  const userCurrent = JSON.parse(res);
+
+  const handleShow = () => {
+    if (userCurrent.info == null) {
+      setCheck(true)
+      return
+    } else if (userCurrent.info){
+      setCheck(false)
+      setShow(true);
+    }
+  }
 
   const { id } = useParams();
   const [jobData, setJobData] = useState({});
 
   const handleActive = (event) => {
     event.preventDefault();
+    setCheck(false)
     setActive(true);
     postCV(id, file, currentUser.token);
     handleClose();
   };
+
   const getJobDetail = async () => {
     let data = await fetchJobDetail(id)
     if (data) {
-        setJobData(data)
-        const splitString = data.name.avatar.split("/");
-        const imageString = splitString[1] + "/".concat(splitString[2]);
-        return setLogo(imageString);
+      setJobData(data)
+      const splitString = data.name.avatar.split("/");
+      const imageString = splitString[1] + "/".concat(splitString[2]);
+      return setLogo(imageString);
     }
     return data
-};
+  };
   useEffect(() => {
     const detailData = async () => {
       await getJobDetail();
@@ -78,37 +93,32 @@ export default function JobDetail() {
   }, [jobData]);
 
   const scrollToElement = (elementID) => {
-      const element = document.getElementById(elementID);
-      const offsetTop = element.offsetTop;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth"
-      })
+    const element = document.getElementById(elementID);
+    const offsetTop = element.offsetTop;
+    window.scrollTo({
+      top: offsetTop,
+      behavior: "smooth"
+    })
   }
+
 
   return (
     <>
-      <MetaData title="Chi tiết tin tuyển dụng" />
       {jobData && (
         <Container>
           <Row>
             <Col sm={9} md={9}>
               <Card className="job-content mt-3 mb-3">
-                <Card.Img
-                  className="job-banner"
-                  variant="top"
-                  src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg"
-                />
-
+                <Card.Img className="job-banner" variant="top" src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg" />
                 <Card.Body>
                   <Row className="titte m-2">
                     <Col className="logo" sm={2} md={2}>
-                      <img className="image-logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`}/>
+                      <img className="image-logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`} />
                     </Col>
 
                     <Col className="company mt-4" sm={10} md={10}>
                       <Card.Title className="job-tittle">
-                        {" "}
+
                         {jobData?.title}
                       </Card.Title>
                       <h3> {jobData?.name?.info?.name}</h3>
@@ -117,21 +127,21 @@ export default function JobDetail() {
 
                   <div className="job-details">
                     <p className="mt-2" style={{ fontWeight: "bolder" }}>
-                      {" "}
-                      <CiLocationOn className="me-2"></CiLocationOn>{" "}
+
+                      <CiLocationOn className="me-2"></CiLocationOn>
                       {jobData?.location?.name}
                     </p>
                     <p className="mt-2">
-                      <AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle>{" "}
-                      <b>Lương</b>:  <span className="salary">{jobData?.salary} (VNĐ){" "}</span>
+                      <AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle>
+                      <b>Lương</b>:  <span className="salary">{jobData?.salary} (VNĐ)</span>
                     </p>
                     <p className="mt-2">
-                      <MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline>{" "}
-                       <b>Yêu cầu kinh nghiệm: </b> <span>{jobData?.experience} </span>
+                      <MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline>
+                      <b>Yêu cầu kinh nghiệm: </b> <span>{jobData?.experience} </span>
                     </p>
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
-                        <BsCalendar2Check className="me-2"></BsCalendar2Check>{" "}
+                        <BsCalendar2Check className="me-2"></BsCalendar2Check>
                         <b>Ngày đăng tuyển:</b> <span> {jobData?.createAt}</span>
                       </Col>
                       <Col sm={5} md={5}>
@@ -141,34 +151,35 @@ export default function JobDetail() {
 
                     {(user?.role == "candidate" ||
                       currentUser?.role == "candidate") && (
-                      <Row className="mt-2">
-                        <Col sm={2} md={3}>
-                          {!active ? (
-                            <Button
-                              className="job-button button-apply"
-                              variant="primary"
-                              onClick={handleShow}
-                            >
-                              Nộp đơn ngay
-                            </Button>
-                          ) : (
-                            <Button className="job-button button-confirm" variant="primary">
-                              Đã ứng tuyển
-                            </Button>
-                          )}
-                        </Col>
+                        <Row className="mt-2">
+                          <Col sm={3} md={3}>
+                            {!active ? (
+                                <Button
+                                  className="job-button button-apply"
+                                  variant="primary"
+                                  onClick={handleShow}
+                                >
+                                  Nộp đơn ngay
+                                </Button>
+                            ) : (
+                              <Button className="job-button button-confirm" variant="primary">
+                                Đã ứng tuyển
+                              </Button>
+                            )}
+                          </Col>
 
-                        <Col sm={2} md={2}>
-                          <Button
-                            className="job-button button-save"
-                            variant="outline-primary"
-                          >
-                            Lưu
-                          </Button>
-                        </Col>
-                        <Col sm={7} md={7}></Col>
-                      </Row>
-                    )}
+                          <Col sm={2} md={2}>
+                            <Button
+                              className="job-button button-save"
+                              variant="outline-primary"
+                            >
+                              Lưu
+                            </Button>
+                          </Col>
+                          <Col sm={7} md={7}></Col>
+                          {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
+                        </Row>
+                      )}
                   </div>
 
                   <div className="tab-rows">
@@ -176,10 +187,8 @@ export default function JobDetail() {
                       <Col sm={2} md={2}>
                         <a
                           className="job-tab"
-                          // href="#"
                           onClick={() => scrollToElement("des-title")}
                         >
-                          {" "}
                           Mô tả
                         </a>
                       </Col>
@@ -187,17 +196,14 @@ export default function JobDetail() {
                       <Col sm={2} md={2}>
                         <a
                           className="job-tab"
-                          // href="#"
                           onClick={() => scrollToElement("require")}
                         >
-                          {" "}
                           Yêu cầu
                         </a>
                       </Col>
 
                       <Col sm={3} md={3}>
                         <a className="job-tab" href="#info" data-target="#info">
-                          {" "}
                           Thông tin liên hệ
                         </a>
                       </Col>
@@ -208,7 +214,6 @@ export default function JobDetail() {
                           href="#about"
                           data-target="#about"
                         >
-                          {" "}
                           Về công ty
                         </a>
                       </Col>
@@ -239,7 +244,6 @@ export default function JobDetail() {
 
                             <div className="mt-3">
                               <h3 className="require-text">
-                                {" "}
                                 <BsDiagram3 className="me-2"></BsDiagram3> Cấp
                                 bậc
                               </h3>
@@ -248,8 +252,7 @@ export default function JobDetail() {
 
                             <div className="mt-3">
                               <h3 className="require-text">
-                                {" "}
-                                <BsClockHistory className="me-2"></BsClockHistory>{" "}
+                                <BsClockHistory className="me-2"></BsClockHistory>
                                 Thời gian làm việc
                               </h3>
                               <p className="ms-2"> {jobData?.type}</p>
@@ -263,32 +266,28 @@ export default function JobDetail() {
                           <Card.Body>
                             <div>
                               <h3 className="require-text">
-                                {" "}
                                 <RxAvatar className="me-2"></RxAvatar>Kinh
                                 nghiệm
                               </h3>
                               <p className="ms-2">
-                                {" "}
                                 {jobData?.experience} kinh nghiệm
                               </p>
                             </div>
 
                             <div className="mt-3">
                               <h3 className="require-text">
-                                {" "}
+
                                 <BsPerson className="me-2"></BsPerson>Số lượng
                               </h3>
                               <p className="ms-2">
-                                {" "}
                                 {jobData?.numberApplicant} nhân viên
                               </p>
                             </div>
 
                             <div className="mt-3">
                               <h3 className="require-text">
-                                {" "}
                                 <TiFlowChildren className="me-2"></TiFlowChildren>
-                                Độ tuổi{" "}
+                                Độ tuổi
                               </h3>
                               <p className="ms-2"> {jobData?.age} tuổi</p>
                             </div>
@@ -301,7 +300,7 @@ export default function JobDetail() {
                   <div id="info" className="mt-3">
                     <h2 className="require-title"> Thông tin liên hệ </h2>
                     {/* <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
-                                        <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p> */}
+                    <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p> */}
                   </div>
 
                   <div id="about" className="mt-3"></div>
@@ -315,6 +314,7 @@ export default function JobDetail() {
 
 
           <Modal show={show} onHide={handleClose} className="job-modal mt-5">
+
             <Modal.Header closeButton>
               <Modal.Title>Form Ứng Tuyển</Modal.Title>
             </Modal.Header>
@@ -343,7 +343,6 @@ export default function JobDetail() {
                     variant="outline-primary"
                     onClick={handleActive}
                   >
-                    {" "}
                     Gửi yêu cầu
                   </Button>
                 </Col>

@@ -46,9 +46,9 @@ export default function CandidateList() {
                             className="sort"
                         >
                             <option value="defaults">-- Trạng thái --</option>
-                            <option value="createAt">Accepted</option>
-                            <option value="createAt">Denied </option>
-                            <option value="createAt">Pending </option>
+                            <option value="createAt">Xác nhận</option>
+                            <option value="createAt">Từ chối </option>
+                            <option value="createAt">Đang chờ </option>
                         </select>
                     </Col>
 
@@ -70,7 +70,7 @@ export default function CandidateList() {
                             pageSize: 10,
                         }}
                         dataSource={data}
-                        renderItem={(item => <CandidateListItem data={item} arr={data} />)}
+                        renderItem={(item => <CandidateListItem data={item} />)}
                     >
                     </List>}
                   

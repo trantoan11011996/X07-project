@@ -1,21 +1,34 @@
 import { Button, Space } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
-export default function CandidateListItem({data, arr}) {
+export default function CandidateListItem({data}) {
 
-    const index = arr.indexOf(data) + 1;
+    const [status, setStatus] = useState("");
+    const [downloadLink, setDownloadLink] = useState("");
+
+    if( data?.status == "Accepted") {
+        setStatus("Đã xác nhận")
+    } else if (data?.status == "denided") {
+        setStatus("Đã từ chối")
+    } else if (data?.status == "pending") {
+        setStatus("Đang chờ")
+    };
+    
+    const splitString = data?.cv.slpitString("/");
+    const imageString = splitString[1] + "/".concat(splitString[2]);
+    setDownloadLink(imageString)
+
 
     return (
         <Card className="list-item mt-3 mb-3">
             <Row>
                 <Col sm={3} md={3}></Col>
                 <Col className="p-2">
-                    <p className="mt-2"> Số thứ tự: {index}</p>
                     <p className="mt-2"> Tên ứng viên: {data?.userId?.info?.fullName} </p>
                     <p className="mt-2"> Ngày gởi yêu cầu: {data?.recruimentId?.createAt}</p>
-                    <p className="mt-2"> File đính kèm: {data?.cv}</p>
-                    <p className="mt-2"> Trạng thái yêu cầu: {data?.status}</p>
+                    <p className="mt-2"> File đính kèm: <a href={`https://xjob-mindx-production.up.railway.app/${downloadLink}`} download></a></p>
+                    <p className="mt-2"> Trạng thái yêu cầu: {status}</p>
                 </Col>
             </Row>
 
