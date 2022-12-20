@@ -46,9 +46,9 @@ export default function CandidateList() {
                             className="sort"
                         >
                             <option value="defaults">-- Trạng thái --</option>
-                            <option value="createAt">Xác nhận</option>
-                            <option value="createAt">Từ chối </option>
-                            <option value="createAt">Đang chờ </option>
+                            <option value="">Xác nhận</option>
+                            <option value="">Từ chối </option>
+                            <option value="">Đang chờ </option>
                         </select>
                     </Col>
 

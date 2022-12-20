@@ -189,6 +189,8 @@ const UserProvider = ({ children }) => {
   };
 
   const getCandidateList = async (id, token) => {
+    console.log("id", id);
+    console.log("token", token);
     const candidateList = await fetch (
       `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}`,
       {
