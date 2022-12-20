@@ -1,4 +1,4 @@
-import React, { Fragment} from "react";
+import React, { Fragment, useState} from "react";
 
 import { Link } from "react-router-dom";
 import styles from "./JobCandidateApplication.module.scss";
@@ -12,8 +12,18 @@ function ApplicationItems({job,recruimentId, id}){
     const splitString  = image.split("/")
     const imageString = splitString[1]+"/".concat(splitString[2])
     // console.log('recruiTd', recruimentId)
-    console.log('job', job)
-    console.log('item',recruimentId)
+    // console.log('job', job)
+    // console.log('item',recruimentId)
+    const [jobStatus, setJobStatus] = useState(job?.status)
+    const [recruitmentStatus, setRecruitmentStatus] = useState(recruimentId?.status)
+    if (jobStatus === "pending" ) {
+        
+      setJobStatus("Đang chờ")
+    } 
+    if (recruitmentStatus === "active") {
+      setRecruitmentStatus("Đang hoạt động")
+    }
+   
     return(
        
         <Fragment>
@@ -41,10 +51,10 @@ function ApplicationItems({job,recruimentId, id}){
             </div>
             <div className={cx("small_detail")}>
               <div className={cx("deadline")}>
-                Trạng thái đơn ứng tuyển: {job?.status}
+                Trạng thái đơn ứng tuyển: {jobStatus}
               </div>
               <div className={cx("deadline")}>
-              Trạng thái tin ứng tuyển: {recruimentId?.status}
+              Trạng thái tin ứng tuyển: {recruitmentStatus}
               </div>
             </div>
           </div>
