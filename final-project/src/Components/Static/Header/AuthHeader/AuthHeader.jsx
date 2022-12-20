@@ -247,7 +247,7 @@ const AuthHeader = ({ mode }) => {
         </div>
       </div>
       <div
-        className={showSideBar ? "modal-header" : "close-modal modal-header"}
+        className={showSideBar ? "modal-header-home" : "close-modal modal-header-home"}
       ></div>
     </div>
   );
