@@ -8,18 +8,21 @@ import CandidateListItem from "./CandidateListItem";
 import { CiSearch } from "react-icons/ci";
 import { UserContext } from "../../Context/UserContext";
 import { useParams } from "react-router";
+import { JobContext } from "../../Context/JobContext";
 
 
 export default function CandidateList() {
 
-    const {currentUser, getCandidateList} = useContext(UserContext)
+    const {getCandidateList} = useContext(UserContext)
+    const {filterCV} = useContext(JobContext);
+
     const {id} = useParams();
     const [data, setData] = useState("");
+    const [filterValue, setFilterValue ] = useState("");
 
     const token = localStorage.getItem('token');
     const userToken = JSON.parse(token)
 
-    console.log(currentUser);
     useEffect(() => {
         const listData = async () => {
            const listCandidate = await getCandidateList(id, userToken)
@@ -28,6 +31,23 @@ export default function CandidateList() {
         listData()
     }, [id, userToken])
 
+    const handleFilter = (event) => {
+        event.preventDefault()
+
+        if (filterValue == "accepted" || filterValue == "denied" || filterValue == "pending" ) {
+            const filterData = async () => {
+                const filter = await filterCV(id, filterValue, userToken);
+                setData(filter);
+            } 
+            filterData();
+        } else {
+            const listData = async () => {
+                const listCandidate = await getCandidateList(id, userToken);
+                setData(listCandidate);
+             };
+             listData();
+        }
+    }
     return (
         <Container>
             <Form>
@@ -44,16 +64,17 @@ export default function CandidateList() {
                     <Col sm={3} md={3} className="mt-3 mb-3 " >
                         <select
                             className="sort"
+                            onChange={(e) => setFilterValue(e.target.value) }
                         >
                             <option value="defaults">-- Trạng thái --</option>
-                            <option value="">Đã xác nhận</option>
-                            <option value="">Đã từ chối </option>
-                            <option value="">Đang chờ </option>
+                            <option value="accepted">Đã xác nhận</option>
+                            <option value="denied">Đã từ chối </option>
+                            <option value="pending">Đang chờ </option>
                         </select>
                     </Col>
 
                     <Col sm={2} md={2}>
-                        <button className="confirm mt-3 mb-3 ms-2"> <CiSearch /></button>
+                        <button className="confirm mt-3 mb-3 ms-2"> <CiSearch onClick={(event) => handleFilter(event)} /></button>
                     </Col>
                     <Col sm={4} md={4} ></Col>
                 </Row>
@@ -77,7 +98,7 @@ export default function CandidateList() {
                 </Col>
 
                 <Col>
-                    <img className="banner mb-3 mt-3" src={images.banner} alt="" />
+                    <img className="list-banner mb-3 mt-3" src={images.banner} alt="" />
                 </Col>
             </Row>
         </Container>

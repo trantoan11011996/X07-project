@@ -45,6 +45,8 @@ export default function JobDetail() {
   const { id } = useParams();
   const [jobData, setJobData] = useState({});
   const [token, setToken] = useState("")
+  const [createDate, setCreateDate] = useState("");
+  const [deadlineDate, setDeadlineDate] = useState("");
 
   const handleClose = () => setShow(false);
 
@@ -100,6 +102,21 @@ export default function JobDetail() {
     description.innerHTML = `
         ${jobData.description}
     `;
+
+    let crTime = new Date(jobData.createAt).getTime();
+    let crDay = new Date(crTime).getDate();
+    let crMonth = new Date(crTime).getMonth() + 1;
+    let crYear = new Date(crTime).getFullYear();
+    let newCreate = `${crDay}-${crMonth}-${crYear}`;
+    setCreateDate(newCreate);
+
+    let dlTime = new Date(jobData.deadline).getTime();
+    let dlDay = new Date(dlTime).getDate();
+    let dlMonth = new Date(dlTime).getMonth() + 1;
+    let dlYear = new Date(dlTime).getFullYear();
+    let newDealine = `${dlDay}-${dlMonth}-${dlYear}`;
+    setDeadlineDate(newDealine);
+
   }, [jobData]);
 
   const scrollToElement = (elementID) => {
@@ -154,10 +171,10 @@ export default function JobDetail() {
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>
-                        <b>Ngày đăng tuyển:</b> <span> {jobData?.createAt}</span>
+                        <b>Ngày đăng tuyển:</b> <span> {createDate}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        <b>Ngày hết hạn:</b> <span>{jobData?.deadline}</span>
+                        <b>Ngày hết hạn:</b> <span>{deadlineDate}</span>
                       </Col>
                     </Row>
 
