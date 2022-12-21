@@ -27,15 +27,15 @@ function JobItemRecruitment({ myJobRecruitment, id }) {
             </Link>
             <div>
               <Link to="/" className={cx("company")}>
-                {myJobRecruitment.name.info.name}
+                Công ty {myJobRecruitment.name.info.name}
               </Link>
             </div>
             <div className={cx("address")}>
-            <span><IoLocationSharp></IoLocationSharp>{myJobRecruitment.location.name} </span> 
+            <span><IoLocationSharp></IoLocationSharp>Địa điểm: {myJobRecruitment.location.name} </span> 
             </div>
             <div className={cx("info_salary")}>
               <div className={cx("salary ")}>
-              <span><IoLogoUsd></IoLogoUsd></span>  <span> {myJobRecruitment.salary} </span>
+              <span><IoLogoUsd></IoLogoUsd></span>  <span>Lương: {myJobRecruitment.salary} (VNĐ) </span>
               </div>
             </div>
             <div className={cx("category")}>

@@ -21,7 +21,6 @@ export const AvailableRecruitment = () => {
   const {getMyRecruitmentJobs, myJobRecruitment , search, allCategory, page,fieldSort, typeSort, token, setSearch} = useContext(JobContext)
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
-  const [searchResults, setSearchResults] = useState("");
   const [params,setParams]=useSearchParams()
 
 

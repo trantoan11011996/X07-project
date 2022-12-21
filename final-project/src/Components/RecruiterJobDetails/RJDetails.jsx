@@ -87,8 +87,8 @@ export default function RJDetails() {
 
                                     <div className="job-details">
                                         <p className="mt-2" style={{ fontWeight: "bolder" }}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
-                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
-                                        <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
+                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> <b>Lương</b>: {jobData?.salary} VNĐ</p>
+                                        <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> <b>Yêu cầu kinh nghiệm: </b> {jobData?.experience} </p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
