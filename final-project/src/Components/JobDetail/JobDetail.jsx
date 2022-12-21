@@ -32,6 +32,7 @@ import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
 import MetaData from "../MetaData/MetaData";
+import { Space } from "antd";
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -41,13 +42,19 @@ export default function JobDetail() {
   const [logo, setLogo] = useState('')
   const [file, setFile] = useState("");
   const [check, setCheck] = useState(false);
+  const { id } = useParams();
+  const [jobData, setJobData] = useState({});
+  const [token, setToken] = useState("")
+  const [createDate, setCreateDate] = useState("");
+  const [deadlineDate, setDeadlineDate] = useState("");
 
   const handleClose = () => setShow(false);
 
-  const res = localStorage.getItem("currentUser");
-  const userCurrent = JSON.parse(res);
-
   const handleShow = () => {
+
+    const res = localStorage.getItem("currentUser");
+    const userCurrent = JSON.parse(res);
+
     if (userCurrent.info == null) {
       setCheck(true)
       return
@@ -57,14 +64,19 @@ export default function JobDetail() {
     }
   }
 
-  const { id } = useParams();
-  const [jobData, setJobData] = useState({});
+ 
+
+  useEffect(() => {
+    const localToken = localStorage.getItem("token")
+    const userToken = JSON.parse(localToken)
+    setToken(userToken)
+  }, []);
 
   const handleActive = (event) => {
     event.preventDefault();
     setCheck(false)
     setActive(true);
-    postCV(id, file, currentUser.token);
+    postCV(id, file, token);
     handleClose();
   };
 
@@ -90,6 +102,21 @@ export default function JobDetail() {
     description.innerHTML = `
         ${jobData.description}
     `;
+
+    let crTime = new Date(jobData.createAt).getTime();
+    let crDay = new Date(crTime).getDate();
+    let crMonth = new Date(crTime).getMonth() + 1;
+    let crYear = new Date(crTime).getFullYear();
+    let newCreate = `${crDay}-${crMonth}-${crYear}`;
+    setCreateDate(newCreate);
+
+    let dlTime = new Date(jobData.deadline).getTime();
+    let dlDay = new Date(dlTime).getDate();
+    let dlMonth = new Date(dlTime).getMonth() + 1;
+    let dlYear = new Date(dlTime).getFullYear();
+    let newDealine = `${dlDay}-${dlMonth}-${dlYear}`;
+    setDeadlineDate(newDealine);
+
   }, [jobData]);
 
   const scrollToElement = (elementID) => {
@@ -99,7 +126,9 @@ export default function JobDetail() {
       top: offsetTop,
       behavior: "smooth"
     })
-  }
+  };
+
+
 
 
   return (
@@ -142,17 +171,16 @@ export default function JobDetail() {
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>
-                        <b>Ngày đăng tuyển:</b> <span> {jobData?.createAt}</span>
+                        <b>Ngày đăng tuyển:</b> <span> {createDate}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        <b>Ngày hết hạn:</b> <span>{jobData?.deadline}</span>
+                        <b>Ngày hết hạn:</b> <span>{deadlineDate}</span>
                       </Col>
                     </Row>
 
                     {(user?.role == "candidate" ||
                       currentUser?.role == "candidate") && (
-                        <Row className="mt-2">
-                          <Col sm={3} md={3}>
+                        <Space wrap>
                             {!active ? (
                                 <Button
                                   className="job-button button-apply"
@@ -166,19 +194,14 @@ export default function JobDetail() {
                                 Đã ứng tuyển
                               </Button>
                             )}
-                          </Col>
-
-                          <Col sm={2} md={2}>
                             <Button
                               className="job-button button-save"
                               variant="outline-primary"
                             >
                               Lưu
                             </Button>
-                          </Col>
-                          <Col sm={7} md={7}></Col>
                           {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
-                        </Row>
+                        </Space>
                       )}
                   </div>
 

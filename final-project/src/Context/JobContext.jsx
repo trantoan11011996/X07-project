@@ -173,7 +173,9 @@ const JobProvider = ({ children }) => {
 
     const CvData = new FormData();
 		CvData.append('formFile', file);
-
+    console.log("id", id);
+    console.log("token", token);
+    console.log("file", file);
     let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/apply/${id}`,
     {
       method: "POST",
@@ -185,9 +187,47 @@ const JobProvider = ({ children }) => {
       return res.json()
     }).then((data)=>{
       return data;
-      
     })
     return userCV
+  };
+
+  const confirmCV = async( cvId, value, token ) => {
+      const item = {status: value}
+    const updateCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${cvId}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(item),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      let user = localStorage.getItem("currentUser")
+      user = JSON.parse(user);
+      user.status = data.status
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
+      return data;
+    })
+    return updateCV
+  }
+
+  const filterCV = async ( id, status, token ) => {
+      const filter = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}?status=${status}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        }
+      }).then((res)=>{
+        return res.json()
+      }).then((data)=>{
+        return data;
+      })
+      return filter
   }
 
   const value = {
@@ -239,7 +279,9 @@ const JobProvider = ({ children }) => {
     numberApplicant,
     location,
     category,
-    date
+    date,
+    confirmCV,
+    filterCV,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
