@@ -151,7 +151,15 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-
+.loading-job{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-animation{
+  height: 300px;
+  width: 300px;
+}
 @media only screen and (max-width : 770px){
   .home-jobs{
     padding-right: 0 !important;

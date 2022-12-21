@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import classNames from "classnames/bind";
 import styles from "../Footer/Footer.module.css";
-import logo from "../../../img/xcareerlogo.png"
+import logo from "../../../img/xcareerlogo.png";
 import { SiVerizon } from "react-icons/si";
 import { JobContext } from "../../../Context/JobContext";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 export default function Footer() {
@@ -42,7 +43,9 @@ export default function Footer() {
               <ul className={cx("list-footer-content")}>
                 <p className={cx("header-footer-content")}>về MindXCareer</p>
                 <div className={cx("wrap-content-item")}>
+                  <Link to={"/Company_about"}>
                   <li className={cx("footer-content-item")}>Về chúng tôi</li>
+                  </Link>
                   <li className={cx("footer-content-item")}>
                     Quy chế hoạt động
                   </li>
@@ -120,7 +123,7 @@ export default function Footer() {
       </div>
       <div className={cx("container-footer-contact")}>
         <div className={cx("logo-contact")}>
-          <img className={cx('image-logo-footer')} src={logo}/>
+          <img className={cx("image-logo-footer")} src={logo} />
         </div>
         <div className={cx("contact-content")}>
           <p>

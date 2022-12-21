@@ -32,14 +32,12 @@ const JobProvider = ({ children }) => {
   const [location,setLocation] = useState('')
   const [date,setDate] = useState([])
   const [jobCandidateApplication, setJobCandidateApplication] = useState([])
-
-  const [createAt,setCreateAt] = useState('')
-  const [deadline,setDeadline] = useState('') 
-  const [categoryId,setCategoryId] = useState('')
+  const [isLoading, setIsLoading] = useState(undefined);
 
   useEffect(() => {
     getallCategory()
     getallLocation()
+    getJobHomePage("")
     const getToken = JSON.parse(localStorage.getItem('token'))
     console.log('current-token', getToken)
     setToken(getToken)
@@ -48,7 +46,6 @@ const JobProvider = ({ children }) => {
   const getJobHomePage = async (categoryId) => {
     console.log('id',categoryId);
     const user_category = {"categoryId"  : categoryId }
-    console.log('user_category',user_category);
     const jobs = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
       {
@@ -66,7 +63,6 @@ const JobProvider = ({ children }) => {
       .then((data) => {
         setJobHomePage(data);
         localStorage.setItem("jobHomePage", JSON.stringify(data));
-        return data;
       });
     return jobs;
   };
