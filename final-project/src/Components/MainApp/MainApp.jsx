@@ -23,6 +23,7 @@ import JobDetail from "../JobDetail/JobDetail";
 import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitment";
 import CandidateList from "../CandidateList/CandidateList";
 import { JobCandidateApplication } from "../JobCandidateApplication/JobCandidateApplication";
+import CompanyPages from "../AboutPages/CompanyPages/CompayPages";
 
 
 export default function MainApp() {
@@ -62,6 +63,7 @@ export default function MainApp() {
 
                 <Route path="/CandidateList/:id" element={<CandidateList />} />
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
+                <Route path="/Company_about" element={<CompanyPages/>}></Route>
               </Routes>
               <Footer />
             </div>
