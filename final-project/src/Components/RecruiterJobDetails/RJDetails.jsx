@@ -56,7 +56,9 @@ export default function RJDetails() {
         detailData()
     }, [id]);
 
-
+    useEffect(()=>{
+        window.scrollTo(0, 0);
+    },[])
 
     useEffect(() => {
         const description = document.getElementById("description")

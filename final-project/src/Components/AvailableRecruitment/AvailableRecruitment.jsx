@@ -36,8 +36,8 @@ export const AvailableRecruitment = () => {
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem('token'))
     getMyRecruitmentJobs(getlocalToken,"","","","")
+    window.scrollTo(0, 0);
   },[])
-
   const listCategory = allCategory?.map((item)=>{
     return{
       id : item._id,

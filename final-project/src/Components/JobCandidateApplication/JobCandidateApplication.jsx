@@ -6,7 +6,7 @@ import MetaData from "../MetaData/MetaData";
 import { Link, useSearchParams } from "react-router-dom";
 import HomeCategory from "../HomePage/HomeCategory/HomeCategory";
 import { images } from "../../img/index";
-import { Container, Form, Row, Col, Card, } from "react-bootstrap";
+import { Container, Form, Row, Col, Card } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
 import { JobContext } from "../../Context/JobContext";
 import ApplicationList from "./ApplicationList";
@@ -17,34 +17,32 @@ export const JobCandidateApplication = () => {
   const { jobCandidateApplication, getJobCandidateApplication, token } =
     useContext(JobContext);
 
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams();
   const setParamKey = (key, value) => {
-    let currentParams = Object.fromEntries([...params])
-    setParams({...currentParams, [key]: value})
-  }
-  const statusParams = params.get('status')
+    let currentParams = Object.fromEntries([...params]);
+    setParams({ ...currentParams, [key]: value });
+  };
+  const statusParams = params.get("status");
   useEffect(() => {
     getJobCandidateApplication(token);
   }, [token]);
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
-    const status = params.get('status')
-    console.log('status',status);
-    getJobCandidateApplication(getlocalToken,status);
+    const status = params.get("status");
+    console.log("status", status);
+    getJobCandidateApplication(getlocalToken, status);
   }, [params]);
-  
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    getJobCandidateApplication(token,statusParams)
-  }
+    e.preventDefault();
+    getJobCandidateApplication(token, statusParams);
+  };
 
-  return(
+  return (
     <>
-         <MetaData title="Danh sách tất cả việc làm" />
+      <MetaData title="Danh sách tất cả việc làm" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
-         
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
             <form action="" onSubmit = {handleSubmit} className="select-bar">
@@ -68,7 +66,7 @@ export const JobCandidateApplication = () => {
                     </Col>
                 
                 </Row>
-            </form>
+              </form>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
                   <h2>Công việc đã ứng tuyển</h2>
@@ -80,23 +78,21 @@ export const JobCandidateApplication = () => {
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
                   <span>
-                      {jobCandidateApplication?.length} <span>việc làm</span>
+                    {jobCandidateApplication?.length} <span>việc làm</span>
                   </span>
                 </div>
-               
               </div>
-            
-              {/* <ul className={cx("list_group_jobs")}> */}
-                  
-                <div>
-                <ul className={cx("list_group_jobs")}>
-                    <ApplicationList jobCandidateApplication={jobCandidateApplication}/>
-              </ul>
 
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  
-                </div>
+              {/* <ul className={cx("list_group_jobs")}> */}
+
+              <div>
+                <ul className={cx("list_group_jobs")}>
+                  <ApplicationList
+                    jobCandidateApplication={jobCandidateApplication}
+                  />
+                </ul>
+              </div>
+              <div style={{ textAlign: "center" }}></div>
               {/* </ul> */}
             </div>
             <div className={cx("wrapper_banner")}>
@@ -106,5 +102,5 @@ export const JobCandidateApplication = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
