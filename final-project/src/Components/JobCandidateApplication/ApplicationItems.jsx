@@ -1,4 +1,4 @@
-import React, { Fragment, useState} from "react";
+import React, { Fragment, useEffect, useState} from "react";
 
 import { Link } from "react-router-dom";
 import styles from "./JobCandidateApplication.module.scss";
@@ -16,13 +16,23 @@ function ApplicationItems({job,recruimentId, id}){
     // console.log('item',recruimentId)
     const [jobStatus, setJobStatus] = useState(job?.status)
     const [recruitmentStatus, setRecruitmentStatus] = useState(recruimentId?.status)
-    if (jobStatus === "pending" ) {
-        
-      setJobStatus("Đang chờ")
-    } 
-    if (recruitmentStatus === "active") {
-      setRecruitmentStatus("Đang hoạt động")
+    
+    useEffect(() => {
+      if (jobStatus === "pending" ) {
+          
+        setJobStatus("Đang chờ")
+      } 
+      if (jobStatus === "accepted") {
+        setJobStatus("Đã xác nhận")
+    }  
+    if (jobStatus == "denided") {
+      setJobStatus("Đã từ chối")
     }
+      if (recruitmentStatus === "active") {
+        setRecruitmentStatus("Đang hoạt động")
+      }
+
+    }, [job])
    
     return(
        
@@ -34,27 +44,30 @@ function ApplicationItems({job,recruimentId, id}){
           </div>
           <div className={cx("content")}>
             <Link to="/" className={cx("title")}>
-              {recruimentId?.title} -  <span><IoLogoUsd></IoLogoUsd></span>{recruimentId?.salary}(VND)
+              {recruimentId?.title} -  <span><IoLogoUsd></IoLogoUsd></span>{recruimentId?.salary}(VNĐ)
             </Link>
             <div>
               <Link to="/" className={cx("company")}>
-                {recruimentId?.name.info.name}
+               Công ty: {recruimentId?.name.info.name}
               </Link>
             </div>
             <div className={cx("address")}>
-            <span><IoLocationSharp></IoLocationSharp>{recruimentId?.location?.name} - {recruimentId?.name.info.address}  </span> 
+       <b> <span><IoLocationSharp></IoLocationSharp>{recruimentId?.location?.name} - {recruimentId?.name.info.address}  </span> </b>  
             </div>
             <div className={cx("info_salary")}>
               <div className={cx("salary ")}>
-               <span> {recruimentId?.position} </span>
+               <span> Vị trí làm việc: {recruimentId?.position} </span>
               </div>
             </div>
             <div className={cx("small_detail")}>
               <div className={cx("deadline")}>
-                Trạng thái đơn ứng tuyển: {jobStatus}
+              <b>  Trạng thái đơn ứng tuyển: {jobStatus} </b>
               </div>
               <div className={cx("deadline")}>
+                <b>
+
               Trạng thái tin ứng tuyển: {recruitmentStatus}
+                </b>
               </div>
             </div>
           </div>
