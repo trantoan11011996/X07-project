@@ -40,7 +40,7 @@ export const JobCandidateApplication = () => {
 
   return (
     <>
-      <MetaData title="Danh sách tất cả việc làm" />
+      <MetaData title="Danh sách việc làm ứng tuyển" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
           <div className={cx("wrapper_content")}>

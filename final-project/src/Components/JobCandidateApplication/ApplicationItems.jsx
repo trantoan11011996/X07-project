@@ -36,46 +36,54 @@ function ApplicationItems({ job, recruimentId, id }) {
 
   return (
     <Fragment>
-      <li className={cx("list_group_item")}>
-        <div className={cx("box_item")}>
-          <div className={cx("images")}>
-            <img
-              src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
-              alt="img"
-            />
-          </div>
-          <div className={cx("content")}>
-            <Link to="/" className={cx("title")}>
-              {recruimentId?.title} -{" "}
-              <span>
-                <IoLogoUsd></IoLogoUsd>
-              </span>
-              {recruimentId?.salary}(VNĐ)
-            </Link>
-            <div>
-              <Link to="/" className={cx("company")}>
-                Công ty: {recruimentId?.name.info.name}
+      <Link to={"/jobDetail/" + id}>
+        <li className={cx("list_group_item")}>
+          <div className={cx("box_item")}>
+            <div className={cx("images")}>
+              <img
+                src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                alt="img"
+              />
+            </div>
+            <div className={cx("content")}>
+              <Link to="/" className={cx("title")}>
+                {recruimentId?.title} -{" "}
+                <span>
+                  <IoLogoUsd></IoLogoUsd>
+                </span>
+                {recruimentId?.salary}(VNĐ)
               </Link>
-            </div>
-            <div className={cx("address")}>
-       <b> <span><IoLocationSharp></IoLocationSharp>{recruimentId?.location?.name} </span> </b>  
-            </div>
-            <div className={cx("info_salary")}>
-              <div className={cx("salary ")}>
-                <span> Vị trí làm việc: {recruimentId?.position} </span>
+              <div>
+                <Link to="/" className={cx("company")}>
+                  Công ty: {recruimentId?.name.info.name}
+                </Link>
               </div>
-            </div>
-            <div className={cx("small_detail")}>
-              <div className={cx("deadline")}>
-                <b> Trạng thái đơn ứng tuyển: {jobStatus} </b>
+              <div className={cx("address")}>
+                <b>
+                  {" "}
+                  <span>
+                    <IoLocationSharp></IoLocationSharp>
+                    {recruimentId?.location?.name}{" "}
+                  </span>{" "}
+                </b>
               </div>
-              <div className={cx("deadline")}>
-                <b>Trạng thái tin ứng tuyển: {recruitmentStatus}</b>
+              <div className={cx("info_salary")}>
+                <div className={cx("salary ")}>
+                  <span> Vị trí làm việc: {recruimentId?.position} </span>
+                </div>
+              </div>
+              <div className={cx("small_detail")}>
+                <div className={cx("deadline")}>
+                  <b> Trạng thái đơn ứng tuyển: {jobStatus} </b>
+                </div>
+                <div className={cx("deadline")}>
+                  <b>Trạng thái tin ứng tuyển: {recruitmentStatus}</b>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </Link>
     </Fragment>
   );
 }

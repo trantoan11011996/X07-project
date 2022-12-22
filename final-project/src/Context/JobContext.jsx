@@ -190,9 +190,9 @@ const JobProvider = ({ children }) => {
     return userCV
   };
 
-  const confirmCV = async( cvId, value, token ) => {
+  const confirmCV = async( value,idCv, token ) => {
       const item = {status: value}
-    const updateCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${cvId}`,
+    const updateCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCv}`,
     {
       method: "PUT",
       body: JSON.stringify(item),

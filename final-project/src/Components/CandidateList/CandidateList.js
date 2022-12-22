@@ -13,41 +13,40 @@ import { JobContext } from "../../Context/JobContext";
 
 export default function CandidateList() {
 
-    const {getCandidateList} = useContext(UserContext)
-    const {filterCV} = useContext(JobContext);
+    const {getCandidateList,listRecruimentCv,SetlistRecruimentCv} = useContext(UserContext)
+    const {filterCV,confirmCV} = useContext(JobContext);
 
     const {id} = useParams();
-    const [data, setData] = useState("");
     const [filterValue, setFilterValue ] = useState("");
-
+    const [statusCv,setStatusCv] = useState("")
     const token = localStorage.getItem('token');
     const userToken = JSON.parse(token)
 
     useEffect(() => {
-        const listData = async () => {
-           const listCandidate = await getCandidateList(id, userToken)
-           setData(listCandidate)
-        };
-        listData()
-    }, [id, userToken])
-
+         getCandidateList(id,userToken)
+    }, [id,userToken])
+   
     const handleFilter = (event) => {
         event.preventDefault()
 
         if (filterValue == "accepted" || filterValue == "denied" || filterValue == "pending" ) {
             const filterData = async () => {
                 const filter = await filterCV(id, filterValue, userToken);
-                setData(filter);
+                SetlistRecruimentCv(filter);
             } 
             filterData();
         } else {
-            const listData = async () => {
-                const listCandidate = await getCandidateList(id, userToken);
-                setData(listCandidate);
-             };
-             listData();
+            getCandidateList(id, userToken)
         }
     }
+    const handleValue = (event,idCv) => {
+        confirmCV(event.target.value,idCv, userToken)
+        setStatusCv(event.target.value)
+        getCandidateList(id,userToken)
+    }
+    useEffect(()=>{
+         getCandidateList(id,userToken)
+    },[statusCv])
     return (
         <Container>
             <Form>
@@ -84,14 +83,14 @@ export default function CandidateList() {
                 <Col sm={9} md={9}>
                     <h1 className="list-title mt-3 mb-1"> Danh sách ứng viên</h1>
 
-                    { data.length == 0 
+                    { listRecruimentCv.length == 0 
                     ? <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
                     : <List
                         pagination={{
                             pageSize: 10,
                         }}
-                        dataSource={data}
-                        renderItem={(item => <CandidateListItem data={item} />)}
+                        dataSource={listRecruimentCv}
+                        renderItem={(item => <CandidateListItem data={item} handleValue={handleValue}/>)}
                     >
                     </List>}
                   
