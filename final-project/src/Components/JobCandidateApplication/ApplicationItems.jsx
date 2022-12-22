@@ -52,7 +52,7 @@ function ApplicationItems({job,recruimentId, id}){
               </Link>
             </div>
             <div className={cx("address")}>
-       <b> <span><IoLocationSharp></IoLocationSharp>{recruimentId?.location?.name} - {recruimentId?.name.info.address}  </span> </b>  
+       <b> <span><IoLocationSharp></IoLocationSharp>{recruimentId?.location?.name} </span> </b>  
             </div>
             <div className={cx("info_salary")}>
               <div className={cx("salary ")}>
