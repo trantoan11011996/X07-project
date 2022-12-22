@@ -22,7 +22,7 @@ import {
   BsPerson,
   BsWhatsapp,
 } from "react-icons/bs";
-import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn, CiPhone } from "react-icons/ci";
 import { TiFlowChildren } from "react-icons/ti";
 import { RxAvatar } from "react-icons/rx";
 import { MdOutlineWorkOutline } from "react-icons/md";
@@ -31,8 +31,11 @@ import { useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
-import MetaData from "../MetaData/MetaData";
+
 import { Space } from "antd";
+
+
+
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -47,24 +50,31 @@ export default function JobDetail() {
   const [token, setToken] = useState("")
   const [createDate, setCreateDate] = useState("");
   const [deadlineDate, setDeadlineDate] = useState("");
+  const [loginErr, setLoginErr] = useState(false);
+
+  const res = localStorage.getItem("currentUser");
+  const userCurrent = JSON.parse(res);
 
   const handleClose = () => setShow(false);
 
   const handleShow = () => {
-
-    const res = localStorage.getItem("currentUser");
-    const userCurrent = JSON.parse(res);
+    if (!userCurrent) {
+      setLoginErr(true);
+      return
+    } else {
+      setLoginErr(false)
+    }
 
     if (userCurrent.info == null) {
       setCheck(true)
       return
-    } else if (userCurrent.info){
+    } else if (userCurrent.info) {
       setCheck(false)
       setShow(true);
     }
   }
 
- 
+
 
   useEffect(() => {
     const localToken = localStorage.getItem("token")
@@ -103,6 +113,11 @@ export default function JobDetail() {
         ${jobData.description}
     `;
 
+    const compnayDescription = document.getElementById("about-info");
+    compnayDescription.innerHTML = `
+        ${jobData?.name?.info?.description}
+    `;
+
     let crTime = new Date(jobData.createAt).getTime();
     let crDay = new Date(crTime).getDate();
     let crMonth = new Date(crTime).getMonth() + 1;
@@ -128,6 +143,8 @@ export default function JobDetail() {
     })
   };
 
+
+  console.log(jobData);
 
 
 
@@ -178,31 +195,34 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {(user?.role == "candidate" ||
-                      currentUser?.role == "candidate") && (
+                    {currentUser?.role == "candidate" || user?.role == "candidate" || !userCurrent && (
+                      <Row>
                         <Space wrap>
-                            {!active ? (
-                                <Button
-                                  className="job-button button-apply"
-                                  variant="primary"
-                                  onClick={handleShow}
-                                >
-                                  Nộp đơn ngay
-                                </Button>
-                            ) : (
-                              <Button className="job-button button-confirm" variant="primary">
-                                Đã ứng tuyển
-                              </Button>
-                            )}
+                          {!active ? (
                             <Button
-                              className="job-button button-save"
-                              variant="outline-primary"
+                              className="job-button button-apply"
+                              variant="primary"
+                              onClick={handleShow}
                             >
-                              Lưu
+                              Nộp đơn ngay
                             </Button>
-                          {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
+                          ) : (
+                            <Button className="job-button button-confirm" variant="primary">
+                              Đã ứng tuyển
+                            </Button>
+                          )}
+                          <Button
+                            className="job-button button-save"
+                            variant="outline-primary"
+                          >
+                            Lưu
+                          </Button>
                         </Space>
-                      )}
+                        {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
+                        {loginErr && (<p className="err"> Bạn cần phải đăng nhập để nộp đơn ứng tuyển</p>)}
+                      </Row>
+                    )}
+
                   </div>
 
                   <div className="tab-rows">
@@ -226,7 +246,9 @@ export default function JobDetail() {
                       </Col>
 
                       <Col sm={3} md={3}>
-                        <a className="job-tab" href="#info" data-target="#info">
+                        <a className="job-tab"
+                          onClick={() => scrollToElement("info")}
+                        >
                           Thông tin liên hệ
                         </a>
                       </Col>
@@ -234,8 +256,7 @@ export default function JobDetail() {
                       <Col sm={3} md={3}>
                         <a
                           className="job-tab"
-                          href="#about"
-                          data-target="#about"
+                          onClick={() => scrollToElement("about")}
                         >
                           Về công ty
                         </a>
@@ -322,11 +343,15 @@ export default function JobDetail() {
 
                   <div id="info" className="mt-3">
                     <h2 className="require-title"> Thông tin liên hệ </h2>
-                    {/* <p className="ms-2"> email: {jobData?.name?.info?.email}</p>
-                    <p className="ms-2"> sdt: {jobData?.name?.info?.phoneNumber}</p> */}
+                    <p className="ms-2 mt-3"> Tên Liên hệ: <b>Phòng Nhân Sự</b></p>
+                    <p className="ms-2 mt-3"> <CiLocationOn></CiLocationOn> {jobData?.name?.info?.address} </p>
+                    <p className="ms-2 mt-3"> <CiPhone> </CiPhone> {jobData?.name?.info?.phoneNumber}</p>
                   </div>
 
-                  <div id="about" className="mt-3"></div>
+                  <div id="about" className="mt-3">
+                    <h2 className="require-title"> Về Công Ty </h2>
+                    <div id="about-info"></div>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
