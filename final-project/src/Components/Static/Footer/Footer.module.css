@@ -69,3 +69,6 @@ p{
     flex-direction: column;
     align-items: center;
 }
+.contact-content{
+    text-align: center;
+}

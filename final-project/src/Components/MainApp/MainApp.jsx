@@ -26,7 +26,6 @@ import { JobCandidateApplication } from "../JobCandidateApplication/JobCandidate
 import CompanyPages from "../AboutPages/CompanyPages/CompayPages";
 import UpdateRecruiment from "../UpdateRecruitment/UpdateRecruitment";
 
-
 export default function MainApp() {
   return (
     <AuthContext.Provider>
@@ -72,5 +71,6 @@ export default function MainApp() {
         </JobProvider>
       </UserProvider>
     </AuthContext.Provider>
+ 
   );
 }

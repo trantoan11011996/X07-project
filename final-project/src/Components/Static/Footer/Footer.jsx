@@ -135,7 +135,7 @@ export default function Footer() {
             cấp ngày 24/11/2022
           </p>
           <p>
-            88/2H Tái Thiết, Phường 11, Quận Tân Bình, Tp HCM Copyright ©
+            Tòa nhà Viettel 279 Đường CMT8, Phường 12, Quận 10 Thành phố Hồ Chí Minh Copyright ©
             2007-2020 by https://www.mindxcareer.vn All rights reserved.
           </p>
         </div>

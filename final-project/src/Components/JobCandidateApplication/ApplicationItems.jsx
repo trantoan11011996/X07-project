@@ -36,7 +36,7 @@ function ApplicationItems({job,recruimentId, id}){
    
     return(
        
-        <Fragment>
+      <Fragment>
       <li className={cx("list_group_item")}>
         <div className={cx("box_item")}>
           <div className={cx("images")}>

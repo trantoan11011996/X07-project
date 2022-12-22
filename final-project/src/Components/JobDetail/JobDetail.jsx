@@ -27,7 +27,7 @@ import { TiFlowChildren } from "react-icons/ti";
 import { RxAvatar } from "react-icons/rx";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
@@ -54,9 +54,21 @@ export default function JobDetail() {
 
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
-
+  console.log('userCurrent',userCurrent);
   const handleClose = () => setShow(false);
-
+  
+  // const checkMyRcm = ()=>{
+  //   const user = JSON.parse(localStorage.getItem('currentUser'))
+  //   const myRcm = JSON.parse(localStorage.getItem("C-applied"))
+  //   if(user.role === "candidate"){
+  //     const foundMyRcm = myRcm.some(item=>item.recruimentId._id === id)
+  //     return foundMyRcm
+  //   }
+  // }
+  // useEffect(()=>{
+  //       const flag = checkMyRcm()
+  //       console.log("<<<<<<Flag", flag);
+  // },[id])
   const handleShow = () => {
     if (!userCurrent) {
       setLoginErr(true);
@@ -80,6 +92,7 @@ export default function JobDetail() {
     const localToken = localStorage.getItem("token")
     const userToken = JSON.parse(localToken)
     setToken(userToken)
+    window.scrollTo(0, 0);
   }, []);
 
   const handleActive = (event) => {
@@ -144,9 +157,6 @@ export default function JobDetail() {
   };
 
 
-  console.log(jobData);
-
-
 
   return (
     <>
@@ -195,7 +205,7 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {currentUser?.role == "candidate" || user?.role == "candidate" || !userCurrent && (
+                    {(userCurrent?.role == "candidate" || user?.role == "candidate" || !userCurrent) && (
                       <Row>
                         <Space wrap>
                           {!active ? (
@@ -219,7 +229,7 @@ export default function JobDetail() {
                           </Button>
                         </Space>
                         {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
-                        {loginErr && (<p className="err"> Bạn cần phải đăng nhập để nộp đơn ứng tuyển</p>)}
+                        {loginErr && (<p className="err"> Bạn cần phải <Link to={"/login"}>đăng nhập</Link> để nộp đơn ứng tuyển</p>)}
                       </Row>
                     )}
 
