@@ -85,9 +85,9 @@ const JobProvider = ({ children }) => {
 }
 
 
-  const getJobCandidateApplication = async (token) => {
+  const getJobCandidateApplication = async (token,status) => {
     await axios.get(
-        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application`,
+        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application?status=${status ?? ""}`,
         { headers: {authorization: `Bearer ${token}`} },
     ).then((res) => {
       const data = res.data;
@@ -246,7 +246,7 @@ const JobProvider = ({ children }) => {
     setFieldSort,
     setTypeSort,
     setSearch,
-    search, category, page,fieldSort, typeSort,
+    search, category, page,fieldSort, typeSort, 
     token,
     getJobCandidateApplication,
     jobCandidateApplication,

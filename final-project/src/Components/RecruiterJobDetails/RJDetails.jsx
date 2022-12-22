@@ -11,7 +11,7 @@ import { TiFlowChildren } from "react-icons/ti";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./RJDetails.css"
 import { UserContext } from "../../Context/UserContext";
@@ -19,9 +19,10 @@ export default function RJDetails() {
     const { user } = useSelector((state) => state.auths);
     const { currentUser } = useContext(UserContext);
     const { fetchJobDetail } = useContext(JobContext)
+
     const [show, setShow] = useState('');
     const [logo, setLogo] = useState('')
-
+    const navigate = useNavigate()
     // const [active, setActive] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -87,8 +88,8 @@ export default function RJDetails() {
 
                                     <div className="job-details">
                                         <p className="mt-2" style={{ fontWeight: "bolder" }}> <CiLocationOn className="me-2"></CiLocationOn> {jobData?.location?.name}</p>
-                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
-                                        <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
+                                        <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> <b>Lương</b>: {jobData?.salary} VNĐ</p>
+                                        <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> <b>Yêu cầu kinh nghiệm: </b> {jobData?.experience} </p>
                                         <Row className="mt-2">
                                             <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
                                             <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
@@ -97,13 +98,13 @@ export default function RJDetails() {
                                         {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
-                                                    <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>
+                                                    <Button className="job-button" variant="primary" onClick={() => {navigate("/update")}}>Cập Nhật</Button>
                                                 </Col>
 
                                                 <Col sm={3} md={3}>
                                                     <Button className="job-button" variant="outline-danger">Gỡ bỏ</Button>
                                                 </Col>
-                                                <Col sm={3} md={3}>
+                                                <Col sm={5} md={5}>
                                                     <Link to={`/CandidateList/${id}`}>
                                                         <Button className="job-button" variant="outline-primary">Danh sách ứng viên</Button>
                                                     </Link>

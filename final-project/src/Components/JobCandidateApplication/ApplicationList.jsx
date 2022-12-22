@@ -5,9 +5,8 @@ import { JobContext } from "../../Context/JobContext";
 import ApplicationItems from "./ApplicationItems";
 
 
-function ApplicationList(){
-    const { jobCandidateApplication } = useContext(JobContext)
-    console.log('job',jobCandidateApplication);
+function ApplicationList({jobCandidateApplication}){
+    // console.log('job',jobCandidateApplication);
     return(
         <List
         grid={{
