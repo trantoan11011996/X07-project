@@ -48,9 +48,9 @@ export const JobCandidateApplication = () => {
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
             <form action="" onSubmit = {handleSubmit} className="select-bar">
-                <Row className="mt-3">
-                    <Col sm={3} md={3} className="mt-3 mb-3">
-                        <select
+                <Row className="mt-3 mb-3">
+                    <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
+                        <select style={{border: "none"}}
                             // className="sort"
                             onChange={(e) => setParamKey('status', e.target.value)}
                         >
@@ -60,13 +60,13 @@ export const JobCandidateApplication = () => {
                             <option value="pending">Đang chờ </option>
                         </select>
                     </Col>
-
+                      
                  
 
-                    <Col sm={2} md={2}>
-                        <button type="submit" className="confirm mt-3 mb-3 ms-2"> <CiSearch /></button>
+                    <Col sm={3} md={3}>
+                        <button id="button1" type="submit" className="confirm mt-3"> <CiSearch  /></button>
                     </Col>
-                    <Col sm={4} md={4} ></Col>
+                
                 </Row>
             </form>
               <div className={cx("recruit_title")}>
