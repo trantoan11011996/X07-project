@@ -195,7 +195,7 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {currentUser?.role == "candidate" || user?.role == "candidate" || !userCurrent && (
+                    {(userCurrent.role == "candidate" || user.role == "candidate" || !userCurrent) && (
                       <Row>
                         <Space wrap>
                           {!active ? (
