@@ -11,7 +11,7 @@ import { TiFlowChildren } from "react-icons/ti";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./RJDetails.css"
 import { UserContext } from "../../Context/UserContext";
@@ -19,9 +19,10 @@ export default function RJDetails() {
     const { user } = useSelector((state) => state.auths);
     const { currentUser } = useContext(UserContext);
     const { fetchJobDetail } = useContext(JobContext)
+
     const [show, setShow] = useState('');
     const [logo, setLogo] = useState('')
-
+    const navigate = useNavigate()
     // const [active, setActive] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -97,7 +98,7 @@ export default function RJDetails() {
                                         {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
                                                 <Col sm={3} md={3}>
-                                                    <Button className="job-button" variant="primary" onClick={handleShow}>Cập Nhật</Button>
+                                                    <Button className="job-button" variant="primary" onClick={() => {navigate("/update")}}>Cập Nhật</Button>
                                                 </Col>
 
                                                 <Col sm={3} md={3}>

@@ -49,7 +49,7 @@ export const JobCandidateApplication = () => {
             <div className={cx("wrapper_jobs")}>
             <form action="" onSubmit = {handleSubmit} className="select-bar">
                 <Row className="mt-3">
-                    <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
+                    <Col sm={3} md={3} className="mt-3 mb-3">
                         <select
                             // className="sort"
                             onChange={(e) => setParamKey('status', e.target.value)}

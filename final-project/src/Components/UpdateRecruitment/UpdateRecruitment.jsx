@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { DatePicker, Space } from "antd";
-import "../UploadRecruiment/Upload.css";
+import "./UpdateRecruitment.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import pretty from "pretty";
@@ -22,7 +22,7 @@ import {
 import create from "@ant-design/icons/lib/components/IconFont";
 import { loginUser } from "../../Actions/authAction";
 const { RangePicker } = DatePicker;
-export default function UploadRecruiment() {
+export default function UpdateRecruiment() {
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
   const [alert, setAlert] = useState(false);
@@ -156,7 +156,7 @@ export default function UploadRecruiment() {
   return (
     <div className="container-upload">
       <div className="form-container-upload">
-        <h1 className="header-form-upload">Đăng tin tuyển dụng</h1>
+        <h1 className="header-form-upload"> Cập nhật tuyển dụng</h1>
         <Form className="form-upload" onSubmit={submitRecruiment}>
           <div className="form-group-container">
             <Form.Group className="mb-3">

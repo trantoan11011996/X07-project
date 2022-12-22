@@ -24,6 +24,7 @@ import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitme
 import CandidateList from "../CandidateList/CandidateList";
 import { JobCandidateApplication } from "../JobCandidateApplication/JobCandidateApplication";
 import CompanyPages from "../AboutPages/CompanyPages/CompayPages";
+import UpdateRecruiment from "../UpdateRecruitment/UpdateRecruitment";
 
 
 export default function MainApp() {
@@ -60,7 +61,7 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>{" "}
-
+                <Route path="/update" element={<UpdateRecruiment/>}></Route>
                 <Route path="/CandidateList/:id" element={<CandidateList />} />
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
                 <Route path="/Company_about" element={<CompanyPages/>}></Route>
