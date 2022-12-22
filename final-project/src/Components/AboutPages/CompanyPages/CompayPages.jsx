@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
-
+import MetaData from "../../MetaData/MetaData";
+import "../CompanyPages/compay.css";
 export default function CompanyPages() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="company-pages">
-      <Container>
-        <h2>Về chúng tôi</h2>
-        <p>&nbsp;</p>
+      <MetaData title="Về Công Ty" />
+      <Container className="container-company">
+        <h1>Về chúng tôi</h1>
         <p>
           Được thành lập vào năm 2022, XCareer đã từng bước trở thành cầu nối
           vững chắc giữa người lao động và nhà tuyển dụng. Chúng tôi chuyên cung
@@ -27,7 +31,7 @@ export default function CompanyPages() {
           những nhà tuyển dụng hàng đầu của Việt Nam hiện nay.
         </p>
         <p>&nbsp;</p>
-        <h3>Triết lý kinh doanh</h3>
+        <h1>Triết lý kinh doanh</h1>
         <p>&nbsp;</p>
         <p>
           Với phương châm: “ Kết nối thành công mục tiêu nghề nghiệp”<br></br>
@@ -42,7 +46,7 @@ export default function CompanyPages() {
           cho ứng viên.
         </p>
         <p>&nbsp;</p>
-        <h3>Dịch vụ tìm kiếm và cung cấp nhân sự cao cấp (Executive Search)</h3>
+        <h1>Dịch vụ tìm kiếm và cung cấp nhân sự cao cấp (Executive Search)</h1>
         <p>&nbsp;</p>
         <p>
           Nếu quý công ty đang gặp khó khăn trong việc tuyển dụng các vị trí
@@ -77,7 +81,7 @@ export default function CompanyPages() {
           khách hàng.
         </p>
         <p>&nbsp;</p>
-        <h3>Dịch vụ tuyển dụng trên website:</h3>
+        <h1>Dịch vụ tuyển dụng trên website:</h1>
         <p>&nbsp;</p>
         <p>
           CareerLink.vn hiện đang là website tuyển dụng có tới 100,000 người
@@ -111,9 +115,26 @@ export default function CompanyPages() {
         </p>
         <p>Để biết thêm chi tiết xin vui lòng liên hệ:</p>
         <p>
-          Điện thoại: <strong>0867 576 851</strong> Email:{" "}
+          Điện thoại: <strong>0867 576 851 &nbsp; &nbsp;</strong> Email:{" "}
           <strong>trantoan11011996@gmail.com</strong>
         </p>
+        <div className="company-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.426770705978!2d106.67819991526041!3d10.778589262100049!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f7d6f3efd25%3A0xa5e00b18ed1cfb7!2sT%C3%B2a%20nh%C3%A0%20Viettel%20Complex!5e0!3m2!1svi!2s!4v1671714303176!5m2!1svi!2s"
+           style={{
+            width:"800px",
+            height:"600px",
+            border:"0",
+            allowfullscreen:"",
+            loading:"lazy",
+            referrerpolicy:"no-referrer-when-downgrade",
+           }}
+          ></iframe>
+        </div>
+        <div className="company-partner">
+          <h1>Các công ty đối tác</h1>
+          <img src="https://dxwd4tssreb4w.cloudfront.net/web/images/pages/about_us/our_client.png"></img>
+        </div>
       </Container>
     </div>
   );

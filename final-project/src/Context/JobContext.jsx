@@ -39,12 +39,11 @@ const JobProvider = ({ children }) => {
     getallLocation()
     getJobHomePage("")
     const getToken = JSON.parse(localStorage.getItem('token'))
-    console.log('current-token', getToken)
     setToken(getToken)
   }, []);
   
   const getJobHomePage = async (categoryId) => {
-    console.log('id',categoryId);
+    // console.log('id',categoryId);
     const user_category = {"categoryId"  : categoryId }
     const jobs = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
@@ -78,7 +77,7 @@ const JobProvider = ({ children }) => {
     
       setMyJobRecruitment(data.myRcm);
      
-      if (!localStorage.getItem("myRcm")) {
+      if (!localStorage.getItem("myRcm")) { 
         localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
       }
     }).catch((error) => console.log(error.response));
@@ -163,7 +162,7 @@ const JobProvider = ({ children }) => {
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      console.log('data',data);
+      return data
     })
     return createRecruiment
   }

@@ -27,14 +27,12 @@ import { TiFlowChildren } from "react-icons/ti";
 import { RxAvatar } from "react-icons/rx";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
 
 import { Space } from "antd";
-
-
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
@@ -42,69 +40,39 @@ export default function JobDetail() {
   const { fetchJobDetail, postCV } = useContext(JobContext);
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
-  const [logo, setLogo] = useState('')
+  const [logo, setLogo] = useState("");
   const [file, setFile] = useState("");
   const [check, setCheck] = useState(false);
   const { id } = useParams();
   const [jobData, setJobData] = useState({});
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
   const [createDate, setCreateDate] = useState("");
   const [deadlineDate, setDeadlineDate] = useState("");
   const [loginErr, setLoginErr] = useState(false);
-
+  const [MyRcmAlert, setMyRcmAlert] = useState(false);
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
-
+  console.log("userCurrent", userCurrent);
   const handleClose = () => setShow(false);
 
-  const handleShow = () => {
-    if (!userCurrent) {
-      setLoginErr(true);
-      return
-    } else {
-      setLoginErr(false)
-    }
-
-    if (userCurrent.info == null) {
-      setCheck(true)
-      return
-    } else if (userCurrent.info) {
-      setCheck(false)
-      setShow(true);
-    }
-  }
-
-
-
   useEffect(() => {
-    const localToken = localStorage.getItem("token")
-    const userToken = JSON.parse(localToken)
-    setToken(userToken)
+    const localToken = localStorage.getItem("token");
+    const userToken = JSON.parse(localToken);
+    setToken(userToken);
+    window.scrollTo(0, 0);
   }, []);
 
-  const handleActive = (event) => {
-    event.preventDefault();
-    setCheck(false)
-    setActive(true);
-    postCV(id, file, token);
-    handleClose();
-  };
-
-  const getJobDetail = async () => {
-    let data = await fetchJobDetail(id)
-    if (data) {
-      setJobData(data)
-      const splitString = data.name.avatar.split("/");
-      const imageString = splitString[1] + "/".concat(splitString[2]);
-      return setLogo(imageString);
-    }
-    return data
-  };
   useEffect(() => {
     const detailData = async () => {
       await getJobDetail();
     };
     detailData();
+    const flag = checkMyRcm();
+    if (flag) {
+      setMyRcmAlert(true);
+      return;
+    }
+    setMyRcmAlert(false);
   }, [id]);
 
   useEffect(() => {
@@ -131,22 +99,66 @@ export default function JobDetail() {
     let dlYear = new Date(dlTime).getFullYear();
     let newDealine = `${dlDay}-${dlMonth}-${dlYear}`;
     setDeadlineDate(newDealine);
-
   }, [jobData]);
+
+  const checkMyRcm = () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("user", user);
+    const myRcm = JSON.parse(localStorage.getItem("C-applied"));
+    if (user) {
+      if (user.role === "candidate") {
+        const foundMyRcm = myRcm.some((item) => item.recruimentId._id === id);
+        return foundMyRcm;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const handleShow = () => {
+    if (!userCurrent) {
+      setLoginErr(true);
+      return;
+    } else {
+      setLoginErr(false);
+    }
+
+    if (userCurrent.info == null) {
+      setCheck(true);
+      return;
+    } else if (userCurrent.info) {
+      setCheck(false);
+      setShow(true);
+    }
+  };
+
+  const handleActive = (event) => {
+    event.preventDefault();
+    setCheck(false);
+    setActive(true);
+    postCV(id, file, token);
+    handleClose();
+  };
+
+  const getJobDetail = async () => {
+    let data = await fetchJobDetail(id);
+    if (data) {
+      setJobData(data);
+      const splitString = data.name.avatar.split("/");
+      const imageString = splitString[1] + "/".concat(splitString[2]);
+      return setLogo(imageString);
+    }
+    return data;
+  };
 
   const scrollToElement = (elementID) => {
     const element = document.getElementById(elementID);
     const offsetTop = element.offsetTop;
     window.scrollTo({
       top: offsetTop,
-      behavior: "smooth"
-    })
+      behavior: "smooth",
+    });
   };
-
-
-  console.log(jobData);
-
-
 
   return (
     <>
@@ -155,16 +167,22 @@ export default function JobDetail() {
           <Row>
             <Col sm={9} md={9}>
               <Card className="job-content mt-3 mb-3">
-                <Card.Img className="job-banner" variant="top" src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg" />
+                <Card.Img
+                  className="job-banner"
+                  variant="top"
+                  src="https://dxwd4tssreb4w.cloudfront.net/web/images/default_banner_1.svg"
+                />
                 <Card.Body>
                   <Row className="titte m-2">
                     <Col className="logo" sm={2} md={2}>
-                      <img className="image-logo" src={`https://xjob-mindx-production.up.railway.app/${logo}`} />
+                      <img
+                        className="image-logo"
+                        src={`https://xjob-mindx-production.up.railway.app/${logo}`}
+                      />
                     </Col>
 
                     <Col className="company mt-4" sm={10} md={10}>
                       <Card.Title className="job-tittle">
-
                         {jobData?.title}
                       </Card.Title>
                       <h3> {jobData?.name?.info?.name}</h3>
@@ -173,17 +191,18 @@ export default function JobDetail() {
 
                   <div className="job-details">
                     <p className="mt-2" style={{ fontWeight: "bolder" }}>
-
                       <CiLocationOn className="me-2"></CiLocationOn>
                       {jobData?.location?.name}
                     </p>
                     <p className="mt-2">
                       <AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle>
-                      <b>Lương</b>:  <span className="salary">{jobData?.salary} (VNĐ)</span>
+                      <b>Lương</b>:{" "}
+                      <span className="salary">{jobData?.salary} (VNĐ)</span>
                     </p>
                     <p className="mt-2">
                       <MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline>
-                      <b>Yêu cầu kinh nghiệm: </b> <span>{jobData?.experience} </span>
+                      <b>Yêu cầu kinh nghiệm: </b>{" "}
+                      <span>{jobData?.experience} </span>
                     </p>
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
@@ -195,19 +214,28 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {currentUser?.role == "candidate" || user?.role == "candidate" || !userCurrent && (
+                    {(userCurrent?.role == "candidate" ||
+                      user?.role == "candidate" ||
+                      !userCurrent) && (
                       <Row>
                         <Space wrap>
                           {!active ? (
                             <Button
-                              className="job-button button-apply"
+                              className={
+                                MyRcmAlert
+                                  ? "job-button button-apply disabled"
+                                  : "job-button button-apply"
+                              }
                               variant="primary"
                               onClick={handleShow}
                             >
                               Nộp đơn ngay
                             </Button>
                           ) : (
-                            <Button className="job-button button-confirm" variant="primary">
+                            <Button
+                              className="job-button button-confirm"
+                              variant="primary"
+                            >
                               Đã ứng tuyển
                             </Button>
                           )}
@@ -218,11 +246,28 @@ export default function JobDetail() {
                             Lưu
                           </Button>
                         </Space>
-                        {check && (<p className="err"> Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng chức năng này</p>)}
-                        {loginErr && (<p className="err"> Bạn cần phải đăng nhập để nộp đơn ứng tuyển</p>)}
+                        {check && (
+                          <p className="err">
+                            {" "}
+                            Bạn cần cập nhật đầy đủ thông tin cá nhân để sử dụng
+                            chức năng này.
+                          </p>
+                        )}
+                        {loginErr && (
+                          <p className="err">
+                            {" "}
+                            Bạn cần phải <Link to={"/login"}>đăng nhập</Link> để
+                            nộp đơn ứng tuyển.
+                          </p>
+                        )}
+                        {MyRcmAlert && (
+                          <p className="err">
+                            Bạn đã nộp đơn vào công việc này, kiểm tra lại danh
+                            sách ứng tuyển.
+                          </p>
+                        )}
                       </Row>
                     )}
-
                   </div>
 
                   <div className="tab-rows">
@@ -246,7 +291,8 @@ export default function JobDetail() {
                       </Col>
 
                       <Col sm={3} md={3}>
-                        <a className="job-tab"
+                        <a
+                          className="job-tab"
                           onClick={() => scrollToElement("info")}
                         >
                           Thông tin liên hệ
@@ -320,7 +366,6 @@ export default function JobDetail() {
 
                             <div className="mt-3">
                               <h3 className="require-text">
-
                                 <BsPerson className="me-2"></BsPerson>Số lượng
                               </h3>
                               <p className="ms-2">
@@ -343,9 +388,19 @@ export default function JobDetail() {
 
                   <div id="info" className="mt-3">
                     <h2 className="require-title"> Thông tin liên hệ </h2>
-                    <p className="ms-2 mt-3"> Tên Liên hệ: <b>Phòng Nhân Sự</b></p>
-                    <p className="ms-2 mt-3"> <CiLocationOn></CiLocationOn> {jobData?.name?.info?.address} </p>
-                    <p className="ms-2 mt-3"> <CiPhone> </CiPhone> {jobData?.name?.info?.phoneNumber}</p>
+                    <p className="ms-2 mt-3">
+                      {" "}
+                      Tên Liên hệ: <b>Phòng Nhân Sự</b>
+                    </p>
+                    <p className="ms-2 mt-3">
+                      {" "}
+                      <CiLocationOn></CiLocationOn>{" "}
+                      {jobData?.name?.info?.address}{" "}
+                    </p>
+                    <p className="ms-2 mt-3">
+                      {" "}
+                      <CiPhone> </CiPhone> {jobData?.name?.info?.phoneNumber}
+                    </p>
                   </div>
 
                   <div id="about" className="mt-3">
@@ -359,10 +414,7 @@ export default function JobDetail() {
             <Col sm={4} md={4}></Col>
           </Row>
 
-
-
           <Modal show={show} onHide={handleClose} className="job-modal mt-5">
-
             <Modal.Header closeButton>
               <Modal.Title>Form Ứng Tuyển</Modal.Title>
             </Modal.Header>

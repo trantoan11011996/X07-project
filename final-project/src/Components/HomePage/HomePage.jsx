@@ -13,6 +13,9 @@ export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
   const { getJobHomePage, setJobHomePage, jobHomePage } =
     useContext(JobContext);
+    useEffect(()=>{
+      window.scrollTo(0, 0);
+    },[])
   return (
     <>
       <MetaData title="Trang chủ" />
