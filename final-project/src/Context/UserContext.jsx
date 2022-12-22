@@ -32,10 +32,13 @@ const UserProvider = ({ children }) => {
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
   const [fieldActivity, setFieldActivity] = useState("");
+  const [listRecruimentCv, SetlistRecruimentCv] = useState("");
 
   useEffect(() => {
     const current = autologin();
     setCurrentUser(current);
+    const getListCv = JSON.parse(localStorage.getItem('listCv'))
+    SetlistRecruimentCv(getListCv)
   }, []);
   useEffect(() => {
     setToken(user?.token);
@@ -188,11 +191,10 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
-  const getCandidateList = async (id, token) => {
-    console.log("id", id);
+  const getCandidateList = async ( idRcm,token) => {
     console.log("token", token);
     const candidateList = await fetch (
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}`,
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${idRcm}`,
       {
         method: "GET",
         headers: {
@@ -202,6 +204,9 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
+      console.log('data',data);
+      SetlistRecruimentCv(data)
+      localStorage.setItem('listCv',JSON.stringify(data))
       return data;
     })
     return candidateList
@@ -253,7 +258,9 @@ const UserProvider = ({ children }) => {
     setCompanyName,
     setFieldActivity,
     token,
-    getCandidateList
+    getCandidateList,
+    listRecruimentCv,
+    SetlistRecruimentCv
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

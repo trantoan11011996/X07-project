@@ -6,7 +6,7 @@ import ApplicationItems from "./ApplicationItems";
 
 
 function ApplicationList({jobCandidateApplication}){
-    // console.log('job',jobCandidateApplication);
+    console.log('job',jobCandidateApplication);
     return(
         <List
         grid={{
@@ -27,7 +27,7 @@ function ApplicationList({jobCandidateApplication}){
         dataSource={jobCandidateApplication}
         renderItem={(job) => (
           <List.Item>
-            <ApplicationItems job={job} recruimentId={job.recruimentId} id={job._id}/>
+            <ApplicationItems job={job} recruimentId={job.recruimentId} id={job.recruimentId._id}/>
           </List.Item>
         )}
       ></List>
