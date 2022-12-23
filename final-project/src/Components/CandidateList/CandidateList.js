@@ -44,9 +44,11 @@ export default function CandidateList() {
         setStatusCv(event.target.value)
         getCandidateList(id,userToken)
     }
+
     useEffect(()=>{
          getCandidateList(id,userToken)
     },[statusCv])
+    
     return (
         <Container>
             <Form>
@@ -83,7 +85,7 @@ export default function CandidateList() {
                 <Col sm={9} md={9}>
                     <h1 className="list-title mt-3 mb-1"> Danh sách ứng viên</h1>
 
-                    { listRecruimentCv.length == 0 
+                    { listRecruimentCv?.length == 0 
                     ? <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
                     : <List
                         pagination={{

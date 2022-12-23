@@ -172,9 +172,6 @@ const JobProvider = ({ children }) => {
 
     const CvData = new FormData();
 		CvData.append('formFile', file);
-    console.log("id", id);
-    console.log("token", token);
-    console.log("file", file);
     let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/apply/${id}`,
     {
       method: "POST",
@@ -208,7 +205,6 @@ const JobProvider = ({ children }) => {
       user = JSON.parse(user);
       user.status = data.status
       localStorage.setItem("currentUser", JSON.stringify(user));
-
       return data;
     })
     return updateCV

@@ -7,12 +7,14 @@ export default function CandidateListItem({ data ,handleValue}) {
 
     const [status, setStatus] = useState("");
     const [downloadLink, setDownloadLink] = useState("");
+    const [avatar, setAvatar] = useState("");
 
     const [createDate, setCreateDate] = useState("");
 
     const token = localStorage.getItem('token');
     const userToken = JSON.parse(token);
 
+   
     useEffect(() => {
         if (data.status == "accepted") {
             setStatus("Đã xác nhận")
@@ -33,6 +35,11 @@ export default function CandidateListItem({ data ,handleValue}) {
         let newCreate = `${crDay}-${crMonth}-${crYear}`;
         setCreateDate(newCreate);
 
+        if ( data.userId.avatar) {
+            let imgSplit = data.userId.avatar.split("/");
+            let imgString = imgSplit[1] + "/".concat(imgSplit[2]);
+            setAvatar(imgString)
+        }
     }, [data]);
 
  
@@ -40,8 +47,8 @@ export default function CandidateListItem({ data ,handleValue}) {
         <Card className="list-item mt-3 mb-3">
             <Row>
                 <Col sm={3} md={3}>
-                    {data.userId.info.avatar
-                        ? <Image src={data.userId.info.avatar} />
+                    {data.userId.avatar
+                        ? <Image src={`https://xjob-mindx-production.up.railway.app/${avatar}`} />
                         : <Image src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" />
                     }
                 </Col>
