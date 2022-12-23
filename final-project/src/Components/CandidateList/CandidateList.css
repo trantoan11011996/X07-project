@@ -103,6 +103,11 @@
     border-radius: 5px;
 }
 
+.list-avatar {
+    height: 170px !important;
+    width: 170px !important;
+}
+
 
 @media only screen and (max-width: 770px) {
     .view-button{
