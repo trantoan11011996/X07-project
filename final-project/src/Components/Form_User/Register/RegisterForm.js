@@ -117,6 +117,7 @@ export default function RegisterForm() {
         return;
       } else {
         setEmailExsistAlert(false);
+        console.log("???????????????");
         navigate("/update_info");
         return;
       }

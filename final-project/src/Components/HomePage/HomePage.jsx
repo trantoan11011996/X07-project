@@ -11,11 +11,13 @@ import JobNotification from "./JobNotification/JobNotification";
 
 export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
-  const { getJobHomePage, setJobHomePage, jobHomePage } =
+  const { getJobHomePage, setJobHomePage, jobHomePage,getJobCandidateApplication,token } =
     useContext(JobContext);
     useEffect(()=>{
       window.scrollTo(0, 0);
-    },[])
+      const tokenLocal = JSON.parse(localStorage.getItem('token'))
+      getJobCandidateApplication(tokenLocal,"")
+    },[token])
   return (
     <>
       <MetaData title="Trang chủ" />

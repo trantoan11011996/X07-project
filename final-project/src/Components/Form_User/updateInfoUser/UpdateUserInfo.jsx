@@ -20,9 +20,6 @@ export default function UpdateInfoUser() {
   const { isAuthenticated, user } = useSelector((state) => state.auths);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   const handleActiveUpdatePass = () => {
