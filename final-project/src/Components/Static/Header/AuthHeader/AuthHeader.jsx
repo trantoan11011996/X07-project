@@ -51,17 +51,6 @@ const AuthHeader = ({ mode }) => {
       imageString = "";
     }
   }
-  // if (flag) {
-  //   console.log(flag);
-  //   if (user.hasOwnProperty('avatar')) {
-  //     const image = user.avatar;
-  //     const splitString = image.split("/");
-  //     imageString = splitString[1] + "/".concat(splitString[2]);
-  //     console.log(imageString);
-  //   }else{
-  //     imageString = ""
-  //   }
-  // }
 
   const handleLogOutUser = () => {
     logOutUser();
@@ -119,24 +108,22 @@ const AuthHeader = ({ mode }) => {
               }
               id="control-account"
             >
-              <div className="btn-control-account">
-                {(user || currentUser) ? (
-                  <></>
-                ) : (
-                  <>
-                    <Link to={"/login"} className="link-btn-header">
-                      <button className="btn-login-header btn-header">
-                        Đăng nhập
-                      </button>
-                    </Link>
-                    <Link to={"/register"} className="link-btn-header">
-                      <button className="btn-signin-header btn-header">
-                        Đăng ký
-                      </button>
-                    </Link>
-                  </>
-                )}
-              </div>
+              {user || currentUser ? (
+                <></>
+              ) : (
+                <div className="btn-control-account">
+                  <Link to={"/login"} className="link-btn-header">
+                    <button className="btn-login-header btn-header">
+                      Đăng nhập
+                    </button>
+                  </Link>
+                  <Link to={"/register"} className="link-btn-header">
+                    <button className="btn-signin-header btn-header">
+                      Đăng ký
+                    </button>
+                  </Link>
+                </div>
+              )}
               <div
                 className={
                   user || currentUser
@@ -247,7 +234,9 @@ const AuthHeader = ({ mode }) => {
         </div>
       </div>
       <div
-        className={showSideBar ? "modal-header-home" : "close-modal modal-header-home"}
+        className={
+          showSideBar ? "modal-header-home" : "close-modal modal-header-home"
+        }
       ></div>
     </div>
   );

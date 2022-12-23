@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   Col,
@@ -45,6 +45,9 @@ export default function RegisterForm() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const handleClick1 = () => {
     setVisible1(!visible1);
   };
@@ -131,12 +134,11 @@ export default function RegisterForm() {
       <Row className="container-register">
         <Col className="container-register-banner" md={4}>
           <h1 className="header-banner-register text-white">
-            Xây dựng{" "} <br/>
+            Xây dựng <br />
             <b>
               Sự nghiệp <br />
               <span className="text-warning">thành công</span>
-            </b>
-            {" "}
+            </b>{" "}
             <br />
             cùng Xjob.Mindx
           </h1>
@@ -210,7 +212,7 @@ export default function RegisterForm() {
                     type={visible2 ? "text" : "password"}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                   />
-                   <InputGroup.Text
+                  <InputGroup.Text
                     className="input_icon"
                     onClick={handleClick2}
                   >

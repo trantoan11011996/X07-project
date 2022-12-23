@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
@@ -24,6 +24,10 @@ const Login = () => {
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+ },[])
   //Handle Even
   const handleClick = () => {
     setVisible(!visible);

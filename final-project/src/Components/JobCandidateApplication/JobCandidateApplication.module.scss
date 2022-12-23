@@ -81,6 +81,10 @@
   
         .wrapper_jobs {
           width: 75%;
+
+          #button1{
+            margin-bottom: 2px;
+          }
   
           .recruit_title {
             display: flex;
@@ -131,6 +135,7 @@
                 outline: none;
               }
             }
+           
           }
           .list_group_jobs {
             .list_group_item {
@@ -210,7 +215,7 @@
                   .deadline {
                     justify-content: space-between;
                     display: flex;
-                    color: #9e9999;
+                
                     line-height: 2;
                   }
                   .small_detail{

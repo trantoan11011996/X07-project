@@ -3,13 +3,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { JobContext } from "../../Context/JobContext";
 
-export default function CandidateListItem({ data }) {
+export default function CandidateListItem({ data ,handleValue}) {
 
     const [status, setStatus] = useState("");
     const [downloadLink, setDownloadLink] = useState("");
 
     const [createDate, setCreateDate] = useState("");
-    const { confirmCV } = useContext(JobContext);
 
     const token = localStorage.getItem('token');
     const userToken = JSON.parse(token);
@@ -36,9 +35,7 @@ export default function CandidateListItem({ data }) {
 
     }, [data]);
 
-    const handleValue = (event, id) => {
-        confirmCV(id, event.target.value, userToken)
-    }
+ 
     return (
         <Card className="list-item mt-3 mb-3">
             <Row>
