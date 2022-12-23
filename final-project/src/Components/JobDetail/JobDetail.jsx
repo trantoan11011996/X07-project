@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
+import { images } from "../../img/index";
 import {
   Card,
   Container,
@@ -144,7 +145,7 @@ export default function JobDetail() {
   };
 
 
-  console.log(jobData);
+
 
 
 
@@ -356,7 +357,9 @@ export default function JobDetail() {
               </Card>
             </Col>
 
-            <Col sm={4} md={4}></Col>
+            <Col>
+              <img className="list-banner mb-3 mt-3" src={images.banner} alt="" />
+            </Col>
           </Row>
 
 
