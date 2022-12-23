@@ -94,7 +94,7 @@ export default function HomeJobs({ jobHomePage }) {
         <Col sm={12} md={12}>
           {!complete ? (
             <div className="loading-job">
-                <Lottie animationData={loadingAnimation} className="loading-animation"></Lottie>
+                <Lottie animationData={loadingAnimation} className="loading-animation-home"></Lottie>
             </div>
           ) :  <ListJobs jobHomePage={jobHomePage} />}
         </Col>

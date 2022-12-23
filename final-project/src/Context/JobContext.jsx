@@ -90,11 +90,11 @@ const JobProvider = ({ children }) => {
         { headers: {authorization: `Bearer ${token}`} },
     ).then((res) => {
       const data = res.data;
+      console.log('data',data);
+      localStorage.setItem("C-applied", JSON.stringify(data));
       setJobCandidateApplication(data);
+      return data
       // console.log('data', (data[0].recruimentId))
-      if (!localStorage.getItem("C-applied")) {
-        localStorage.setItem("C-applied", JSON.stringify(data));
-      }
     }).catch((error) => console.log(error.response));
   }
   
