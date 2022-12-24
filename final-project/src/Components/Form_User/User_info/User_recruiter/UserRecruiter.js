@@ -48,24 +48,26 @@ export default function UserRecruiter() {
   const [imageData, setImageData] = useState("");
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
-
+  const [succes, setSucces] = useState(false);
   useEffect(() => {
     getAllCategory();
-    const getToken =  JSON.parse(localStorage.getItem("token"));
-    setToken(getToken)
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    setUserInfo(user)
-    if(user.avatar){
+    console.log("user", user);
+    setUserInfo(user);
+    if (user.avatar) {
       const splitString = user?.avatar?.split("/");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
     }
-    if(user.info){
-      setCompanyName(user.info.name)
-      setCompanyEmail(user.info.email)
-      setCompanyPhone(user.info.phoneNumber)
-      setCompanyAddress(user.info.address)
-      return
+    if (user.info) {
+      setCompanyName(user.info.name);
+      setCompanyEmail(user.info.email);
+      setCompanyPhone(user.info.phoneNumber);
+      setCompanyAddress(user.info.address);
+      setCategory(user.operationSector.name);
+      return;
     }
   }, []);
 
@@ -77,7 +79,7 @@ export default function UserRecruiter() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("formFile", selectedFile);
-    console.log('token',token);
+    console.log("token", token);
     const uploadImage = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
       {
@@ -92,14 +94,14 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data);
+        console.log("data", data);
         const splitString = data.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.avatar = data;
-        console.log('user',user);
+        console.log("user", user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
@@ -161,7 +163,6 @@ export default function UserRecruiter() {
       return;
     } else {
       setDescriptEmpty(false);
-      console.log(ckEditorOutput);
       updateRecruiterInfo(
         companyName,
         companyEmail,
@@ -170,11 +171,14 @@ export default function UserRecruiter() {
         ckEditorOutput,
         category
       );
+      setSucces(true);
       setShowLogin(false);
       // navigate("/");
     }
   };
-
+  const handleCancelUpload = ()=>{
+    setSucces(false)
+  }
   const getAllCategory = async () => {
     const all = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
@@ -182,7 +186,7 @@ export default function UserRecruiter() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
+          Accept: "application/json",
         },
       }
     )
@@ -190,11 +194,10 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        setCategoryForm(data)
+        setCategoryForm(data);
       });
     return all;
   };
-
 
   return (
     <div className="form-container-recruiter">
@@ -217,8 +220,18 @@ export default function UserRecruiter() {
             )}
           </div>
           <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
-            <input type="file" name="formFile" enctype="multipart/form-data" onChange={getFile}></input>
-            <button className="submit-img" type="submit"  name="image" id="image">
+            <input
+              type="file"
+              name="formFile"
+              enctype="multipart/form-data"
+              onChange={getFile}
+            ></input>
+            <button
+              className="submit-img"
+              type="submit"
+              name="image"
+              id="image"
+            >
               Lưu
             </button>
           </form>
@@ -319,7 +332,7 @@ export default function UserRecruiter() {
               className="input ms-2"
               onChange={(event) => setCategory(event.target.value)}
             >
-              <option></option>
+              <option value={category}>{category}</option>
               {categoryForm?.map((item, index) => {
                 return (
                   <option key={index} value={item._id}>
@@ -348,20 +361,35 @@ export default function UserRecruiter() {
               <p className="text"> Mô tả không được để trống</p>
             )}
           </Row>
+          {succes && (
+            <div className="noti-upload-succes">
+              <Form.Text className="form-text-alert">
+                Cập nhật thông tin thành công.{" "}
+                <Link to={"/"} className="link-home">Quay về trang chủ</Link>
+              </Form.Text>
+            </div>
+          )}
 
           <Row className="mt-5">
             <Col sm={3} md={3}>
               {" "}
             </Col>
             <Col sm={3} md={3}>
-              <Button className="button" type="submit">
-                {" "}
-                Cập nhật{" "}
-              </Button>
+              {succes ? (
+                <Button className="button disabled" type="submit">
+                  {" "}
+                  Cập nhật{" "}
+                </Button>
+              ) : (
+                <Button className="button" type="submit">
+                  {" "}
+                  Cập nhật{" "}
+                </Button>
+              )}
             </Col>
             <Col sm={3} md={3}>
-              <Link to={"/"}>
-                <Button variant="light"> Hủy bỏ </Button>
+              <Link >
+                <Button variant="light" onClick={()=>handleCancelUpload()}> Hủy bỏ </Button>
               </Link>
             </Col>
           </Row>
