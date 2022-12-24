@@ -9,7 +9,8 @@ import { CiSearch } from "react-icons/ci";
 import { UserContext } from "../../Context/UserContext";
 import { useParams } from "react-router";
 import { JobContext } from "../../Context/JobContext";
-
+import Lottie from "lottie-react";
+import loadingAnimation from "../../animationJson/loading-animation.json";
 export default function CandidateList() {
   const { getCandidateList, listRecruimentCv, SetlistRecruimentCv } =
     useContext(UserContext);
@@ -18,16 +19,17 @@ export default function CandidateList() {
   const { id } = useParams();
   const [filterValue, setFilterValue] = useState("");
   const [statusCv, setStatusCv] = useState("");
+  const [complete, setComplete] = useState(false);
   const token = localStorage.getItem("token");
   const userToken = JSON.parse(token);
 
-  console.log('list',listRecruimentCv);
-  useEffect(()=>{
-    getCandidateList(id,userToken)
-  },[id,userToken])
+  useEffect(() => {
+    getCandidateList(id, userToken);
+  }, [id, userToken]);
   useEffect(() => {
     getCandidateList(id, userToken);
   }, [statusCv]);
+
   const handleFilter = (event) => {
     event.preventDefault();
 
@@ -50,7 +52,9 @@ export default function CandidateList() {
     setStatusCv(event.target.value);
     getCandidateList(id, userToken);
   };
-  
+  setTimeout(() => {
+    setComplete(true);
+  }, 2500);
   return (
     <Container>
       <Form>
@@ -87,22 +91,29 @@ export default function CandidateList() {
       <Row>
         <Col sm={9} md={9}>
           <h1 className="list-title mt-3 mb-1"> Danh sách ứng viên</h1>
-
-          {listRecruimentCv?.length == 0 ? (
-            <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
+          {!complete ? (
+            <div className="loading-job">
+              <Lottie
+                animationData={loadingAnimation}
+                className="loading-animation-list-cv"
+              ></Lottie>
+            </div>
           ) : (
-            <List
-              pagination={{
-                pageSize: 10,
-              }}
-              dataSource={listRecruimentCv}
-              renderItem={(item) => (
-                <CandidateListItem
-                  data={item}
-                  handleValue={handleValue}
-                />
+            <>
+              {listRecruimentCv?.length == 0 ? (
+                <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
+              ) : (
+                <List
+                  pagination={{
+                    pageSize: 10,
+                  }}
+                  dataSource={listRecruimentCv}
+                  renderItem={(item) => (
+                    <CandidateListItem data={item} handleValue={handleValue} />
+                  )}
+                ></List>
               )}
-            ></List>
+            </>
           )}
         </Col>
 

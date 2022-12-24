@@ -22,8 +22,8 @@ const AuthHeader = ({ mode }) => {
     useContext(UserContext);
   const [showUserBox, setShowUserBox] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
-  const current = JSON.parse(localStorage.getItem("currentUser"))
-  console.log(current);
+  const current = JSON.parse(localStorage.getItem("currentUser"));
+
   useEffect(() => {
     const closeUserBox = (e) => {
       if (e.path[1].className !== "navbar-content account-user") {
@@ -35,18 +35,9 @@ const AuthHeader = ({ mode }) => {
   });
 
   let imageString;
-  if (user) {
-    if (user.hasOwnProperty("avatar")) {
-      const image = user.avatar;
-      const splitString = image.split("/");
-      imageString = splitString[1] + "/".concat(splitString[2]);
-    } else {
-      imageString = "";
-    }
-  }
   if (currentUser) {
     if (currentUser.hasOwnProperty("avatar")) {
-      const image = user.avatar;
+      const image = currentUser.avatar;
       const splitString = image.split("/");
       imageString = splitString[1] + "/".concat(splitString[2]);
     } else {
@@ -70,8 +61,9 @@ const AuthHeader = ({ mode }) => {
   const closeSideBar = () => {
     setShowSideBar(false);
   };
+
   return (
-    <div className="header"> 
+    <div className="header">
       <div className="header-logo">
         <Link to={"/"}>
           <img className="image-header" src={logo}></img>
@@ -91,7 +83,7 @@ const AuthHeader = ({ mode }) => {
           onClick={() => toggleUserBox()}
         >
           <MdAccountCircle className="icon-navbar"></MdAccountCircle>
-          {(!current) ? <p className="content">Đăng ký</p> : <></>}
+          {!current ? <p className="content">Đăng ký</p> : <></>}
           {(currentUser?.role === "recruiter" ||
             user?.role === "recruiter") && (
             <p className="content">Nhà tuyển dụng</p>
@@ -104,13 +96,13 @@ const AuthHeader = ({ mode }) => {
           {showUserBox && (
             <div
               className={
-                 !current
+                !current
                   ? "control-account  control-account-position"
                   : "control-account"
               }
               id="control-account"
             >
-              { current ? (
+              {current ? (
                 <></>
               ) : (
                 <div className="btn-control-account">
@@ -146,20 +138,27 @@ const AuthHeader = ({ mode }) => {
                   </div>
                 </Link>
                 {!current && <></>}
-                {(current?.role == "recruiter" ) && (
+                {current?.role == "recruiter" && (
                   <div className="account-action">
                     <Link to={"/availablerecruitment"}>
                       <p className="content-action">Tin tuyển dụng đã đăng</p>
                     </Link>
-                    <Link to={"/upload"}>
-                      <p className="content-action">Đăng tin tuyển dụng</p>
-                    </Link>
+                    {!current.info ? (
+                      <p className="alert-update-info content-action text-danger">
+                        Cập nhật thông tin đầy đủ trước khi đăng tuyển
+                      </p>
+                    ) : (
+                      <Link to={"/upload"}>
+                        <p className="content-action">Đăng tin tuyển dụng</p>
+                      </Link>
+                    )}
+
                     <Link to={"/update_info"}>
                       <p className="content-action">Cập nhật thông tin</p>
                     </Link>
                   </div>
                 )}{" "}
-                {(current?.role == "candidate") && (
+                {current?.role == "candidate" && (
                   <div className="account-action">
                     <Link to={"/CandidateApplication"}>
                       <p className="content-action">Công việc đã ứng tuyển</p>
