@@ -172,7 +172,7 @@ const JobProvider = ({ children }) => {
 
     const CvData = new FormData();
 		CvData.append('formFile', file);
-    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/apply/${id}`,
+    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/app/${id}`,
     {
       method: "POST",
       body: CvData,
@@ -180,9 +180,14 @@ const JobProvider = ({ children }) => {
         authorization: `Bearer ${token}`,
       }
     }).then((res)=>{
-      return res.json()
+      if( res.ok ) {
+        return res.json()
+      }
+      return Promise.reject(res)
     }).then((data)=>{
       return data;
+    }).catch((err) => {
+      console.log(err);
     })
     return userCV
   };
