@@ -60,7 +60,7 @@ export default function CandidateListItem({ data ,handleValue}) {
                     <p className="mt-2"> Ngày gởi yêu cầu: {createDate}</p>
                     <p className="mt-2"> File đính kèm:
                         <a href={`https://xjob-mindx-production.up.railway.app/${downloadLink}`} download>
-                            <Button className="download-button ms-2"> <span> Download file </span></Button>
+                            <Button className="download-button ms-2"> <span> Tải xuống </span></Button>
                         </a>
                     </p>
                     {complete ? (

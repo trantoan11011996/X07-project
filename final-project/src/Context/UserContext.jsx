@@ -162,7 +162,6 @@ const UserProvider = ({ children }) => {
       ckEditorOutput,
       operationSector
     );
-    console.log("info",info);
     let user_info = await fetch(
       "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
       {
@@ -192,8 +191,6 @@ const UserProvider = ({ children }) => {
   };
 
   const getCandidateList = async ( idRcm,token) => {
-    console.log(idRcm,token);
-    
     const candidateList = await fetch (
       `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${idRcm}`,
       {
@@ -205,7 +202,6 @@ const UserProvider = ({ children }) => {
     ).then((res)=>{
       return res.json()
     }).then((data)=>{
-      console.log(data);
       SetlistRecruimentCv(data)
       localStorage.setItem('listCv',JSON.stringify(data))
       return data;

@@ -92,7 +92,7 @@
 
 .select-bar{
     background-color: #f2f2f2;
-    /* margin-top: 10px !important; */
+    margin-top: 80px !important;
 }
 
 .confirm {
@@ -103,8 +103,9 @@
     border-radius: 5px;
 }
 
-.select-bar{
-    margin-top: 80px !important;
+.list-avatar {
+    height: 170px !important;
+    width: 170px !important;
 }
 .loading-status{
     display: flex;
@@ -127,6 +128,7 @@
     height: 80px;
     width: 80px;
 }
+
 @media only screen and (max-width: 770px) {
     .view-button{
         margin-right: 20px !important ;

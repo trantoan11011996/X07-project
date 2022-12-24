@@ -14,25 +14,25 @@ import ApplicationList from "./ApplicationList";
 const cx = classNames.bind(styles);
 
 export const JobCandidateApplication = () => {
-  const { jobCandidateApplication, getJobCandidateApplication } =
-    useContext(JobContext);
+  const { jobCandidateApplication, getJobCandidateApplication, deleteCV } = useContext(JobContext);
   const token = localStorage.getItem("token");
   const userToken = JSON.parse(token);
-  console.log('usserToken<<<<<<<<<<<<<<<,',userToken);
+
   const [params, setParams] = useSearchParams();
+
   const setParamKey = (key, value) => {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
+
   const statusParams = params.get("status");
   useEffect(() => {
-
     getJobCandidateApplication(userToken, null);
   }, [userToken]);
+  
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     const status = params.get("status");
-    console.log("status", status);
     getJobCandidateApplication(getlocalToken, status);
   }, [params]);
 
@@ -40,6 +40,10 @@ export const JobCandidateApplication = () => {
     e.preventDefault();
     getJobCandidateApplication(userToken, statusParams);
   };
+
+  useEffect(() => {
+    getJobCandidateApplication(token, statusParams);
+  }, [jobCandidateApplication])
 
   return (
     <>

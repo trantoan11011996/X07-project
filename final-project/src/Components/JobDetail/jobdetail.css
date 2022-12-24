@@ -65,3 +65,13 @@
 .err {
     color: red;
 }
+
+.deadline-date {
+    color: red;
+    margin-left: 5px;
+
+}
+.create-date {
+    color: #0069DB;
+    margin-left: 5px;
+}

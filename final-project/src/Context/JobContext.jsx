@@ -172,10 +172,7 @@ const JobProvider = ({ children }) => {
 
     const CvData = new FormData();
 		CvData.append('formFile', file);
-    console.log("id", id);
-    console.log("token", token);
-    console.log("file", file);
-    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/apply/${id}`,
+    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/app/${id}`,
     {
       method: "POST",
       body: CvData,
@@ -183,9 +180,14 @@ const JobProvider = ({ children }) => {
         authorization: `Bearer ${token}`,
       }
     }).then((res)=>{
-      return res.json()
+      if( res.ok ) {
+        return res.json()
+      }
+      return Promise.reject(res)
     }).then((data)=>{
       return data;
+    }).catch((err) => {
+      console.log(err);
     })
     return userCV
   };
@@ -208,7 +210,6 @@ const JobProvider = ({ children }) => {
       user = JSON.parse(user);
       user.status = data.status
       localStorage.setItem("currentUser", JSON.stringify(user));
-
       return data;
     })
     return updateCV
@@ -228,6 +229,22 @@ const JobProvider = ({ children }) => {
       })
       return filter
   }
+
+  const deleteCV = async ( idCV, token ) => {
+    const del = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCV}`,
+    {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data;
+    })
+    return del
+}
+  
 
   const value = {
     getJobHomePage,
@@ -281,6 +298,7 @@ const JobProvider = ({ children }) => {
     date,
     confirmCV,
     filterCV,
+    deleteCV
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

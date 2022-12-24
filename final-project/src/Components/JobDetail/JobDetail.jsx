@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
+import { images } from "../../img/index";
 import {
   Card,
   Container,
@@ -36,8 +37,8 @@ import { Space } from "antd";
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
-  const { currentUser } = useContext(UserContext);
   const { fetchJobDetail, postCV } = useContext(JobContext);
+  const [err, setErr] = useState(false);
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState("");
@@ -52,7 +53,7 @@ export default function JobDetail() {
   const [MyRcmAlert, setMyRcmAlert] = useState(false);
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
-  console.log("userCurrent", userCurrent);
+  
   const handleClose = () => setShow(false);
 
   useEffect(() => {
@@ -134,9 +135,16 @@ export default function JobDetail() {
   const handleActive = (event) => {
     event.preventDefault();
     setCheck(false);
-    setActive(true);
-    postCV(id, file, token);
-    handleClose();
+    
+    if(file == "" ) {
+      setErr(true)
+      return
+    } else {
+      setErr(false)
+      postCV(id, file, token);
+      handleClose();
+      setActive(true);
+    }
   };
 
   const getJobDetail = async () => {
@@ -206,16 +214,14 @@ export default function JobDetail() {
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>
-                        <b>Ngày đăng tuyển:</b> <span> {createDate}</span>
+                        <b>Ngày đăng tuyển:</b> <span className="create-date"> {createDate}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        <b>Ngày hết hạn:</b> <span>{deadlineDate}</span>
+                        <b>Ngày hết hạn:</b> <span className="deadline-date">{deadlineDate}</span>
                       </Col>
                     </Row>
 
-                    {(userCurrent?.role == "candidate" ||
-                      user?.role == "candidate" ||
-                      !userCurrent) && (
+                    {(userCurrent.role == "candidate" || user.role == "candidate" || !userCurrent) && (
                       <Row>
                         <Space wrap>
                           {!active ? (
@@ -267,6 +273,7 @@ export default function JobDetail() {
                         )}
                       </Row>
                     )}
+
                   </div>
 
                   <div className="tab-rows">
@@ -319,7 +326,6 @@ export default function JobDetail() {
                   <div id="require" className="mt-3">
                     <h2 className="require-title"> Yêu Cầu </h2>
                     <Row>
-                      <div> </div>
                       <Col sm={6} md={6}>
                         <Card>
                           <Card.Body>
@@ -410,7 +416,9 @@ export default function JobDetail() {
               </Card>
             </Col>
 
-            <Col sm={4} md={4}></Col>
+            <Col>
+              <img className="list-banner mb-3 mt-3" src={images.banner} alt="" />
+            </Col>
           </Row>
 
           <Modal show={show} onHide={handleClose} className="job-modal mt-5">
@@ -423,9 +431,11 @@ export default function JobDetail() {
                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
                 <Form.Control
                   type="file"
+                  accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                   name="formFile"
                   onChange={(event) => setFile(event.target.files[0])}
                 />
+              {err && (<p className="err">Hồ sơ không được để trống </p>)}
               </Form.Group>
 
               <Form.Group>

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 export default function Footer() {
   const { allCategory, allLocation } = useContext(JobContext);
-  console.log(allLocation);
+
   let location = [];
   let category = [];
   if (allCategory) {
@@ -33,7 +33,7 @@ export default function Footer() {
       allLocation[5],
     ];
   }
-  console.log(category);
+
   return (
     <div className={cx("footer")}>
       <div className={cx("container-footer-content")}>

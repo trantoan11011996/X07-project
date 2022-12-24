@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
+import { Space, Col, Row } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 import styles from "./JobCandidateApplication.module.scss";
 import classNames from "classnames/bind";
 import { IoLogoUsd } from "react-icons/io";
 import { IoLocationSharp } from "react-icons/io5";
+import { JobContext } from "../../Context/JobContext";
 const cx = classNames.bind(styles);
 
 function ApplicationItems({ job, recruimentId, id }) {
@@ -12,12 +14,16 @@ function ApplicationItems({ job, recruimentId, id }) {
   const splitString = image.split("/");
   const imageString = splitString[1] + "/".concat(splitString[2]);
   // console.log('recruiTd', recruimentId)
-  // console.log('job', job)
+  console.log('job', job)
   // console.log('item',recruimentId)
   const [jobStatus, setJobStatus] = useState(job?.status);
   const [recruitmentStatus, setRecruitmentStatus] = useState(
     recruimentId?.status
   );
+
+  const { deleteCV } = useContext(JobContext);
+  const token = localStorage.getItem('token');
+  const userToken = JSON.parse(token);
 
   useEffect(() => {
     if (jobStatus === "pending") {
@@ -34,10 +40,15 @@ function ApplicationItems({ job, recruimentId, id }) {
     }
   }, [job]);
 
+  const handleDelete = () => {
+    deleteCV(job._id, userToken)
+    console.log("job del", job);
+  }
+
   return (
     <Fragment>
-      <Link to={"/jobDetail/" + id}>
-        <li className={cx("list_group_item")}>
+      <li className={cx("list_group_item")}>
+        <Link to={"/jobDetail/" + id}>
           <div className={cx("box_item")}>
             <div className={cx("images")}>
               <img
@@ -82,8 +93,18 @@ function ApplicationItems({ job, recruimentId, id }) {
               </div>
             </div>
           </div>
-        </li>
-      </Link>
+        </Link>
+
+        <Row>
+          <Col sm={5} md={5}></Col>
+          <Col sm={4} md={4}></Col>
+          <Col sm={3} md={3}>
+            <button className={cx("delete-button")} onClick={handleDelete}>
+              Hủy ứng tuyển
+            </button>
+          </Col>
+        </Row>
+      </li>
     </Fragment>
   );
 }

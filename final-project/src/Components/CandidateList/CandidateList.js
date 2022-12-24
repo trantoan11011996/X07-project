@@ -55,6 +55,11 @@ export default function CandidateList() {
   setTimeout(() => {
     setComplete(true);
   }, 2500);
+
+
+  useEffect(() => {
+    getCandidateList(id, userToken)
+  }, [statusCv])
   return (
     <Container>
       <Form>
