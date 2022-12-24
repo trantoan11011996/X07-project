@@ -14,8 +14,9 @@ import ApplicationList from "./ApplicationList";
 const cx = classNames.bind(styles);
 
 export const JobCandidateApplication = () => {
-  const { jobCandidateApplication, getJobCandidateApplication, token, deleteCV } =
-    useContext(JobContext);
+  const { jobCandidateApplication, getJobCandidateApplication, deleteCV } = useContext(JobContext);
+  const token = localStorage.getItem("token");
+  const userToken = JSON.parse(token);
 
   const [params, setParams] = useSearchParams();
 
@@ -26,9 +27,9 @@ export const JobCandidateApplication = () => {
 
   const statusParams = params.get("status");
   useEffect(() => {
-    getJobCandidateApplication(token);
-  }, [token]);
-
+    getJobCandidateApplication(userToken, null);
+  }, [userToken]);
+  
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     const status = params.get("status");
@@ -37,7 +38,7 @@ export const JobCandidateApplication = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getJobCandidateApplication(token, statusParams);
+    getJobCandidateApplication(userToken, statusParams);
   };
 
   useEffect(() => {
@@ -51,26 +52,27 @@ export const JobCandidateApplication = () => {
         <div className={cx("wrapper")}>
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
-            <form action="" onSubmit = {handleSubmit} className="select-bar">
+              <form action="" onSubmit={handleSubmit} className="select-bar">
                 <Row className="mt-3 mb-3">
-                    <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
-                        <select style={{border: "none"}}
-                            // className="sort"
-                            onChange={(e) => setParamKey('status', e.target.value)}
-                        >
-                            <option value="">-- Trạng thái --</option>
-                            <option value="accepted">Xác nhận </option>
-                            <option value="denied">Từ chối </option>
-                            <option value="pending">Đang chờ </option>
-                        </select>
-                    </Col>
-                      
-                 
+                  <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
+                    <select
+                      style={{ border: "none" }}
+                      // className="sort"
+                      onChange={(e) => setParamKey("status", e.target.value)}
+                    >
+                      <option value="">-- Trạng thái --</option>
+                      <option value="accepted">Xác nhận </option>
+                      <option value="denied">Từ chối </option>
+                      <option value="pending">Đang chờ </option>
+                    </select>
+                  </Col>
 
-                    <Col sm={3} md={3}>
-                        <button id="button1" type="submit" className="confirm mt-3"> <CiSearch  /></button>
-                    </Col>
-                
+                  <Col sm={3} md={3}>
+                    <button id="button1" type="submit" className="confirm mt-3">
+                      {" "}
+                      <CiSearch />
+                    </button>
+                  </Col>
                 </Row>
               </form>
               <div className={cx("recruit_title")}>

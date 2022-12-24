@@ -90,11 +90,10 @@ const JobProvider = ({ children }) => {
         { headers: {authorization: `Bearer ${token}`} },
     ).then((res) => {
       const data = res.data;
+      localStorage.setItem("C-applied", JSON.stringify(data));
       setJobCandidateApplication(data);
+      return data
       // console.log('data', (data[0].recruimentId))
-      if (!localStorage.getItem("C-applied")) {
-        localStorage.setItem("C-applied", JSON.stringify(data));
-      }
     }).catch((error) => console.log(error.response));
   }
   
@@ -151,6 +150,7 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     )
+    console.log('new',newRecruiment);
     const createRecruiment = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/new`,{
       method: "post",
       body: JSON.stringify(newRecruiment),

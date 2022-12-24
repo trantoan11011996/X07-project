@@ -107,7 +107,27 @@
     height: 170px !important;
     width: 170px !important;
 }
-
+.loading-status{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.loading-animation{
+    width: 60px;
+    height: 60px;
+}
+.col-avatar-cv{
+    padding-top: 10px;
+}
+.list-avatar {
+    height: 18vh !important;
+    width: 10vw !important;
+    margin-left: 15px;
+}
+.loading-animation-list-cv{
+    height: 80px;
+    width: 80px;
+}
 
 @media only screen and (max-width: 770px) {
     .view-button{

@@ -139,6 +139,8 @@ export default function UploadRecruiment() {
       setAlerToday(true);
       return;
     }
+    date[0] = date[0].split("/").reverse().join("/")
+    date[1] = date[1].split("/").reverse().join("/")
     setWarningTitle(false);
     setWarningPosition(false);
     setWarningType(false);

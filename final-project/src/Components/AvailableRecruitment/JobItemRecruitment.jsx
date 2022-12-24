@@ -70,10 +70,7 @@ function JobItemRecruitment({ myJobRecruitment, id }) {
                 Ngày hết hạn:  <span className="deadline-date">{deadlineDate}</span>
               </div>
               <div className={cx("update")}>
-                <a href="/#">
-                  <AiOutlineHeart />
-                  Cập Nhật
-                </a>
+                <button className={cx("btn-delete-rcm")}>Gỡ bỏ</button>
               </div>
             </div>
           </div>

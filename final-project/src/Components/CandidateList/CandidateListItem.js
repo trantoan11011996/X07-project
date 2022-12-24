@@ -2,16 +2,17 @@ import { Button, Image, Space } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { JobContext } from "../../Context/JobContext";
-
-export default function CandidateListItem({ data, handleValue }) {
+import Lottie from "lottie-react"
+import loadingAnimation from "../../animationJson/loading-animation.json"
+export default function CandidateListItem({ data ,handleValue}) {
 
     const [status, setStatus] = useState("");
     const [downloadLink, setDownloadLink] = useState("");
     const [avatar, setAvatar] = useState("");
-
     const [createDate, setCreateDate] = useState("");
-
-
+    const [complete, setComplete] = useState(false);
+    const token = localStorage.getItem('token');
+    const userToken = JSON.parse(token);
     useEffect(() => {
         if (data.status == "accepted") {
             setStatus("Đã xác nhận")
@@ -31,7 +32,6 @@ export default function CandidateListItem({ data, handleValue }) {
         let crYear = new Date(crTime).getFullYear();
         let newCreate = `${crDay}-${crMonth}-${crYear}`;
         setCreateDate(newCreate);
-
         if (data.userId.avatar) {
             let imgSplit = data.userId.avatar.split("/");
             let imgString = imgSplit[1] + "/".concat(imgSplit[2]);
@@ -39,11 +39,17 @@ export default function CandidateListItem({ data, handleValue }) {
         }
     }, [data]);
 
-
+    const hanldeStatus = (e)=>{
+            setComplete(true)
+            setTimeout(()=>{
+                setComplete(false)
+            },2500)        
+        handleValue(e,data._id)      
+    }
     return (
         <Card className="list-item mt-3 mb-3">
             <Row>
-                <Col sm={3} md={3}>
+                <Col sm={3} md={3} className="col-avatar-cv">
                     {data.userId.avatar
                         ? <Image className="list-avatar mt-1" src={`https://xjob-mindx-production.up.railway.app/${avatar}`} />
                         : <Image className="list-avatar mt-1" src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" />
@@ -57,7 +63,13 @@ export default function CandidateListItem({ data, handleValue }) {
                             <Button className="download-button ms-2"> <span> Tải xuống </span></Button>
                         </a>
                     </p>
-                    <p className="mt-2"> Trạng thái yêu cầu: {status}</p>
+                    {complete ? (
+                        <div className="loading-status">
+                            <p className="mt-2"> Trạng thái yêu cầu: </p>
+                            <Lottie animationData={loadingAnimation} className="loading-animation"></Lottie>
+                        </div>
+                    ) : <p className="mt-2"> Trạng thái yêu cầu: {status}</p>}
+                    
                 </Col>
             </Row>
 
@@ -66,7 +78,7 @@ export default function CandidateListItem({ data, handleValue }) {
                 </Col>
                 <Col sm={6} md={6}>
                     <Space wrap className="space-wrap">
-                        {status == "Đã xác nhận" || status == "Đã từ chối"
+                    {status == "Đã xác nhận" || status == "Đã từ chối"
                             ? <Row>
                                 <Col sm={4} md={4}></Col>
                                 <Col sm={4} md={4}></Col>
@@ -75,19 +87,19 @@ export default function CandidateListItem({ data, handleValue }) {
                                         Xem thông tin ứng viên
                                     </button>
                                 </Col>
+
                             </Row>
                             : (<>
-                                <button className="apply-button ms-2" value="accepted" onClick={(e) => handleValue(e, data._id)}>
+                                <button className="apply-button ms-2" value="accepted" onClick={hanldeStatus}>
                                     Xác nhận
                                 </button>
-                                <button className="denied-button" value="denied" onClick={(e) => handleValue(e, data._id)}>
+                                <button className="denied-button" value="denied" onClick={hanldeStatus}>
                                     Từ chối
                                 </button>
                                 <button className="view-button">
                                     Xem thông tin ứng viên
                                 </button>
                             </>)}
-
                     </Space>
                 </Col>
             </Row>

@@ -104,7 +104,6 @@ export default function JobDetail() {
 
   const checkMyRcm = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    console.log("user", user);
     const myRcm = JSON.parse(localStorage.getItem("C-applied"));
     if (user) {
       if (user.role === "candidate") {
