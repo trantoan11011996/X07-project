@@ -99,14 +99,10 @@ export default function RJDetails() {
 
                                         {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
                                             <Row className="mt-2">
-                                                <Col sm={3} md={3}>
+                                                <Col sm={12} md={3}>
                                                     <Button className="job-button" variant="primary" onClick={() => {navigate("/update")}}>Cập Nhật</Button>
                                                 </Col>
-
-                                                <Col sm={3} md={3}>
-                                                    <Button className="job-button" variant="outline-danger">Gỡ bỏ</Button>
-                                                </Col>
-                                                <Col sm={5} md={5}>
+                                                <Col sm={12} md={3}>
                                                     <Link to={`/CandidateList/${id}`}>
                                                         <Button className="job-button" variant="outline-primary">Danh sách ứng viên</Button>
                                                     </Link>

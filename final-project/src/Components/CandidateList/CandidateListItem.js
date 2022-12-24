@@ -49,7 +49,7 @@ export default function CandidateListItem({ data ,handleValue}) {
     return (
         <Card className="list-item mt-3 mb-3">
             <Row>
-                <Col sm={3} md={3}>
+                <Col sm={3} md={3} className="col-avatar-cv">
                     {data.userId.avatar
                         ? <Image className="list-avatar mt-1" src={`https://xjob-mindx-production.up.railway.app/${avatar}`} />
                         : <Image className="list-avatar mt-1" src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" />
