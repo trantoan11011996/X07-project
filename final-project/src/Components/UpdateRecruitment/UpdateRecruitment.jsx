@@ -118,6 +118,7 @@ export default function UpdateRecruiment() {
     if (!isExperience(experience)) {
       setWarningExp(true);
       return;
+      
     }
     if (!isAge(ageFrom)) {
       setWarningAge(true);
