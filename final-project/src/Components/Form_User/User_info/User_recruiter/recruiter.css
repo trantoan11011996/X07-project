@@ -59,3 +59,16 @@
 .submit-img:hover{
   opacity: 0.8;
 }
+.noti-upload-succes{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.form-text-alert{
+  font-weight: 500px;
+  color: black;
+}
+.link-home:hover{
+  text-decoration: underline;
+}

@@ -165,6 +165,7 @@ const JobProvider = ({ children }) => {
       return data
     })
     return createRecruiment
+
   }
 
   //post CV
