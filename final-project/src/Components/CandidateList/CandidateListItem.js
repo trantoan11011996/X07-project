@@ -11,9 +11,6 @@ export default function CandidateListItem({ data, handleValue }) {
 
     const [createDate, setCreateDate] = useState("");
 
-    const token = localStorage.getItem('token');
-    const userToken = JSON.parse(token);
-
 
     useEffect(() => {
         if (data.status == "accepted") {
@@ -78,7 +75,6 @@ export default function CandidateListItem({ data, handleValue }) {
                                         Xem thông tin ứng viên
                                     </button>
                                 </Col>
-
                             </Row>
                             : (<>
                                 <button className="apply-button ms-2" value="accepted" onClick={(e) => handleValue(e, data._id)}>

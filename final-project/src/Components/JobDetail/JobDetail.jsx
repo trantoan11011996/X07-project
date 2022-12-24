@@ -37,8 +37,8 @@ import { Space } from "antd";
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
-  const { currentUser } = useContext(UserContext);
   const { fetchJobDetail, postCV } = useContext(JobContext);
+  const [err, setErr] = useState(false);
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState("");
@@ -136,9 +136,16 @@ export default function JobDetail() {
   const handleActive = (event) => {
     event.preventDefault();
     setCheck(false);
-    setActive(true);
-    postCV(id, file, token);
-    handleClose();
+    
+    if(file == "" ) {
+      setErr(true)
+      return
+    } else {
+      setErr(false)
+      postCV(id, file, token);
+      handleClose();
+      setActive(true);
+    }
   };
 
   const getJobDetail = async () => {
@@ -208,10 +215,10 @@ export default function JobDetail() {
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>
-                        <b>Ngày đăng tuyển:</b> <span> {createDate}</span>
+                        <b>Ngày đăng tuyển:</b> <span className="create-date"> {createDate}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        <b>Ngày hết hạn:</b> <span>{deadlineDate}</span>
+                        <b>Ngày hết hạn:</b> <span className="deadline-date">{deadlineDate}</span>
                       </Col>
                     </Row>
 
@@ -267,6 +274,7 @@ export default function JobDetail() {
                         )}
                       </Row>
                     )}
+
                   </div>
 
                   <div className="tab-rows">
@@ -319,7 +327,6 @@ export default function JobDetail() {
                   <div id="require" className="mt-3">
                     <h2 className="require-title"> Yêu Cầu </h2>
                     <Row>
-                      <div> </div>
                       <Col sm={6} md={6}>
                         <Card>
                           <Card.Body>
@@ -425,9 +432,11 @@ export default function JobDetail() {
                 <Form.Label>Hồ sơ ứng tuyển</Form.Label>
                 <Form.Control
                   type="file"
+                  accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                   name="formFile"
                   onChange={(event) => setFile(event.target.files[0])}
                 />
+              {err && (<p className="err">Hồ sơ không được để trống </p>)}
               </Form.Group>
 
               <Form.Group>

@@ -225,6 +225,22 @@ const JobProvider = ({ children }) => {
       return filter
   }
 
+  const deleteCV = async ( idCV, token ) => {
+    const del = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCV}`,
+    {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      return data;
+    })
+    return del
+}
+  
+
   const value = {
     getJobHomePage,
     setJobHomePage,
@@ -277,6 +293,7 @@ const JobProvider = ({ children }) => {
     date,
     confirmCV,
     filterCV,
+    deleteCV
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

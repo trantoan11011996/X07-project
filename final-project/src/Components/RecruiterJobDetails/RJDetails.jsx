@@ -8,7 +8,7 @@ import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsBriefcase, BsCalendar2Check, BsClockHistory, BsDiagram3, BsHeadset, BsPerson, BsWhatsapp } from "react-icons/bs";
 import { RxAvatar } from "react-icons/rx";
 import { TiFlowChildren } from "react-icons/ti";
-import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn, CiPhone } from "react-icons/ci";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -20,7 +20,9 @@ export default function RJDetails() {
     const { currentUser } = useContext(UserContext);
     const { fetchJobDetail } = useContext(JobContext)
     const [show, setShow] = useState('');
-    const [logo, setLogo] = useState('')
+    const [logo, setLogo] = useState('');
+    const [createDate, setCreateDate] = useState("");
+    const [deadlineDate, setDeadlineDate] = useState("");
 
     // const [active, setActive] = useState(false);
 
@@ -55,17 +57,43 @@ export default function RJDetails() {
         detailData()
     }, [id]);
 
-    useEffect(()=>{
+    useEffect(() => {
         window.scrollTo(0, 0);
-    },[])
+    }, [])
 
     useEffect(() => {
         const description = document.getElementById("description")
         description.innerHTML = `
         ${jobData.description}
     `
-    }, [jobData])
+        const compnayDescription = document.getElementById("about-info");
+        compnayDescription.innerHTML = `
+        ${jobData?.name?.info?.description}
+    `;
 
+        let crTime = new Date(jobData.createAt).getTime();
+        let crDay = new Date(crTime).getDate();
+        let crMonth = new Date(crTime).getMonth() + 1;
+        let crYear = new Date(crTime).getFullYear();
+        let newCreate = `${crDay}-${crMonth}-${crYear}`;
+        setCreateDate(newCreate);
+
+        let dlTime = new Date(jobData.deadline).getTime();
+        let dlDay = new Date(dlTime).getDate();
+        let dlMonth = new Date(dlTime).getMonth() + 1;
+        let dlYear = new Date(dlTime).getFullYear();
+        let newDealine = `${dlDay}-${dlMonth}-${dlYear}`;
+        setDeadlineDate(newDealine);
+    }, [jobData]);
+
+    const scrollToElement = (elementID) => {
+        const element = document.getElementById(elementID);
+        const offsetTop = element.offsetTop;
+        window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth",
+        });
+    };
     return (
         <>
             {jobData && (
@@ -92,8 +120,13 @@ export default function RJDetails() {
                                         <p className="mt-2"><AiOutlineDollarCircle className="me-2"></AiOutlineDollarCircle> {jobData?.salary} VND</p>
                                         <p className="mt-2"><MdOutlineWorkOutline className="me-2"></MdOutlineWorkOutline> {jobData?.experience} kinh nghiệm</p>
                                         <Row className="mt-2">
-                                            <Col sm={5} md={5} ><BsCalendar2Check className="me-2"></BsCalendar2Check> Ngày đăng tuyển: {jobData?.createAt}</Col>
-                                            <Col sm={5} md={5} >Ngày hết hạn: {jobData?.deadline}</Col>
+                                            <Col sm={5} md={5}>
+                                                <BsCalendar2Check className="me-2"></BsCalendar2Check>
+                                                <b>Ngày đăng tuyển:</b> <span className="create-date"> {createDate}</span>
+                                            </Col>
+                                            <Col sm={5} md={5}>
+                                                <b>Ngày hết hạn:</b> <span className="deadline-date">{deadlineDate}</span>
+                                            </Col>
                                         </Row>
 
                                         {(user?.role == "recruiter" || currentUser?.role == "recruiter") && (
@@ -117,34 +150,34 @@ export default function RJDetails() {
                                     <div className="tab-rows">
                                         <Row className="ms-2 p-2">
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#description"  data-target="#description"> Mô tả</a>
+                                                <a className="job-tab" onClick={() => scrollToElement("des-title")}> Mô tả</a>
                                             </Col>
 
                                             <Col sm={2} md={2}>
-                                                <a className="job-tab" href="#require"  data-target="#require"> Yêu cầu </a>
+                                                <a className="job-tab" onClick={() => scrollToElement("require")}> Yêu cầu </a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#info" data-target="#info"> Mô tả bổ sung</a>
+                                                <a className="job-tab" onClick={() => scrollToElement("info")}> Mô tả bổ sung</a>
                                             </Col>
 
                                             <Col sm={3} md={3}>
-                                                <a className="job-tab" href="#about" data-target="#about"> Về công ty</a>
+                                                <a className="job-tab" onClick={() => scrollToElement("about")}> Về công ty</a>
                                             </Col>
 
                                             <Col sm={2} md={2}></Col>
                                         </Row>
                                     </div>
 
-                                    <div className="mt-3">
+                                    <div id="des-title">
                                         <h2 className="require-title"> Mô tả </h2>
                                         <div id="description" className="mt-3"></div>
                                     </div>
 
+
                                     <div id="require" className="mt-3">
                                         <h2 className="require-title"> Yêu Cầu </h2>
                                         <Row>
-                                            <div> </div>
                                             <Col sm={6} md={6}>
                                                 <Card>
                                                     <Card.Body>
@@ -193,13 +226,25 @@ export default function RJDetails() {
 
                                     <div id="info" className="mt-3">
                                         <h2 className="require-title"> Thông tin liên hệ </h2>
-
+                                        <p className="ms-2 mt-3">
+                                            {" "}
+                                            Tên Liên hệ: <b>Phòng Nhân Sự</b>
+                                        </p>
+                                        <p className="ms-2 mt-3">
+                                            {" "}
+                                            <CiLocationOn></CiLocationOn>{" "}
+                                            {jobData?.name?.info?.address}{" "}
+                                        </p>
+                                        <p className="ms-2 mt-3">
+                                            {" "}
+                                            <CiPhone> </CiPhone> {jobData?.name?.info?.phoneNumber}
+                                        </p>
                                     </div>
 
                                     <div id="about" className="mt-3">
-                                        <h2 className="require-title"> Về công ty </h2>
+                                        <h2 className="require-title"> Về Công Ty </h2>
+                                        <div id="about-info"></div>
                                     </div>
-
                                 </Card.Body>
                             </Card>
                         </Col>

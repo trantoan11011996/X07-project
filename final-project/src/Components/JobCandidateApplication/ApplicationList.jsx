@@ -6,7 +6,7 @@ import ApplicationItems from "./ApplicationItems";
 
 
 function ApplicationList({jobCandidateApplication}){
-    console.log('job',jobCandidateApplication);
+
     return(
         <List
         grid={{
