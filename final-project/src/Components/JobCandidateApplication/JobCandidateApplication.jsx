@@ -52,7 +52,7 @@ export const JobCandidateApplication = () => {
         <div className={cx("wrapper")}>
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
-              <form action="" onSubmit={handleSubmit} className="select-bar">
+              <form action="" onSubmit={handleSubmit} className="select-bar"  style={{ padding: 0}}>
                 <Row className="mt-3 mb-3">
                   <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
                     <select

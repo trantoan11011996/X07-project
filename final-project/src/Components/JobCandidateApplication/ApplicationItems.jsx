@@ -32,7 +32,7 @@ function ApplicationItems({ job, recruimentId, id }) {
     if (jobStatus === "accepted") {
       setJobStatus("Đã xác nhận");
     }
-    if (jobStatus == "denided") {
+    if (jobStatus === "denied") {
       setJobStatus("Đã từ chối");
     }
     if (recruitmentStatus === "active") {
