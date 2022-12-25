@@ -64,6 +64,7 @@ export default function MainApp() {
                 <Route path="/CandidateList/:id" element={<CandidateList />} />
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
                 <Route path="/Company_about" element={<CompanyPages/>}></Route>
+                <Route path="/update/:id" element={<UpdateRecruiment/>}></Route>
               </Routes>
               <Footer />
             </div>
