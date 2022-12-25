@@ -25,20 +25,20 @@ function ApplicationItems({ job, recruimentId, id }) {
   const token = localStorage.getItem('token');
   const userToken = JSON.parse(token);
 
-  useEffect(() => {
-    if (jobStatus === "pending") {
-      setJobStatus("Đang chờ");
-    }
-    if (jobStatus === "accepted") {
-      setJobStatus("Đã xác nhận");
-    }
-    if (jobStatus === "denied") {
-      setJobStatus("Đã từ chối");
-    }
-    if (recruitmentStatus === "active") {
-      setRecruitmentStatus("Đang hoạt động");
-    }
-  }, [job]);
+  // useEffect(() => {
+  //   if (jobStatus === "pending") {
+  //     setJobStatus("Đang chờ");
+  //   }
+  //   if (jobStatus === "accepted") {
+  //     setJobStatus("Đã xác nhận");
+  //   }
+  //   if (jobStatus === "denied") {
+  //     setJobStatus("Đã từ chối");
+  //   }
+  //   if (recruitmentStatus === "active") {
+  //     setRecruitmentStatus("Đang hoạt động");
+  //   }
+  // }, [job]);
   // useEffect(() => {
   //   if (jobStatus === "pending") {
   //     setJobStatus("Đang chờ");
