@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import JobApi from "../API/ProductApi";
 import axios from "axios";
@@ -8,43 +8,43 @@ const JobContext = createContext();
 const JobProvider = ({ children }) => {
   const [jobHomePage, setJobHomePage] = useState([]);
   const [jobList, setJobList] = useState([]);
-  const [allCategory,setAllCategory] = useState([])
-  const [allLocation,setAllLocation] = useState([])
-  const [search, setSearch] = useState("")
-  const [myJobRecruitment, setMyJobRecruitment] = useState([])
-  const [category, setCategory] = useState("")
-  const [operationSector,setOperationSector] = useState("")
-  const [page, setPage] = useState("")
-  const [fieldSort, setFieldSort] = useState("")
-  const [typeSort, setTypeSort] = useState("")
-  const [token,setToken] = useState(null)
-  const [title,setTitle] = useState('')
-  const [name,setName] = useState('')
-  const [description,setDescription]= useState('')
-  const [position,setPosition] = useState('')
-  const [type,setType] = useState('')
-  const [level,setLevel] = useState('')
-  const [ageFrom,setAgeFrom] = useState('')
-  const [ageTo,setAgeTo] = useState('')
-  const [experience,setExperience] = useState('')
-  const [salary,setSalary] = useState('')
-  const [numberApplicant,setNumberApplicant] = useState('')
-  const [location,setLocation] = useState('')
-  const [date,setDate] = useState([])
-  const [jobCandidateApplication, setJobCandidateApplication] = useState([])
+  const [allCategory, setAllCategory] = useState([]);
+  const [allLocation, setAllLocation] = useState([]);
+  const [search, setSearch] = useState("");
+  const [myJobRecruitment, setMyJobRecruitment] = useState([]);
+  const [category, setCategory] = useState("");
+  const [operationSector, setOperationSector] = useState("");
+  const [page, setPage] = useState("");
+  const [fieldSort, setFieldSort] = useState("");
+  const [typeSort, setTypeSort] = useState("");
+  const [token, setToken] = useState(null);
+  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [position, setPosition] = useState("");
+  const [type, setType] = useState("");
+  const [level, setLevel] = useState("");
+  const [ageFrom, setAgeFrom] = useState("");
+  const [ageTo, setAgeTo] = useState("");
+  const [experience, setExperience] = useState("");
+  const [salary, setSalary] = useState("");
+  const [numberApplicant, setNumberApplicant] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState([]);
+  const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(undefined);
 
   useEffect(() => {
-    getallCategory()
-    getallLocation()
-    getJobHomePage("")
-    const getToken = JSON.parse(localStorage.getItem('token'))
-    setToken(getToken)
+    getallCategory();
+    getallLocation();
+    getJobHomePage("");
+    const getToken = JSON.parse(localStorage.getItem("token"));
+    setToken(getToken);
   }, []);
-  
+
   const getJobHomePage = async (categoryId) => {
     // console.log('id',categoryId);
-    const user_category = {"categoryId"  : categoryId }
+    const user_category = { categoryId: categoryId };
     const jobs = await fetch(
       `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
       {
@@ -52,7 +52,6 @@ const JobProvider = ({ children }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-
         },
       }
     )
@@ -65,44 +64,51 @@ const JobProvider = ({ children }) => {
       });
     return jobs;
   };
-  
 
-  const getMyRecruitmentJobs = async (token,search,category,page,date) => {
-    await axios.get(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${category ?? ""}&page=${page}&fieldSort=${date}`,
-      { headers: {authorization: `Bearer ${token}`} },
-    
-    ).then((res) => {
-      const data = res.data;
-    
-      setMyJobRecruitment(data.myRcm);
-     
-      if (!localStorage.getItem("myRcm")) { 
-        localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
-      }
-    }).catch((error) => console.log(error.response));
-}
+  const getMyRecruitmentJobs = async (token, search, category, page, date) => {
+    await axios
+      .get(
+        `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${
+          category ?? ""
+        }&page=${page}&fieldSort=${date}`,
+        { headers: { authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        const data = res.data;
 
+        setMyJobRecruitment(data.myRcm);
 
-  const getJobCandidateApplication = async (token,status) => {
-    await axios.get(
-        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application?status=${status ?? ""}`,
-        { headers: {authorization: `Bearer ${token}`} },
-    ).then((res) => {
-      const data = res.data;
-      localStorage.setItem("C-applied", JSON.stringify(data));
-      setJobCandidateApplication(data);
-      return data
-      // console.log('data', (data[0].recruimentId))
-    }).catch((error) => console.log(error.response));
-  }
-  
+        if (!localStorage.getItem("myRcm")) {
+          localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
+        }
+      })
+      .catch((error) => console.log(error.response));
+  };
+
+  const getJobCandidateApplication = async (token, status) => {
+    await axios
+      .get(
+        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application?status=${
+          status ?? ""
+        }`,
+        { headers: { authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        const data = res.data;
+        localStorage.setItem("C-applied", JSON.stringify(data));
+        setJobCandidateApplication(data);
+        return data;
+        // console.log('data', (data[0].recruimentId))
+      })
+      .catch((error) => console.log(error.response));
+  };
+
   const fetchCandidateApplication = async (id) => {
-    let applicationDetail = await JobApi.CandidateApplicationDetail(id)
-    if(applicationDetail){
-      return applicationDetail
+    let applicationDetail = await JobApi.CandidateApplicationDetail(id);
+    if (applicationDetail) {
+      return applicationDetail;
     }
-  }
+  };
 
   //fetch all Job
   const fetchAllJobs = async () => {
@@ -119,21 +125,21 @@ const JobProvider = ({ children }) => {
       return jobDetail;
     }
   };
-  /// fetch all category 
-  const getallCategory = async() =>{
-    const categories = await JobApi.categories()
-    setAllCategory(categories)
-  }
+  /// fetch all category
+  const getallCategory = async () => {
+    const categories = await JobApi.categories();
+    setAllCategory(categories);
+  };
   //fetch all location
-  const getallLocation= async() =>{
-    const locations = await JobApi.locations()
+  const getallLocation = async () => {
+    const locations = await JobApi.locations();
     // console.log('loca',locations);
-    setAllLocation(locations)
-  }
+    setAllLocation(locations);
+  };
   //create recruiment
-  const createRecruiment = async (description,createAt,deadline,age) =>{
-    const getUserId = JSON.parse(localStorage.getItem('currentUser'))
-    const userId = getUserId.id
+  const createRecruiment = async (description, createAt, deadline, age) => {
+    const getUserId = JSON.parse(localStorage.getItem("currentUser"));
+    const userId = getUserId.id;
     const newRecruiment = JobApi.recruiment(
       title,
       userId,
@@ -149,103 +155,160 @@ const JobProvider = ({ children }) => {
       category,
       createAt,
       deadline
+    );
+    console.log("new", newRecruiment);
+    const createRecruiment = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/new`,
+      {
+        method: "post",
+        body: JSON.stringify(newRecruiment),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
     )
-    console.log('new',newRecruiment);
-    const createRecruiment = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/new`,{
-      method: "post",
-      body: JSON.stringify(newRecruiment),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        authorization: `Bearer ${token}`,
-      },
-    }).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      return data
-    })
-    return createRecruiment
-
-  }
-
-  //post CV
-  const postCV = async ( id, file, token) => {
-
-    const CvData = new FormData();
-		CvData.append('formFile', file);
-    let userCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/app/${id}`,
-    {
-      method: "POST",
-      body: CvData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      }
-    }).then((res)=>{
-      if( res.ok ) {
-        return res.json()
-      }
-      return Promise.reject(res)
-    }).then((data)=>{
-      return data;
-    }).catch((err) => {
-      console.log(err);
-    })
-    return userCV
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+    return createRecruiment;
   };
 
-  const confirmCV = async( value,idCv, token ) => {
-      const item = {status: value}
-    const updateCV = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCv}`,
-    {
-      method: "PUT",
-      body: JSON.stringify(item),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        authorization: `Bearer ${token}`,
-      },
-    }).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      let user = localStorage.getItem("currentUser")
-      user = JSON.parse(user);
-      user.status = data.status
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      return data;
-    })
-    return updateCV
-  }
+  //updateRecruitment
+  const updateRecruitment = async (description, deadline, age, id) => {
+    const getUserId = JSON.parse(localStorage.getItem("currentUser"));
+    const newUpdatedRecruitment = JobApi.update(
+      title,
+      description,
+      position,
+      type,
+      level,
+      age,
+      experience,
+      salary,
+      numberApplicant,
+      deadline
+    );
+    console.log("update", newUpdatedRecruitment);
+    const updateRecruitment = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(newUpdatedRecruitment),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+    return updateRecruitment;
+  };
 
-  const filterCV = async ( id, status, token ) => {
-      const filter = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}?status=${status}`,
+  //post CV
+  const postCV = async (id, file, token) => {
+    const CvData = new FormData();
+    CvData.append("formFile", file);
+    let userCV = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/app/${id}`,
+      {
+        method: "POST",
+        body: CvData,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return userCV;
+  };
+
+  const confirmCV = async (value, idCv, token) => {
+    const item = { status: value };
+    const updateCV = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCv}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.status = data.status;
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        return data;
+      });
+    return updateCV;
+  };
+
+  const filterCV = async (id, status, token) => {
+    const filter = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}?status=${status}`,
       {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
-        }
-      }).then((res)=>{
-        return res.json()
-      }).then((data)=>{
-        return data;
-      })
-      return filter
-  }
-
-  const deleteCV = async ( idCV, token ) => {
-    const del = await fetch (`https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCV}`,
-    {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${token}`,
+        },
       }
-    }).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      return data;
-    })
-    return del
-}
-  
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+    return filter;
+  };
+
+  const deleteCV = async (idCV, token) => {
+    const del = await fetch(
+      `https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCV}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+    return del;
+  };
 
   const value = {
     getJobHomePage,
@@ -263,7 +326,11 @@ const JobProvider = ({ children }) => {
     setFieldSort,
     setTypeSort,
     setSearch,
-    search, category, page,fieldSort, typeSort, 
+    search,
+    category,
+    page,
+    fieldSort,
+    typeSort,
     token,
     getJobCandidateApplication,
     jobCandidateApplication,
@@ -297,9 +364,10 @@ const JobProvider = ({ children }) => {
     location,
     category,
     date,
+    updateRecruitment,
     confirmCV,
     filterCV,
-    deleteCV
+    deleteCV,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

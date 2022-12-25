@@ -19,9 +19,9 @@ import {
   isTitle,
   isType,
 } from "../../utils/validate";
-import create from "@ant-design/icons/lib/components/IconFont";
-import { loginUser } from "../../Actions/authAction";
-const { RangePicker } = DatePicker;
+
+import { useParams } from "react-router-dom";
+// const { RangePicker } = DatePicker;
 export default function UpdateRecruiment() {
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
@@ -38,7 +38,15 @@ export default function UpdateRecruiment() {
   const [warningNumberApplicant, setWarningNumberApplicant] = useState(false);
   const [warningLocation, setWarningLocaion] = useState(false);
   const [warningCategory, setWarningCategory] = useState(false);
-
+  const [jobDetail,setJobDetail] = useState({})
+  const {id} = useParams()
+  useEffect(()=>{
+    const getDetailFunc = async()=>{
+      const getDetail = await fetchJobDetail(id)
+      setJobDetail(getDetail);
+    }
+    getDetailFunc()
+  },[id])
   const {
     allCategory,
     allLocation,
@@ -70,15 +78,16 @@ export default function UpdateRecruiment() {
     location,
     category,
     date,
-    createRecruiment,
+    updateRecruitment,
+    fetchJobDetail
   } = useContext(JobContext);
 
   const today = new Date();
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1; // Months start at 0!
   let dd = today.getDate();
-  const formattedToday = dd + "/" + mm + "/" + yyyy;
-
+  const formattedToday =  yyyy + "/" + mm + "/" + dd;
+  const dateFormat = 'YYYY/MM/DD'
   useEffect(() => {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
@@ -88,57 +97,14 @@ export default function UpdateRecruiment() {
     setCkEditorOutput(editor.getData());
   };
 
-  const submitRecruiment = (e, dateCompare) => {
+  const submitRecruiment = (e) => {
     e.preventDefault();
     let stringAge = `${ageFrom}-${ageTo}`;
-    if (!isTitle(title)) {
-      setWarningTitle(true);
-      return;
+    if(location===""){
+      setLocation(null)
     }
-    if (!isPosition(position)) {
-      setWarningPosition(true);
-      return;
-    }
-    if (!isType(type)) {
-      setWarningType(true);
-      return;
-    }
-    if (!isLevel(level)) {
-      setWarningLevel(true);
-      return;
-    }
-    if (!isSalary(salary)) {
-      setWarningSalary(true);
-      return;
-    }
-    if (!isNumberApplicant(numberApplicant)) {
-      setWarningNumberApplicant(true);
-      return;
-    }
-    if (!isExperience(experience)) {
-      setWarningExp(true);
-      return;
-      
-    }
-    if (!isAge(ageFrom)) {
-      setWarningAge(true);
-      return;
-    }
-    if (!isCategory(category)) {
-      setWarningCategory(true);
-      return;
-    }
-    if (!isLocation(location)) {
-      setWarningLocaion(true);
-      return;
-    }
-    if (!isDescription(ckEditorOutput)) {
-      setWarningDescription(true);
-      return;
-    }
-    if (date[0] < formattedToday || date[0] > formattedToday) {
-      setAlerToday(true);
-      return;
+    if(category===""){
+      setCategory(null)
     }
     setWarningTitle(false);
     setWarningPosition(false);
@@ -151,7 +117,7 @@ export default function UpdateRecruiment() {
     setWarningCategory(false);
     setWarningLocaion(false);
     setWarningDescription(false);
-    createRecruiment(ckEditorOutput, date[0], date[1], stringAge);
+    updateRecruitment(ckEditorOutput, date, stringAge,id);
   };
 
   return (
@@ -197,13 +163,16 @@ export default function UpdateRecruiment() {
             <Row>
               <Col md={6}>
                 <Form.Group className="form-deadline">
-                  <Form.Label>Thời hạn ứng tuyển từ: </Form.Label>
+                  <Form.Label>Gia hạn ứng tuyển : </Form.Label>
                   <Space direction="vertical" size={12}>
-                    <RangePicker
-                      format={"DD/MM/YYYY"}
+                    <DatePicker
+                      format={dateFormat}
                       id="date"
                       name="date"
-                      onChange={(e, dateString) => setDate(dateString)}
+                      onChange={(e, dateString) => {
+                        console.log('date',dateString);
+                        setDate(dateString)
+                      }}
                     />
                   </Space>
                 </Form.Group>
@@ -283,13 +252,13 @@ export default function UpdateRecruiment() {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Col>
                 <Form.Label>
                   Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
                 </Form.Label>
                 <Form.Select onChange={(e) => setCategory(e.target.value)}>
-                  <option></option>
+                  <option value={jobDetail.}></option>
                   {allCategory?.map((item, index) => {
                     return (
                       <option value={item._id} key={index}>
@@ -304,9 +273,9 @@ export default function UpdateRecruiment() {
                   </Form.Text>
                 )}
               </Col>
-            </Row>
+            </Row> */}
 
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Col>
                 <Form.Label>
                   Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
@@ -327,7 +296,7 @@ export default function UpdateRecruiment() {
                   </Form.Text>
                 )}
               </Col>
-            </Row>
+            </Row> */}
             <Form.Group className="mb-3">
               <Form.Label>
                 Mức Lương <span style={{ color: "red" }}>*</span>

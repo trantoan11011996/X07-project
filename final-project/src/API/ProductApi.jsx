@@ -40,6 +40,7 @@ import React, { useEffect, useState } from "react";
     });
 
     if (res.status === 200) {
+        localStorage.setItem("jobDetail",JSON.stringify(res.data))
         return res.data;
     }
  }
@@ -104,6 +105,34 @@ import React, { useEffect, useState } from "react";
     };
     return recruimentInfo;
   };
+
+ const updateRecruitment =(
+  title,
+  description,
+  position,
+  type,
+  level,
+  age,
+  experience,
+  salary,
+  numberApplicant,
+  deadline
+ ) => {
+    const updateInfo = {
+      title: title,
+      description: description,
+      position: position,
+      type: type,
+      level: level,
+      age: age,
+      experience: experience,
+      salary: salary,
+      numberApplicant: numberApplicant,
+      deadline: deadline,
+    }
+    return updateInfo
+ }
+
  const JobApi = {
     allJobs : fetchAllJobs,
     homepageJob: fetchJobHomepage,
@@ -111,6 +140,7 @@ import React, { useEffect, useState } from "react";
     categories : getAllCategory,
     locations:getAllLocation,
     recruiment : createRecruiment,
+    update: updateRecruitment
    
  }
 
