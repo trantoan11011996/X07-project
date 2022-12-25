@@ -53,7 +53,7 @@ export default function JobDetail() {
   const [MyRcmAlert, setMyRcmAlert] = useState(false);
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
-  
+  console.log('current',userCurrent);
   const handleClose = () => setShow(false);
 
   useEffect(() => {
@@ -221,7 +221,7 @@ export default function JobDetail() {
                       </Col>
                     </Row>
 
-                    {(userCurrent.role == "candidate" || user.role == "candidate" || !userCurrent) && (
+                    {( !userCurrent || userCurrent.role === "candidate") && (
                       <Row>
                         <Space wrap>
                           {!active ? (
