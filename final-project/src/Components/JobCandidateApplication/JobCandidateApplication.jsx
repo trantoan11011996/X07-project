@@ -30,11 +30,11 @@ export const JobCandidateApplication = () => {
     getJobCandidateApplication(userToken, null);
   }, [userToken]);
   
-  useEffect(() => {
-    const getlocalToken = JSON.parse(localStorage.getItem("token"));
-    const status = params.get("status");
-    getJobCandidateApplication(getlocalToken, status);
-  }, [params]);
+  // useEffect(() => {
+  //   const getlocalToken = JSON.parse(localStorage.getItem("token"));
+  //   const status = params.get("status");
+  //   getJobCandidateApplication(getlocalToken, status);
+  // }, [params]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

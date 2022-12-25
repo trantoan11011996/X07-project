@@ -16,7 +16,7 @@ function ApplicationItems({ job, recruimentId, id }) {
   // console.log('recruiTd', recruimentId)
   console.log('job', job)
   // console.log('item',recruimentId)
-  const [jobStatus, setJobStatus] = useState(job?.status);
+  // const [jobStatus, setJobStatus] = useState(job?.status);
   const [recruitmentStatus, setRecruitmentStatus] = useState(
     recruimentId?.status
   );
@@ -39,6 +39,23 @@ function ApplicationItems({ job, recruimentId, id }) {
       setRecruitmentStatus("Đang hoạt động");
     }
   }, [job]);
+  // useEffect(() => {
+  //   if (jobStatus === "pending") {
+  //     setJobStatus("Đang chờ");
+  //     return
+  //   }
+  //   if (jobStatus === "accepted") {
+  //     setJobStatus("Đã xác nhận");
+  //     return
+  //   }
+  //   if (jobStatus === "denied") {
+  //     setJobStatus("Đã từ chối");
+  //     return
+  //   }
+  //   if (recruitmentStatus === "active") {
+  //     setRecruitmentStatus("Đang hoạt động");
+  //   }
+  // }, [job]);
 
   const handleDelete = () => {
     deleteCV(job._id, userToken)
@@ -85,7 +102,9 @@ function ApplicationItems({ job, recruimentId, id }) {
               </div>
               <div className={cx("small_detail")}>
                 <div className={cx("deadline")}>
-                  <b> Trạng thái đơn ứng tuyển: {jobStatus} </b>
+                  {job?.status === "denied" && <b> Trạng thái đơn ứng tuyển: Đã từ chối </b>}
+                  {job?.status === "accpeted" && <b> Trạng thái đơn ứng tuyển: Đã chấp nhận </b>}
+                  {job?.status === "pending" && <b> Trạng thái đơn ứng tuyển: Đang chờ </b>}
                 </div>
                 <div className={cx("deadline")}>
                   <b>Trạng thái tin ứng tuyển: {recruitmentStatus}</b>
