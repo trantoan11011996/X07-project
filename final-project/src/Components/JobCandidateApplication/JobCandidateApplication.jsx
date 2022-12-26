@@ -42,8 +42,8 @@ export const JobCandidateApplication = () => {
   };
 
   useEffect(() => {
-    getJobCandidateApplication(token, statusParams);
-  }, [jobCandidateApplication])
+    getJobCandidateApplication(userToken, statusParams);
+  }, [jobCandidateApplication]);
 
   return (
     <>

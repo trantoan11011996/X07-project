@@ -221,7 +221,7 @@ const JobProvider = ({ children }) => {
     const CvData = new FormData();
     CvData.append("formFile", file);
     let userCV = await fetch(
-      getApiHost() + `recruiments/app/${id}`,
+      getApiHost() + `recruiments/apply/${id}`,
       {
         method: "POST",
         body: CvData,
@@ -231,12 +231,10 @@ const JobProvider = ({ children }) => {
       }
     )
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res);
+        return res.json();
       })
       .then((data) => {
+        console.log(data);
         return data;
       })
       .catch((err) => {
