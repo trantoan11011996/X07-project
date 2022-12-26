@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { getApiHost } from "../config";
 // url
- const url = "https://xjob-mindx-production.up.railway.app";
- const allJobUrl = url + "/api/recruiments";
+ const url = getApiHost();
+ const allJobUrl = url + "recruiments";
  const homepageJobUrl = allJobUrl + "/home-page";
 
  const fetchAllJobs = async () => {
@@ -31,7 +32,7 @@ import React, { useEffect, useState } from "react";
  }
 
  const fetchJobDetail = async (id) => {
-    const JobDetailUrl = `https://xjob-mindx-production.up.railway.app/api/recruiments/detail/${id}`
+    const JobDetailUrl = getApiHost() + `recruiments/detail/${id}`
 
     const res = await axios({
         method: "get",
@@ -50,7 +51,7 @@ import React, { useEffect, useState } from "react";
 
 
  const getAllCategory = async() =>{
-    const categories = await fetch(`https://xjob-mindx-production.up.railway.app/api/users/category`,{
+    const categories = await fetch(getApiHost() + `users/category`,{
       method :"GET"
     }).then((res)=>{
       return res.json()
@@ -60,7 +61,7 @@ import React, { useEffect, useState } from "react";
     return categories
   }
   const getAllLocation = async() =>{
-    const locations = await fetch(`https://xjob-mindx-production.up.railway.app/api/users/location`,{
+    const locations = await fetch(getApiHost() + `users/location`,{
       method :"GET"
     }).then((res)=>{
       return res.json()

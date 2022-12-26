@@ -10,6 +10,7 @@ import "../User_recruiter/recruiter.css";
 import { MdAccountCircle } from "react-icons/md";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { getApiHost } from "../../../../config";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
@@ -81,7 +82,7 @@ export default function UserRecruiter() {
     formData.append("formFile", selectedFile);
     console.log("token", token);
     const uploadImage = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
+      getApiHost() + "users/upload-single-file",
       {
         method: "post",
         body: formData,
@@ -181,7 +182,7 @@ export default function UserRecruiter() {
   }
   const getAllCategory = async () => {
     const all = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/users/operation-sector`,
+      getApiHost() + `users/operation-sector`,
       {
         method: "GET",
         headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import JobApi from "../API/ProductApi";
 import axios from "axios";
+import { getApiHost } from "../config";
 
 const JobContext = createContext();
 
@@ -33,7 +34,6 @@ const JobProvider = ({ children }) => {
   const [date, setDate] = useState([]);
   const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(undefined);
-
   useEffect(() => {
     getallCategory();
     getallLocation();
@@ -46,7 +46,7 @@ const JobProvider = ({ children }) => {
     // console.log('id',categoryId);
     const user_category = { categoryId: categoryId };
     const jobs = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/home-page/`,
+      getApiHost() + `recruiments/home-page/`,
       {
         method: "POST",
         headers: {
@@ -68,7 +68,7 @@ const JobProvider = ({ children }) => {
   const getMyRecruitmentJobs = async (token, search, category, page, date) => {
     await axios
       .get(
-        `https://xjob-mindx-production.up.railway.app/api/recruiments/my-recruiment?search=${search}&category=${
+        getApiHost() + `recruiments/my-recruiment?search=${search}&category=${
           category ?? ""
         }&page=${page}&fieldSort=${date}`,
         { headers: { authorization: `Bearer ${token}` } }
@@ -88,7 +88,7 @@ const JobProvider = ({ children }) => {
   const getJobCandidateApplication = async (token, status) => {
     await axios
       .get(
-        `https://xjob-mindx-production.up.railway.app/api/recruiments/list-recruiment-application?status=${
+        getApiHost() + `recruiments/list-recruiment-application?status=${
           status ?? ""
         }`,
         { headers: { authorization: `Bearer ${token}` } }
@@ -158,7 +158,7 @@ const JobProvider = ({ children }) => {
     );
     console.log("new", newRecruiment);
     const createRecruiment = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/new`,
+      getApiHost() + `recruiments/new`,
       {
         method: "post",
         body: JSON.stringify(newRecruiment),
@@ -195,7 +195,7 @@ const JobProvider = ({ children }) => {
     );
     console.log("update", newUpdatedRecruitment);
     const updateRecruitment = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/${id}`,
+      getApiHost() + `recruiments/${id}`,
       {
         method: "PUT",
         body: JSON.stringify(newUpdatedRecruitment),
@@ -221,7 +221,7 @@ const JobProvider = ({ children }) => {
     const CvData = new FormData();
     CvData.append("formFile", file);
     let userCV = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/app/${id}`,
+      getApiHost() + `recruiments/app/${id}`,
       {
         method: "POST",
         body: CvData,
@@ -248,7 +248,7 @@ const JobProvider = ({ children }) => {
   const confirmCV = async (value, idCv, token) => {
     const item = { status: value };
     const updateCV = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCv}`,
+      getApiHost() + `recruiments/application/${idCv}`,
       {
         method: "PUT",
         body: JSON.stringify(item),
@@ -274,7 +274,7 @@ const JobProvider = ({ children }) => {
 
   const filterCV = async (id, status, token) => {
     const filter = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${id}?status=${status}`,
+      getApiHost() + `recruiments/list-candidate-application/${id}?status=${status}`,
       {
         method: "GET",
         headers: {
@@ -293,7 +293,7 @@ const JobProvider = ({ children }) => {
 
   const deleteCV = async (idCV, token) => {
     const del = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/application/${idCV}`,
+      getApiHost() + `recruiments/application/${idCV}`,
       {
         method: "DELETE",
         headers: {
