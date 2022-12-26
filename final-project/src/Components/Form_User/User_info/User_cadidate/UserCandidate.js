@@ -17,6 +17,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
+import { getApiHost } from "../../../../config";
 
 export default function UserCandidate() {
   const {
@@ -80,7 +81,7 @@ export default function UserCandidate() {
 
   const getAllCategory = async () => {
     const all = await fetch(
-      `https://xjob-mindx-production.up.railway.app/api/users/category`,
+      getApiHost() + `users/category`,
       {
         method: "GET",
         headers: {
@@ -109,7 +110,7 @@ export default function UserCandidate() {
 
     formData.append("formFile", selectedFile);
     const uploadImage = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/upload-single-file",
+      getApiHost() + "users/upload-single-file",
       {
         method: "POST",
         body: formData,

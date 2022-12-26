@@ -8,12 +8,13 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
 } from "../Constants/userConstant";
+import { getApiHost } from "../config";
 export const updatePassword =
   (currentPassword, newPassword, token) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PASSWORD_REQUEST });
       const data = await axios.put(
-        "https://xjob-mindx-production.up.railway.app/api/users/update-password",
+        getApiHost() + "users/update-password",
         { currentPassword, newPassword },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -39,7 +40,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } };
 
     const data = await axios.post(
-      "https://xjob-mindx-production.up.railway.app/api/users/forgot-password",
+      getApiHost() + "users/forgot-password",
       { email },
       config
     );

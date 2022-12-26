@@ -5,6 +5,7 @@ import UserApi from "../API/UserApi";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { async } from "q";
+import { getApiHost } from "../config";
 
 const UserContext = createContext();
 
@@ -57,7 +58,7 @@ const UserProvider = ({ children }) => {
     // push lên API
     let item = { email: email, password: password, role: role };
     let user = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/register",
+      `${getApiHost()}users/register`,
       {
         method: "POST",
         body: JSON.stringify(item),
@@ -115,7 +116,7 @@ const UserProvider = ({ children }) => {
     );
 
     const user_info = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
+      `${getApiHost()}users/update-profile`,
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -163,7 +164,7 @@ const UserProvider = ({ children }) => {
       operationSector
     );
     let user_info = await fetch(
-      "https://xjob-mindx-production.up.railway.app/api/users/update-profile",
+      getApiHost() + "users/update-profile",
       {
         method: "PUT",
         body: JSON.stringify(info),
@@ -192,7 +193,7 @@ const UserProvider = ({ children }) => {
 
   const getCandidateList = async ( idRcm,token) => {
     const candidateList = await fetch (
-      `https://xjob-mindx-production.up.railway.app/api/recruiments/list-candidate-application/${idRcm}`,
+      getApiHost() + `recruiments/list-candidate-application/${idRcm}`,
       {
         method: "GET",
         headers: {

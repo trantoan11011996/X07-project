@@ -6,12 +6,13 @@ import {
   LOGOUT,
 } from "../Constants/authConstant";
 import axios from "axios";
+import { getApiHost } from "../config";
 export const loginUser = (email, password, navigate) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "https://xjob-mindx-production.up.railway.app/api/users/login",
+      getApiHost() + "users/login",
       { email, password },
       config
     );

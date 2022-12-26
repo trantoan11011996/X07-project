@@ -7,28 +7,28 @@ import {
   GET_ALL_JOB_REQUEST,
   GET_ALL_JOB_SUCCESS,
 } from "../Constants/jobConstants";
-
+import { getApiHost } from "../config";
 export const getAllJobs =
   (search = "", createAt = "", deadline = "", defaults = "", id = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_ALL_JOB_REQUEST });
 
-      let link = "https://xjob-mindx-production.up.railway.app/api/recruiments";
+      let link = getApiHost() + "recruiments";
       if (search) {
-        link = `https://xjob-mindx-production.up.railway.app/api/recruiments?search=${search}`;
+        link = getApiHost() + `recruiments?search=${search}`;
       }
       if (createAt) {
-        link = `https://xjob-mindx-production.up.railway.app/api/recruiments?fieldSort=${createAt}`;
+        link = getApiHost() + `recruiments?fieldSort=${createAt}`;
       }
       if (deadline) {
-        link = `https://xjob-mindx-production.up.railway.app/api/recruiments?fieldSort=${deadline}`;
+        link = getApiHost() + `recruiments?fieldSort=${deadline}`;
       }
       if (defaults) {
-        link = "https://xjob-mindx-production.up.railway.app/api/recruiments";
+        link = getApiHost() + "recruiments";
       }
       if (id) {
-        link = `https://xjob-mindx-production.up.railway.app/api/recruiments?category=${id}`;
+        link = getApiHost() + `recruiments?category=${id}`;
       }
       const { data } = await axios.get(link);
       dispatch({ type: GET_ALL_JOB_SUCCESS, payload: data });
@@ -45,7 +45,7 @@ export const getAllJobCategory = () => async (dispatch) => {
     dispatch({ type: GET_ALL_CATEGORY_REQUEST });
 
     const { data } = await axios.get(
-      `https://xjob-mindx-production.up.railway.app/api/users/category`
+      getApiHost() + `users/category`
     );
 
     dispatch({ type: GET_ALL_CATEGORY_SUCCESS, payload: data });
