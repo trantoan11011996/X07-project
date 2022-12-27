@@ -96,14 +96,14 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         console.log("data", data);
-        const splitString = data.split("/");
-        const imageString = splitString[1] + "/".concat(splitString[2]);
-        setImageData(imageString);
-        let user = localStorage.getItem("currentUser");
-        user = JSON.parse(user);
-        user.avatar = data;
-        console.log("user", user);
-        localStorage.setItem("currentUser", JSON.stringify(user));
+        // const splitString = data.split("/");
+        // const imageString = splitString[1] + "/".concat(splitString[2]);
+        // setImageData(imageString);
+        // let user = localStorage.getItem("currentUser");
+        // user = JSON.parse(user);
+        // user.avatar = data;
+        // console.log("user", user);
+        // localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;
@@ -214,7 +214,7 @@ export default function UserRecruiter() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src={`https://xjob-mindx-production.up.railway.app/${imageData}`}
+                src={`${getApiHost}${imageData}`}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>

@@ -156,7 +156,6 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     );
-    console.log("new", newRecruiment);
     const createRecruiment = await fetch(
       getApiHost() + `recruiments/new`,
       {
