@@ -37,8 +37,9 @@ import { Space } from "antd";
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
-  const { fetchJobDetail, postCV } = useContext(JobContext);
+  const { fetchJobDetail, postCV, checkCV } = useContext(JobContext);
   const [err, setErr] = useState(false);
+  const [cvErr, setCvErr] = useState(false);
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState("");
@@ -132,18 +133,27 @@ export default function JobDetail() {
     }
   };
 
-  const handleActive = (event) => {
+  const handleActive = async (event) => {
     event.preventDefault();
     setCheck(false);
     
-    if(file == "" ) {
+    if(file == "" || file == null) {
       setErr(true)
       return
     } else {
       setErr(false)
-      postCV(id, file, token);
-      handleClose();
-      setActive(true);
+      const post = await postCV(id, file, token);
+      if (post.status == "400") {
+        setCvErr(true)
+        return
+      } else {
+        setCvErr(false)
+        handleClose();
+        // const check = checkCV(id, token)
+        // console.log("checked", check.data);
+        setActive(true);
+      }
+      
     }
   };
 
@@ -436,6 +446,7 @@ export default function JobDetail() {
                   onChange={(event) => setFile(event.target.files[0])}
                 />
               {err && (<p className="err">Hồ sơ không được để trống </p>)}
+              {cvErr && (<p className="err"> Không gửi dữ liệu thành công </p>)}
               </Form.Group>
 
               <Form.Group>

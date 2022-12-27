@@ -9,7 +9,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { JobContext } from "../../Context/JobContext";
 const cx = classNames.bind(styles);
 
-function ApplicationItems({ job, recruimentId, id }) {
+function ApplicationItems({ job, recruimentId, id, handleDelete }) {
   const image = recruimentId?.name?.avatar;
   const splitString = image.split("/");
   const imageString = splitString[1] + "/".concat(splitString[2]);
@@ -57,10 +57,10 @@ function ApplicationItems({ job, recruimentId, id }) {
   //   }
   // }, [job]);
 
-  const handleDelete = () => {
-    deleteCV(job._id, userToken)
-    console.log("job del", job);
-  }
+  // const handleDelete = () => {
+  //   deleteCV(job._id, userToken)
+  //   console.log("job del", job);
+  // }
 
   return (
     <Fragment>
@@ -118,7 +118,7 @@ function ApplicationItems({ job, recruimentId, id }) {
           <Col sm={5} md={5}></Col>
           <Col sm={4} md={4}></Col>
           <Col sm={3} md={3}>
-            <button className={cx("delete-button")} onClick={handleDelete}>
+            <button className={cx("delete-button")} onClick={(e) => handleDelete(job._id, userToken, e)} value="cancel">
               Hủy ứng tuyển
             </button>
           </Col>

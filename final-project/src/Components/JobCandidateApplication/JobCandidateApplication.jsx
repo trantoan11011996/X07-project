@@ -17,7 +17,7 @@ export const JobCandidateApplication = () => {
   const { jobCandidateApplication, getJobCandidateApplication, deleteCV } = useContext(JobContext);
   const token = localStorage.getItem("token");
   const userToken = JSON.parse(token);
-
+  const [confirmDelete, setConfirmDelete] = useState("")
   const [params, setParams] = useSearchParams();
 
   const setParamKey = (key, value) => {
@@ -25,25 +25,32 @@ export const JobCandidateApplication = () => {
     setParams({ ...currentParams, [key]: value });
   };
 
-  const statusParams = params.get("status");
+ 
   useEffect(() => {
     getJobCandidateApplication(userToken, null);
   }, [userToken]);
   
-  // useEffect(() => {
-  //   const getlocalToken = JSON.parse(localStorage.getItem("token"));
-  //   const status = params.get("status");
-  //   getJobCandidateApplication(getlocalToken, status);
-  // }, [params]);
+  useEffect(() => {
+    const getlocalToken = JSON.parse(localStorage.getItem("token"));
+    const status = params.get("status");
+    getJobCandidateApplication(getlocalToken, status);
+  }, [params]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getJobCandidateApplication(userToken, statusParams);
+    const status = params.get("status");
+    getJobCandidateApplication(userToken, status);
   };
 
+  const handleDelete = (idCV, token, e) => {
+    deleteCV(idCV, token);
+    setConfirmDelete(e.target.value);
+    getJobCandidateApplication(token, "",);
+  }
+
   useEffect(() => {
-    getJobCandidateApplication(userToken, statusParams);
-  }, [jobCandidateApplication]);
+    getJobCandidateApplication(userToken, "",);
+  }, [confirmDelete])
 
   return (
     <>
@@ -97,6 +104,7 @@ export const JobCandidateApplication = () => {
                 <ul className={cx("list_group_jobs")}>
                   <ApplicationList
                     jobCandidateApplication={jobCandidateApplication}
+                    handleDelete = {handleDelete}
                   />
                 </ul>
               </div>

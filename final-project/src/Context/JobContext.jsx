@@ -68,8 +68,7 @@ const JobProvider = ({ children }) => {
   const getMyRecruitmentJobs = async (token, search, category, page, date) => {
     await axios
       .get(
-        getApiHost() + `recruiments/my-recruiment?search=${search}&category=${
-          category ?? ""
+        getApiHost() + `recruiments/my-recruiment?search=${search}&category=${category ?? ""
         }&page=${page}&fieldSort=${date}`,
         { headers: { authorization: `Bearer ${token}` } }
       )
@@ -88,8 +87,7 @@ const JobProvider = ({ children }) => {
   const getJobCandidateApplication = async (token, status) => {
     await axios
       .get(
-        getApiHost() + `recruiments/list-recruiment-application?status=${
-          status ?? ""
+        getApiHost() + `recruiments/list-recruiment-application?status=${status ?? ""
         }`,
         { headers: { authorization: `Bearer ${token}` } }
       )
@@ -231,15 +229,14 @@ const JobProvider = ({ children }) => {
       }
     )
       .then((res) => {
-        return res.json();
+        if (res.status == 200) {
+          return res.json()
+        } else {
+          return res
+        }
+      }).catch((err) => {
+        return err
       })
-      .then((data) => {
-        console.log(data);
-        return data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     return userCV;
   };
 
@@ -308,6 +305,26 @@ const JobProvider = ({ children }) => {
     return del;
   };
 
+  const checkCV = async (idCV, token) => {
+    const check = await fetch(
+      getApiHost() + `recruiments/check/${idCV}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log("checkData", data);
+        return data;
+      });
+    return check;
+  };
+
   const value = {
     getJobHomePage,
     setJobHomePage,
@@ -366,6 +383,7 @@ const JobProvider = ({ children }) => {
     confirmCV,
     filterCV,
     deleteCV,
+    checkCV,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

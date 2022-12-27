@@ -5,7 +5,7 @@ import { JobContext } from "../../Context/JobContext";
 import ApplicationItems from "./ApplicationItems";
 
 
-function ApplicationList({jobCandidateApplication}){
+function ApplicationList({jobCandidateApplication, handleDelete}){
 
     return(
         <List
@@ -27,7 +27,7 @@ function ApplicationList({jobCandidateApplication}){
         dataSource={jobCandidateApplication}
         renderItem={(job) => (
           <List.Item>
-            <ApplicationItems job={job} recruimentId={job.recruimentId} id={job.recruimentId._id}/>
+            <ApplicationItems job={job} recruimentId={job.recruimentId} id={job.recruimentId._id} handleDelete= {handleDelete}/>
           </List.Item>
         )}
       ></List>
