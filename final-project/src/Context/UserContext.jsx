@@ -191,24 +191,6 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
-  const getCandidateList = async ( idRcm,token) => {
-    const candidateList = await fetch (
-      getApiHost() + `recruiments/list-candidate-application/${idRcm}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        }
-      }
-    ).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      SetlistRecruimentCv(data)
-      localStorage.setItem('listCv',JSON.stringify(data))
-      return data;
-    })
-    return candidateList
-  }
 
   const value = {
     userData,
@@ -256,7 +238,6 @@ const UserProvider = ({ children }) => {
     setCompanyName,
     setFieldActivity,
     token,
-    getCandidateList,
     listRecruimentCv,
     SetlistRecruimentCv
   };

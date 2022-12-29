@@ -14,20 +14,18 @@ import { getApiHost } from "../../../../config";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
-    currentUser,
-    setCurrentUser,
     companyEmail,
     companyName,
     companyPhone,
     companyAddress,
-    companyDescription,
     category,
+    companyDescription,
     setCompanyEmail,
     setCompanyPhone,
     setCompanyAddress,
     setCategory,
-    setCompanyDescription,
     setCompanyName,
+    setCompanyDescription,
     setFieldActivity,
     updateRecruiterInfo,
     setShowLogin,
@@ -48,7 +46,7 @@ export default function UserRecruiter() {
   const [selectedFile, setSelectedFile] = useState();
   const [imageData, setImageData] = useState("");
   const [token, setToken] = useState("");
-  const [ckEditorOutput, setCkEditorOutput] = useState(null);
+  const [ckEditorOutput, setCkEditorOutput] = useState(companyDescription);
   const [succes, setSucces] = useState(false);
   useEffect(() => {
     getAllCategory();
@@ -68,6 +66,7 @@ export default function UserRecruiter() {
       setCompanyPhone(user.info.phoneNumber);
       setCompanyAddress(user.info.address);
       setCategory(user.operationSector.name);
+      setCompanyDescription(user.info.description)
       return;
     }
   }, []);
@@ -355,6 +354,7 @@ export default function UserRecruiter() {
             </b>
             <CKEditor
               editor={ClassicEditor}
+              data={companyDescription}
               onChange={(event, editor) => setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
