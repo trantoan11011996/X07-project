@@ -4,43 +4,6 @@ import { Container } from "react-bootstrap";
 export default function ContactPage() {
     return (
         <Container>
-            <h2>Bộ phận Sales TP. Hồ Chí Minh</h2>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Mr. Tâm</p>
-            <p>Sđt:</p>
-            <p>(028) 3810 9357</p>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Ms. Thanh Chung</p>
-            <p>Sđt:</p>
-            <p>0916 920 719</p>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Ms. Hồng Hà</p>
-            <p>Sđt:</p>
-            <p>0916 896 162</p>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Ms. Tuyết Trang</p>
-            <p>Sđt:</p>
-            <p>(028) 3813 0500</p>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Ms. Bích Trâm</p>
-            <p>Sđt:</p>
-            <p>(028) 3810 4085</p>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Ms. Tươi</p>
-            <p>Sđt:</p>
-            <p>(028) 3812 7983</p>
-            <h2>Bộ phận Resume</h2>
-            <p>&nbsp;</p>
-            <p>Nhân viên:</p>
-            <p>Mr. Nhân</p>
-            <p>Sđt:</p>
-            <p>(028) 3810 9357</p>
             <h2>Liên hệ</h2>
             <p>&nbsp;</p>
             <p>Văn phòng tại Tp. Hồ Chí Minh</p>
