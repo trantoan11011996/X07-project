@@ -11,54 +11,52 @@ import { useParams } from "react-router";
 import { JobContext } from "../../Context/JobContext";
 import Lottie from "lottie-react";
 import loadingAnimation from "../../animationJson/loading-animation.json";
+import { useSearchParams } from "react-router-dom";
 export default function CandidateList() {
-  const { getCandidateList, listRecruimentCv, SetlistRecruimentCv } =
-    useContext(UserContext);
-  const { filterCV, confirmCV } = useContext(JobContext);
+  const { getCV, confirmCV,listRecruimentCv } = useContext(JobContext);
 
   const { id } = useParams();
   const [filterValue, setFilterValue] = useState("");
   const [statusCv, setStatusCv] = useState("");
   const [complete, setComplete] = useState(false);
+  const [params, setParams] = useSearchParams();
+
+  const setParamKey = (key, value) => {
+    let currentParams = Object.fromEntries([...params]);
+    setParams({ ...currentParams, [key]: value });
+  };
   const token = localStorage.getItem("token");
   const userToken = JSON.parse(token);
 
   useEffect(() => {
-    getCandidateList(id, userToken);
+    getCV(id,"", userToken);
   }, [id, userToken]);
   useEffect(() => {
-    getCandidateList(id, userToken);
+    getCV(id, "",userToken);
   }, [statusCv]);
 
-  const handleFilter = (event) => {
-    event.preventDefault();
-
-    if (
-      filterValue == "accepted" ||
-      filterValue == "denied" ||
-      filterValue == "pending"
-    ) {
-      const filterData = async () => {
-        const filter = await filterCV(id, filterValue, userToken);
-        SetlistRecruimentCv(filter);
-      };
-      filterData();
-    } else {
-      getCandidateList(id, userToken);
-    }
-  };
   const handleValue = (event, idCv) => {
     confirmCV(event.target.value, idCv, userToken);
     setStatusCv(event.target.value);
-    getCandidateList(id, userToken);
+    getCV(id, "",userToken);
   };
   setTimeout(() => {
     setComplete(true);
   }, 2500);
 
+  useEffect(() => {
+    const getFilterCv = async()=>{
+      const getlocalToken = JSON.parse(localStorage.getItem("token"));
+      const status = params.get("status");
+      console.log('status',status);
+      const filter = await getCV(id, status, getlocalToken);
+      console.log("filter",filter);
+    }
+    getFilterCv()
+  }, [params]);
 
   useEffect(() => {
-    getCandidateList(id, userToken)
+    getCV(id,"", userToken)
   }, [statusCv])
   return (
     <Container>
@@ -74,7 +72,7 @@ export default function CandidateList() {
           <Col sm={3} md={3} className="mt-3 mb-3 ">
             <select
               className="sort"
-              onChange={(e) => setFilterValue(e.target.value)}
+              onChange={(e) => setParamKey("status",e.target.value)}
             >
               <option value="defaults">-- Trạng thái --</option>
               <option value="accepted">Đã xác nhận</option>
@@ -86,7 +84,7 @@ export default function CandidateList() {
           <Col sm={2} md={2}>
             <button className="confirm mt-3 mb-3 ms-2">
               {" "}
-              <CiSearch onClick={(event) => handleFilter(event)} />
+              <CiSearch  />
             </button>
           </Col>
           <Col sm={4} md={4}></Col>
@@ -106,7 +104,7 @@ export default function CandidateList() {
           ) : (
             <>
               {listRecruimentCv?.length == 0 ? (
-                <p className="m-2 p-2"> Chưa có ứng viên nộp đơn</p>
+                <></>
               ) : (
                 <List
                   pagination={{

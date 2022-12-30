@@ -34,8 +34,7 @@ const JobProvider = ({ children }) => {
   const [date, setDate] = useState([]);
   const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(undefined);
- 
-
+  const [listRecruimentCv, SetlistRecruimentCv] = useState("");
   useEffect(() => {
     getallCategory();
     getallLocation();
@@ -47,16 +46,13 @@ const JobProvider = ({ children }) => {
   const getJobHomePage = async (categoryId) => {
     // console.log('id',categoryId);
     const user_category = { categoryId: categoryId };
-    const jobs = await fetch(
-      getApiHost() + `recruiments/home-page/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    )
+    const jobs = await fetch(getApiHost() + `recruiments/home-page/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -70,13 +66,14 @@ const JobProvider = ({ children }) => {
   const getMyRecruitmentJobs = async (token, search, category, page, date) => {
     await axios
       .get(
-        getApiHost() + `recruiments/my-recruiment?search=${search}&category=${category ?? ""
-        }&page=${page}&fieldSort=${date}`,
+        getApiHost() +
+          `recruiments/my-recruiment?search=${search ?? ""}&category=${
+            category ?? ""
+          }&page=${page ?? ""}&fieldSort=${date ?? ""}`,
         { headers: { authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         const data = res.data;
-
         setMyJobRecruitment(data.myRcm);
 
         if (!localStorage.getItem("myRcm")) {
@@ -156,19 +153,15 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     );
-    console.log("new", newRecruiment);
-    const createRecruiment = await fetch(
-      getApiHost() + `recruiments/new`,
-      {
-        method: "post",
-        body: JSON.stringify(newRecruiment),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const createRecruiment = await fetch(getApiHost() + `recruiments/new`, {
+      method: "post",
+      body: JSON.stringify(newRecruiment),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -194,18 +187,15 @@ const JobProvider = ({ children }) => {
       deadline
     );
     console.log("update", newUpdatedRecruitment);
-    const updateRecruitment = await fetch(
-      getApiHost() + `recruiments/${id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(newUpdatedRecruitment),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const updateRecruitment = await fetch(getApiHost() + `recruiments/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(newUpdatedRecruitment),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -220,16 +210,13 @@ const JobProvider = ({ children }) => {
   const postCV = async (id, file, token) => {
     const CvData = new FormData();
     CvData.append("formFile", file);
-    let userCV = await fetch(
-      getApiHost() + `recruiments/apply/${id}`,
-      {
-        method: "POST",
-        body: CvData,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    let userCV = await fetch(getApiHost() + `recruiments/apply/${id}`, {
+      method: "POST",
+      body: CvData,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         if (res.status == 200) {
           return res.json()
@@ -269,9 +256,10 @@ const JobProvider = ({ children }) => {
     return updateCV;
   };
 
-  const filterCV = async (id, status, token) => {
+  const getCV = async (id, status, token) => {
     const filter = await fetch(
-      getApiHost() + `recruiments/list-candidate-application/${id}?status=${status}`,
+      getApiHost() +
+        `recruiments/list-candidate-application/${id}?status=${status ?? ""}`,
       {
         method: "GET",
         headers: {
@@ -283,21 +271,20 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        SetlistRecruimentCv(data);
+        localStorage.setItem("listCv", JSON.stringify(data));
         return data;
       });
     return filter;
   };
 
   const deleteCV = async (idCV, token) => {
-    const del = await fetch(
-      getApiHost() + `recruiments/application/${idCV}`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const del = await fetch(getApiHost() + `recruiments/application/${idCV}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -382,9 +369,11 @@ const JobProvider = ({ children }) => {
     date,
     updateRecruitment,
     confirmCV,
-    filterCV,
+    getCV,
     deleteCV,
     checkCV,
+    listRecruimentCv,
+    SetlistRecruimentCv,
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

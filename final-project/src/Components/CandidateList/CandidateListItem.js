@@ -4,6 +4,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import { JobContext } from "../../Context/JobContext";
 import Lottie from "lottie-react"
 import loadingAnimation from "../../animationJson/loading-animation.json"
+import { getApiHost } from "../../config";
 export default function CandidateListItem({ data ,handleValue}) {
 
     const [status, setStatus] = useState("");
@@ -51,7 +52,7 @@ export default function CandidateListItem({ data ,handleValue}) {
             <Row>
                 <Col sm={3} md={3} className="col-avatar-cv">
                     {data.userId.avatar
-                        ? <Image className="list-avatar mt-1" src={`https://xjob-mindx-production.up.railway.app/${avatar}`} />
+                        ? <Image className="list-avatar mt-1" src={getApiHost() + `${avatar}`} />
                         : <Image className="list-avatar mt-1" src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" />
                     }
                 </Col>
@@ -59,7 +60,7 @@ export default function CandidateListItem({ data ,handleValue}) {
                     <p className="mt-2"> Tên ứng viên: {data.userId.info.fullName} </p>
                     <p className="mt-2"> Ngày gởi yêu cầu: {createDate}</p>
                     <p className="mt-2"> File đính kèm:
-                        <a href={`https://xjob-mindx-production.up.railway.app/${downloadLink}`} download>
+                        <a href={getApiHost() +`${downloadLink}`} download >
                             <Button className="download-button ms-2"> <span> Tải xuống </span></Button>
                         </a>
                     </p>

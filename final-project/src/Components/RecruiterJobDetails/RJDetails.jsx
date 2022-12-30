@@ -169,28 +169,29 @@ export default function RJDetails() {
 
                     {(user?.role == "recruiter" ||
                       currentUser?.role == "recruiter") && (
-                        <Row className="mt-2">
-                          <Space wrap>
-                            <Link to={"/update/" + jobData?._id}>
-                              <Button
-                                className="job-button"
-                                variant="primary"
-                              >
-                                Cập Nhật
-                              </Button>
-                            </Link>
-
-                            <Link to={`/CandidateList/${id}`}>
-                              <Button
-                                className="job-button"
-                                variant="outline-primary"
-                              >
-                                Danh sách ứng viên
-                              </Button>
-                            </Link>
-                          </Space>
-                        </Row>
-                      )}
+                      <Row className="mt-2">
+                          <Col sm={12} md={3}>
+                        <Link to={"/update/" + jobData?._id}>
+                            <Button
+                              className="job-button"
+                              variant="primary"
+                            >
+                              Cập Nhật
+                            </Button>
+                        </Link>
+                          </Col>
+                        <Col sm={12} md={4}>
+                          <Link to={`/CandidateList/${id}`}>
+                            <Button
+                              className="job-button"
+                              variant="outline-primary"
+                            >
+                              Danh sách ứng viên
+                            </Button>
+                          </Link>
+                        </Col>
+                      </Row>
+                    )}
                   </div>
 
                   <div className="tab-rows">
