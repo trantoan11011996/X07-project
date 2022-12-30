@@ -56,11 +56,12 @@ export default function JobDetail() {
   const userCurrent = JSON.parse(res);
   // console.log('current',userCurrent);
   const handleClose = () => setShow(false);
+  
+  const localToken = localStorage.getItem("token");
+  const userToken = JSON.parse(localToken);
+ 
 
   useEffect(() => {
-    const localToken = localStorage.getItem("token");
-    const userToken = JSON.parse(localToken);
-    setToken(userToken);
     window.scrollTo(0, 0);
   }, []);
 
@@ -69,13 +70,19 @@ export default function JobDetail() {
       await getJobDetail();
     };
     detailData();
-    const flag = checkMyRcm();
-    if (flag) {
-      setMyRcmAlert(true);
-      return;
-    }
-    setMyRcmAlert(false);
   }, [id]);
+
+  useEffect(() => {
+    const checkMyCv = async() => {
+      const check = await checkCV(id, userToken)
+      if (check == false) {
+        setMyRcmAlert(false);
+      } else {
+        setMyRcmAlert(true);
+      }
+    }
+    checkMyCv()
+  }, [])
 
   useEffect(() => {
     const description = document.getElementById("description");
@@ -103,18 +110,6 @@ export default function JobDetail() {
     setDeadlineDate(newDealine);
   }, [jobData]);
 
-  const checkMyRcm = () => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const myRcm = JSON.parse(localStorage.getItem("C-applied"));
-    if (user) {
-      if (user.role === "candidate") {
-        const foundMyRcm = myRcm.some((item) => item.recruimentId._id === id);
-        return foundMyRcm;
-      }
-    } else {
-      return false;
-    }
-  };
 
   const handleShow = () => {
     if (!userCurrent) {
@@ -142,19 +137,14 @@ export default function JobDetail() {
       return
     } else {
       setErr(false)
-      const post = await postCV(id, file, token);
+      const post = await postCV(id, file, userToken);
       if (post.status == "400") {
         setCvErr(true)
         return
       } else {
         setCvErr(false)
         handleClose();
-        const check = await checkCV(id, token)
-        if (check === true) {
-          setMyRcmAlert(true)
-        } else {
-          setMyRcmAlert(false)
-        }
+        setMyRcmAlert(true)
       }
     }
   };
@@ -246,7 +236,7 @@ export default function JobDetail() {
                             </Button>
                           ) : (
                             <Button
-                              className="job-button button-confirm"
+                              className="job-button button-confirm disabled"
                               variant="primary"
                             >
                               Đã ứng tuyển
