@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import MetaData from "../../MetaData/MetaData";
-import "../CompanyPages/compay.css";
+import "../CompanyPages/company.css";
+
 export default function CompanyPages() {
   useEffect(() => {
     window.scrollTo(0, 0);

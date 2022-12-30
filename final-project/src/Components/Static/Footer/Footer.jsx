@@ -44,18 +44,26 @@ export default function Footer() {
                 <p className={cx("header-footer-content")}>về MindXCareer</p>
                 <div className={cx("wrap-content-item")}>
                   <Link to={"/Company_about"}>
-                  <li className={cx("footer-content-item")}>Về chúng tôi</li>
+                    <li className={cx("footer-content-item")}>Về chúng tôi</li>
                   </Link>
-                  <li className={cx("footer-content-item")}>
-                    Quy chế hoạt động
-                  </li>
-                  <li className={cx("footer-content-item")}>
-                    Quy định bảo mật
-                  </li>
-                  <li className={cx("footer-content-item")}>
-                    Thỏa thuận sử dụng
-                  </li>
-                  <li className={cx("footer-content-item")}>Liên hệ</li>
+                  <Link to="/TermPage">
+                    <li className={cx("footer-content-item")}>
+                      Quy chế hoạt động
+                    </li>
+                  </Link>
+                  <Link to="PrivacyPage">
+                    <li className={cx("footer-content-item")}>
+                      Quy định bảo mật
+                    </li>
+                  </Link>
+                  <Link to="/CovenantPage">
+                    <li className={cx("footer-content-item")}>
+                      Thỏa thuận sử dụng
+                    </li>
+                  </Link>
+                  <Link to="/ContactPage">
+                    <li className={cx("footer-content-item")}>Liên hệ</li>
+                  </Link>
                 </div>
               </ul>
             </Col>

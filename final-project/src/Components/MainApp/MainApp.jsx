@@ -10,7 +10,6 @@ import RegisterForm from "../Form_User/Register/RegisterForm";
 import UserCandidate from "../Form_User/User_info/User_cadidate/UserCandidate";
 import UserRecruiter from "../Form_User/User_info/User_recruiter/UserRecruiter";
 import { UserProvider } from "../../Context/UserContext";
-import CompanyPage from "../CompanyPage/CompanyPage";
 import JobAndLocation from "../JobAndLocation/JobAndLocation";
 import ForgotPassword from "../Form_User/ForgotPassword/ForgotPassword";
 import UpdatePassword from "../Form_User/UpdatePassword/UpdatePassword";
@@ -23,8 +22,12 @@ import JobDetail from "../JobDetail/JobDetail";
 import { AvailableRecruitment } from "../AvailableRecruitment/AvailableRecruitment";
 import CandidateList from "../CandidateList/CandidateList";
 import { JobCandidateApplication } from "../JobCandidateApplication/JobCandidateApplication";
-import CompanyPages from "../AboutPages/CompanyPages/CompayPages";
+import CompanyPages from "../AboutPages/CompanyPages/CompanyPages";
 import UpdateRecruiment from "../UpdateRecruitment/UpdateRecruitment";
+import CovenantPage from "../AboutPages/CovenantPage/CovenantPage";
+import TermPage from "../AboutPages/TermPage/TermPage";
+import PrivacyPage from "../AboutPages/PrivacyPage/PrivacyPage";
+import ContactPage from "../AboutPages/ContactPage/ContactPage";
 
 export default function MainApp() {
   return (
@@ -43,7 +46,6 @@ export default function MainApp() {
                   element={<ForgotPassword />}
                 ></Route>
                 <Route path="/register" element={<RegisterForm />}></Route>
-                <Route path="/company" element={<CompanyPage />}></Route>
                 <Route
                   path="/job&location"
                   element={<JobAndLocation />}
@@ -65,6 +67,10 @@ export default function MainApp() {
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
                 <Route path="/Company_about" element={<CompanyPages/>}></Route>
                 <Route path="/update/:id" element={<UpdateRecruiment/>}></Route>
+                <Route path="/CovenantPage" element={<CovenantPage />} />
+                <Route path="/TermPage" element={<TermPage />} />
+                <Route path="/PrivacyPage" element={<PrivacyPage />} />
+                <Route path="/ContactPage" element={<ContactPage />} />
               </Routes>
               <Footer />
             </div>
