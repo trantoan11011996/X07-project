@@ -34,6 +34,8 @@ const JobProvider = ({ children }) => {
   const [date, setDate] = useState([]);
   const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(undefined);
+ 
+
   useEffect(() => {
     getallCategory();
     getallLocation();
@@ -305,9 +307,9 @@ const JobProvider = ({ children }) => {
     return del;
   };
 
-  const checkCV = async (idCV, token) => {
+  const checkCV = async (id, token) => {
     const check = await fetch(
-      getApiHost() + `recruiments/check/${idCV}`,
+      getApiHost() + `recruiments/check/${id}`,
       {
         method: "GET",
         headers: {
@@ -319,7 +321,6 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log("checkData", data);
         return data;
       });
     return check;
