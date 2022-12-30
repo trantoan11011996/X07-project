@@ -37,7 +37,7 @@ import { Space } from "antd";
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
-  const { fetchJobDetail, postCV, checkCV } = useContext(JobContext);
+  const { fetchJobDetail, postCV, checkCV, checkResult } = useContext(JobContext);
   const [err, setErr] = useState(false);
   const [cvErr, setCvErr] = useState(false);
   const [show, setShow] = useState("");
@@ -54,7 +54,7 @@ export default function JobDetail() {
   const [MyRcmAlert, setMyRcmAlert] = useState(false);
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
-  console.log('current',userCurrent);
+  // console.log('current',userCurrent);
   const handleClose = () => setShow(false);
 
   useEffect(() => {
@@ -149,11 +149,13 @@ export default function JobDetail() {
       } else {
         setCvErr(false)
         handleClose();
-        // const check = checkCV(id, token)
-        // console.log("checked", check.data);
-        setActive(true);
+        const check = await checkCV(id, token)
+        if (check === true) {
+          setMyRcmAlert(true)
+        } else {
+          setMyRcmAlert(false)
+        }
       }
-      
     }
   };
 
@@ -234,13 +236,9 @@ export default function JobDetail() {
                     {( !userCurrent || userCurrent.role === "candidate") && (
                       <Row>
                         <Space wrap>
-                          {!active ? (
+                          {!MyRcmAlert ? (
                             <Button
-                              className={
-                                MyRcmAlert
-                                  ? "job-button button-apply disabled"
-                                  : "job-button button-apply"
-                              }
+                              className= "job-button button-apply"
                               variant="primary"
                               onClick={handleShow}
                             >

@@ -30,6 +30,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { JobContext } from "../../Context/JobContext";
 import "./RJDetails.css";
 import { UserContext } from "../../Context/UserContext";
+import { Space } from "antd";
 export default function RJDetails() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -168,29 +169,28 @@ export default function RJDetails() {
 
                     {(user?.role == "recruiter" ||
                       currentUser?.role == "recruiter") && (
-                      <Row className="mt-2">
-                        <Link to={"/update/" + jobData?._id}>
-                          <Col sm={12} md={3}>
-                            <Button
-                              className="job-button"
-                              variant="primary"
-                            >
-                              Cập Nhật
-                            </Button>
-                          </Col>
-                        </Link>
-                        <Col sm={12} md={3}>
-                          <Link to={`/CandidateList/${id}`}>
-                            <Button
-                              className="job-button"
-                              variant="outline-primary"
-                            >
-                              Danh sách ứng viên
-                            </Button>
-                          </Link>
-                        </Col>
-                      </Row>
-                    )}
+                        <Row className="mt-2">
+                          <Space wrap>
+                            <Link to={"/update/" + jobData?._id}>
+                              <Button
+                                className="job-button"
+                                variant="primary"
+                              >
+                                Cập Nhật
+                              </Button>
+                            </Link>
+
+                            <Link to={`/CandidateList/${id}`}>
+                              <Button
+                                className="job-button"
+                                variant="outline-primary"
+                              >
+                                Danh sách ứng viên
+                              </Button>
+                            </Link>
+                          </Space>
+                        </Row>
+                      )}
                   </div>
 
                   <div className="tab-rows">
