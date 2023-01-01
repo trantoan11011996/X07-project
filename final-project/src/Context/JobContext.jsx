@@ -13,8 +13,6 @@ const JobProvider = ({ children }) => {
   const [allLocation, setAllLocation] = useState([]);
   const [search, setSearch] = useState("");
   const [myJobRecruitment, setMyJobRecruitment] = useState([]);
-  const [category, setCategory] = useState("");
-  const [operationSector, setOperationSector] = useState("");
   const [page, setPage] = useState("");
   const [fieldSort, setFieldSort] = useState("");
   const [typeSort, setTypeSort] = useState("");
@@ -30,10 +28,25 @@ const JobProvider = ({ children }) => {
   const [experience, setExperience] = useState("");
   const [salary, setSalary] = useState("");
   const [numberApplicant, setNumberApplicant] = useState("");
+  const [category, setCategory] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [location, setLocation] = useState("");
+  const [locationName, setLocationName] = useState("");
+  const [locationId, setLocationId] = useState("");
   const [date, setDate] = useState([]);
+  const [deadlineJob, setDeadlineJob] = useState("");
+  const [titleUpdate, setTitleUpdate] = useState("");
+  const [descriptionUpdate, setDescriptionUpdate] = useState("");
+  const [positionUpdate, setPositionUpdate] = useState("");
+  const [typeUpdate, setTypeUpdate] = useState("");
+  const [levelUpdate, setLevelUpdate] = useState("");
+  const [ageFromUpdate, setAgeFromUpdate] = useState("");
+  const [ageToUpdate, setAgeToUpdate] = useState("");
+  const [expUpdate, setExpUpdate] = useState("");
+  const [salaryUpdate, setSalaryUpdate] = useState("");
+  const [numberApplicantUpdate, setNumberApplicantUpdate] = useState("");
   const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
-  const [isLoading, setIsLoading] = useState(undefined);
   const [listRecruimentCv, SetlistRecruimentCv] = useState("");
   useEffect(() => {
     getallCategory();
@@ -64,30 +77,33 @@ const JobProvider = ({ children }) => {
   };
 
   const getMyRecruitmentJobs = async (token, search, category, page, date) => {
-    await axios
-      .get(
+    const getMyListJob = await fetch(
         getApiHost() +
           `recruiments/my-recruiment?search=${search ?? ""}&category=${
             category ?? ""
           }&page=${page ?? ""}&fieldSort=${date ?? ""}`,
-        { headers: { authorization: `Bearer ${token}` } }
+        { 
+          method:"GET",
+          headers: { "authorization": `Bearer ${token}` } }
       )
       .then((res) => {
-        const data = res.data;
+        return res.json()
+      }).then((data)=>{
         setMyJobRecruitment(data.myRcm);
-
         if (!localStorage.getItem("myRcm")) {
           localStorage.setItem("myRcm", JSON.stringify(data.myRcm));
         }
+        return data
       })
       .catch((error) => console.log(error.response));
+      return getMyListJob
   };
 
   const getJobCandidateApplication = async (token, status) => {
     await axios
       .get(
-        getApiHost() + `recruiments/list-recruiment-application?status=${status ?? ""
-        }`,
+        getApiHost() +
+          `recruiments/list-recruiment-application?status=${status ?? ""}`,
         { headers: { authorization: `Bearer ${token}` } }
       )
       .then((res) => {
@@ -137,6 +153,7 @@ const JobProvider = ({ children }) => {
   const createRecruiment = async (description, createAt, deadline, age) => {
     const getUserId = JSON.parse(localStorage.getItem("currentUser"));
     const userId = getUserId.id;
+    console.log(token);
     const newRecruiment = JobApi.recruiment(
       title,
       userId,
@@ -166,6 +183,7 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        console.log("data", data);
         return data;
       });
     return createRecruiment;
@@ -173,18 +191,19 @@ const JobProvider = ({ children }) => {
 
   //updateRecruitment
   const updateRecruitment = async (description, deadline, age, id) => {
-    const getUserId = JSON.parse(localStorage.getItem("currentUser"));
     const newUpdatedRecruitment = JobApi.update(
-      title,
+      titleUpdate,
       description,
-      position,
-      type,
-      level,
+      positionUpdate,
+      typeUpdate,
+      levelUpdate,
       age,
-      experience,
-      salary,
-      numberApplicant,
-      deadline
+      expUpdate,
+      salaryUpdate,
+      numberApplicantUpdate,
+      deadline,
+      categoryId,
+      locationId
     );
     console.log("update", newUpdatedRecruitment);
     const updateRecruitment = await fetch(getApiHost() + `recruiments/${id}`, {
@@ -219,13 +238,14 @@ const JobProvider = ({ children }) => {
     })
       .then((res) => {
         if (res.status == 200) {
-          return res.json()
+          return res.json();
         } else {
-          return res
+          return res;
         }
-      }).catch((err) => {
-        return err
       })
+      .catch((err) => {
+        return err;
+      });
     return userCV;
   };
 
@@ -295,15 +315,12 @@ const JobProvider = ({ children }) => {
   };
 
   const checkCV = async (id, token) => {
-    const check = await fetch(
-      getApiHost() + `recruiments/check/${id}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const check = await fetch(getApiHost() + `recruiments/check/${id}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -320,12 +337,20 @@ const JobProvider = ({ children }) => {
     fetchJobDetail,
     fetchAllJobs,
     fetchCandidateApplication,
+    getMyRecruitmentJobs,
+    setMyJobRecruitment,
+    getJobCandidateApplication,
+    jobCandidateApplication,
+    createRecruiment,
     jobList,
     allCategory,
     allLocation,
-    getMyRecruitmentJobs,
-    setMyJobRecruitment,
     myJobRecruitment,
+    updateRecruitment,
+    confirmCV,
+    getCV,
+    deleteCV,
+    checkCV,
     setFieldSort,
     setTypeSort,
     setSearch,
@@ -335,10 +360,7 @@ const JobProvider = ({ children }) => {
     fieldSort,
     typeSort,
     token,
-    getJobCandidateApplication,
-    jobCandidateApplication,
     postCV,
-    createRecruiment,
     setTitle,
     setName,
     setDescription,
@@ -351,8 +373,22 @@ const JobProvider = ({ children }) => {
     setSalary,
     setNumberApplicant,
     setLocation,
+    setCategoryId,
+    setCategoryName,
+    setLocationId,
+    setLocationName,
     setCategory,
     setDate,
+    setTitleUpdate,
+    setDescriptionUpdate,
+    setPositionUpdate,
+    setTypeUpdate,
+    setLevelUpdate,
+    setAgeFromUpdate,
+    setAgeToUpdate,
+    setExpUpdate,
+    setSalaryUpdate,
+    setNumberApplicantUpdate,
     title,
     name,
     description,
@@ -365,13 +401,24 @@ const JobProvider = ({ children }) => {
     salary,
     numberApplicant,
     location,
+    locationId,
+    locationName,
+    categoryId,
+    categoryName,
     category,
     date,
-    updateRecruitment,
-    confirmCV,
-    getCV,
-    deleteCV,
-    checkCV,
+    deadlineJob,
+    setDeadlineJob,
+    titleUpdate,
+    descriptionUpdate,
+    positionUpdate,
+    typeUpdate,
+    levelUpdate,
+    ageFromUpdate,
+    ageToUpdate,
+    expUpdate,
+    salaryUpdate,
+    numberApplicantUpdate,
     listRecruimentCv,
     SetlistRecruimentCv,
   };

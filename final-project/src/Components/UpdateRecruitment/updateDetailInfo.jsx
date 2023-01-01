@@ -5,17 +5,17 @@ import { DatePicker, Space } from "antd";
 import { AuthContext } from "../../Context/Context";
 const { RangePicker } = DatePicker;
 
-export default function DetailInfo(){
+export default function UpdateDetailInfo(){
     const {
         
-        setLevel,
-        setAgeFrom,
-        setAgeTo,
-        setSalary,
-        level,
-        ageFrom,
-        ageTo,
-        salary
+      setLevelUpdate,
+      setAgeFromUpdate,
+      setAgeToUpdate,
+      setSalaryUpdate,
+      levelUpdate,
+      ageFromUpdate,
+      ageToUpdate,
+      salaryUpdate
       } = useContext(JobContext);
       const {
         warningLevel,
@@ -31,17 +31,13 @@ export default function DetailInfo(){
                 <Form.Label>
                   Cấp bậc <span style={{ color: "red" }}>*</span>
                 </Form.Label>
-                <Form.Select onChange={(e) => setLevel(e.target.value)}>
-                  <option value={level}>{level}</option>
+                <Form.Select onChange={(e) => setLevelUpdate(e.target.value)}>
+                  <option value={levelUpdate}>{levelUpdate}</option>
                   <option value="Thực tập">Thực Tập</option>
                   <option value="nhân viên">Nhân Viên</option>
                   <option value="trường phòng">Trường Phòng</option>
                 </Form.Select>
-                {warningLevel && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
+                
               </Col>
             </Row>
             <Form.Group className="mb-3">
@@ -50,17 +46,12 @@ export default function DetailInfo(){
               </Form.Label>
               <Form.Control
                 maxLength={100}
-                value={salary}
+                value={salaryUpdate}
                 type="text"
                 placeholder="2.000.000-3.000.000"
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalaryUpdate(e.target.value)}
                 // required
               />
-              {warningSalary && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
             </Form.Group>
             <Row>
               <Col>
@@ -70,16 +61,11 @@ export default function DetailInfo(){
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
-                    value={ageFrom}
+                    value={ageFromUpdate}
                     min={18}
                     placeholder="18"
-                    onChange={(e) => setAgeFrom(e.target.value)}
+                    onChange={(e) => setAgeFromUpdate(e.target.value)}
                   />
-                  {warningAgeFrom && (
-                    <Form.Text className="text-danger">
-                      <a>Đây là trường bắt buộc không được bỏ trống</a>
-                    </Form.Text>
-                  )}
                 </Form.Group>
               </Col>
               <Col>
@@ -89,17 +75,12 @@ export default function DetailInfo(){
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
-                    value={ageTo}
+                    value={ageToUpdate}
                     min={20}
                     max={80}
                     placeholder="20"
-                    onChange={(e) => setAgeTo(e.target.value)}
+                    onChange={(e) => setAgeToUpdate(e.target.value)}
                   />
-                  {warningAgeTo && (
-                    <Form.Text className="text-danger">
-                      <a>Đây là trường bắt buộc không được bỏ trống</a>
-                    </Form.Text>
-                  )}
                 </Form.Group>
               </Col>
             </Row>

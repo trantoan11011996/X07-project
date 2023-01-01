@@ -43,7 +43,6 @@ const Login = () => {
     // check email
     if (!isEmail(email))
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
-
     if (email && password) {
       dispatch(loginUser(email, password, navigate));
     }

@@ -27,6 +27,7 @@ export const JobCandidateApplication = () => {
 
  
   useEffect(() => {
+    window.scrollTo(0, 0);
     getJobCandidateApplication(userToken, null);
   }, [userToken]);
   
@@ -59,11 +60,11 @@ export const JobCandidateApplication = () => {
         <div className={cx("wrapper")}>
           <div className={cx("wrapper_content")}>
             <div className={cx("wrapper_jobs")}>
-              <form action="" onSubmit={handleSubmit} className="select-bar"  style={{ padding: 0}}>
-                <Row className="mt-3 mb-3">
-                  <Col sm={3} md={3} className="mt-3 mb-3 ms-3">
+              <form action="" onSubmit={handleSubmit} className={cx("select-bar")}  style={{ padding: 0}}>
+                <Row className={cx("row-select")}>
+                  <Col sm={3} md={2} className={cx("select-wrapper")}>
                     <select
-                      style={{ border: "none" }}
+                      style={{ border: "none" , outline:"none"}}
                       // className="sort"
                       onChange={(e) => setParamKey("status", e.target.value)}
                     >
@@ -75,7 +76,7 @@ export const JobCandidateApplication = () => {
                   </Col>
 
                   <Col sm={3} md={3}>
-                    <button id="button1" type="submit" className="confirm mt-3">
+                    <button id="button1" type="submit" className={cx("confirm")}>
                       {" "}
                       <CiSearch />
                     </button>

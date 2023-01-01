@@ -8,7 +8,12 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 const JobItem = ({ data }) => {
-  const day = moment(data?.createAt, "DDMMYYYY").locale("vi", vi).fromNow();
+  const day = moment(data?.createAt, "yyyy-mm-dd").locale("vi", vi).fromNow();
+  let crTime = new Date(data.deadline).getTime();
+  let crDay = new Date(crTime).getDate();
+  let crMonth = new Date(crTime).getMonth() + 1;
+  let crYear = new Date(crTime).getFullYear();
+  let newCreate = `${crDay}-${crMonth}-${crYear}`;
   const images = data?.name?.avatar;
   const result = images?.split("/")[1] + "/".concat(images?.split("/")[2]);
   return (
@@ -32,7 +37,7 @@ const JobItem = ({ data }) => {
               <div className={cx("address")}>
                 <a href="/#">{data.location.name}</a>
                 <span>
-                  Cập nhật : <span>{day}</span>
+                  Ngày hết hạn : <span>{newCreate}</span>
                 </span>
               </div>
               <div className={cx("info_salary")}>

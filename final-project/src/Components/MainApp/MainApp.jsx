@@ -51,7 +51,7 @@ export default function MainApp() {
                   element={<JobAndLocation />}
                 ></Route>
                 <Route path="/allJob" element={<AllJob />}></Route>
-                <Route path="/upload" element={<UploadRecruiment />}></Route>
+                <Route path="/upload_recruiment" element={<UploadRecruiment />}></Route>
                 <Route path="RJDetails" >
                     <Route path=":id" element={<RJDetails />}></Route>
                 </Route>

@@ -17,7 +17,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
-import { getApiHost } from "../../../../config";
+import { getApiHost, getApiHostImage } from "../../../../config";
 
 export default function UserCandidate() {
   const {
@@ -103,6 +103,7 @@ export default function UserCandidate() {
     console.log(e.target.files[0]);
   };
 
+  let imageUrl 
   const handleSubmitAvarta = async (e) => {
     e.preventDefault();
     console.log("token", token);
@@ -123,14 +124,16 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data);
-        const splitString = data.split("/");
+        console.log("data", data);
+        const splitString = data.split("\\");
+        console.log(splitString)
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
+        imageUrl = getApiHostImage() + imageString
+        console.log(imageUrl);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.avatar = data;
-        console.log("user", user);
+        user.avatar = imageString;
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
@@ -217,7 +220,7 @@ export default function UserCandidate() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src={`https://xjob-mindx-production.up.railway.app/${imageData}`}
+                src={imageUrl}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>

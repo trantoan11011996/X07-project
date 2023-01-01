@@ -1,378 +1,180 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
-import { DatePicker, Space } from "antd";
-import "./UpdateRecruitment.css";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import pretty from "pretty";
+import "../UpdateRecruitment/update.css";
 import { JobContext } from "../../Context/JobContext";
-import {
-  isAge,
-  isCategory,
-  isDescription,
-  isExperience,
-  isLevel,
-  isLocation,
-  isNumberApplicant,
-  isPosition,
-  isSalary,
-  isTitle,
-  isType,
-} from "../../utils/validate";
 
+import { AuthContext } from "../../Context/Context";
+import UpdateBasicInfo from "./updateBasicInfo";
+import UpdateDetailInfo from "./updateDetailInfo";
+import UpdateDesInfo from "./updateDesInfo";
 import { useParams } from "react-router-dom";
+import MetaData from "../MetaData/MetaData";
 // const { RangePicker } = DatePicker;
 export default function UpdateRecruiment() {
-  const [token, setToken] = useState("");
-  const [ckEditorOutput, setCkEditorOutput] = useState(null);
-  const [alert, setAlert] = useState(false);
-  const [alerToday, setAlerToday] = useState(false);
-  const [warningTitle, setWarningTitle] = useState(false);
-  const [warningDescription, setWarningDescription] = useState(false);
-  const [warningPosition, setWarningPosition] = useState(false);
-  const [warningType, setWarningType] = useState(false);
-  const [warningLevel, setWarningLevel] = useState(false);
-  const [warningAge, setWarningAge] = useState(false);
-  const [warningExp, setWarningExp] = useState(false);
-  const [warningSalary, setWarningSalary] = useState(false);
-  const [warningNumberApplicant, setWarningNumberApplicant] = useState(false);
-  const [warningLocation, setWarningLocaion] = useState(false);
-  const [warningCategory, setWarningCategory] = useState(false);
-  const [jobDetail,setJobDetail] = useState({})
-  const {id} = useParams()
-  useEffect(()=>{
-    const getDetailFunc = async()=>{
-      const getDetail = await fetchJobDetail(id)
-      setJobDetail(getDetail);
-    }
-    getDetailFunc()
-  },[id])
+  const [ckEditorOutput, setCkEditorOutput] = useState("");
+  const [alertDeadline, setAlertDeadline] = useState(false);
+  const [page, setPage] = useState(0);
+  const [alertUpdatedSuccess, setAletUpdateSuccess] = useState(false);
+  const [disabledUpdate, setDisabledUpdate] = useState(true);
+  const [confirmInfoJob, setConformInfoJob] = useState(true);
+  const [descriptionJob, setDescriptionJob] = useState("");
+  const [dateFormat,setDateFormat] = useState("")
+  const [jobData,setJobData] = useState("")
+  const [deadlineCheck,setDeadlineCheck] = useState("")
+  const { id } = useParams();
+
   const {
-    allCategory,
-    allLocation,
-    setTitle,
-    setName,
-    setDescription,
-    setPosition,
-    setType,
-    setLevel,
-    setAgeFrom,
-    setAgeTo,
-    setExperience,
-    setSalary,
-    setNumberApplicant,
-    setLocation,
-    setCategory,
-    setDate,
-    title,
-    name,
-    description,
-    position,
-    type,
-    level,
-    ageFrom,
-    ageTo,
-    experience,
-    salary,
-    numberApplicant,
-    location,
-    category,
-    date,
+    setTitleUpdate,
+    setDescriptionUpdate,
+    setPositionUpdate,
+    setTypeUpdate,
+    setLevelUpdate,
+    setAgeFromUpdate,
+    setAgeToUpdate,
+    setExpUpdate,
+    setSalaryUpdate,
+    setNumberApplicantUpdate,
+    fetchJobDetail,
+    setCategoryId,
+    setCategoryName,
+    setLocationId,
+    setLocationName,
     updateRecruitment,
-    fetchJobDetail
+    date,
+    setDate,
+    ageFromUpdate,
+    ageToUpdate,
+    deadlineJob,
+    setDeadlineJob,
   } = useContext(JobContext);
 
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  let mm = today.getMonth() + 1; // Months start at 0!
-  let dd = today.getDate();
-  const formattedToday =  yyyy + "/" + mm + "/" + dd;
-  const dateFormat = 'YYYY/MM/DD'
-  useEffect(() => {
-    const getToken = JSON.parse(localStorage.getItem("token"));
-    setToken(getToken);
-  }, []);
+  const FormTitles = [
+    "Cập nhật thông tin ",
+    "Cập nhật thông tin",
+    "Cập nhật thông tin",
+  ];
 
-  const handleCkEditorChanges = (event, editor) => {
-    setCkEditorOutput(editor.getData());
+  const pageDisplay = () => {
+    if (page === 0) {
+      return <UpdateBasicInfo />;
+    }
+    if (page === 1) {
+      return <UpdateDetailInfo />;
+    }
+    if (page === 2) {
+      return <UpdateDesInfo />;
+    }
+  };
+  useEffect(() => {
+    const getJobDetail = async (id) => {
+      const jobDetail = await fetchJobDetail(id)
+      setJobData(jobDetail)
+      setTitleUpdate(jobDetail.title);
+      setPositionUpdate(jobDetail.position);
+      setTypeUpdate(jobDetail.type);
+      setLevelUpdate(jobDetail.level);
+      const ageString = jobDetail.age.split("-");
+      setAgeFromUpdate(ageString[0]);
+      setAgeToUpdate(ageString[1]);
+      setSalaryUpdate(jobDetail.salary);
+      setExpUpdate(jobDetail.experience);
+      setNumberApplicantUpdate(jobDetail.numberApplicant);
+      setLocationId(jobDetail?.location._id);
+      setLocationName(jobDetail?.location.name);
+      setCategoryId(jobDetail?.category._id);
+      setCategoryName(jobDetail?.category.name);
+      setCkEditorOutput(jobDetail.description);
+      let crTime = new Date(jobDetail.deadline).getTime();
+      let crDay = new Date(crTime).getDate();
+      let crMonth = new Date(crTime).getMonth() + 1;
+      let crYear = new Date(crTime).getFullYear();
+      let newCreate = `${crDay}-${crMonth}-${crYear}`;
+      setDateFormat(newCreate)
+    };
+    getJobDetail(id);
+  }, [id]);
+
+  const confirmInfo = () => {
+    setConformInfoJob(false);
+    setDisabledUpdate(false);
+  };
+  const submitRecruiment = (e, dateCompare) => {
+    e.preventDefault();
+    let stringAge = `${ageFromUpdate}-${ageToUpdate}`;
+    setAletUpdateSuccess(true)
+    setDisabledUpdate(true)
+    updateRecruitment(ckEditorOutput, deadlineCheck, stringAge, id);
   };
 
-  const submitRecruiment = (e) => {
-    e.preventDefault();
-    let stringAge = `${ageFrom}-${ageTo}`;
-    if(location===""){
-      setLocation(null)
+  const setNextPage = () => {
+    if (page == 0) {
+      if(deadlineCheck < jobData.deadline){
+        console.log("????");
+        setAlertDeadline(true)
+        return
+      }
+      setAlertDeadline(false)
+      setPage((page) => page + 1);
+      return;
     }
-    if(category===""){
-      setCategory(null)
-    }
-    setWarningTitle(false);
-    setWarningPosition(false);
-    setWarningType(false);
-    setWarningLevel(false);
-    setWarningAge(false);
-    setWarningExp(false);
-    setWarningNumberApplicant(false);
-    setWarningSalary(false);
-    setWarningCategory(false);
-    setWarningLocaion(false);
-    setWarningDescription(false);
-    updateRecruitment(ckEditorOutput, date, stringAge,id);
+    setPage((page) => page + 1);
   };
 
   return (
-    <div className="container-upload">
-      <div className="form-container-upload">
-        <h1 className="header-form-upload"> Cập nhật tuyển dụng</h1>
-        <Form className="form-upload" onSubmit={submitRecruiment}>
-          <div className="form-group-container">
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Tiêu đề tuyển dụng <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                maxLength={100}
-                type="text"
-                placeholder="Nhập tiêu đề tuyển dụng"
-                onChange={(e) => setTitle(e.target.value)}
-                // required
-              />
-              {warningTitle && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-            <Form.Label>
-              Vị trí việc làm <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Group className="mb-3">
-              <Form.Control
-                maxLength={300}
-                type="text"
-                placeholder="ví dụ : Nhân Viên Kinh Doanh"
-                onChange={(e) => setPosition(e.target.value)}
-                // required
-              />
-              {warningPosition && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="form-deadline">
-                  <Form.Label>Gia hạn ứng tuyển : </Form.Label>
-                  <Space direction="vertical" size={12}>
-                    <DatePicker
-                      format={dateFormat}
-                      id="date"
-                      name="date"
-                      onChange={(e, dateString) => {
-                        console.log('date',dateString);
-                        setDate(dateString)
-                      }}
-                    />
-                  </Space>
-                </Form.Group>
-              </Col>
-              {alerToday && (
-                <Form.Text className="text-danger link-wrong-pass">
-                  <a>Ngày khởi tạo phải bằng ngày hiện tại</a>
-                </Form.Text>
-              )}
-            </Row>
-            <Row className="mb-3">
-              <Col>
-                <Form.Label>
-                  Hình thức làm việc <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Select onChange={(e) => setType(e.target.value)}>
-                  <option></option>
-                  <option value="fulltime">Toàn thời gian</option>
-                  <option value="parttime">bán thời gian</option>
-                </Form.Select>
-                {warningType && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
-              </Col>
-            </Row>
-            <Row className="mb-3">
-              <Col>
-                <Form.Label>
-                  Cấp bậc <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Select onChange={(e) => setLevel(e.target.value)}>
-                  <option></option>
-                  <option value="Thực tập">Thực Tập</option>
-                  <option value="nhân viên">Nhân Viên</option>
-                  <option value="trường phòng">Trường Phòng</option>
-                </Form.Select>
-                {warningLevel && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Label>
-                  Độ tuổi yêu cầu từ: <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="number"
-                    min={18}
-                    placeholder="18"
-                    onChange={(e) => setAgeFrom(e.target.value)}
-                  />
-                  {warningAge && (
-                    <Form.Text className="text-danger">
-                      <a>Đây là trường bắt buộc không được bỏ trống</a>
-                    </Form.Text>
-                  )}
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Label>
-                  Độ tuổi yêu cầu đến: <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="number"
-                    min={20}
-                    max={80}
-                    placeholder="20"
-                    onChange={(e) => setAgeTo(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            {/* <Row className="mb-3">
-              <Col>
-                <Form.Label>
-                  Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Select onChange={(e) => setCategory(e.target.value)}>
-                  <option value={jobDetail.}></option>
-                  {allCategory?.map((item, index) => {
-                    return (
-                      <option value={item._id} key={index}>
-                        {item.name}
-                      </option>
-                    ); 
-                  })}
-                </Form.Select>
-                {warningCategory && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
-              </Col>
-            </Row> */}
-
-            {/* <Row className="mb-3">
-              <Col>
-                <Form.Label>
-                  Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Select onChange={(e) => setLocation(e.target.value)}>
-                  <option></option>
-                  {allLocation?.map((item, index) => {
-                    return (
-                      <option value={item._id} key={index}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-                {warningLocation && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
-              </Col>
-            </Row> */}
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Mức Lương <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                maxLength={100}
-                type="text"
-                placeholder="2.000.000-3.000.000"
-                onChange={(e) => setSalary(e.target.value)}
-                // required
-              />
-              {warningSalary && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Số lượng ứng viên <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                max="10000"
-                min="0"
-                type="number"
-                onChange={(e) => setNumberApplicant(e.target.value)}
-              />
-              {warningNumberApplicant && (
-                <Form.Text className="text-danger">
-                  <a>Đây là trường bắt buộc không được bỏ trống</a>
-                </Form.Text>
-              )}
-            </Form.Group>
-            <Row className="mb-3">
-              <Col>
-                <Form.Label>Kinh nghiệm làm việc</Form.Label>
-                <Form.Select onChange={(e) => setExperience(e.target.value)}>
-                  <option></option>
-                  <option value="Mới tốt nghiệp/ chưa có">
-                    Mới tốt nghiệp/ chưa có kinh nghiệm
-                  </option>
-                  <option value="0 - 1 năm">0 - 1 năm</option>
-                  <option value="1 - 3 năm">1 - 3 năm</option>
-                  <option value="3 - 5 năm">3 - 5 năm</option>
-                  <option value="> 5">
-                    <span>&gt;</span> 5 năm
-                  </option>
-                </Form.Select>
-                {warningExp && (
-                  <Form.Text className="text-danger">
-                    <a>Đây là trường bắt buộc không được bỏ trống</a>
-                  </Form.Text>
-                )}
-              </Col>
-            </Row>
-            <Form.Label>
-              Mô tả bổ sung <span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <CKEditor
-              editor={ClassicEditor}
-              onChange={handleCkEditorChanges}
-              style={{ padding: "20px" }}
-            />
-            {warningDescription && (
-              <Form.Text className="text-danger">
-                <a>Đây là trường bắt buộc không được bỏ trống</a>
-              </Form.Text>
-            )}
+    <AuthContext.Provider
+      value={{
+        setCkEditorOutput,
+        ckEditorOutput,
+        alertDeadline, 
+        descriptionJob,
+        ckEditorOutput,
+        alertUpdatedSuccess,
+        disabledUpdate,
+        confirmInfoJob,
+        dateFormat,
+        setDeadlineJob,
+        deadlineJob,
+        setDeadlineCheck,
+        confirmInfo,
+      }}
+    >
+      <MetaData title="Cập nhật tuyển dụng" />
+      <div className="container-update-job">
+        <div className="form-container-upload-job">
+          <form className="form-upload-job" onSubmit={submitRecruiment}>
+            <div className="form-wrapper-upload">
+              <div className="header-form-upload">
+                <h1 className="header-single-form">{FormTitles[page]}</h1>
+              </div>
+              <div className="form-body-upload">{pageDisplay()}</div>
+            </div>
+          </form>
+          <div className="footer-form-upload">
+            <button
+              disabled={page == 0}
+              onClick={() => setPage((currentPage) => currentPage - 1)}
+              className={
+                page == 0
+                  ? "btn-prev-form btn-form-upload-job disabled"
+                  : "btn-prev-form btn-form-upload-job"
+              }
+            >
+              Quay lại
+            </button>
+            <button
+              disabled={page == FormTitles.length - 1}
+              onClick={() => setNextPage()}
+              className={
+                page == FormTitles.length - 1
+                  ? "btn-prev-form btn-form-upload-job disabled"
+                  : "btn-prev-form btn-form-upload-job"
+              }
+            >
+              Tiến lên
+            </button>
           </div>
-          <button className="btn-upload" variant="primary" type="submit">
-            Submit
-          </button>
-        </Form>
+        </div>
+        <div></div>
       </div>
-      <div></div>
-    </div>
+    </AuthContext.Provider>
   );
 }

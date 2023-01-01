@@ -10,7 +10,7 @@ import "../User_recruiter/recruiter.css";
 import { MdAccountCircle } from "react-icons/md";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { getApiHost } from "../../../../config";
+import { getApiHost, getApiHostImage } from "../../../../config";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
@@ -65,7 +65,7 @@ export default function UserRecruiter() {
       setCompanyEmail(user.info.email);
       setCompanyPhone(user.info.phoneNumber);
       setCompanyAddress(user.info.address);
-      setCategory(user.operationSector.name);
+      setCategory(user.operationSector);
       setCompanyDescription(user.info.description)
       return;
     }
@@ -74,7 +74,7 @@ export default function UserRecruiter() {
   const getFile = (e) => {
     setSelectedFile(e.target.files[0]);
   };
-
+  let imageUrl 
   const handleSubmitAvarta = async (e, editor) => {
     e.preventDefault();
     const formData = new FormData();
@@ -95,14 +95,16 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         console.log("data", data);
-        // const splitString = data.split("/");
-        // const imageString = splitString[1] + "/".concat(splitString[2]);
-        // setImageData(imageString);
-        // let user = localStorage.getItem("currentUser");
-        // user = JSON.parse(user);
-        // user.avatar = data;
-        // console.log("user", user);
-        // localStorage.setItem("currentUser", JSON.stringify(user));
+        const splitString = data.split("\\");
+        console.log(splitString)
+        const imageString = splitString[1] + "/".concat(splitString[2]);
+        setImageData(imageString);
+        imageUrl = getApiHostImage() + imageString
+        console.log(imageUrl);
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.avatar = imageString;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;
@@ -213,7 +215,7 @@ export default function UserRecruiter() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src={`${getApiHost}${imageData}`}
+                src= {imageUrl}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>
@@ -332,7 +334,7 @@ export default function UserRecruiter() {
               className="input ms-2"
               onChange={(event) => setCategory(event.target.value)}
             >
-              <option value={category}>{category}</option>
+              <option value={category._id}>{category.name}</option>
               {categoryForm?.map((item, index) => {
                 return (
                   <option key={index} value={item._id}>

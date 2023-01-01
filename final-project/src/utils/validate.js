@@ -71,8 +71,14 @@ export const isLevel = (level)=>{
   return true
 }
 
-export const isAge = (ageFrom,ageTo)=>{
+export const isAgeFrom = (ageFrom)=>{
   if(!ageFrom || whiteSpaceCheck.test(ageFrom)){
+    return false
+  }
+  return true
+}
+export const isAgeTo = (ageTo)=>{
+  if(!ageTo || whiteSpaceCheck.test(ageTo)){
     return false
   }
   return true
@@ -115,14 +121,8 @@ export const isDescription = (description)=>{
   }
   return true
 }
-export const isCreateAt = (createAt) =>{
-  if(!createAt) {
-    return false
-  }
-  return true
-}
-export const isDeadline = (deadline) =>{
-  if(!deadline) {
+export const isDate = (date)=>{
+  if(!date){
     return false
   }
   return true

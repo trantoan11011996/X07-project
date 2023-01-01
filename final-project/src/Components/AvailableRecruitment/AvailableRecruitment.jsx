@@ -19,6 +19,7 @@ export const AvailableRecruitment = () => {
   const {
     getMyRecruitmentJobs,
     myJobRecruitment,
+    setMyJobRecruitment,
     search,
     allCategory,
     page,
@@ -37,16 +38,25 @@ export const AvailableRecruitment = () => {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
-  const searchParams = params.get("search");
-  const categoryParams = params.get("category");
-  const dateParams = params.get("date");
-
-  useEffect(() => {
+ 
+  useEffect(()=>{
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     getMyRecruitmentJobs(getlocalToken, "", "", "", "");
+  },[])
+  useEffect(() => {
+    const getlocalToken = JSON.parse(localStorage.getItem("token"));
+    const searchParams = params.get("search");
+    const categoryParams = params.get("category");
+    const dateParams = params.get("date");
+    const getMyListJob = async (token,search,category,page,date)=>{
+      const myListJob = await getMyRecruitmentJobs(token, search, category, page,date);
+      setMyJobRecruitment(myListJob.myRcm);
+      return myListJob
+    }
+    getMyListJob(getlocalToken,searchParams,categoryParams,"",dateParams)
     window.scrollTo(0, 0);
-  }, []);
-
+  }, [params]);
+  
   const listCategory = allCategory?.map((item) => {
     return {
       id: item._id,
@@ -54,7 +64,6 @@ export const AvailableRecruitment = () => {
     };
   });
 
-  ///setting loading animation
   setTimeout(() => {
     setComplete(true);
   }, 2500);
@@ -75,23 +84,13 @@ export const AvailableRecruitment = () => {
     }
   };
 
-  const onSubmitSearch = (e) => {
-    e.preventDefault();
-    getMyRecruitmentJobs(
-      token,
-      searchParams.toLocaleUpperCase(),
-      categoryParams,
-      "",
-      dateParams
-    );
-  };
   return (
     <>
       <MetaData title="Danh sách tin tuyển dụng đã đăng" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
           <div className={cx("filter")}>
-            <form action="" onSubmit={onSubmitSearch}>
+            <form action="">
               <div className={cx("form-group")}>
                 <input
                   type="text"
@@ -141,7 +140,7 @@ export const AvailableRecruitment = () => {
                   <h2>Danh sách tin tuyển dụng của bạn</h2>
                 </div>
                 <div className={cx("right")}>
-                  <Link to="/">Đăng tin ứng tuyển</Link>
+                  <Link to="/upload_recruiment">Đăng tin ứng tuyển</Link>
                 </div>
               </div>
               {/* <ul className={cx("list_group_jobs")}> */}
@@ -173,7 +172,7 @@ export const AvailableRecruitment = () => {
                   </div>
                   <div>
                     <ul className={cx("list_group_jobs")}>
-                      <JobListRecruitment />
+                      <JobListRecruitment myJobRecruitment={myJobRecruitment}/>
                     </ul>
                   </div>
                 </>
