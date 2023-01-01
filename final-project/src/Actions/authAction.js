@@ -21,7 +21,7 @@ export const loginUser = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     navigate("/");
   } catch (error) {
-    toast.error(error.response.data.message);
+    toast.error(error.response.data.message === "Email is not correct" ? "Sai địa chỉ Email" : "Sai mật khẩu");
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
