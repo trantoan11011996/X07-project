@@ -117,7 +117,9 @@ import { getApiHost } from "../config";
   experience,
   salary,
   numberApplicant,
-  deadline
+  deadline,
+  category,
+  location
  ) => {
     const updateInfo = {
       title: title,
@@ -130,6 +132,8 @@ import { getApiHost } from "../config";
       salary: salary,
       numberApplicant: numberApplicant,
       deadline: deadline,
+      category:category,
+      location:location
     }
     return updateInfo
  }

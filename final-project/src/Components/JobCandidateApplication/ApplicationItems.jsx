@@ -102,12 +102,14 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
               </div>
               <div className={cx("small_detail")}>
                 <div className={cx("deadline")}>
-                  {job?.status === "denied" && <b> Trạng thái đơn ứng tuyển: Đã từ chối </b>}
-                  {job?.status === "accpeted" && <b> Trạng thái đơn ứng tuyển: Đã chấp nhận </b>}
-                  {job?.status === "pending" && <b> Trạng thái đơn ứng tuyển: Đang chờ </b>}
+                  {job?.status === "denied" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã từ chối</strong> </b>}
+                  {job?.status === "accpeted" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã chấp nhận</strong></b>}
+                  {job?.status === "pending" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đang chờ</strong> </b>}
                 </div>
                 <div className={cx("deadline")}>
-                  <b>Trạng thái tin ứng tuyển: {recruitmentStatus}</b>
+                  {recruitmentStatus==="active" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đang hoạt động</strong></b>}
+                  {recruitmentStatus==="extended" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã gia hạn</strong></b>}
+                  {recruitmentStatus==="expire" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã hết hạn</strong></b>}
                 </div>
               </div>
             </div>

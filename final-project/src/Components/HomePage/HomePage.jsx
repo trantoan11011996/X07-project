@@ -15,9 +15,7 @@ export default function HomePage() {
     useContext(JobContext);
     useEffect(()=>{
       window.scrollTo(0, 0);
-      const tokenLocal = JSON.parse(localStorage.getItem('token'))
-      getJobCandidateApplication(tokenLocal,"")
-    },[token])
+    },[])
   return (
     <>
       <MetaData title="Trang chủ" />

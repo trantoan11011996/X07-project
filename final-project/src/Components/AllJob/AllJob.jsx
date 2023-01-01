@@ -38,7 +38,6 @@ export const AllJob = () => {
   useEffect(() => {
     dispatch(getAllJobs());
     dispatch(getAllJobCategory());
-
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [dispatch]);
   //change input Search
@@ -49,6 +48,7 @@ export const AllJob = () => {
   const handleSubmitSearchJob = (e) => {
     e.preventDefault();
     dispatch(getAllJobs(search.toLocaleUpperCase(), "", "", "", id[0]));
+
   };
   //sort by select
   const handleSortDate = (e) => {

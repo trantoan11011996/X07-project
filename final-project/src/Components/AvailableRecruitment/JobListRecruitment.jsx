@@ -2,8 +2,9 @@ import React, { useContext} from "react";
 import { List } from "antd";
 import JobItemRecruitment from "./JobItemRecruitment";
 import { JobContext } from "../../Context/JobContext";
-function JobListRecruitment(){
-    const { myJobRecruitment} = useContext(JobContext)
+function JobListRecruitment({myJobRecruitment}){
+  console.log(myJobRecruitment);
+    
     return(
         <List
         grid={{

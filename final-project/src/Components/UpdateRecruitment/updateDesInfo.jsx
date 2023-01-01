@@ -5,26 +5,28 @@ import { Col, Form, Row } from "react-bootstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Link } from "react-router-dom";
-export default function DesInfo() {
+export default function UpdateDesInfo() {
   const {
     allCategory,
     allLocation,
-    setExperience,
-    setNumberApplicant,
-    setLocation,
-    setCategory,
+    setExpUpdate,
+    setNumberApplicantUpdate,
+    numberApplicantUpdate,
+    expUpdate,
+    locationId,
+    locationName,
+    categoryId,
+    categoryName,
+    setCategoryId,
+    setLocationId
   } = useContext(JobContext);
   const {
-    warningNumberApplicant,
-    warningExp,
-    warningCategory,
-    warningLocation,
-    warningDescription,
     setCkEditorOutput,
-    aletUploadSuccess,
-    disabledUpload,
+    alertUpdatedSuccess,
+    disabledUpdate,
     confirmInfo,
-    confirmInfoJob
+    confirmInfoJob,
+    ckEditorOutput 
   } = useContext(AuthContext);
   const handleConfirmInfo = () => {
     confirmInfo();
@@ -43,19 +45,15 @@ export default function DesInfo() {
           max="10000"
           min="0"
           type="number"
-          onChange={(e) => setNumberApplicant(e.target.value)}
+          value={numberApplicantUpdate}
+          onChange={(e) => setNumberApplicantUpdate(e.target.value)}
         />
-        {warningNumberApplicant && (
-          <Form.Text className="text-danger">
-            <a>Đây là trường bắt buộc không được bỏ trống</a>
-          </Form.Text>
-        )}
       </Form.Group>
       <Row className="mb-3">
         <Col>
           <Form.Label>Kinh nghiệm làm việc</Form.Label>
-          <Form.Select onChange={(e) => setExperience(e.target.value)}>
-            <option></option>
+          <Form.Select onChange={(e) => setExpUpdate(e.target.value)}>
+            <option value={expUpdate}>{expUpdate}</option>
             <option value="Mới tốt nghiệp/ chưa có">
               Mới tốt nghiệp/ chưa có kinh nghiệm
             </option>
@@ -64,11 +62,6 @@ export default function DesInfo() {
             <option value="3 - 5 năm">3 - 5 năm</option>
             <option value="> 5">{`> 5 năm`}</option>
           </Form.Select>
-          {warningExp && (
-            <Form.Text className="text-danger">
-              <a>Đây là trường bắt buộc không được bỏ trống</a>
-            </Form.Text>
-          )}
         </Col>
       </Row>
       <Row className="mb-3">
@@ -76,8 +69,8 @@ export default function DesInfo() {
           <Form.Label>
             Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
           </Form.Label>
-          <Form.Select onChange={(e) => setCategory(e.target.value)}>
-            <option></option>
+          <Form.Select onChange={(e) => setCategoryId(e.target.value)}>
+            <option value={categoryId}>{categoryName}</option>
             {allCategory?.map((item, index) => {
               return (
                 <option value={item._id} key={index}>
@@ -86,21 +79,13 @@ export default function DesInfo() {
               );
             })}
           </Form.Select>
-          {warningCategory && (
-            <Form.Text className="text-danger">
-              <a>Đây là trường bắt buộc không được bỏ trống</a>
-            </Form.Text>
-          )}
         </Col>
-      </Row>
-
-      <Row className="mb-3">
         <Col>
           <Form.Label>
             Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
           </Form.Label>
-          <Form.Select onChange={(e) => setLocation(e.target.value)}>
-            <option></option>
+          <Form.Select onChange={(e) => setLocationId(e.target.value)}>
+            <option value={locationId}>{locationName}</option>
             {allLocation?.map((item, index) => {
               return (
                 <option value={item._id} key={index}>
@@ -109,30 +94,22 @@ export default function DesInfo() {
               );
             })}
           </Form.Select>
-          {warningLocation && (
-            <Form.Text className="text-danger">
-              <a>Đây là trường bắt buộc không được bỏ trống</a>
-            </Form.Text>
-          )}
         </Col>
       </Row>
       <Form.Label>
         Mô tả bổ sung <span style={{ color: "red" }}>*</span>
       </Form.Label>
       <CKEditor
+        data={ckEditorOutput}
         editor={ClassicEditor}
         onChange={handleCkEditorChanges}
         style={{ padding: "20px" }}
+        className="ck-editor"
       />
-      {warningDescription && (
-        <Form.Text className="text-danger">
-          <a>Đây là trường bắt buộc không được bỏ trống</a>
-        </Form.Text>
-      )}
       {confirmInfoJob && (
         <div className="container-confirm-upload">
           <p className="confirm-text">
-            Hãy kiểm tra lại thông tin trước khi đăng tin, nếu đã chắc chắn hãy
+            Hãy kiểm tra lại thông tin trước khi cập nhật, nếu đã chắc chắn hãy
             nhấn nút{" "}
             <u onClick={handleConfirmInfo} className="Confirm-btn">
               Xác nhận
@@ -140,24 +117,24 @@ export default function DesInfo() {
           </p>{" "}
         </div>
       )}
-      {aletUploadSuccess  && (
+      {alertUpdatedSuccess  && (
         <div className="container-confirm-upload">
           <p className="confirm-text">
-            tin tuyển dụng của bạn đã được cập nhật lên hệ thống
-            
+            tin tuyển dụng của bạn đã được cập nhật
+            {" "}
             <Link to={"/"} className="Confirm-btn">Quay lại trang chủ</Link>
           </p>{" "}
         </div>
       )}
       <div className="btn-upload-job">
         <button
-          disabled={disabledUpload == true}
+          disabled={disabledUpdate == true}
           type="submit"
           className={
-            disabledUpload ? "upload-job disabled-btn-upload" : "upload-job"
+            disabledUpdate ? "upload-job disabled-btn-upload" : "upload-job"
           }
         >
-          Đăng tin tuyển dụng
+        Cập nhật tin tuyển dụng
         </button>
       </div>
     </div>

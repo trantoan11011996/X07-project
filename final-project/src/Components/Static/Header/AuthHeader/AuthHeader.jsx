@@ -148,7 +148,7 @@ const AuthHeader = ({ mode }) => {
                         Cập nhật thông tin đầy đủ trước khi đăng tuyển
                       </p>
                     ) : (
-                      <Link to={"/upload"}>
+                      <Link to={"/upload_recruiment"}>
                         <p className="content-action">Đăng tin tuyển dụng</p>
                       </Link>
                     )}
