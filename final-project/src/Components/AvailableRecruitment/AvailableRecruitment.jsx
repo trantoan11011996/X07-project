@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import styles from "./AvailableRecruitment.module.scss";
+import styles from "./AvailableRecruitment.module.css";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
 import loadingAnimation from "../../animationJson/loading-animation.json";
@@ -29,7 +29,7 @@ export const AvailableRecruitment = () => {
     setSearch,
   } = useContext(JobContext);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
-  const [selectedOptionsAddress, setSelectedOptionsAddress] = useState([]);
+  const [isClearable, setIsClearable] = useState(true);
   const [params, setParams] = useSearchParams();
   const [complete, setComplete] = useState(false);
 
@@ -38,41 +38,71 @@ export const AvailableRecruitment = () => {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     getMyRecruitmentJobs(getlocalToken, "", "", "", "");
-  },[])
+  }, []);
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     const searchParams = params.get("search");
     const categoryParams = params.get("category");
     const dateParams = params.get("date");
-    const getMyListJob = async (token,search,category,page,date)=>{
-      const myListJob = await getMyRecruitmentJobs(token, search, category, page,date);
+    const statusParams = params.get("status")
+    const getMyListJob = async (token, search, category, page, date,status) => {
+      const myListJob = await getMyRecruitmentJobs(
+        token,
+        search,
+        category,
+        page,
+        date,
+        status
+      );
       setMyJobRecruitment(myListJob.myRcm);
-      return myListJob
-    }
-    getMyListJob(getlocalToken,searchParams,categoryParams,"",dateParams)
+      return myListJob;
+    };
+    getMyListJob(getlocalToken, searchParams, categoryParams, "", dateParams,statusParams);
     window.scrollTo(0, 0);
   }, [params]);
-  
+
   const listCategory = allCategory?.map((item) => {
     return {
       id: item._id,
       label: item.name,
     };
   });
-
+  const listStatus = [
+    {
+      value: "expire",
+      label: "Hết hạn",
+    },
+    {
+      value: "pending",
+      label: "Đang chờ duyệt",
+    },
+    {
+      value: "active",
+      label: "Đang hoạt động",
+    },
+    {
+      value: "extended",
+      label: "Được gia hạn",
+    },
+  ];
   setTimeout(() => {
     setComplete(true);
   }, 2500);
 
+  const statusArr = listStatus.map((item)=>{
+    return {
+      value : item.value,
+      label : item.label
+    }
+  })
   const handlSelectCategory = (e) => {
     let arrField = e;
     console.log(arrField);
     if (arrField.length == 0) {
-      console.log("....");
       setParamsKey("category", "");
     } else {
       const id = arrField.map((item) => {
@@ -81,6 +111,17 @@ export const AvailableRecruitment = () => {
       if (id) {
         setParamsKey("category", id);
       }
+    }
+  };
+  const handleSelectStatus = (e) => {
+    let arrStatus = e;
+    if(arrStatus === null ){
+      setParamsKey("status", "")
+    }else{
+       const value = e.value
+       if(value){
+        setParamsKey("status", value)
+       }
     }
   };
 
@@ -114,18 +155,17 @@ export const AvailableRecruitment = () => {
               </div>
               <div className={cx("form-group")}>
                 <Select
-                  defaultValue={selectedOptionsAddress}
-                  isMulti
-                  name="address"
-                  options={address}
-                  isSearchable="true"
-                  className="basic-multi-select"
-                  onChange={(e) => setSelectedOptionsAddress(e)}
-                  isOptionDisabled={() => selectedOptionsAddress.length >= 2}
+                  className="basic-single"
                   classNamePrefix="select"
-                  placeholder="Địa điểm"
+                  placeholder="Trạng thái tin tuyển dụng"
+                  defaultValue=""
+                  isClearable={isClearable}
+                  name="status"
+                  options={listStatus}
+                  onChange={handleSelectStatus}
                 />
               </div>
+
               <div className={cx("form-group-button")}>
                 <button>
                   <CiSearch />
@@ -137,7 +177,9 @@ export const AvailableRecruitment = () => {
             <div className={cx("wrapper_jobs")}>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
-                  <h2>Danh sách tin tuyển dụng của bạn</h2>
+                  <h2 className={cx("header-myrcm")}>
+                    Danh sách tin tuyển dụng của bạn
+                  </h2>
                 </div>
                 <div className={cx("right")}>
                   <Link to="/upload_recruiment">Đăng tin ứng tuyển</Link>
@@ -172,7 +214,7 @@ export const AvailableRecruitment = () => {
                   </div>
                   <div>
                     <ul className={cx("list_group_jobs")}>
-                      <JobListRecruitment myJobRecruitment={myJobRecruitment}/>
+                      <JobListRecruitment myJobRecruitment={myJobRecruitment} />
                     </ul>
                   </div>
                 </>
