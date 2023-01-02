@@ -84,11 +84,10 @@
   display: flex;
   align-items: center;
 }
-.container .wrapper_content .wrapper_jobs .recruit_title .left h2 {
-  font-size: 30px;
-  font-family: var(--font-roboto);
-  font-weight: 900;
-  margin: 0 1rem 0 0;
+.header-jcd{
+  font-size: 32px;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif;
 }
 .container .wrapper_content .wrapper_jobs .recruit_title .left .view_all {
   padding: 0rem 1rem;
@@ -266,6 +265,13 @@
 .delete-button:hover{
   opacity: 0.8;
 }
-.deadline-status{
+.status-myjob{
   color: #e20c0c;
+  font-weight: 600;
+  font-family: var(--font-family);
+}
+.status-rcm{
+  color: #e20c0c;
+  font : 600;
+  font-family: var(--font-family);
 }
