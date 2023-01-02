@@ -19,7 +19,8 @@ export default function ContactPage() {
         <div className="contact-page">
             <Container className="container-contact-page mb-3">
                 <Row>
-                    <Col sm={9} md={9}>
+                    <Col sm={2} md={2}></Col>
+                    <Col sm={8} md={8}>
                         <Card className="contact-background">
                             <h2 className="contact-title mt-3">Thông tin liên hệ</h2>
                             <List
@@ -56,7 +57,7 @@ export default function ContactPage() {
                                 className="ms-2 mt-2"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1198431119687!2d106.64497454990983!3d10.802132292266261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752948b22bd9cd%3A0x24c05cd638b90d33!2zM3JkIGZsb29yLCAyNzIgxJAuIEPhu5luZyBIw7JhLCBQaMaw4budbmcgMTMsIFTDom4gQsOsbmgsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1672659651755!5m2!1svi!2s"
                                 style={{
-                                    width: "800px",
+                                    width: "725px",
                                     height: "450px",
                                     border: "0",
                                     allowfullscreen: "",
@@ -78,7 +79,7 @@ export default function ContactPage() {
                                 className="ms-2 mt-2"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.0822760869946!2d105.80803525006507!3d21.02939368592931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab6be93a9bd9%3A0x3a6eb744e79dea70!2zVG_DoCBuaMOgIERNQw!5e0!3m2!1svi!2s!4v1672660073984!5m2!1svi!2s"
                                 style={{
-                                    width: "800px",
+                                    width: "725px",
                                     height: "450px",
                                     border: "0",
                                     allowfullscreen: "",
@@ -88,8 +89,7 @@ export default function ContactPage() {
                             </iframe>
                         </Card>
                     </Col>
-
-                    <Col sm={3} md={3}></Col>
+                    <Col sm={2} md={2}></Col>
                 </Row>
 
             </Container>
