@@ -1,7 +1,7 @@
 import React, { Fragment, useState} from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import styles from "./AvailableRecruitment.module.scss";
+import styles from "./AvailableRecruitment.module.css";
 import classNames from "classnames/bind";
 import { IoLogoUsd } from "react-icons/io"
 import { IoLocationSharp } from "react-icons/io5"

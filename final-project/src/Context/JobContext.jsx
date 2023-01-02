@@ -76,12 +76,12 @@ const JobProvider = ({ children }) => {
     return jobs;
   };
 
-  const getMyRecruitmentJobs = async (token, search, category, page, date) => {
+  const getMyRecruitmentJobs = async (token, search, category, page, date,status) => {
     const getMyListJob = await fetch(
         getApiHost() +
           `recruiments/my-recruiment?search=${search ?? ""}&category=${
             category ?? ""
-          }&page=${page ?? ""}&fieldSort=${date ?? ""}`,
+          }&page=${page ?? ""}&fieldSort=${date ?? ""}&status=${status ?? ""}`,
         { 
           method:"GET",
           headers: { "authorization": `Bearer ${token}` } }
