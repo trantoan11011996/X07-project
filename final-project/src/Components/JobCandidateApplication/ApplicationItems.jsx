@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useContext } from "react";
 import { Space, Col, Row } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
-import styles from "./JobCandidateApplication.module.scss";
+import styles from "./JobCandidateApplication.module.css";
 import classNames from "classnames/bind";
 import { IoLogoUsd } from "react-icons/io";
 import { IoLocationSharp } from "react-icons/io5";
@@ -102,14 +102,14 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
               </div>
               <div className={cx("small_detail")}>
                 <div className={cx("deadline")}>
-                  {job?.status === "denied" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã từ chối</strong> </b>}
-                  {job?.status === "accpeted" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã chấp nhận</strong></b>}
-                  {job?.status === "pending" && <b> Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đang chờ</strong> </b>}
+                  {job?.status === "denied" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đã từ chối</strong> </p>}
+                  {job?.status === "accepted" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đã chấp nhận</strong></p>}
+                  {job?.status === "pending" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đang chờ</strong> </p>}
                 </div>
                 <div className={cx("deadline")}>
-                  {recruitmentStatus==="active" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đang hoạt động</strong></b>}
-                  {recruitmentStatus==="extended" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã gia hạn</strong></b>}
-                  {recruitmentStatus==="expire" && <b>Trạng thái đơn ứng tuyển: <strong className={cx('deadline-status')}>Đã hết hạn</strong></b>}
+                  {recruitmentStatus==="active" && <p>Trạng thái tin tuyển dụng: <strong className={cx('status-rcm')}>Đang hoạt động</strong></p>}
+                  {recruitmentStatus==="extended" && <p>Trạng thái tin tuyển dụng: <strong className={cx('status-rcm')}>Đã gia hạn</strong></p>}
+                  {recruitmentStatus==="expire" && <p>Trạng thái tin tuyển dụng: <strong className={cx('status-rcm')}>Đã hết hạn</strong></p>}
                 </div>
               </div>
             </div>

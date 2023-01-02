@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import MetaData from "../../MetaData/MetaData";
 import "../CovenantPage/Covenantpage.css";
 export default function CovenantPage() {
   useEffect(() => {
