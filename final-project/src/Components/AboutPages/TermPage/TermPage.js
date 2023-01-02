@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import MetaData from "../../MetaData/MetaData";
 import "../TermPage/Termpage.css";
 export default function TermPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div class="term-page">
+    <>
+      <MetaData title="Quy chế hoạt động"/>
+      <div class="term-page">
       <Container className="container-term-page">
         <h1 class="operation-regulation-title mb-4">Quy chế hoạt động</h1>
         <h1 class="main-title mb-4 mt-0 text-center">
@@ -783,6 +786,7 @@ export default function TermPage() {
           </div>
         </div>
       </Container>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 
-import styles from "./JobCandidateApplication.module.scss";
+import styles from "./JobCandidateApplication.module.css";
 import classNames from "classnames/bind";
 import MetaData from "../MetaData/MetaData";
 import { Link, useSearchParams } from "react-router-dom";
@@ -85,7 +85,7 @@ export const JobCandidateApplication = () => {
               </form>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
-                  <h2>Công việc đã ứng tuyển</h2>
+                  <h2 className={cx("header-jcd")}>Công việc đã ứng tuyển</h2>
                 </div>
                 <div className={cx("right")}>
                   <Link to="/"></Link>
