@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8b3b91c0.css",
+    "main.js": "/static/js/main.2b4e4977.js",
+    "static/js/483.636207ac.chunk.js": "/static/js/483.636207ac.chunk.js",
+    "static/media/banner_login.jpg": "/static/media/banner_login.0b1de1064823d4033c66.jpg",
+    "static/media/loginbanner2.jpg": "/static/media/loginbanner2.0c813a728c262049de3c.jpg",
+    "static/media/baners.png": "/static/media/baners.a9e8174e5fcc2f1443a1.png",
+    "static/media/logocompany.png": "/static/media/logocompany.d6ca04604b179fa07baf.png",
+    "static/media/img1.png": "/static/media/img1.e6f3718459feba5b211e.png",
+    "static/media/xcareerlogo.png": "/static/media/xcareerlogo.14a9fb3fb84f0b64097d.png",
+    "index.html": "/index.html",
+    "main.8b3b91c0.css.map": "/static/css/main.8b3b91c0.css.map",
+    "main.2b4e4977.js.map": "/static/js/main.2b4e4977.js.map",
+    "483.636207ac.chunk.js.map": "/static/js/483.636207ac.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8b3b91c0.css",
+    "static/js/main.2b4e4977.js"
+  ]
+}
