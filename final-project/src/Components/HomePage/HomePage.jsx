@@ -11,7 +11,7 @@ import JobNotification from "./JobNotification/JobNotification";
 
 export default function HomePage() {
   const { user } = useSelector((state) => state.auths);
-  const { getJobHomePage, setJobHomePage, jobHomePage,getJobCandidateApplication,token } =
+  const { getJobHomePage, setJobHomePage, jobHomePage,pageHomeJob,getJobCandidateApplication,token } =
     useContext(JobContext);
     useEffect(()=>{
       window.scrollTo(0, 0);
@@ -21,7 +21,7 @@ export default function HomePage() {
       <MetaData title="Trang chủ" />
       <div className="home-page">
         <HomeBanner />
-        <HomeJobs jobHomePage={jobHomePage} />
+        <HomeJobs jobHomePage={jobHomePage} pageHomeJob={pageHomeJob} getJobHomePage={getJobHomePage}/>
         <HomeCategory/> 
         <JobNotification/>
       </div>

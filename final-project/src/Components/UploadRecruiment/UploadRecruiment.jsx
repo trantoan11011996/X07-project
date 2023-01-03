@@ -17,11 +17,14 @@ import {
   isDate,
 } from "../../utils/validate";
 import BasicInfo from "./BasicInfo";
-import DetailInfo from "./DetailInfo";
+import DetailInfo from "./DetailFirstInfo";
 import { AuthContext } from "../../Context/Context";
-import DesInfo from "./DesInfo";
+import DesInfo from "./DetailSeccondInfo";
 import FormRange from "react-bootstrap/esm/FormRange";
 import MetaData from "../MetaData/MetaData";
+import DetailFirstInfo from "./DetailFirstInfo";
+import DetailSeccondInfo from "./DetailSeccondInfo";
+import DescriptionInfo from "./DescriptionInfo";
 
 export default function UploadRecruiment() {
   const [token, setToken] = useState("");
@@ -64,9 +67,10 @@ export default function UploadRecruiment() {
   } = useContext(JobContext);
 
   const FormTitles = [
-    "Thông tin cơ bản",
-    "Hình thức làm việc, cấp bậc, mức lương và độ tuổi yêu cầu",
-    "Số lượng ứng viên, kinh nghiệm, lĩnh vực, địa điểm tuyển dụng và mô tả chi tiết công việc",
+    "Thông tin tin tuyển dụng",
+    "Thông tin tin tuyển dụng",
+    "Thông tin tin tuyển dụng",
+    "Thông tin tin tuyển dụng",
   ];
 
   const pageDisplay = () => {
@@ -74,10 +78,13 @@ export default function UploadRecruiment() {
       return <BasicInfo />;
     }
     if (page === 1) {
-      return <DetailInfo />;
+      return <DetailFirstInfo />;
     }
     if (page === 2) {
-      return <DesInfo />;
+      return <DetailSeccondInfo />;
+    }
+    if(page===3){
+      return <DescriptionInfo/>
     }
   };
 
@@ -107,23 +114,7 @@ export default function UploadRecruiment() {
   const submitRecruiment = (e, dateCompare) => {
     e.preventDefault();
     let stringAge = `${ageFrom}-${ageTo}`;    
-    if(page==2){
-      if(!isNumberApplicant(numberApplicant)){
-        setWarningNumberApplicant(true)
-        return
-      }
-      if(!isExperience(experience)){
-        setWarningExp(true)
-        return
-      }
-      if(!isCategory(category)){
-        setWarningCategory(true)
-        return
-      }
-      if(!isLocation(location)){
-        setWarningLocaion(true)
-        return
-      }
+    if(page==3){
       if(!ckEditorOutput){
         setWarningDescription(true)
         return
@@ -131,10 +122,6 @@ export default function UploadRecruiment() {
       setAletUploadSuccess(true)
       setDisabledUpload(true)
       createRecruiment(ckEditorOutput, date[0], date[1], stringAge);
-      setWarningNumberApplicant(false)
-      setWarningExp(false)
-      setWarningLocaion(false)
-      setWarningCategory(false)
       setWarningDescription(false)
     }   
   };
@@ -189,6 +176,30 @@ export default function UploadRecruiment() {
       setWarningSalary(false)
       setWarningAgeFrom(false)
       setWarningAgeTo(false)
+      setPage(page=>page+1)
+      return
+    }
+    if(page ==2){
+      if(!isNumberApplicant(numberApplicant)){
+        setWarningNumberApplicant(true)
+        return
+      }
+      if(!isExperience(experience)){
+        setWarningExp(true)
+        return
+      }
+      if(!isCategory(category)){
+        setWarningCategory(true)
+        return
+      }
+      if(!isLocation(location)){
+        setWarningLocaion(true)
+        return
+      }
+      setWarningNumberApplicant(true)
+      setWarningExp(true)
+      setWarningCategory(true)
+      setWarningLocaion(true)
       setPage(page=>page+1)
       return
     }
@@ -263,7 +274,7 @@ export default function UploadRecruiment() {
                   : "btn-prev-form btn-form-upload-job"
               }
             >
-              Tiến lên
+              Tiếp tục
             </button>
           </div>
         </div>

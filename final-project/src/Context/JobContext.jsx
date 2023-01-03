@@ -8,6 +8,7 @@ const JobContext = createContext();
 
 const JobProvider = ({ children }) => {
   const [jobHomePage, setJobHomePage] = useState([]);
+  const [pageHomeJob,setPageHomeJob] = useState([])
   const [jobList, setJobList] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allLocation, setAllLocation] = useState([]);
@@ -51,15 +52,14 @@ const JobProvider = ({ children }) => {
   useEffect(() => {
     getallCategory();
     getallLocation();
-    getJobHomePage("");
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
   }, []);
 
-  const getJobHomePage = async (categoryId) => {
+  const getJobHomePage = async (categoryId,page) => {
     // console.log('id',categoryId);
     const user_category = { categoryId: categoryId };
-    const jobs = await fetch(getApiHost() + `recruiments/home-page/`, {
+    const jobs = await fetch(getApiHost() + `recruiments/home-page/?page=${page ?? ""}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,8 +70,10 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        setJobHomePage(data);
-        localStorage.setItem("jobHomePage", JSON.stringify(data));
+        console.log(data);
+        setJobHomePage(data.recruiment);
+        setPageHomeJob (data.pageTotal)
+        localStorage.setItem("jobHomePage", JSON.stringify(data.recruiment));
       });
     return jobs;
   };
@@ -170,6 +172,7 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     );
+    console.log(newRecruiment);
     const createRecruiment = await fetch(getApiHost() + `recruiments/new`, {
       method: "post",
       body: JSON.stringify(newRecruiment),
@@ -333,6 +336,8 @@ const JobProvider = ({ children }) => {
   const value = {
     getJobHomePage,
     setJobHomePage,
+    pageHomeJob,
+    setPageHomeJob,
     jobHomePage,
     fetchJobDetail,
     fetchAllJobs,

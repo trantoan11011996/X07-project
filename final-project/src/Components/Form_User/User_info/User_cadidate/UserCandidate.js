@@ -11,18 +11,21 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { UserContext } from "../../../../Context/UserContext";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 import { getApiHost, getApiHostImage } from "../../../../config";
+import { Radio } from "antd";
 
 export default function UserCandidate() {
   const {
     name,
     setName,
+    emailCandidate,
+    setEmailCandidate,
     gender,
     setGender,
     age,
@@ -31,8 +34,8 @@ export default function UserCandidate() {
     setPhone,
     address,
     setAddress,
-    category,
-    setCategory,
+    categoryUser,
+    setCategoryUser,
     description,
     setDescription,
     updateCandidateInfo,
@@ -47,6 +50,7 @@ export default function UserCandidate() {
   const [ageEmpty, setAgeEmpty] = useState(false);
   const [phoneEmpty, setPhoneEmpty] = useState(false);
   const [addressEmpty, setAddressEmpty] = useState(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
   const [ageErr, setAgeErr] = useState(false);
@@ -54,46 +58,47 @@ export default function UserCandidate() {
   const [categories, setCategories] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [selectedFile, setSelectedFile] = useState();
-  const [imageData,setImageData] = useState("")
-  const [token,setToken] = useState('')
+  const [imageData, setImageData] = useState("");
+  const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
+  const [succes, setSucces] = useState(false);
 
-  useEffect(()=>{
-    getAllCategory()
+
+  useEffect(() => {
+    getAllCategory();
+    setSucces(false);
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    setUserInfo(user)
-    if(user.avatar){
-      const splitString = user?.avatar?.split("/");
+    if (user.avatar) {
+      const splitString = user.avatar.split("\\");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
-      return;
-    }if(user.info){
-      setName(user.info.fullName)
-      setAge(user.info.age)
-      setPhone(user.info.phoneNumber)
-      setAddress(user.info.address)
-      return
     }
-  },[])
-
+    if (user.info) {
+      setName(user.info.fullName);
+      setGender(user.info.gender);
+      setAge(user.info.age);
+      setPhone(user.info.phoneNumber);
+      setAddress(user.info.address);
+      setCategoryUser(user.category);
+      setDescription(user.info.description);
+    }
+  }, []);
 
   const getAllCategory = async () => {
-    const all = await fetch(
-      getApiHost() + `users/category`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    )
+    const all = await fetch(getApiHost() + `users/category`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
+        console.log('data',data)
         setCategories(data);
       });
     return all;
@@ -103,37 +108,29 @@ export default function UserCandidate() {
     console.log(e.target.files[0]);
   };
 
-  let imageUrl 
   const handleSubmitAvarta = async (e) => {
     e.preventDefault();
     console.log("token", token);
     const formData = new FormData();
 
     formData.append("formFile", selectedFile);
-    const uploadImage = await fetch(
-      getApiHost() + "users/upload-single-file",
-      {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const uploadImage = await fetch(getApiHost() + "users/upload-single-file", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
         const splitString = data.split("\\");
-        console.log(splitString)
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
-        imageUrl = getApiHostImage() + imageString
-        console.log(imageUrl);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.avatar = imageString;
+        user.avatar = data;
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
@@ -184,7 +181,12 @@ export default function UserCandidate() {
     } else {
       setPhoneErr(false);
     }
-
+    if(!emailCandidate || emailCandidate == null){
+      setEmailEmpty(true)
+      return
+    }else{
+      setEmailEmpty(false)
+    }
     if (!address || address == null) {
       setAddressEmpty(true);
       return;
@@ -192,18 +194,19 @@ export default function UserCandidate() {
       setAddressEmpty(false);
     }
 
-    if (!category || category == null) {
+    if (!categoryUser || categoryUser == null) {
       setCategoryEmpty(true);
       return;
     } else {
       setDescriptEmpty(false);
       setCategoryEmpty(false);
     }
-      setDescriptEmpty(false);
+    setDescriptEmpty(false);
 
-      updateCandidateInfo(ckEditorOutput);
-      setShowLogin(false);
-      // navigate("/");
+    updateCandidateInfo(ckEditorOutput);
+    setSucces(true);
+    setShowLogin(false);
+    // navigate("/");
   };
 
   return (
@@ -220,7 +223,7 @@ export default function UserCandidate() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src={imageUrl}
+                src={getApiHostImage() + `${imageData}`}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>
@@ -250,6 +253,7 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  value={name}
                   maxLength={100}
                   defaultValue={userInfo?.info?.fullName}
                   onChange={(event) => setName(event.target.value)}
@@ -267,28 +271,15 @@ export default function UserCandidate() {
                   {" "}
                   Giới tính<span style={{ color: "red" }}>*</span>{" "}
                 </b>
-                {["radio"].map((type) => (
-                  <div key={`inline-${type}`} className="m-2">
-                    <Form.Check
-                      inline
-                      label="Nam"
-                      name="group1"
-                      value="Nam"
-                      type={type}
-                      id={`inline-${type}-1`}
-                      onChange={(e) => setGender(e.target.value)}
-                    />
-                    <Form.Check
-                      inline
-                      label="Nữ"
-                      name="group1"
-                      value="Nữ"
-                      type={type}
-                      id={`inline-${type}-2`}
-                      onChange={(e) => setGender(e.target.value)}
-                    />
-                  </div>
-                ))}
+                <div className="radio-gender">
+                <Radio.Group name="radiogroup" defaultValue={gender} onChange={(e)=>{
+                  console.log('gender',gender);
+                  setGender(e.target.value)
+                }}>
+                  <Radio value="Nam">Nam</Radio>
+                  <Radio value="Nữ">Nữ</Radio>
+                </Radio.Group>
+                </div>
                 {genderEmpty && (
                   <p className="text"> Giới tính không được để trống</p>
                 )}
@@ -307,6 +298,7 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="number"
+                  value={age}
                   min={18}
                   max={100}
                   defaultValue={userInfo?.info?.age}
@@ -327,6 +319,7 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
+                  value={phone}
                   defaultValue={userInfo?.info?.phoneNumber}
                   onChange={(event) => setPhone(event.target.value)}
                 />
@@ -344,12 +337,32 @@ export default function UserCandidate() {
             <Form.Label />{" "}
             <b>
               {" "}
+              Email<span style={{ color: "red" }}>*</span>{" "}
+            </b>
+            <Form.Control
+              className="input ms-2"
+              type="email"
+              maxLength={200}
+              value={emailCandidate}
+              defaultValue={userInfo?.info?.email}
+              onChange={(event) => setEmailCandidate(event.target.value)}
+            />
+            {emailEmpty && (
+              <p className="text"> Email không được để trống</p>
+            )}
+          </Row>
+
+          <Row className="row-form">
+            <Form.Label />{" "}
+            <b>
+              {" "}
               Địa chỉ<span style={{ color: "red" }}>*</span>{" "}
             </b>
             <Form.Control
               className="input ms-2"
               type="text"
               maxLength={200}
+              value={address}
               defaultValue={userInfo?.info?.address}
               onChange={(event) => setAddress(event.target.value)}
             />
@@ -365,10 +378,11 @@ export default function UserCandidate() {
             </b>
             <Form.Select
               className="input ms-2"
-              onChange={(event) => setCategory(event.target.value)}
+              onChange={(event) => setCategoryUser(event.target.value)}
             >
-              <option></option>
+              <option value={categoryUser._id}>{categoryUser.name}</option>
               {categories?.map((item, index) => {
+                console.log(item._id);
                 return (
                   <option key={index} value={item._id}>
                     {item.name}
@@ -389,6 +403,7 @@ export default function UserCandidate() {
             </b>
             <CKEditor
               editor={ClassicEditor}
+              data={description}
               onChange={(event, editor) => setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
@@ -399,17 +414,32 @@ export default function UserCandidate() {
               <p className="text"> Mô tả không được để trống</p>
             )} */}
           </Row>
+          {succes && (
+            <div className="noti-upload-succes">
+              <Form.Text className="form-text-alert">
+                Cập nhật thông tin thành công.{" "}
+                <Link to={"/"} className="link-home">Quay về trang chủ</Link>
+              </Form.Text>
+            </div>
+          )}
           <Row className="mt-5">
-            <Col sm={3} md={3}>
+          <Col sm={3} md={3}>
               {" "}
             </Col>
             <Col sm={3} md={3}>
-              <Button className="button" type="submit">
-                {" "}
-                Cập nhật{" "}
-              </Button>
+              {succes ? (
+                <Button className="button disabled" type="submit">
+                  {" "}
+                  Cập nhật{" "}
+                </Button>
+              ) : (
+                <Button className="button" type="submit">
+                  {" "}
+                  Cập nhật{" "}
+                </Button>
+              )}
             </Col>
-            <Col>
+            <Col sm={3} md={3}>
               <Link to={"/"}>
                 <Button variant="light"> Hủy bỏ </Button>
               </Link>

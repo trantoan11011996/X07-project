@@ -118,7 +118,14 @@
 .text {
     color: red;
 }
-
+.alert-success-register{
+    border : 1px solid red;
+    text-align: center;
+    margin-top: 15px;
+}
+.navigate-update:hover{
+    text-decoration: underline;
+}
 @media only screen and (max-width : 1050px){
     .container-register-banner{
         display: none;

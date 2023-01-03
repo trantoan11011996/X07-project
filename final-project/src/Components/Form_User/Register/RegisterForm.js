@@ -42,6 +42,7 @@ export default function RegisterForm() {
   const [passEmpty, setPassEmpty] = useState(false);
   const [confirmEmpty, setConfirmEmpty] = useState(false);
   const [roleEmpty, setRoleEmpty] = useState(false);
+  const [alertSuccessRegister,setAlertSuccessRegister] = useState(false)
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -117,8 +118,10 @@ export default function RegisterForm() {
         return;
       } else {
         setEmailExsistAlert(false);
-        console.log("???????????????");
-        navigate("/update_info");
+        setEmail("")
+        setPassword("")
+        setConfirmPassword("")
+        setAlertSuccessRegister(true)
         return;
       }
       // const user = await registerUser()
@@ -161,6 +164,7 @@ export default function RegisterForm() {
                   <Form.Control
                     className="input-register"
                     type="email"
+                    value={email}
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </InputGroup>
@@ -181,6 +185,7 @@ export default function RegisterForm() {
                 <InputGroup className="input-group-register">
                   <Form.Control
                     className="input-register"
+                    value={password}
                     type={visible1 ? "text" : "password"}
                     onChange={(event) => setPassword(event.target.value)}
                   />
@@ -210,6 +215,7 @@ export default function RegisterForm() {
                 <InputGroup className="input-group-register">
                   <Form.Control
                     className="input-register"
+                    value={confirmPassword}
                     type={visible2 ? "text" : "password"}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                   />
@@ -272,10 +278,19 @@ export default function RegisterForm() {
               </Row>
 
               <Row className="mt-2">
-                <Button className="button-submit" type="submit">
+                {alertSuccessRegister ? ( <Button className="button-submit disabled" type="submit">
                   {" "}
                   Đăng kí{" "}
-                </Button>
+                </Button>) : ( <Button className="button-submit" type="submit">
+                  {" "}
+                  Đăng kí{" "}
+                </Button>)}
+               
+                {alertSuccessRegister && ( <div className="alert-success-register">
+                    <p className="text-success-register">Đăng kí tài khoản thành công.{" "}
+                      <Link className="navigate-update" to={"/update_info"}>Nhấn vào</Link> để tiếp tục cập nhật thông tin
+                    </p>
+                </div>)}
               </Row>
             </Form.Group>
           </Form>
