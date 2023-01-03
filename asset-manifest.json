@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/X07-project/static/css/main.8b3b91c0.css",
-    "main.js": "/X07-project/static/js/main.18eb93d4.js",
+    "main.js": "/X07-project/static/js/main.f04f9110.js",
     "static/js/483.184e8558.chunk.js": "/X07-project/static/js/483.184e8558.chunk.js",
     "static/media/banner_login.jpg": "/X07-project/static/media/banner_login.0b1de1064823d4033c66.jpg",
     "static/media/loginbanner2.jpg": "/X07-project/static/media/loginbanner2.0c813a728c262049de3c.jpg",
@@ -11,11 +11,11 @@
     "static/media/xcareerlogo.png": "/X07-project/static/media/xcareerlogo.14a9fb3fb84f0b64097d.png",
     "index.html": "/X07-project/index.html",
     "main.8b3b91c0.css.map": "/X07-project/static/css/main.8b3b91c0.css.map",
-    "main.18eb93d4.js.map": "/X07-project/static/js/main.18eb93d4.js.map",
+    "main.f04f9110.js.map": "/X07-project/static/js/main.f04f9110.js.map",
     "483.184e8558.chunk.js.map": "/X07-project/static/js/483.184e8558.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8b3b91c0.css",
-    "static/js/main.18eb93d4.js"
+    "static/js/main.f04f9110.js"
   ]
 }
