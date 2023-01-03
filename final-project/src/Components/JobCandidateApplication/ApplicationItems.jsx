@@ -7,16 +7,14 @@ import classNames from "classnames/bind";
 import { IoLogoUsd } from "react-icons/io";
 import { IoLocationSharp } from "react-icons/io5";
 import { JobContext } from "../../Context/JobContext";
+import { getApiHostImage } from "../../config";
 const cx = classNames.bind(styles);
 
 function ApplicationItems({ job, recruimentId, id, handleDelete }) {
   const image = recruimentId?.name?.avatar;
-  const splitString = image.split("/");
+  const splitString = image.split("\\");
   const imageString = splitString[1] + "/".concat(splitString[2]);
-  // console.log('recruiTd', recruimentId)
-  console.log('job', job)
-  // console.log('item',recruimentId)
-  // const [jobStatus, setJobStatus] = useState(job?.status);
+ 
   const [recruitmentStatus, setRecruitmentStatus] = useState(
     recruimentId?.status
   );
@@ -25,42 +23,7 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
   const token = localStorage.getItem('token');
   const userToken = JSON.parse(token);
 
-  // useEffect(() => {
-  //   if (jobStatus === "pending") {
-  //     setJobStatus("Đang chờ");
-  //   }
-  //   if (jobStatus === "accepted") {
-  //     setJobStatus("Đã xác nhận");
-  //   }
-  //   if (jobStatus === "denied") {
-  //     setJobStatus("Đã từ chối");
-  //   }
-  //   if (recruitmentStatus === "active") {
-  //     setRecruitmentStatus("Đang hoạt động");
-  //   }
-  // }, [job]);
-  // useEffect(() => {
-  //   if (jobStatus === "pending") {
-  //     setJobStatus("Đang chờ");
-  //     return
-  //   }
-  //   if (jobStatus === "accepted") {
-  //     setJobStatus("Đã xác nhận");
-  //     return
-  //   }
-  //   if (jobStatus === "denied") {
-  //     setJobStatus("Đã từ chối");
-  //     return
-  //   }
-  //   if (recruitmentStatus === "active") {
-  //     setRecruitmentStatus("Đang hoạt động");
-  //   }
-  // }, [job]);
-
-  // const handleDelete = () => {
-  //   deleteCV(job._id, userToken)
-  //   console.log("job del", job);
-  // }
+  
 
   return (
     <Fragment>
@@ -69,12 +32,12 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
           <div className={cx("box_item")}>
             <div className={cx("images")}>
               <img
-                src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                src={getApiHostImage()+`${imageString}`}
                 alt="img"
               />
             </div>
             <div className={cx("content")}>
-              <Link to="/" className={cx("title")}>
+              <Link to={"/jobDetail/" + id} className={cx("title")}>
                 {recruimentId?.title} -{" "}
                 <span>
                   <IoLogoUsd></IoLogoUsd>
@@ -82,7 +45,7 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
                 {recruimentId?.salary}(VNĐ)
               </Link>
               <div>
-                <Link to="/" className={cx("company")}>
+                <Link to={"/jobDetail/" + id} className={cx("company")}>
                   Công ty: {recruimentId?.name.info.name}
                 </Link>
               </div>

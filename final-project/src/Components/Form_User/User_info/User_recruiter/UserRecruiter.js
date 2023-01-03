@@ -49,6 +49,7 @@ export default function UserRecruiter() {
   const [ckEditorOutput, setCkEditorOutput] = useState(companyDescription);
   const [succes, setSucces] = useState(false);
   useEffect(() => {
+    setSucces(false);
     getAllCategory();
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
@@ -56,7 +57,7 @@ export default function UserRecruiter() {
     console.log("user", user);
     setUserInfo(user);
     if (user.avatar) {
-      const splitString = user?.avatar?.split("/");
+      const splitString = user.avatar.split("\\");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
     }
@@ -67,14 +68,12 @@ export default function UserRecruiter() {
       setCompanyAddress(user.info.address);
       setCategory(user.operationSector);
       setCompanyDescription(user.info.description)
-      return;
     }
   }, []);
 
   const getFile = (e) => {
     setSelectedFile(e.target.files[0]);
   };
-  let imageUrl 
   const handleSubmitAvarta = async (e, editor) => {
     e.preventDefault();
     const formData = new FormData();
@@ -94,16 +93,14 @@ export default function UserRecruiter() {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
+        console.log('data',data);
         const splitString = data.split("\\");
         console.log(splitString)
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
-        imageUrl = getApiHostImage() + imageString
-        console.log(imageUrl);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
-        user.avatar = imageString;
+        user.avatar = data;
         localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
@@ -215,7 +212,7 @@ export default function UserRecruiter() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src= {imageUrl}
+                src= {getApiHostImage()+`${imageData}`}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>

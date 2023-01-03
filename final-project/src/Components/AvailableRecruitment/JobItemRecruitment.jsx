@@ -12,9 +12,9 @@ const cx = classNames.bind(styles);
 function JobItemRecruitment({ myJobRecruitment, id }) {
 
 
-  const image = myJobRecruitment?.name?.avatar
-  const splitString  = image.split("/")
-  const imageString = splitString[1]+"/".concat(splitString[2])
+  const image = myJobRecruitment?.name?.avatar;
+  const splitString = image.split("\\");
+  const imageString = splitString[1] + "/".concat(splitString[2]);
   let crTime = new Date(myJobRecruitment.createAt).getTime();
   let crDay = new Date(crTime).getDate();
   let crMonth = new Date(crTime).getMonth() + 1;
@@ -35,14 +35,14 @@ function JobItemRecruitment({ myJobRecruitment, id }) {
       <li className={cx("list_group_item")}>
         <div className={cx("box_item")}>
           <div className={cx("images")}>
-            <img src={`${getApiHostImage}`+`${imageString}`} alt="" />
+            <img src={getApiHostImage()+`${imageString}`} alt="" />
           </div>
           <div className={cx("content")}>
-            <Link to="/" className={cx("title")}>
+            <Link to={"/RJDetails/" + id} className={cx("title")}>
               {myJobRecruitment.title}
             </Link>
             <div>
-              <Link to="/" className={cx("company")}>
+              <Link to={"/RJDetails/" + id} className={cx("company")}>
                 Công ty {myJobRecruitment.name.info.name}
               </Link>
             </div>
@@ -64,10 +64,42 @@ function JobItemRecruitment({ myJobRecruitment, id }) {
               <div className={cx("deadline")}>
                 Ngày hết hạn:  <span className="deadline-date">{newDealine}</span>
               </div>
+              <div className={cx("deadline")}>
+                {myJobRecruitment.status === "active" && <>
+                Trạng thái tin:<span className={cx("status-myrcm-active")}>
+                    Đang hoạt động
+                </span>
+                </>}
+                {myJobRecruitment.status === "removed" && <>
+                Trạng thái tin:<span className={cx("status-myrcm-removed")}>
+                    Đã bị gỡ bỏ
+                </span>
+                </>}
+                {myJobRecruitment.status === "pending" && <>
+                Trạng thái tin:<span className={cx("status-myrcm-pending")}>
+                    Đang chờ duyệt
+                </span>
+                </>}
+                {myJobRecruitment.status === "extended" && <>
+                Trạng thái tin:<span className={cx("status-myrcm-extended")}>
+                    Đã được gia hạn đến ngày {newDealine}
+                </span>
+                </>}
+                {myJobRecruitment.status === "expire" && <>
+                Trạng thái tin:<span className={cx("status-myrcm-expire")}>
+                    Đã hết hạn
+                </span>
+                </>}
+              </div>
               <div className={cx("update")}>
                 <button className={cx("btn-delete-rcm")}>Gỡ bỏ</button>
               </div>
             </div>
+            {myJobRecruitment.status === "removed" && <>
+                <span className={cx("alert-myrcm-removed")}>
+                    Hãy kiểm tra <strong>Email</strong> của bạn để biết được tại sao tin của bạn bị gỡ bỏ.
+                </span>
+                </>}
           </div>
         </div>
       </li>

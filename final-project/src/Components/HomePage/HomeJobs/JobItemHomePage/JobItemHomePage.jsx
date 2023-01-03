@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Card, Col, Container } from "react-bootstrap";
 import { IoLogoUsd } from "react-icons/io"
 import { IoLocationSharp } from "react-icons/io5"
-import "../JobItem/JobItem.css";
+import "./JobItem.css";
 import logocompany from "../../../../img/logocompany.png"
 import { Link } from "react-router-dom";
-export default function JobItem({ job,id }) {
+import { getApiHostImage } from "../../../../config";
+export default function JobItemHomePage({ job,id }) {
+  console.log(job);
   // console.log('job',job);
   const image = job?.name?.avatar
-  const splitString  = image.split("/")
-  const imageString = splitString[1]+"/".concat(splitString[2])
+  const splitString  = image.split("\\")
+  const imageString = splitString[1] + "/".concat(splitString[2]);
   
  
   return (
@@ -20,7 +22,7 @@ export default function JobItem({ job,id }) {
           <div className="job-wrapper">
             <Col md={2} className="company-logo">
               <div className="logo-wraper">
-              <img className="logo-company" src={`https://xjob-mindx-production.up.railway.app/${imageString}`}></img>
+              <img className="logo-company" src={getApiHostImage()+`${imageString}`}></img>
               </div>
             </Col>
 

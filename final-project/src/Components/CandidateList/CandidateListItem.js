@@ -4,7 +4,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import { JobContext } from "../../Context/JobContext";
 import Lottie from "lottie-react"
 import loadingAnimation from "../../animationJson/loading-animation.json"
-import { getApiHost } from "../../config";
+import { getApiHost, getApiHostImage } from "../../config";
 export default function CandidateListItem({ data ,handleValue}) {
 
     const [status, setStatus] = useState("");
@@ -22,9 +22,9 @@ export default function CandidateListItem({ data ,handleValue}) {
         } else if (data.status == "pending") {
             setStatus("Đang chờ")
         };
-
-        const splitString = data.cv.split("/");
+        const splitString = data.cv.split("\\");
         const cvString = splitString[1] + "/".concat(splitString[2]);
+        console.log(cvString);
         setDownloadLink(cvString);
 
         let crTime = new Date(data.createAt).getTime();
@@ -34,7 +34,7 @@ export default function CandidateListItem({ data ,handleValue}) {
         let newCreate = `${crDay}-${crMonth}-${crYear}`;
         setCreateDate(newCreate);
         if (data.userId.avatar) {
-            let imgSplit = data.userId.avatar.split("/");
+            let imgSplit = data.userId.avatar.split("\\");
             let imgString = imgSplit[1] + "/".concat(imgSplit[2]);
             setAvatar(imgString)
         }
@@ -52,7 +52,7 @@ export default function CandidateListItem({ data ,handleValue}) {
             <Row>
                 <Col sm={3} md={3} className="col-avatar-cv">
                     {data.userId.avatar
-                        ? <Image className="list-avatar mt-1" src={getApiHost() + `${avatar}`} />
+                        ? <img className="list-avatar-user mt-1" src={getApiHostImage()+`${avatar}`} />
                         : <Image className="list-avatar mt-1" src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" />
                     }
                 </Col>
@@ -60,7 +60,7 @@ export default function CandidateListItem({ data ,handleValue}) {
                     <p className="mt-2"> Tên ứng viên: {data.userId.info.fullName} </p>
                     <p className="mt-2"> Ngày gởi yêu cầu: {createDate}</p>
                     <p className="mt-2"> File đính kèm:
-                        <a href={getApiHost() +`${downloadLink}`} download >
+                        <a href={getApiHostImage()+`${downloadLink}`} download >
                             <Button className="download-button ms-2"> <span> Tải xuống </span></Button>
                         </a>
                     </p>
@@ -84,9 +84,6 @@ export default function CandidateListItem({ data ,handleValue}) {
                                 <Col sm={4} md={4}></Col>
                                 <Col sm={4} md={4}></Col>
                                 <Col sm={4} md={4}>
-                                    <button className="view-button">
-                                        Xem thông tin ứng viên
-                                    </button>
                                 </Col>
 
                             </Row>
@@ -96,9 +93,6 @@ export default function CandidateListItem({ data ,handleValue}) {
                                 </button>
                                 <button className="denied-button" value="denied" onClick={hanldeStatus}>
                                     Từ chối
-                                </button>
-                                <button className="view-button">
-                                    Xem thông tin ứng viên
                                 </button>
                             </>)}
                     </Space>

@@ -31,6 +31,7 @@ import { JobContext } from "../../Context/JobContext";
 import "./RJDetails.css";
 import { UserContext } from "../../Context/UserContext";
 import { Space } from "antd";
+import { getApiHostImage } from "../../config";
 export default function RJDetails() {
   const { user } = useSelector((state) => state.auths);
   const { currentUser } = useContext(UserContext);
@@ -59,7 +60,8 @@ export default function RJDetails() {
     let data = await fetchJobDetail(id);
     if (data) {
       setJobData(data);
-      const splitString = data.name.avatar.split("/");
+      const image = data?.name?.avatar;
+      const splitString = image.split("\\");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       return setLogo(imageString);
     }
@@ -128,7 +130,7 @@ export default function RJDetails() {
                     <Col className="logo" sm={2} md={2}>
                       <img
                         className="image-logo"
-                        src={`https://xjob-mindx-production.up.railway.app/${logo}`}
+                        src={getApiHostImage()+`${logo}`}
                       />
                     </Col>
 

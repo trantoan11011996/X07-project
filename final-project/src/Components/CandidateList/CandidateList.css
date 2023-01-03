@@ -102,10 +102,11 @@
     background: #00b2a3;
     border-radius: 5px;
 }
-
-.list-avatar {
-    height: 170px !important;
-    width: 170px !important;
+.col-avatar-cv{
+    padding-left: 30px;
+}
+.list-avatar-user{
+    width: 100%;
 }
 .loading-status{
     display: flex;

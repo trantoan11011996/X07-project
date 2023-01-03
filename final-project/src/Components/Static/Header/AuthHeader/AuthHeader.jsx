@@ -13,6 +13,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../../../Context/UserContext";
 import { logoutUser } from "../../../../Actions/authAction";
+import { getApiHostImage } from "../../../../config";
 
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const AuthHeader = ({ mode }) => {
   if (currentUser) {
     if (currentUser.hasOwnProperty("avatar")) {
       const image = currentUser.avatar;
-      const splitString = image.split("/");
+      const splitString = image.split("\\");
       imageString = splitString[1] + "/".concat(splitString[2]);
     } else {
       imageString = "";
@@ -175,7 +176,7 @@ const AuthHeader = ({ mode }) => {
                     <div className="account-info-content">
                       {imageString ? (
                         <img
-                          src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                          src={getApiHostImage()+`${imageString}`}
                           className="logo-user"
                         />
                       ) : (

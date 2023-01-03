@@ -5,7 +5,7 @@ import { DatePicker, Space } from "antd";
 import { AuthContext } from "../../Context/Context";
 const { RangePicker } = DatePicker;
 
-export default function DetailInfo(){
+export default function DetailFirstInfo(){
     const {
         
         setLevel,
@@ -32,7 +32,7 @@ export default function DetailInfo(){
                   Cấp bậc <span style={{ color: "red" }}>*</span>
                 </Form.Label>
                 <Form.Select onChange={(e) => setLevel(e.target.value)}>
-                  <option value={level}>{level}</option>
+                  <option></option>
                   <option value="Thực tập">Thực Tập</option>
                   <option value="nhân viên">Nhân Viên</option>
                   <option value="trường phòng">Trường Phòng</option>
@@ -50,7 +50,6 @@ export default function DetailInfo(){
               </Form.Label>
               <Form.Control
                 maxLength={100}
-                value={salary}
                 type="text"
                 placeholder="2.000.000-3.000.000"
                 onChange={(e) => setSalary(e.target.value)}
@@ -70,7 +69,6 @@ export default function DetailInfo(){
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
-                    value={ageFrom}
                     min={18}
                     placeholder="18"
                     onChange={(e) => setAgeFrom(e.target.value)}
@@ -89,7 +87,6 @@ export default function DetailInfo(){
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
-                    value={ageTo}
                     min={20}
                     max={80}
                     placeholder="20"
