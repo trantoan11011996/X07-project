@@ -14,7 +14,7 @@ export default function JobItemHomePage({ job,id }) {
   const splitString  = image.split("\\")
   const imageString = splitString[1] + "/".concat(splitString[2]);
   
- 
+  
   return (
     <div className="job-item">
       <Link to={"/jobDetail/" + id}>

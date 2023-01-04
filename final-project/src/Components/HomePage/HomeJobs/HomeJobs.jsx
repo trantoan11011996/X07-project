@@ -16,7 +16,7 @@ export default function HomeJobs({ jobHomePage, pageHomeJob, getJobHomePage }) {
   const [params, setParams] = useSearchParams();
   const { currentUser } = useContext(UserContext);
 
-  console.log(pageHomeJob);
+  
   setTimeout(() => {
     setComplete(true);
   }, 2500);
@@ -34,6 +34,7 @@ export default function HomeJobs({ jobHomePage, pageHomeJob, getJobHomePage }) {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
+  const pageTotal = Math.ceil(pageHomeJob/10)
   return (
     <div className="home-jobs">
       <Row className="row-home-jobs">
@@ -73,7 +74,7 @@ export default function HomeJobs({ jobHomePage, pageHomeJob, getJobHomePage }) {
       <div className="pagi-homepage">
         <Pagination
           defaultCurrent={1 * 10}
-          total={pageHomeJob * 10}
+          total={pageTotal * 10}
           onChange={(page) => setParamsKey("page", page)}
         ></Pagination>
       </div>
