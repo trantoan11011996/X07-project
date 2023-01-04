@@ -63,7 +63,6 @@ export default function UserCandidate() {
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
   const [succes, setSucces] = useState(false);
 
-
   useEffect(() => {
     getAllCategory();
     setSucces(false);
@@ -80,19 +79,19 @@ export default function UserCandidate() {
       setGender(user.info.gender);
       setAge(user.info.age);
       setPhone(user.info.phoneNumber);
-      setEmailCandidate(user.email)
+      setEmailCandidate(user.email);
       setAddress(user.info.address);
       setCategoryUser(user.category);
       setDescription(user.info.description);
     }
-    if(!user.info){
+    if (!user.info) {
       setName("");
       setGender("");
       setAge("");
       setPhone("");
-      setEmailCandidate("")
+      setEmailCandidate("");
       setAddress("");
-      setCategoryUser("")
+      setCategoryUser("");
       setDescription("");
     }
   }, []);
@@ -109,7 +108,7 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data)
+        console.log("data", data);
         setCategories(data);
       });
     return all;
@@ -136,7 +135,8 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        const splitString = data.split("\\");
+        console.log("data", data);
+        const splitString = data.split("/");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
@@ -192,11 +192,11 @@ export default function UserCandidate() {
     } else {
       setPhoneErr(false);
     }
-    if(!emailCandidate || emailCandidate == null){
-      setEmailEmpty(true)
-      return
-    }else{
-      setEmailEmpty(false)
+    if (!emailCandidate || emailCandidate == null) {
+      setEmailEmpty(true);
+      return;
+    } else {
+      setEmailEmpty(false);
     }
     if (!address || address == null) {
       setAddressEmpty(true);
@@ -241,7 +241,12 @@ export default function UserCandidate() {
             )}
           </div>
           <form className="form-upload-avarta" onSubmit={handleSubmitAvarta}>
-            <input type="file" name="formFile" onChange={getFile}></input>
+            <input
+              type="file"
+              name="formFile"
+              accept="image/png, image/gif, image/jpeg, image/jfif"
+              onChange={getFile}
+            ></input>
             <button className="submit-img" type="submit">
               Lưu
             </button>
@@ -283,13 +288,17 @@ export default function UserCandidate() {
                   Giới tính<span style={{ color: "red" }}>*</span>{" "}
                 </b>
                 <div className="radio-gender">
-                <Radio.Group name="radiogroup" defaultValue={gender} onChange={(e)=>{
-                  console.log('gender',gender);
-                  setGender(e.target.value)
-                }}>
-                  <Radio value="Nam">Nam</Radio>
-                  <Radio value="Nữ">Nữ</Radio>
-                </Radio.Group>
+                  <Radio.Group
+                    name="radiogroup"
+                    defaultValue={gender}
+                    onChange={(e) => {
+                      console.log("gender", gender);
+                      setGender(e.target.value);
+                    }}
+                  >
+                    <Radio value="Nam">Nam</Radio>
+                    <Radio value="Nữ">Nữ</Radio>
+                  </Radio.Group>
                 </div>
                 {genderEmpty && (
                   <p className="text"> Giới tính không được để trống</p>
@@ -358,9 +367,7 @@ export default function UserCandidate() {
               defaultValue={userInfo?.info?.email}
               onChange={(event) => setEmailCandidate(event.target.value)}
             />
-            {emailEmpty && (
-              <p className="text"> Email không được để trống</p>
-            )}
+            {emailEmpty && <p className="text"> Email không được để trống</p>}
           </Row>
 
           <Row className="row-form">
@@ -429,12 +436,14 @@ export default function UserCandidate() {
             <div className="noti-upload-succes">
               <Form.Text className="form-text-alert">
                 Cập nhật thông tin thành công.{" "}
-                <Link to={"/"} className="link-home">Quay về trang chủ</Link>
+                <Link to={"/"} className="link-home">
+                  Quay về trang chủ
+                </Link>
               </Form.Text>
             </div>
           )}
           <Row className="mt-5">
-          <Col sm={3} md={3}>
+            <Col sm={3} md={3}>
               {" "}
             </Col>
             <Col sm={3} md={3}>
