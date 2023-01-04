@@ -95,14 +95,14 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         console.log('data',data);
-        // const splitString = data.split("\\");
-        // console.log(splitString)
-        // const imageString = splitString[1] + "/".concat(splitString[2]);
-        // setImageData(imageString);
-        // let user = localStorage.getItem("currentUser");
-        // user = JSON.parse(user);
-        // user.avatar = data;
-        // localStorage.setItem("currentUser", JSON.stringify(user));
+        const splitString = data.split("\\");
+        console.log(splitString)
+        const imageString = splitString[1] + "/".concat(splitString[2]);
+        setImageData(imageString);
+        let user = localStorage.getItem("currentUser");
+        user = JSON.parse(user);
+        user.avatar = data;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;
@@ -224,6 +224,7 @@ export default function UserRecruiter() {
               type="file"
               name="formFile"
               enctype="multipart/form-data"
+              accept="image/png, image/gif, image/jpeg, image/jfif"
               onChange={getFile}
             ></input>
             <button

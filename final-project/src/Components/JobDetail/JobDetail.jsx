@@ -142,7 +142,8 @@ export default function JobDetail() {
     } else {
       setErr(false);
       const post = await postCV(id, file, userToken);
-      if (post.status == "400") {
+      console.log("post",post);
+      if (typeof post === "object" && post !== null) {
         setCvErr(true);
         return;
       } else {

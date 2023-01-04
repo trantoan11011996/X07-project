@@ -64,9 +64,11 @@ export default function UpdateRecruiment() {
       return <UpdateDesInfo />;
     }
   };
+  ///////////
   useEffect(() => {
     const getJobDetail = async (id) => {
       const jobDetail = await fetchJobDetail(id)
+      console.log(jobDetail);
       setJobData(jobDetail)
       setTitleUpdate(jobDetail.title);
       setPositionUpdate(jobDetail.position);
