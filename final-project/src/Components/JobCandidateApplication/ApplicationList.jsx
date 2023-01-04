@@ -6,7 +6,6 @@ import ApplicationItems from "./ApplicationItems";
 
 
 function ApplicationList({jobCandidateApplication, handleDelete}){
-
     return(
         <List
         grid={{

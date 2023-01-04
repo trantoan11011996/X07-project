@@ -72,7 +72,7 @@ const JobProvider = ({ children }) => {
       .then((data) => {
         console.log(data);
         setJobHomePage(data.recruiment);
-        setPageHomeJob (data.pageTotal)
+        setPageHomeJob (data.countDoc)
         localStorage.setItem("jobHomePage", JSON.stringify(data.recruiment));
       });
     return jobs;
@@ -110,6 +110,7 @@ const JobProvider = ({ children }) => {
       )
       .then((res) => {
         const data = res.data;
+        console.log('data',data);
         localStorage.setItem("C-applied", JSON.stringify(data));
         setJobCandidateApplication(data);
         return data;

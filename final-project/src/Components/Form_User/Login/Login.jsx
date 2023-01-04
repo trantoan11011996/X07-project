@@ -20,7 +20,7 @@ const Login = () => {
   };
   const [data, setData] = useState(initialState);
   const [visible, setVisible] = useState(false);
-  const { loading } = useSelector((state) => state.auths);
+  // const { loading } = useSelector((state) => state.auths);
   const { email, password } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,13 +111,14 @@ const Login = () => {
                     </div>
                   </div>
                   <div className={cx("login_btn")}>
-                    {loading ? (
+                    {/* {loading ? (
                       <button type="submit" disabled>
                         <Loading loading={loading} color={"#fff"} size={20} />
                       </button>
                     ) : (
                       <button type="submit">Đăng nhập</button>
-                    )}
+                    )} */}
+                    <button type="submit">Đăng nhập</button>
                   </div>
                 </form>
               </div>

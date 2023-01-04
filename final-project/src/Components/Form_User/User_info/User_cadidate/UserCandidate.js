@@ -80,9 +80,20 @@ export default function UserCandidate() {
       setGender(user.info.gender);
       setAge(user.info.age);
       setPhone(user.info.phoneNumber);
+      setEmailCandidate(user.email)
       setAddress(user.info.address);
       setCategoryUser(user.category);
       setDescription(user.info.description);
+    }
+    if(!user.info){
+      setName("");
+      setGender("");
+      setAge("");
+      setPhone("");
+      setEmailCandidate("")
+      setAddress("");
+      setCategoryUser("")
+      setDescription("");
     }
   }, []);
 

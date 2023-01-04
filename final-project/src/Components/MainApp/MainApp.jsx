@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AuthContext } from "../../Context/Context";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,HashRouter } from "react-router-dom";
 import "../MainApp/mainapp.css";
 import Header from "../Static/Header/Header";
 import Footer from "../Static/Footer/Footer";
@@ -34,7 +34,7 @@ export default function MainApp() {
     <AuthContext.Provider>
       <UserProvider>
         <JobProvider>
-          <BrowserRouter>
+          <HashRouter>
             <div className="main-app">
               <Header />
               <Routes>
@@ -74,7 +74,7 @@ export default function MainApp() {
               </Routes>
               <Footer />
             </div>
-          </BrowserRouter>
+          </HashRouter>
         </JobProvider>
       </UserProvider>
     </AuthContext.Provider>

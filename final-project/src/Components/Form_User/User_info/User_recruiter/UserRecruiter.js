@@ -57,7 +57,7 @@ export default function UserRecruiter() {
     console.log("user", user);
     setUserInfo(user);
     if (user.avatar) {
-      const splitString = user.avatar.split("\\");
+      const splitString = user.avatar.split("/");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       setImageData(imageString);
     }
@@ -72,6 +72,7 @@ export default function UserRecruiter() {
   }, []);
 
   const getFile = (e) => {
+    console.log(e.target.files[0]);
     setSelectedFile(e.target.files[0]);
   };
   const handleSubmitAvarta = async (e, editor) => {
@@ -94,14 +95,14 @@ export default function UserRecruiter() {
       })
       .then((data) => {
         console.log('data',data);
-        const splitString = data.split("\\");
-        console.log(splitString)
-        const imageString = splitString[1] + "/".concat(splitString[2]);
-        setImageData(imageString);
-        let user = localStorage.getItem("currentUser");
-        user = JSON.parse(user);
-        user.avatar = data;
-        localStorage.setItem("currentUser", JSON.stringify(user));
+        // const splitString = data.split("\\");
+        // console.log(splitString)
+        // const imageString = splitString[1] + "/".concat(splitString[2]);
+        // setImageData(imageString);
+        // let user = localStorage.getItem("currentUser");
+        // user = JSON.parse(user);
+        // user.avatar = data;
+        // localStorage.setItem("currentUser", JSON.stringify(user));
         return data;
       });
     return uploadImage;

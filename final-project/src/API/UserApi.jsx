@@ -64,9 +64,10 @@ const autoLogin = () => {
   return json ? JSON.parse(json) : null;
 };
 const logOut = () => {
-  localStorage.removeItem("currentUser");
-  localStorage.removeItem("token");
-  localStorage.removeItem("myRcm");
+  // localStorage.removeItem("currentUser");
+  // localStorage.removeItem("token");
+  // localStorage.removeItem("myRcm");
+  localStorage.clear()
 };
 
 const UserApis = {

@@ -12,9 +12,9 @@ const cx = classNames.bind(styles);
 
 function ApplicationItems({ job, recruimentId, id, handleDelete }) {
   const image = recruimentId?.name?.avatar;
-  const splitString = image.split("\\");
+  const splitString = image.split("/");
   const imageString = splitString[1] + "/".concat(splitString[2]);
- 
+  console.log('job',job);
   const [recruitmentStatus, setRecruitmentStatus] = useState(
     recruimentId?.status
   );
@@ -65,6 +65,7 @@ function ApplicationItems({ job, recruimentId, id, handleDelete }) {
               </div>
               <div className={cx("small_detail")}>
                 <div className={cx("deadline")}>
+                {job?.status === "active" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đã chấp nhận</strong> </p>}
                   {job?.status === "denied" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đã từ chối</strong> </p>}
                   {job?.status === "accepted" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đã chấp nhận</strong></p>}
                   {job?.status === "pending" && <p> Trạng thái đơn ứng tuyển: <strong className={cx('status-myjob')}>Đang chờ</strong> </p>}
