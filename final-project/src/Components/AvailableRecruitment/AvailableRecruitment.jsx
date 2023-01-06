@@ -42,7 +42,9 @@ export const AvailableRecruitment = () => {
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     getMyRecruitmentJobs(getlocalToken, "", "", "", "");
+    window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
     const searchParams = params.get("search");
@@ -62,7 +64,6 @@ export const AvailableRecruitment = () => {
       return myListJob;
     };
     getMyListJob(getlocalToken, searchParams, categoryParams, "", dateParams,statusParams);
-    window.scrollTo(0, 0);
   }, [params]);
 
   const listCategory = allCategory?.map((item) => {
@@ -88,17 +89,15 @@ export const AvailableRecruitment = () => {
       value: "extended",
       label: "Được gia hạn",
     },
+    {
+      value: "removed",
+      label: "Đã bị gỡ bỏ",
+    },
   ];
   setTimeout(() => {
     setComplete(true);
   }, 2500);
 
-  const statusArr = listStatus.map((item)=>{
-    return {
-      value : item.value,
-      label : item.label
-    }
-  })
   const handlSelectCategory = (e) => {
     let arrField = e;
     console.log(arrField);
@@ -124,7 +123,7 @@ export const AvailableRecruitment = () => {
        }
     }
   };
-
+      
   return (
     <>
       <MetaData title="Danh sách tin tuyển dụng đã đăng" />

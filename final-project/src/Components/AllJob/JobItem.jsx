@@ -5,6 +5,7 @@ import moment from "moment";
 import vi from "moment/locale/vi";
 import styles from "./AllJob.module.scss";
 import classNames from "classnames/bind";
+import { getApiHostImage } from "../../config";
 const cx = classNames.bind(styles);
 
 const JobItem = ({ data }) => {
@@ -14,8 +15,11 @@ const JobItem = ({ data }) => {
   let crMonth = new Date(crTime).getMonth() + 1;
   let crYear = new Date(crTime).getFullYear();
   let newCreate = `${crDay}-${crMonth}-${crYear}`;
-  const images = data?.name?.avatar;
-  const result = images?.split("/")[1] + "/".concat(images?.split("/")[2]);
+  const image = data?.name?.avatar
+  const splitString  = image.split("\\")
+  const imageString = splitString[1] + "/".concat(splitString[2]);
+
+
   return (
     <Fragment>
       <Link to={"/jobDetail/" + data._id}>
@@ -23,15 +27,15 @@ const JobItem = ({ data }) => {
           <div className={cx("box_item")}>
             <div className={cx("images")}>
               <img
-                src={`https://xjob-mindx-production.up.railway.app/${result}`}
+                src={getApiHostImage()+`${imageString}`}
                 alt="logo"
               />
             </div>
             <div className={cx("content")}>
-              <Link to="/" className={cx("title")}>
+              <Link to={"/jobDetail/" + data._id} className={cx("title")}>
                 {data.title}
               </Link>
-              <Link to="/" className={cx("company")}>
+              <Link to={"/jobDetail/" + data._id} className={cx("company")}>
                 {data.name.info.name}
               </Link>
               <div className={cx("address")}>

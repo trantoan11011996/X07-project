@@ -19,7 +19,6 @@ export default function BasicInfo() {
           maxLength={100}
           type="text"
           placeholder="Nhập tiêu đề tuyển dụng"
-          value={title}
           onChange={(e) => setTitle(e.target.value)}
           // required
         />
@@ -35,7 +34,6 @@ export default function BasicInfo() {
       <Form.Group className="mb-3">
         <Form.Control
           maxLength={300}
-          value={position}
           type="text"
           placeholder="ví dụ : Nhân Viên Kinh Doanh"
           onChange={(e) => setPosition(e.target.value)}
@@ -53,7 +51,7 @@ export default function BasicInfo() {
             Hình thức làm việc <span style={{ color: "red" }}>*</span>
           </Form.Label>
           <Form.Select onChange={(e) => setType(e.target.value)}>
-            <option value={type}></option>
+            <option ></option>
             <option value="fulltime">Toàn thời gian</option>
             <option value="parttime">bán thời gian</option>
           </Form.Select>

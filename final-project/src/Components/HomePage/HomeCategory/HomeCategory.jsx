@@ -66,45 +66,44 @@ export default function HomeCategory() {
 
   return (
     <div className="home-category">
-      <Container>
-        <div className="content-home-category">
-          <h1 className="header-home-category">Việc làm theo ngành nghề</h1>
-          <Link>
-            <p className="all-category">
-              xem tất cả{" "}
-              <span>
-                <AiOutlineArrowRight></AiOutlineArrowRight>
-              </span>
-            </p>
-          </Link>
-        </div>
-        <Slider {...settings}>
-          {allCategory?.map((item, value) => {
-            let color = "#";
-            for (let i = 0; i < 3; i++)
-              color += (
-                "0" +
-                Math.floor(
-                  ((1 + Math.random()) * Math.pow(16, 2)) / 2
-                ).toString(16)
-              ).slice(-2);
-            const bgColor = color;
-            return (
-              <div className="slide-item">
-                <div
-                  className="item"
-                  style={{
-                    backgroundColor: bgColor,
-                  }}
-                >
-                  <h1 className="name-category">{item.name}</h1>
-                  <p className="amount-jobs">việc làm</p>
-                </div>
+      <div className="navigate-content-category">
+        <h1 className="header-home-category">Việc làm theo ngành nghề</h1>
+        <Link>
+          <p className="all-category">
+            xem tất cả{" "}
+            <span>
+              <AiOutlineArrowRight></AiOutlineArrowRight>
+            </span>
+          </p>
+        </Link>
+      </div>
+      <div className="content-home-category"></div>
+      <Slider {...settings}>
+        {allCategory?.map((item, value) => {
+          let color = "#";
+          for (let i = 0; i < 3; i++)
+            color += (
+              "0" +
+              Math.floor(((1 + Math.random()) * Math.pow(16, 2)) / 2).toString(
+                16
+              )
+            ).slice(-2);
+          const bgColor = color;
+          return (
+            <div className="slide-item">
+              <div
+                className="item"
+                style={{
+                  backgroundColor: bgColor,
+                }}
+              >
+                <h1 className="name-category">{item.name}</h1>
+                <p className="amount-jobs">việc làm</p>
               </div>
-            );
-          })}
-        </Slider>
-      </Container>
+            </div>
+          );
+        })}
+      </Slider>
     </div>
   );
 }

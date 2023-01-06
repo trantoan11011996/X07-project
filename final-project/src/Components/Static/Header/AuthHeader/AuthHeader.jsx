@@ -13,6 +13,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../../../Context/UserContext";
 import { logoutUser } from "../../../../Actions/authAction";
+import { getApiHostImage } from "../../../../config";
 
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const AuthHeader = ({ mode }) => {
   if (currentUser) {
     if (currentUser.hasOwnProperty("avatar")) {
       const image = currentUser.avatar;
-      const splitString = image.split("/");
+      const splitString = image.split("\\");
       imageString = splitString[1] + "/".concat(splitString[2]);
     } else {
       imageString = "";
@@ -48,6 +49,7 @@ const AuthHeader = ({ mode }) => {
   const handleLogOutUser = () => {
     logOutUser();
     navigate("/");
+    setShowSideBar(false);
     dispatch(logoutUser(navigate));
   };
   // handleLogOutUser()
@@ -175,7 +177,7 @@ const AuthHeader = ({ mode }) => {
                     <div className="account-info-content">
                       {imageString ? (
                         <img
-                          src={`https://xjob-mindx-production.up.railway.app/${imageString}`}
+                          src={getApiHostImage() + `${imageString}`}
                           className="logo-user"
                         />
                       ) : (
@@ -217,11 +219,66 @@ const AuthHeader = ({ mode }) => {
         <div className="close-sidebar-container" onClick={() => closeSideBar()}>
           <AiOutlineClose className="close-icon-sidebar"></AiOutlineClose>
         </div>
-        <div className="btn-sidebar-container show-btn-sidebar">
-          <button className="btn-login-header btn-header">Đăng nhập</button>
-          <button className="btn-signin-header btn-header">Đăng ký</button>
-        </div>
-        <div className="navbar-sidebar-content show-content-sidebar">
+        {!user && (
+          <div className="btn-sidebar-container show-btn-sidebar">
+            <Link to={"/login"} onClick={() => closeSideBar()}>
+              <button className="btn-login-header btn-header">Đăng nhập</button>
+            </Link>
+            <Link to={"/register"} onClick={() => closeSideBar()}>
+              <button className="btn-signin-header btn-header">Đăng ký</button>
+            </Link>
+          </div>
+        )}
+        {user && (
+          <div className="btn-sidebar-container btn-sidebar-container-user show-btn-sidebar">
+            <Link className="logo-sidebar"  to={"/"} onClick={() => closeSideBar()}>
+              <img className="img-logo-sidebar" src={logo}></img>
+            </Link>
+            {current.role === "candidate" && (
+              <div className="action-sidebar">
+                <Link
+                  to={"/CandidateApplication"}
+                  onClick={() => closeSideBar()}
+                >
+                  <p className="content-action">Công việc đã ứng tuyển</p>
+                </Link>
+                <Link to={"/update_info"} onClick={() => closeSideBar()}>
+                  <p className="content-action">Cập nhật thông tin</p>
+                </Link>
+              </div>
+            )}
+            {current.role === "recruiter" && (
+              <div className="action-sidebar">
+                <Link
+                  to={"/availablerecruitment"}
+                  onClick={() => closeSideBar()}
+                >
+                  <p className="content-action">Tin tuyển dụng đã đăng</p>
+                </Link>
+                {!current.info ? (
+                  <p
+                    className="alert-update-info content-action text-danger"
+                    onClick={() => closeSideBar()}
+                  >
+                    Cập nhật thông tin đầy đủ trước khi đăng tuyển
+                  </p>
+                ) : (
+                  <Link
+                    to={"/upload_recruiment"}
+                    onClick={() => closeSideBar()}
+                  >
+                    <p className="content-action">Đăng tin tuyển dụng</p>
+                  </Link>
+                )}
+
+                <Link to={"/update_info"} onClick={() => closeSideBar()}>
+                  <p className="content-action">Cập nhật thông tin</p>
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+        <div className={current ? "navbar-sidebar-content navbar-sidebar-content-user show-content-sidebar" : "navbar-sidebar-content  show-content-sidebar"}>
           <div className="navbar-content company-navbar">
             <BsBuilding className="icon-navbar"></BsBuilding>
             <p className="content">Danh sách công ty</p>
@@ -231,6 +288,10 @@ const AuthHeader = ({ mode }) => {
             <p className="content">Địa điểm/Ngành nghề</p>
           </div>
         </div>
+        {current ? <div className="btn-logout-sidebar" onClick={() => handleLogOutUser()}>
+          <BiLogOut className="icon-logout"></BiLogOut>
+          <div className="logout">Đăng xuất</div>
+        </div> : <></>}
       </div>
       <div
         className={

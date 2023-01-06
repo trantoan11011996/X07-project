@@ -34,10 +34,12 @@ import "./jobdetail.css";
 import { UserContext } from "../../Context/UserContext";
 
 import { Space } from "antd";
+import { getApiHostImage } from "../../config";
 
 export default function JobDetail() {
   const { user } = useSelector((state) => state.auths);
-  const { fetchJobDetail, postCV, checkCV, checkResult } = useContext(JobContext);
+  const { fetchJobDetail, postCV, checkCV, checkResult } =
+    useContext(JobContext);
   const [err, setErr] = useState(false);
   const [cvErr, setCvErr] = useState(false);
   const [show, setShow] = useState("");
@@ -55,10 +57,9 @@ export default function JobDetail() {
   const res = localStorage.getItem("currentUser");
   const userCurrent = JSON.parse(res);
   const handleClose = () => setShow(false);
-  
+
   const localToken = localStorage.getItem("token");
   const userToken = JSON.parse(localToken);
- 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,21 +73,21 @@ export default function JobDetail() {
   }, [id]);
 
   useEffect(() => {
-    const checkMyCv = async() => {
-      const check = await checkCV(id, userToken)
+    const checkMyCv = async () => {
+      const check = await checkCV(id, userToken);
       console.log(check);
-      if(typeof check === "object" && check !== null){
+      if (typeof check === "object" && check !== null) {
         setMyRcmAlert(false);
-      }else{
+      } else {
         if (check == false) {
           setMyRcmAlert(false);
         } else {
           setMyRcmAlert(true);
         }
       }
-    }
-    checkMyCv()
-  }, [id])
+    };
+    checkMyCv();
+  }, [id]);
 
   useEffect(() => {
     const description = document.getElementById("description");
@@ -114,7 +115,6 @@ export default function JobDetail() {
     setDeadlineDate(newDealine);
   }, [jobData]);
 
-
   const handleShow = () => {
     if (!userCurrent) {
       setLoginErr(true);
@@ -135,20 +135,21 @@ export default function JobDetail() {
   const handleActive = async (event) => {
     event.preventDefault();
     setCheck(false);
-    
-    if(file == "" || file == null) {
-      setErr(true)
-      return
+
+    if (file == "" || file == null) {
+      setErr(true);
+      return;
     } else {
-      setErr(false)
+      setErr(false);
       const post = await postCV(id, file, userToken);
-      if (post.status == "400") {
-        setCvErr(true)
-        return
+      console.log("post",post);
+      if (typeof post === "object" && post !== null) {
+        setCvErr(true);
+        return;
       } else {
-        setCvErr(false)
+        setCvErr(false);
         handleClose();
-        setMyRcmAlert(true)
+        setMyRcmAlert(true);
       }
     }
   };
@@ -157,7 +158,8 @@ export default function JobDetail() {
     let data = await fetchJobDetail(id);
     if (data) {
       setJobData(data);
-      const splitString = data.name.avatar.split("/");
+      const image = data?.name?.avatar;
+      const splitString = image.split("\\");
       const imageString = splitString[1] + "/".concat(splitString[2]);
       return setLogo(imageString);
     }
@@ -190,7 +192,7 @@ export default function JobDetail() {
                     <Col className="logo" sm={2} md={2}>
                       <img
                         className="image-logo"
-                        src={`https://xjob-mindx-production.up.railway.app/${logo}`}
+                        src={getApiHostImage()+`${logo}`}
                       />
                     </Col>
 
@@ -220,19 +222,21 @@ export default function JobDetail() {
                     <Row className="mt-2">
                       <Col sm={5} md={5}>
                         <BsCalendar2Check className="me-2"></BsCalendar2Check>
-                        <b>Ngày đăng tuyển:</b> <span className="create-date"> {createDate}</span>
+                        <b>Ngày đăng tuyển:</b>{" "}
+                        <span className="create-date"> {createDate}</span>
                       </Col>
                       <Col sm={5} md={5}>
-                        <b>Ngày hết hạn:</b> <span className="deadline-date">{deadlineDate}</span>
+                        <b>Ngày hết hạn:</b>{" "}
+                        <span className="deadline-date">{deadlineDate}</span>
                       </Col>
                     </Row>
 
-                    {( !userCurrent || userCurrent.role === "candidate") && (
+                    {(!userCurrent || userCurrent.role === "candidate") && (
                       <Row>
                         <Space wrap>
                           {!MyRcmAlert ? (
                             <Button
-                              className= "job-button button-apply"
+                              className="job-button button-apply"
                               variant="primary"
                               onClick={handleShow}
                             >
@@ -275,7 +279,6 @@ export default function JobDetail() {
                         )}
                       </Row>
                     )}
-
                   </div>
 
                   <div className="tab-rows">
@@ -419,7 +422,11 @@ export default function JobDetail() {
             </Col>
 
             <Col>
-              <img className="list-banner mb-3 mt-3" src={images.banner} alt="" />
+              <img
+                className="list-banner mb-3 mt-3"
+                src={images.banner}
+                alt=""
+              />
             </Col>
           </Row>
 
@@ -437,8 +444,8 @@ export default function JobDetail() {
                   name="formFile"
                   onChange={(event) => setFile(event.target.files[0])}
                 />
-              {err && (<p className="err">Hồ sơ không được để trống </p>)}
-              {cvErr && (<p className="err"> Không gửi dữ liệu thành công </p>)}
+                {err && <p className="err">Hồ sơ không được để trống </p>}
+                {cvErr && <p className="err"> Không gửi dữ liệu thành công </p>}
               </Form.Group>
 
               <Form.Group>

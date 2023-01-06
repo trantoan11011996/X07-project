@@ -15,6 +15,7 @@ const register = (email, password, user_role) => {
 
 const candidateInfo = (
   name,
+  email,
   gender,
   age,
   phone,
@@ -25,8 +26,9 @@ const candidateInfo = (
   const userInfo = {
     info: {
       fullName: name,
-      age: age,
+      email : email,
       gender: gender,
+      age: age,
       phoneNumber: phone,
       address: address,
       description: description,
@@ -62,9 +64,10 @@ const autoLogin = () => {
   return json ? JSON.parse(json) : null;
 };
 const logOut = () => {
-  localStorage.removeItem("currentUser");
-  localStorage.removeItem("token");
-  localStorage.removeItem("myRcm");
+  // localStorage.removeItem("currentUser");
+  // localStorage.removeItem("token");
+  // localStorage.removeItem("myRcm");
+  localStorage.clear()
 };
 
 const UserApis = {

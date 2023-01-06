@@ -27,7 +27,7 @@ export default function CandidateList() {
   };
   const token = localStorage.getItem("token");
   const userToken = JSON.parse(token);
-
+  
   useEffect(() => {
     getCV(id,"", userToken);
   }, [id, userToken]);

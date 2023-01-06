@@ -22,8 +22,10 @@ const UserProvider = ({ children }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [category, setCategory] = useState("");
+  const [categoryUser, setCategoryUser] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
+  const [emailCandidate,setEmailCandidate] = useState("")
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [showLogin, setShowLogin] = useState(true);
@@ -32,6 +34,7 @@ const UserProvider = ({ children }) => {
   const [companyPhone, setCompanyPhone] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
+  const [userDescription, setUserDescription] = useState("");
   const [fieldActivity, setFieldActivity] = useState("");
   const [listRecruimentCv, SetlistRecruimentCv] = useState("");
 
@@ -107,14 +110,16 @@ const UserProvider = ({ children }) => {
   const updateCandidateInfo = async (description) => {
     const info = UserApi.candidateInfo(
       name,
+      emailCandidate,
       gender,
       age,
       phone,
       address,
-      category,
+      categoryUser,
       description
     );
-
+    console.log("info",info);
+      console.log('info',info);
     const user_info = await fetch(
       `${getApiHost()}users/update-profile`,
       {
@@ -135,7 +140,7 @@ const UserProvider = ({ children }) => {
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.info = data.info;
-        user.category = data.caterogry
+        user.category = data.category
         localStorage.setItem("currentUser", JSON.stringify(user));
         setCurrentUser(user);
         return data;
@@ -153,7 +158,7 @@ const UserProvider = ({ children }) => {
     companyPhone,
     companyAddress,
     ckEditorOutput,
-    operationSector
+    category
   ) => {
     const info = UserApi.recruiterInfo(
       companyName,
@@ -161,8 +166,9 @@ const UserProvider = ({ children }) => {
       companyPhone,
       companyAddress,
       ckEditorOutput,
-      operationSector
+      category
     );
+    console.log();
     let user_info = await fetch(
       getApiHost() + "users/update-profile",
       {
@@ -211,9 +217,13 @@ const UserProvider = ({ children }) => {
     setAddress,
     category,
     setCategory,
+    categoryUser, 
+    setCategoryUser,
     description,
     setDescription,
     name,
+    emailCandidate,
+    setEmailCandidate,
     setName,
     gender,
     setGender,
