@@ -38,6 +38,7 @@
 }
 
 .contact-location{
+    width: 725px !important;
     background-color: #FFF7ED;
     padding: 10px 15px;
     margin-bottom: 20px;

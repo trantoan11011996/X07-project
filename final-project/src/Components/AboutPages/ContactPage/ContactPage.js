@@ -57,7 +57,7 @@ export default function ContactPage() {
                 <h2 className="contact-title mt-3">Vị trí</h2>
                 <p className="ms-2 mt-3">
                   {" "}
-                  <BsBuilding></BsBuilding> <b> Văn phòng tại Tp.Hồ Chí Minh</b>
+                  <b> Văn phòng tại Tp.Hồ Chí Minh</b>
                 </p>
                 <div className="contact-location mt-3">
                   <p>
