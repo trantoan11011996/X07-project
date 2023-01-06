@@ -247,7 +247,7 @@ const AuthHeader = ({ mode }) => {
                 </Link>
               </div>
             )}
-            {current.role === "recruiter" && (
+            {current?.role === "recruiter" && (
               <div className="action-sidebar">
                 <Link
                   to={"/availablerecruitment"}
