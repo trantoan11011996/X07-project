@@ -234,7 +234,7 @@ const AuthHeader = ({ mode }) => {
             <Link className="logo-sidebar"  to={"/"} onClick={() => closeSideBar()}>
               <img className="img-logo-sidebar" src={logo}></img>
             </Link>
-            {current.role === "candidate" && (
+            {current?.role === "candidate" && (
               <div className="action-sidebar">
                 <Link
                   to={"/CandidateApplication"}
