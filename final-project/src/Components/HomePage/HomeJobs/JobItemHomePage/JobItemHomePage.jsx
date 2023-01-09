@@ -8,7 +8,7 @@ import logocompany from "../../../../img/logocompany.png"
 import { Link } from "react-router-dom";
 import { getApiHostImage } from "../../../../config";
 export default function JobItemHomePage({ job,id }) {
-  console.log(job);
+  // console.log(job);
   // console.log('job',job);
   const image = job?.name?.avatar
   const splitString  = image.split("\\")

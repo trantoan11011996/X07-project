@@ -3,7 +3,7 @@ import { List } from "antd";
 import CompanyItems from "./items";
 import { JobContext } from "../../Context/JobContext";
 function CompanyList({company}){
-  console.log(company);
+  // console.log(company);
     
     return(
         <List

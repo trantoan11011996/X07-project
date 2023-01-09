@@ -4,7 +4,6 @@ import { UserData } from "../UserData/UserData";
 import UserApi from "../API/UserApi";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { async } from "q";
 import { getApiHost } from "../config";
 
 const UserContext = createContext();
@@ -25,7 +24,7 @@ const UserProvider = ({ children }) => {
   const [categoryUser, setCategoryUser] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
-  const [emailCandidate,setEmailCandidate] = useState("")
+  const [emailCandidate, setEmailCandidate] = useState("")
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [showLogin, setShowLogin] = useState(true);
@@ -78,14 +77,14 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        if(!data.message){
+        if (!data.message) {
           setCurrentUser(data);
           setToken(data.token);
           localStorage.setItem("currentUser", JSON.stringify(data));
           localStorage.setItem("token", JSON.stringify(data.token));
           return data
         }
-        return 
+        return
       })
       .catch((err) => {
         console.log(err);
@@ -118,8 +117,8 @@ const UserProvider = ({ children }) => {
       categoryUser,
       description
     );
-    console.log("info",info);
-      console.log('info',info);
+    console.log("info", info);
+    console.log('info', info);
     const user_info = await fetch(
       `${getApiHost()}users/update-profile`,
       {
@@ -136,7 +135,7 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log('data',data);
+        console.log('data', data);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.info = data.info;
@@ -168,7 +167,6 @@ const UserProvider = ({ children }) => {
       ckEditorOutput,
       category
     );
-    console.log();
     let user_info = await fetch(
       getApiHost() + "users/update-profile",
       {
@@ -185,7 +183,7 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log("data",data);
+        console.log("data", data);
         let user = localStorage.getItem("currentUser");
         user = JSON.parse(user);
         user.info = data.info;
@@ -197,6 +195,18 @@ const UserProvider = ({ children }) => {
     return user_info;
   };
 
+  const getCompanyInfo = async (id) => {
+    const getInfo = await fetch(getApiHost() + `users/detail-recruiter/${id}`, {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+      return getInfo
+  };
 
   const value = {
     userData,
@@ -217,7 +227,7 @@ const UserProvider = ({ children }) => {
     setAddress,
     category,
     setCategory,
-    categoryUser, 
+    categoryUser,
     setCategoryUser,
     description,
     setDescription,
@@ -249,7 +259,8 @@ const UserProvider = ({ children }) => {
     setFieldActivity,
     token,
     listRecruimentCv,
-    SetlistRecruimentCv
+    SetlistRecruimentCv,
+    getCompanyInfo
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

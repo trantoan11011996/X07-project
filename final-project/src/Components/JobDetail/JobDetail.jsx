@@ -75,7 +75,7 @@ export default function JobDetail() {
   useEffect(() => {
     const checkMyCv = async () => {
       const check = await checkCV(id, userToken);
-      console.log(check);
+    
       if (typeof check === "object" && check !== null) {
         setMyRcmAlert(false);
       } else {
@@ -92,11 +92,11 @@ export default function JobDetail() {
   useEffect(() => {
     const description = document.getElementById("description");
     description.innerHTML = `
-        ${jobData.description}
+        ${jobData?.description}
     `;
 
-    const compnayDescription = document.getElementById("about-info");
-    compnayDescription.innerHTML = `
+    const companyDescription = document.getElementById("about-info");
+    companyDescription.innerHTML = `
         ${jobData?.name?.info?.description}
     `;
 
@@ -142,7 +142,7 @@ export default function JobDetail() {
     } else {
       setErr(false);
       const post = await postCV(id, file, userToken);
-      console.log("post",post);
+      console.log("post", post);
       if (typeof post === "object" && post !== null) {
         setCvErr(true);
         return;
@@ -192,7 +192,7 @@ export default function JobDetail() {
                     <Col className="logo" sm={2} md={2}>
                       <img
                         className="image-logo"
-                        src={getApiHostImage()+`${logo}`}
+                        src={getApiHostImage() + `${logo}`}
                       />
                     </Col>
 

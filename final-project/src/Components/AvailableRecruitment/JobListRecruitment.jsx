@@ -3,7 +3,7 @@ import { List } from "antd";
 import JobItemRecruitment from "./JobItemRecruitment";
 import { JobContext } from "../../Context/JobContext";
 function JobListRecruitment({myJobRecruitment}){
-  console.log(myJobRecruitment);
+  // console.log(myJobRecruitment);
     
     return(
         <List

@@ -17,55 +17,55 @@ function CompanyItems({ company, id }) {
   // console.log(t);
 
   return (
-    //   <Link to={"/" + id}>
-    <Fragment>
-      <li className={cx("list_group_item")}>
-        <div className={cx("box_item")}>
-          <div className={cx("images")}>
-            <img src={getApiHostImage() + `${imageString}`} alt="" />
-            {/* <img src={image} alt="" /> */}
-          </div>
-          <div className={cx("content")}>
-            <Link to={"/" + id} className={cx("title")}></Link>
-            <div>
-              <Link to={"/" + id} className={cx("company")}>
-                {company.info.name}
-              </Link>
+    <Link to={"/CompanyDetail/" + id}>
+      <Fragment>
+        <li className={cx("list_group_item")}>
+          <div className={cx("box_item")}>
+            <div className={cx("images")}>
+              <img src={getApiHostImage() + `${imageString}`} alt="" />
+              {/* <img src={image} alt="" /> */}
             </div>
-            <div className={cx("address")}>
-              <span>
-                <IoLocationSharp></IoLocationSharp>Địa điểm:{" "}
-                {company.info.address}{" "}
-              </span>
-            </div>
-            <div className={cx("info_salary")}>
-              <div className={cx("salary ")}>
-                <span>
-                  <AiOutlinePhone></AiOutlinePhone>
-                </span>{" "}
-                <span>Liên hệ: {company.info.phoneNumber} </span>
+            <div className={cx("content")}>
+              <div className={cx("title")}></div>
+              <div>
+                <div className={cx("company")}>
+                  {company.info.name}
+                </div>
               </div>
-            </div>
-            <div className={cx("info_salary")}>
-              <div className={cx("category  ")}>
+              <div className={cx("address")}>
                 <span>
-                  <AiOutlineMail></AiOutlineMail>Email: {company.info.email}
+                  <IoLocationSharp></IoLocationSharp>Địa điểm:{" "}
+                  {company.info.address}{" "}
                 </span>
               </div>
+              <div className={cx("info_salary")}>
+                <div className={cx("salary ")}>
+                  <span>
+                    <AiOutlinePhone></AiOutlinePhone>
+                  </span>{" "}
+                  <span>Liên hệ: {company.info.phoneNumber} </span>
+                </div>
+              </div>
+              <div className={cx("info_salary")}>
+                <div className={cx("category  ")}>
+                  <span>
+                    <AiOutlineMail></AiOutlineMail>Email: {company.info.email}
+                  </span>
+                </div>
+              </div>
+              <div className={cx("small_detail")}></div>
+              {company.status === "removed" && (
+                <>
+                  <span className={cx("alert-myrcm-removed")}>
+                    Hãy kiểm tra <strong>Email</strong> của bạn để biết được tại
+                    sao tin của bạn bị gỡ bỏ.
+                  </span>
+                </>
+              )}
             </div>
-            <div className={cx("small_detail")}></div>
-            {company.status === "removed" && (
-              <>
-                <span className={cx("alert-myrcm-removed")}>
-                  Hãy kiểm tra <strong>Email</strong> của bạn để biết được tại
-                  sao tin của bạn bị gỡ bỏ.
-                </span>
-              </>
-            )}
           </div>
-        </div>
-      </li>
-    </Fragment>
+        </li>
+      </Fragment>
 
     //   </Link>
   );
