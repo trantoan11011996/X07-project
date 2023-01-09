@@ -183,7 +183,7 @@ export default function RJDetails() {
                         </Link>
                           </Col>
                         <Col sm={12} md={4}>
-                          <Link to={`/CandidateList/${id}`}>
+                          <Link to={`/candidateList/${id}`}>
                             <Button
                               className="job-button"
                               variant="outline-primary"

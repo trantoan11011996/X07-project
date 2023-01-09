@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import classNames from "classnames/bind";
 import styles from "../Footer/Footer.module.css";
@@ -10,29 +10,30 @@ const cx = classNames.bind(styles);
 
 export default function Footer() {
   const { allCategory, allLocation } = useContext(JobContext);
-
   let location = [];
   let category = [];
-  if (allCategory) {
-    category = [
-      allCategory[0],
-      allCategory[11],
-      allCategory[12],
-      allCategory[15],
-      allCategory[6],
-      allCategory[10],
-    ];
-  }
-  if (allLocation) {
-    location = [
-      allLocation[0],
-      allLocation[1],
-      allLocation[2],
-      allLocation[3],
-      allLocation[4],
-      allLocation[5],
-    ];
-  }
+    if (allCategory) {
+      category = [
+        allCategory[0],
+        allCategory[11],
+        allCategory[12],
+        allCategory[15],
+        allCategory[6],
+        allCategory[10],
+      ];
+    }
+    if (allLocation) {
+      location = [
+        allLocation[0],
+        allLocation[1],
+        allLocation[2],
+        allLocation[3],
+        allLocation[4],
+        allLocation[5],
+      ];
+      console.log('location',location);
+    }
+ 
 
   return (
     <div className={cx("footer")}>

@@ -72,10 +72,12 @@ const AuthHeader = ({ mode }) => {
         </Link>
       </div>
       <div className="header-navbar">
-        <div className="navbar-content company-navbar">
-          <BsBuilding className="icon-navbar"></BsBuilding>
-          <p className="content">Danh sách công ty</p>
-        </div>
+        <Link to={"/company"} className="navbar-content navbar-content-link company-navbar">
+          <div className="navbar-content company-navbar">
+            <BsBuilding className="icon-navbar"></BsBuilding>
+            <p className="content">Danh sách công ty</p>
+          </div>
+        </Link>
         <div className="navbar-content location-navbar">
           <BsSearch className="icon-navbar"></BsSearch>
           <p className="content">Địa điểm/Ngành nghề</p>
@@ -231,7 +233,11 @@ const AuthHeader = ({ mode }) => {
         )}
         {user && (
           <div className="btn-sidebar-container btn-sidebar-container-user show-btn-sidebar">
-            <Link className="logo-sidebar"  to={"/"} onClick={() => closeSideBar()}>
+            <Link
+              className="logo-sidebar"
+              to={"/"}
+              onClick={() => closeSideBar()}
+            >
               <img className="img-logo-sidebar" src={logo}></img>
             </Link>
             {current?.role === "candidate" && (
@@ -278,7 +284,13 @@ const AuthHeader = ({ mode }) => {
             )}
           </div>
         )}
-        <div className={current ? "navbar-sidebar-content navbar-sidebar-content-user show-content-sidebar" : "navbar-sidebar-content  show-content-sidebar"}>
+        <div
+          className={
+            current
+              ? "navbar-sidebar-content navbar-sidebar-content-user show-content-sidebar"
+              : "navbar-sidebar-content  show-content-sidebar"
+          }
+        >
           <div className="navbar-content company-navbar">
             <BsBuilding className="icon-navbar"></BsBuilding>
             <p className="content">Danh sách công ty</p>
@@ -288,10 +300,17 @@ const AuthHeader = ({ mode }) => {
             <p className="content">Địa điểm/Ngành nghề</p>
           </div>
         </div>
-        {current ? <div className="btn-logout-sidebar" onClick={() => handleLogOutUser()}>
-          <BiLogOut className="icon-logout"></BiLogOut>
-          <div className="logout">Đăng xuất</div>
-        </div> : <></>}
+        {current ? (
+          <div
+            className="btn-logout-sidebar"
+            onClick={() => handleLogOutUser()}
+          >
+            <BiLogOut className="icon-logout"></BiLogOut>
+            <div className="logout">Đăng xuất</div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div
         className={
