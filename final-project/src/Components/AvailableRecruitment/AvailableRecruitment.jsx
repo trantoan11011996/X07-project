@@ -7,8 +7,6 @@ import Lottie from "lottie-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { images } from "../../img/index";
 import { CiSearch } from "react-icons/ci";
-import { colourOptions } from "../DataJob/data";
-import { address } from "../DataJob/data";
 import Select from "react-select";
 import { JobContext } from "../../Context/JobContext";
 
