@@ -75,7 +75,7 @@ export default function JobDetail() {
   useEffect(() => {
     const checkMyCv = async () => {
       const check = await checkCV(id, userToken);
-      console.log(check);
+    
       if (typeof check === "object" && check !== null) {
         setMyRcmAlert(false);
       } else {
@@ -92,11 +92,11 @@ export default function JobDetail() {
   useEffect(() => {
     const description = document.getElementById("description");
     description.innerHTML = `
-        ${jobData.description}
+        ${jobData?.description}
     `;
 
-    const compnayDescription = document.getElementById("about-info");
-    compnayDescription.innerHTML = `
+    const companyDescription = document.getElementById("about-info");
+    companyDescription.innerHTML = `
         ${jobData?.name?.info?.description}
     `;
 

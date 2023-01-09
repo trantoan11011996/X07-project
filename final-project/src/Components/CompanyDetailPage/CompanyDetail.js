@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { getApiHostImage } from "../../config";
 import { UserContext } from "../../Context/UserContext";
 import { images } from "../../img/index";
+import { CiLocationOn, CiPhone } from "react-icons/ci";
 
 export default function CompanyDetail() {
 
-    const [companyData, setCompanyData] = useState();
+    const [companyData, setCompanyData] = useState({});
     const { getCompanyInfo } = useContext(UserContext);
     const { id } = useParams();
     const [logo, setLogo] = useState();
@@ -16,6 +17,7 @@ export default function CompanyDetail() {
         window.scrollTo(0, 0);
     }, []);
 
+
     useEffect(() => {
         const detailData = async () => {
             await getCompanyDetail();
@@ -23,17 +25,24 @@ export default function CompanyDetail() {
         detailData();
     }, [id]);
 
+
     const getCompanyDetail = async () => {
         let data = await getCompanyInfo(id);
         if (data) {
             setCompanyData(data);
-            const image = data?.name?.avatar;
+            const image = data?.avatar;
             const splitString = image.split("\\");
             const imageString = splitString[1] + "/".concat(splitString[2]);
             return setLogo(imageString);
         }
         return data;
     };
+
+    useEffect(() => {
+        const companyDescription = document.getElementById("company-info");
+        companyDescription.innerHTML = `${companyData?.info?.description}`;
+    }, [companyData]);
+
 
     return (
         <>
@@ -62,9 +71,23 @@ export default function CompanyDetail() {
                                         <Card.Title className="job-tittle">
                                             {companyData?.info?.name}
                                         </Card.Title>
-                                        <h3> {companyData?.info?.address}</h3>
+                                        <CiLocationOn className="me-2"></CiLocationOn> <span> {companyData?.info?.address}</span>
                                     </Col>
                                 </Row>
+
+                                <div id="about" className="mt-3">
+                                    <h2 className="require-title"> Về Công Ty </h2>
+                                    <div id="company-info"></div>
+                                </div>
+
+                                <div className="mt-3">
+                                    <h2 className="require-title"> Việc đang tuyển </h2>
+                                    
+                                </div>
+
+                                <div className="mt-3">
+                                    <h2 className="require-title"> Nơi làm việc </h2>
+                                </div>
                             </Card.Body>
                         </Col>
 

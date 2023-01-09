@@ -29,6 +29,7 @@ import TermPage from "../AboutPages/TermPage/TermPage";
 import PrivacyPage from "../AboutPages/PrivacyPage/PrivacyPage";
 import ContactPage from "../AboutPages/ContactPage/ContactPage";
 import { CompanyPage } from "../CompanyPage/CompanyPage";
+import CompanyDetail from "../CompanyDetailPage/CompanyDetail";
 
 export default function MainApp() {
   return (
@@ -63,7 +64,6 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>
-                <Route path="/update" element={<UpdateRecruiment/>}></Route>
                 <Route path="/CandidateList/:id" element={<CandidateList />} />
                 <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
                 <Route path="/Company_about" element={<CompanyPages/>}></Route>
@@ -73,6 +73,7 @@ export default function MainApp() {
                 <Route path="/PrivacyPage" element={<PrivacyPage />} />
                 <Route path="/ContactPage" element={<ContactPage />} />
                 <Route path="/Company" element={<CompanyPage/>} />
+                <Route path="/CompanyDetail/:id" element={<CompanyDetail />} />
               </Routes>
             
               <Footer />

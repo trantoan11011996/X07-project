@@ -203,7 +203,6 @@ const UserProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log("company detail", data)
         return data;
       });
       return getInfo
