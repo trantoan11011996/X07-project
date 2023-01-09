@@ -142,7 +142,7 @@ export default function JobDetail() {
     } else {
       setErr(false);
       const post = await postCV(id, file, userToken);
-      console.log("post",post);
+      console.log("post", post);
       if (typeof post === "object" && post !== null) {
         setCvErr(true);
         return;
@@ -192,7 +192,7 @@ export default function JobDetail() {
                     <Col className="logo" sm={2} md={2}>
                       <img
                         className="image-logo"
-                        src={getApiHostImage()+`${logo}`}
+                        src={getApiHostImage() + `${logo}`}
                       />
                     </Col>
 

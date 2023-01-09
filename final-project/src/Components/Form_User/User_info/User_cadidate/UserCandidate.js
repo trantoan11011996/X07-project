@@ -292,7 +292,7 @@ export default function UserCandidate() {
                     name="radiogroup"
                     defaultValue={gender}
                     onChange={(e) => {
-                      console.log("gender", gender);
+                      // console.log("gender", gender);
                       setGender(e.target.value);
                     }}
                   >
@@ -400,7 +400,7 @@ export default function UserCandidate() {
             >
               <option value={categoryUser._id}>{categoryUser.name}</option>
               {categories?.map((item, index) => {
-                console.log(item._id);
+                // console.log(item._id);
                 return (
                   <option key={index} value={item._id}>
                     {item.name}

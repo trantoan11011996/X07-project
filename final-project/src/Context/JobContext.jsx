@@ -70,7 +70,7 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setJobHomePage(data.recruiment);
         setPageHomeJob (data.countDoc)
         localStorage.setItem("jobHomePage", JSON.stringify(data.recruiment));
@@ -173,7 +173,7 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     );
-    console.log(newRecruiment);
+    // console.log(newRecruiment);
     const createRecruiment = await fetch(getApiHost() + `recruiments/new`, {
       method: "post",
       body: JSON.stringify(newRecruiment),
@@ -187,7 +187,7 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
+        // console.log("data", data);
         return data;
       });
     return createRecruiment;
@@ -223,7 +223,7 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         return data;
       });
     return updateRecruitment;
@@ -334,6 +334,7 @@ const JobProvider = ({ children }) => {
       });
     return check;
   };
+
 
   const value = {
     getJobHomePage,

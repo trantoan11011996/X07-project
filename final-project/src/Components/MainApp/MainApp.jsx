@@ -28,6 +28,7 @@ import CovenantPage from "../AboutPages/CovenantPage/CovenantPage";
 import TermPage from "../AboutPages/TermPage/TermPage";
 import PrivacyPage from "../AboutPages/PrivacyPage/PrivacyPage";
 import ContactPage from "../AboutPages/ContactPage/ContactPage";
+import CompanyDetail from "../CompanyDetailPage/CompanyDetail";
 
 export default function MainApp() {
   return (
@@ -71,7 +72,9 @@ export default function MainApp() {
                 <Route path="/TermPage" element={<TermPage />} />
                 <Route path="/PrivacyPage" element={<PrivacyPage />} />
                 <Route path="/ContactPage" element={<ContactPage />} />
+                <Route path="/CompanyDetail/:id" element={<CompanyDetail />} />
               </Routes>
+            
               <Footer />
             </div>
           </HashRouter>
