@@ -71,7 +71,6 @@ export default function CompanyDetail() {
                                         <Card.Title className="job-tittle">
                                             {companyData?.info?.name}
                                         </Card.Title>
-                                        <CiLocationOn className="me-2"></CiLocationOn> <span> {companyData?.info?.address}</span>
                                     </Col>
                                 </Row>
 
@@ -85,9 +84,6 @@ export default function CompanyDetail() {
                                     
                                 </div>
 
-                                <div className="mt-3">
-                                    <h2 className="require-title"> Nơi làm việc </h2>
-                                </div>
                             </Card.Body>
                         </Col>
 
