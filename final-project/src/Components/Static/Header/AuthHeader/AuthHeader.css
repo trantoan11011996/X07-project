@@ -32,6 +32,12 @@
 }
 .company-navbar {
 }
+.navbar-content-link{
+  color: black;
+}
+.navbar-content-link:hover{
+  text-decoration: underline
+}
 .company-navbar > .icon-navbar {
   font-weight: 800;
   font-size: 20px;
