@@ -28,7 +28,11 @@ import CovenantPage from "../AboutPages/CovenantPage/CovenantPage";
 import TermPage from "../AboutPages/TermPage/TermPage";
 import PrivacyPage from "../AboutPages/PrivacyPage/PrivacyPage";
 import ContactPage from "../AboutPages/ContactPage/ContactPage";
+<<<<<<< HEAD
 import CompanyDetail from "../CompanyDetailPage/CompanyDetail";
+=======
+import { CompanyPage } from "../CompanyPage/CompanyPage";
+>>>>>>> 84e4023fc36fc41ed87050fcbec929b1ad7fbc0c
 
 export default function MainApp() {
   return (
@@ -72,7 +76,7 @@ export default function MainApp() {
                 <Route path="/TermPage" element={<TermPage />} />
                 <Route path="/PrivacyPage" element={<PrivacyPage />} />
                 <Route path="/ContactPage" element={<ContactPage />} />
-                <Route path="/CompanyDetail/:id" element={<CompanyDetail />} />
+                <Route path="/Company" element={<CompanyPage/>} />
               </Routes>
             
               <Footer />

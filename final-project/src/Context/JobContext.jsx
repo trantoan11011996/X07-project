@@ -49,6 +49,7 @@ const JobProvider = ({ children }) => {
   const [numberApplicantUpdate, setNumberApplicantUpdate] = useState("");
   const [jobCandidateApplication, setJobCandidateApplication] = useState([]);
   const [listRecruimentCv, SetlistRecruimentCv] = useState("");
+  const [company, setCompany] = useState([]);
   useEffect(() => {
     getallCategory();
     getallLocation();
@@ -118,6 +119,29 @@ const JobProvider = ({ children }) => {
       })
       .catch((error) => console.log(error.response));
   };
+
+
+  //getRecruiterCompany
+  const getRecruiterCompany = async (zeta, page, operationSector) => {
+
+    const getMyListCompany = await fetch(
+      getApiHost() +`users/list-recruiter?search=${zeta ?? ""}&page=${page ?? ""}$operationSector=${operationSector}`,
+      { 
+        method:"GET",
+ }
+    )
+    .then((res) => {
+      return res.json()
+    }).then((data)=>{
+      setCompany(data.rcts);
+      if (!localStorage.getItem("company")) {
+        localStorage.setItem("company", JSON.stringify(data.rcts));
+      }
+      return data
+    })
+    .catch((error) => console.log(error.response));
+    return getMyListCompany
+  }
 
   const fetchCandidateApplication = async (id) => {
     let applicationDetail = await JobApi.CandidateApplicationDetail(id);
@@ -228,6 +252,9 @@ const JobProvider = ({ children }) => {
       });
     return updateRecruitment;
   };
+
+  
+
 
   //post CV
   const postCV = async (id, file, token) => {
@@ -429,6 +456,9 @@ const JobProvider = ({ children }) => {
     numberApplicantUpdate,
     listRecruimentCv,
     SetlistRecruimentCv,
+    getRecruiterCompany ,
+    setCompany,
+    company
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };
