@@ -45,7 +45,8 @@ export default function JobDetail() {
   const [show, setShow] = useState("");
   const [active, setActive] = useState(false);
   const [logo, setLogo] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState({});
+  const [fileErr, setFileErr] = useState(false);
   const [check, setCheck] = useState(false);
   const { id } = useParams();
   const [jobData, setJobData] = useState({});
@@ -141,8 +142,18 @@ export default function JobDetail() {
       return;
     } else {
       setErr(false);
+      const splitFile = file?.name?.split(".")
+      // console.log("splitFile", splitFile[1]);
+
+      if (splitFile[1] == "docx" || splitFile[1] == "pdf" ) {
+        setFileErr(false);
+      } else {
+        setFileErr(true);
+        return;
+      }
+
       const post = await postCV(id, file, userToken);
-      console.log("post", post);
+      // console.log("post", post);
       if (typeof post === "object" && post !== null) {
         setCvErr(true);
         return;
@@ -175,6 +186,8 @@ export default function JobDetail() {
     });
   };
 
+
+  
   return (
     <>
       {jobData && (
@@ -446,6 +459,7 @@ export default function JobDetail() {
                 />
                 {err && <p className="err">Hồ sơ không được để trống </p>}
                 {cvErr && <p className="err"> Không gửi dữ liệu thành công </p>}
+                {fileErr && <p className="err">Chỉ nhận file có kết thúc bằng .docx hoặc .pdf </p>}
               </Form.Group>
 
               <Form.Group>
