@@ -173,8 +173,9 @@ const JobProvider = ({ children }) => {
   //fetch all location
   const getallLocation = async () => {
     const locations = await JobApi.locations();
-    // console.log('loca',locations);
+    console.log('locations',locations);
     setAllLocation(locations);
+    return locations
   };
   //create recruiment
   const createRecruiment = async (description, createAt, deadline, age) => {

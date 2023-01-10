@@ -64,16 +64,16 @@ export default function MainApp() {
                   path="/availablerecruitment"
                   element={<AvailableRecruitment />}
                 ></Route>
-                <Route path="/CandidateList/:id" element={<CandidateList />} />
-                <Route path="/CandidateApplication" element={<JobCandidateApplication />} />
-                <Route path="/Company_about" element={<CompanyPages/>}></Route>
+                <Route path="/update" element={<UpdateRecruiment/>}></Route>
+                <Route path="/candidateList/:id" element={<CandidateList />} />
+                <Route path="/candidateApplication" element={<JobCandidateApplication />} />
+                <Route path="/company_about" element={<CompanyPages/>}></Route>
                 <Route path="/update/:id" element={<UpdateRecruiment/>}></Route>
-                <Route path="/CovenantPage" element={<CovenantPage />} />
-                <Route path="/TermPage" element={<TermPage />} />
-                <Route path="/PrivacyPage" element={<PrivacyPage />} />
-                <Route path="/ContactPage" element={<ContactPage />} />
-                <Route path="/Company" element={<CompanyPage/>} />
-                <Route path="/CompanyDetail/:id" element={<CompanyDetail />} />
+                <Route path="/covenantPage" element={<CovenantPage />} />
+                <Route path="/termPage" element={<TermPage />} />
+                <Route path="/privacyPage" element={<PrivacyPage />} />
+                <Route path="/contactPage" element={<ContactPage />} />
+                <Route path="/company" element={<CompanyPage/>} />
               </Routes>
             
               <Footer />
