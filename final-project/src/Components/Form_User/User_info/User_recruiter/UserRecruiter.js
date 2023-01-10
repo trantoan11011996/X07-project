@@ -3,7 +3,13 @@ import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/UserContext";
 import {
+  isAddressCompany,
+  isCategoryCompany,
+  isCompanyName,
+  isDesCompany,
   isEmail,
+  isEmailCompany,
+  isPhoneCompany,
   isVietnamesePhoneNumberValid,
 } from "../../../../utils/validate";
 import "../User_recruiter/recruiter.css";
@@ -11,6 +17,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getApiHost, getApiHostImage } from "../../../../config";
+import { IoFastFood } from "react-icons/io5";
 export default function UserRecruiter() {
   const navigate = useNavigate(null);
   const {
@@ -32,7 +39,6 @@ export default function UserRecruiter() {
   } = useContext(UserContext);
 
   const [companyEmpty, setCompanyEmpty] = useState(false);
-  const [websiteEmpty, setWebsiteEmpty] = useState(false);
   const [companyEmailEmpty, setCompanyEmailEmpty] = useState(false);
   const [phoneEmpty, setPhoneEmpty] = useState(false);
   const [addressEmpty, setAddressEmpty] = useState(false);
@@ -42,12 +48,14 @@ export default function UserRecruiter() {
   const [phoneErr, setPhoneErr] = useState(false);
   const [categoryForm, setCategoryForm] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-  const [operationSectorAuto, setOperationSectorAuto] = useState("");
   const [selectedFile, setSelectedFile] = useState();
   const [imageData, setImageData] = useState("");
+  const [imageEmpty, setImageEmpty] = useState(false);
+  const [imageFile, setImageFile] = useState(false);
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(companyDescription);
   const [succes, setSucces] = useState(false);
+
   useEffect(() => {
     setSucces(false);
     getAllCategory();
@@ -67,36 +75,54 @@ export default function UserRecruiter() {
       setCompanyPhone(user.info.phoneNumber);
       setCompanyAddress(user.info.address);
       setCategory(user.operationSector);
-      setCompanyDescription(user.info.description)
+      setCkEditorOutput(user.info.description);
     }
   }, []);
-
   const getFile = (e) => {
-    // console.log(e.target.files[0]);
     setSelectedFile(e.target.files[0]);
+  };
+  const checkFileType = (string) => {
+    console.log("string", string);
+    console.log(typeof string);
+    if (string === "png") {
+      setImageFile(false);
+      return
+    }
+    else if (string === "jpeg") {
+      setImageFile(false);
+      return
+    }
+    else if (string === "jpg") {
+      setImageFile(false);
+      return
+    }   
+    else if (string === "jfif") {
+      setImageFile(false);
+      return
+    }else {
+      setImageFile(true);
+    }
+    return
   };
   const handleSubmitAvarta = async (e, editor) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("formFile", selectedFile);
     console.log("token", token);
-    const uploadImage = await fetch(
-      getApiHost() + "users/upload-single-file",
-      {
-        method: "post",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const uploadImage = await fetch(getApiHost() + "users/upload-single-file", {
+      method: "post",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        // console.log('data',data);
         const splitString = data.split("\\");
-        console.log(splitString)
+        const stringCheck = splitString[2].split(".");
+        checkFileType(stringCheck[1]);
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
@@ -110,27 +136,25 @@ export default function UserRecruiter() {
 
   const handleSubmitUpdateRecruiter = (event, editor) => {
     event.preventDefault();
-    if (!companyName || companyName == null) {
+    if (!isCompanyName(companyName)) {
       setCompanyEmpty(true);
       return;
     } else {
       setCompanyEmpty(false);
     }
-    if (!companyEmail || companyEmail == null) {
+    if (!isEmailCompany(companyEmail)) {
       setCompanyEmailEmpty(true);
       return;
     } else {
       setCompanyEmailEmpty(false);
     }
-
-    if (!isEmail(companyEmail)) {
-      setEmailErr(true);
-      return;
-    } else {
-      setEmailErr(false);
+    if(!isEmail(companyEmail)){
+      setEmailErr(true)
+      return
+    }else{
+      setEmailErr(false)
     }
-
-    if (!companyPhone || companyPhone == null) {
+    if (!isPhoneCompany(companyPhone)) {
       setPhoneEmpty(true);
       return;
     } else {
@@ -144,25 +168,30 @@ export default function UserRecruiter() {
       setPhoneErr(false);
     }
 
-    if (!companyAddress || companyAddress == null) {
+    if (!isAddressCompany(companyAddress)) {
       setAddressEmpty(true);
       return;
     } else {
       setAddressEmpty(false);
     }
 
-    if (!category || category == null) {
+    if (!isCategoryCompany(category)) {
       setOperationSectorEmpty(true);
       return;
     } else {
       setOperationSectorEmpty(false);
     }
-
-    if (!ckEditorOutput || ckEditorOutput == null) {
+    if (!isDesCompany(ckEditorOutput)) {
       setDescriptEmpty(true);
       return;
     } else {
       setDescriptEmpty(false);
+      if (!imageData) {
+        setImageEmpty(true);
+        return;
+      } else {
+        setImageEmpty(false);
+      }
       updateRecruiterInfo(
         companyName,
         companyEmail,
@@ -173,23 +202,19 @@ export default function UserRecruiter() {
       );
       setSucces(true);
       setShowLogin(false);
-      // navigate("/");
     }
   };
-  const handleCancelUpload = ()=>{
-    setSucces(false)
-  }
+  const handleCancelUpload = () => {
+    setSucces(false);
+  };
   const getAllCategory = async () => {
-    const all = await fetch(
-      getApiHost() + `users/operation-sector`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    )
+    const all = await fetch(getApiHost() + `users/operation-sector`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
       .then((res) => {
         return res.json();
       })
@@ -213,7 +238,7 @@ export default function UserRecruiter() {
             {imageData ? (
               <img
                 className="image-avarta"
-                src= {getApiHostImage()+`${imageData}`}
+                src={getApiHostImage() + `${imageData}`}
               ></img>
             ) : (
               <MdAccountCircle className="icon-avarta"></MdAccountCircle>
@@ -224,7 +249,7 @@ export default function UserRecruiter() {
               type="file"
               name="formFile"
               enctype="multipart/form-data"
-              accept="image/png, image/gif, image/jpeg, image/jfif"
+              accept="image/png,image/gif,image/jpeg,image/jfif"
               onChange={getFile}
             ></input>
             <button
@@ -235,6 +260,12 @@ export default function UserRecruiter() {
             >
               Lưu
             </button>
+            {imageEmpty && <p className="text">Không được để trống</p>}
+            {imageFile && (
+              <p className="text">
+                Chỉ chấp nhận các định dạng file: JPG, PNG, JPEG{" "}
+              </p>
+            )}
           </form>
         </div>
       </div>
@@ -256,9 +287,7 @@ export default function UserRecruiter() {
               defaultValue={userInfo?.info?.name}
               onChange={(event) => setCompanyName(event.target.value)}
             />
-            {companyEmpty && (
-              <p className="text">Tên công ty không được để trống</p>
-            )}
+            {companyEmpty && <p className="text">Không được để trống</p>}
           </Row>
           <Row className="mt-1">
             <Col sm={6} md={6}>
@@ -270,15 +299,16 @@ export default function UserRecruiter() {
                 </b>
                 <Form.Control
                   className="input ms-2"
-                  type="email"
+                  type="text"
+                  // value={userInfo?.info?.email}
                   defaultValue={userInfo?.info?.email}
                   onChange={(event) => setCompanyEmail(event.target.value)}
                 />
                 {companyEmailEmpty && (
-                  <p className="text">Email không được để trống</p>
+                  <p className="text">Không được để trống</p>
                 )}
                 {EmailErr && (
-                  <p className="text"> Hãy nhập email đúng định dạng</p>
+                  <p className="text">Nhập đúng định dạng Email</p>
                 )}
               </Row>
             </Col>
@@ -296,9 +326,7 @@ export default function UserRecruiter() {
                   defaultValue={userInfo?.info?.phoneNumber}
                   onChange={(event) => setCompanyPhone(event.target.value)}
                 />
-                {phoneEmpty && (
-                  <p className="text"> Số điện thoại không được để trống</p>
-                )}
+                {phoneEmpty && <p className="text">Không được để trống</p>}
                 {phoneErr && (
                   <p className="text"> Hãy nhập số điện thoại Việt Nam</p>
                 )}
@@ -319,9 +347,7 @@ export default function UserRecruiter() {
               defaultValue={userInfo?.info?.address}
               onChange={(event) => setCompanyAddress(event.target.value)}
             />
-            {addressEmpty && (
-              <p className="text"> Địa chỉ không được để trống</p>
-            )}
+            {addressEmpty && <p className="text">Không được để trống</p>}
           </Row>
           <Row className="row-form">
             <Form.Label />{" "}
@@ -331,6 +357,7 @@ export default function UserRecruiter() {
             </b>
             <Form.Select
               className="input ms-2"
+              defaultValue={category._id}
               onChange={(event) => setCategory(event.target.value)}
             >
               <option value={category._id}>{category.name}</option>
@@ -343,7 +370,7 @@ export default function UserRecruiter() {
               })}
             </Form.Select>
             {operationSectorEmpty && (
-              <p className="text"> Lĩnh vực không được để trống</p>
+              <p className="text">Không được để trống</p>
             )}
           </Row>
 
@@ -355,19 +382,19 @@ export default function UserRecruiter() {
             </b>
             <CKEditor
               editor={ClassicEditor}
-              data={companyDescription}
+              data={ckEditorOutput}
               onChange={(event, editor) => setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
-            {descriptEmpty && (
-              <p className="text"> Mô tả không được để trống</p>
-            )}
+            {descriptEmpty && <p className="text">Không được để trống</p>}
           </Row>
           {succes && (
             <div className="noti-upload-succes">
               <Form.Text className="form-text-alert">
                 Cập nhật thông tin thành công.{" "}
-                <Link to={"/"} className="link-home">Quay về trang chủ</Link>
+                <Link to={"/"} className="link-home">
+                  Quay về trang chủ
+                </Link>
               </Form.Text>
             </div>
           )}
@@ -390,8 +417,11 @@ export default function UserRecruiter() {
               )}
             </Col>
             <Col sm={3} md={3}>
-              <Link >
-                <Button variant="light" onClick={()=>handleCancelUpload()}> Hủy bỏ </Button>
+              <Link>
+                <Button variant="light" onClick={() => handleCancelUpload()}>
+                  {" "}
+                  Hủy bỏ{" "}
+                </Button>
               </Link>
             </Col>
           </Row>

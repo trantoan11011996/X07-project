@@ -108,15 +108,16 @@ export default function UpdateRecruiment() {
   };
 
   const setNextPage = () => {
-    if (page == 0) {
+      if (page == 0) {
       if(deadlineCheck < jobData.deadline){
-        console.log("????");
         setAlertDeadline(true)
         return
-      }
-      setAlertDeadline(false)
-      setPage((page) => page + 1);
-      return;
+      }else if (deadlineCheck > jobData.deadline || deadlineCheck == jobData.deadline){
+        setAlertDeadline(false)
+        console.log("?????");
+        setPage((page) => page + 1);
+        return;
+      } 
     }
     setPage((page) => page + 1);
   };
@@ -171,7 +172,7 @@ export default function UpdateRecruiment() {
                   : "btn-prev-form btn-form-upload-job"
               }
             >
-              Tiến lên
+              Tiếp tục
             </button>
           </div>
         </div>

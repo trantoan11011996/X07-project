@@ -71,7 +71,7 @@ export default function UpdateBasicInfo() {
               <strong>{dateFormat}</strong>
             </Form.Label>
             <Form.Label>
-              Gia hạn thời gian ứng tuyển đến: {deadlineJob ? deadlineJob : <></>}
+              Gia hạn thời gian ứng tuyển đến: {deadlineJob==="NaN-NaN-NaN" ? <></> : deadlineJob}
             </Form.Label>
             <Space direction="vertical" className="range-picker">
               <DatePicker
@@ -85,6 +85,7 @@ export default function UpdateBasicInfo() {
                   let crMonth = new Date(crTime).getMonth() + 1;
                   let crYear = new Date(crTime).getFullYear();
                   let newCreate = `${crDay}-${crMonth}-${crYear}`;
+                  console.log(newCreate);
                   setDeadlineJob(newCreate);
                 }}
               />

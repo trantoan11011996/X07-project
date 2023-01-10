@@ -3,6 +3,8 @@ import { Col, Form, Row } from "react-bootstrap";
 import { JobContext } from "../../Context/JobContext";
 import { DatePicker, Space } from "antd";
 import { AuthContext } from "../../Context/Context";
+import moment from "moment";
+
 const { RangePicker } = DatePicker;
 
 export default function BasicInfo() {
@@ -19,6 +21,7 @@ export default function BasicInfo() {
           maxLength={100}
           type="text"
           placeholder="Nhập tiêu đề tuyển dụng"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
           // required
         />
@@ -35,6 +38,7 @@ export default function BasicInfo() {
         <Form.Control
           maxLength={300}
           type="text"
+          value={position}
           placeholder="ví dụ : Nhân Viên Kinh Doanh"
           onChange={(e) => setPosition(e.target.value)}
           // required
@@ -51,7 +55,7 @@ export default function BasicInfo() {
             Hình thức làm việc <span style={{ color: "red" }}>*</span>
           </Form.Label>
           <Form.Select onChange={(e) => setType(e.target.value)}>
-            <option ></option>
+            <option value={type}>{type}</option>
             <option value="fulltime">Toàn thời gian</option>
             <option value="parttime">bán thời gian</option>
           </Form.Select>
@@ -68,6 +72,7 @@ export default function BasicInfo() {
             <Form.Label>Thời hạn ứng tuyển:  </Form.Label>
             <Space direction="vertical" className="range-picker">
               <RangePicker
+              // defaultPickerValue={DatePicker}
                 format={"YYYY-MM-DD"}
                 id="date"
                 name="date"

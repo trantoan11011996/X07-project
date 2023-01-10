@@ -275,3 +275,7 @@
   font : 600;
   font-family: var(--font-family);
 }
+.filter-status{
+  outline: none;
+  padding: 5px 8px;
+}

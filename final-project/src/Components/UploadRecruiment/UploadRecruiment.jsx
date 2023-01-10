@@ -64,13 +64,26 @@ export default function UploadRecruiment() {
     category,
     date,
     createRecruiment,
+    setTitle,
+    setPosition,
+    setType,
+    setLevel,
+    setAgeFrom,
+    setAgeTo,
+    setExperience,
+    setSalary,
+    setNumberApplicant,
+    setLocation,
+    setCategory,
+    setDate,
+
   } = useContext(JobContext);
 
   const FormTitles = [
-    "Thông tin tin tuyển dụng",
-    "Thông tin tin tuyển dụng",
-    "Thông tin tin tuyển dụng",
-    "Thông tin tin tuyển dụng",
+    "Đăng tin tuyển dụng",
+    "Đăng tin tuyển dụng",
+    "Đăng tin tuyển dụng",
+    "Đăng tin tuyển dụng",
   ];
 
   const pageDisplay = () => {
@@ -89,7 +102,6 @@ export default function UploadRecruiment() {
   };
 
   const today = new Date();
-  console.log(today);
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1 ; // Months start at 0!
   if(mm < 9){
@@ -97,11 +109,10 @@ export default function UploadRecruiment() {
   }
   
   let dd = today.getDate();
-  if(mm < 9){
+  if(dd < 9){
     dd = "0" + dd
   }
   const formattedToday = yyyy + "-" + mm + "-" + dd;
-  console.log(formattedToday);
   useEffect(() => {
     const getToken = JSON.parse(localStorage.getItem("token"));
     setToken(getToken);
@@ -121,6 +132,17 @@ export default function UploadRecruiment() {
       }
       setAletUploadSuccess(true)
       setDisabledUpload(true)
+      setTitle("")
+      setPosition("")
+      setType("")
+      setLevel("")
+      setAgeFrom("")
+      setAgeTo("")
+      setExperience("")
+      setSalary("")
+      setNumberApplicant("")
+      setLocation("")
+      setCategory("")
       createRecruiment(ckEditorOutput, date[0], date[1], stringAge);
       setWarningDescription(false)
     }   
@@ -130,20 +152,27 @@ export default function UploadRecruiment() {
       if (!isTitle(title)) {
         setWarningTitle(true);
         return;
+      }else{
+        setWarningTitle(false)
       }
       if (!isPosition(position)) {
         setWarningPosition(true);
         return;
+      }else{
+        setWarningPosition(false)
       }
       if (!isType(type)) {
         setWarningType(true);
         return;
+      }else{
+        setWarningType(false)
       }
       if (!isDate(date)) {
         setWarningDate(true);
         return;
       }
       if (date[0] < formattedToday || date[0] > formattedToday) {
+        console.log(date[0]);
         setAlerToday(true);
         return;
       }
@@ -159,18 +188,26 @@ export default function UploadRecruiment() {
       if(!isLevel(level)){
         setWarningLevel(true)
         return
+      }else{
+        setWarningLevel(false)
       }
       if(!isSalary(salary)){
         setWarningSalary(true)
         return
+      }else{
+        setWarningSalary(false)
       }
-      if(!isAgeFrom){
+      if(!isAgeFrom(ageFrom)){
         setWarningAgeFrom(true)
         return
+      }else{
+        setWarningAgeFrom(false)
       }
-      if(!isAgeTo){
+      if(!isAgeTo(ageTo)){
         setWarningAgeTo(true)
         return
+      }else{
+        setWarningAgeTo(false)
       }
       setWarningLevel(false)
       setWarningSalary(false)
@@ -179,27 +216,33 @@ export default function UploadRecruiment() {
       setPage(page=>page+1)
       return
     }
-    if(page ==2){
+    if(page == 2){
       if(!isNumberApplicant(numberApplicant)){
         setWarningNumberApplicant(true)
         return
+      }else{
+        setWarningNumberApplicant(false)
       }
       if(!isExperience(experience)){
         setWarningExp(true)
         return
+      }else{
+        setWarningExp(false)
       }
       if(!isCategory(category)){
         setWarningCategory(true)
         return
+      }else{
+        setWarningCategory(false)
       }
       if(!isLocation(location)){
         setWarningLocaion(true)
         return
       }
-      setWarningNumberApplicant(true)
-      setWarningExp(true)
-      setWarningCategory(true)
-      setWarningLocaion(true)
+      setWarningNumberApplicant(false)
+      setWarningExp(false)
+      setWarningCategory(false)
+      setWarningLocaion(false)
       setPage(page=>page+1)
       return
     }

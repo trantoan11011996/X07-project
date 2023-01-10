@@ -15,11 +15,13 @@ import { UserContext } from "../../../../Context/UserContext";
 import { logoutUser } from "../../../../Actions/authAction";
 import { getApiHostImage } from "../../../../config";
 
+
+
 const AuthHeader = ({ mode }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auths);
-  const { showLogin, logOutUser, currentUser, setCurrentUser } =
+  const { showLogin, logOutUser, currentUser, setCurrentUser,imageString} =
     useContext(UserContext);
   const [showUserBox, setShowUserBox] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
@@ -34,18 +36,6 @@ const AuthHeader = ({ mode }) => {
     document.body.addEventListener("click", closeUserBox);
     return () => document.body.addEventListener("click", closeUserBox);
   });
-
-  let imageString;
-  if (currentUser) {
-    if (currentUser.hasOwnProperty("avatar")) {
-      const image = currentUser.avatar;
-      const splitString = image.split("\\");
-      imageString = splitString[1] + "/".concat(splitString[2]);
-    } else {
-      imageString = "";
-    }
-  }
-
   const handleLogOutUser = () => {
     logOutUser();
     navigate("/");

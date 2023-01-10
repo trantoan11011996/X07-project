@@ -55,7 +55,7 @@ export const JobCandidateApplication = () => {
 
   return (
     <>
-      <MetaData title="Danh sách việc làm ứng tuyển" />
+      <MetaData title="Công viện đã ứng tuyển" />
       <div className={cx("container")}>
         <div className={cx("wrapper")}>
           <div className={cx("wrapper_content")}>
@@ -64,8 +64,7 @@ export const JobCandidateApplication = () => {
                 <Row className={cx("row-select")}>
                   <Col sm={3} md={2} className={cx("select-wrapper")}>
                     <select
-                      style={{ border: "none" , outline:"none"}}
-                      // className="sort"
+                      className={cx("filter-status")}
                       onChange={(e) => setParamKey("status", e.target.value)}
                     >
                       <option value="">-- Trạng thái --</option>

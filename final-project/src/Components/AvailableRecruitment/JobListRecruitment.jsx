@@ -2,9 +2,9 @@ import React, { useContext} from "react";
 import { List } from "antd";
 import JobItemRecruitment from "./JobItemRecruitment";
 import { JobContext } from "../../Context/JobContext";
-function JobListRecruitment({myJobRecruitment}){
+function JobListRecruitment({myJobRecruitment,removeRcm}){
   // console.log(myJobRecruitment);
-    
+
     return(
         <List
         grid={{
@@ -25,7 +25,7 @@ function JobListRecruitment({myJobRecruitment}){
         dataSource={myJobRecruitment}
         renderItem={(myJobRecruitment) => (
           <List.Item>
-            <JobItemRecruitment myJobRecruitment={myJobRecruitment} id={myJobRecruitment._id} />
+            <JobItemRecruitment myJobRecruitment={myJobRecruitment} id={myJobRecruitment._id} removeRcm={removeRcm} />
           </List.Item>
         )}
       ></List>

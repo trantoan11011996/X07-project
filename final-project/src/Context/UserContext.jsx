@@ -36,25 +36,36 @@ const UserProvider = ({ children }) => {
   const [userDescription, setUserDescription] = useState("");
   const [fieldActivity, setFieldActivity] = useState("");
   const [listRecruimentCv, SetlistRecruimentCv] = useState("");
+  const [avatarHeader,setAvatarHeader] = useState("")
 
   useEffect(() => {
     const current = autologin();
     setCurrentUser(current);
     const getListCv = JSON.parse(localStorage.getItem('listCv'))
     SetlistRecruimentCv(getListCv)
-  }, []);
-  useEffect(() => {
-    setToken(user?.token);
-  }, [user]);
-  useEffect(() => {
     let getToken = localStorage.getItem("token");
     if (getToken) {
       getToken = JSON.parse(getToken);
       setToken(getToken);
-      return;
-    }
-    return;
+    }   
   }, []);
+
+  let imageString  
+  const current = JSON.parse(localStorage.getItem("currentUser"))
+  if(current){
+    const image = current.avatar
+    const splitImage = image.split("\\")
+    imageString = splitImage[1]+"/".concat(splitImage[2])
+  }
+  else{
+    imageString=""
+  }
+  
+
+  useEffect(() => {
+    setToken(user?.token);
+  }, [user]);
+
 
   const registerUser = async () => {
     // push lên API
@@ -167,6 +178,7 @@ const UserProvider = ({ children }) => {
       ckEditorOutput,
       category
     );
+    console.log('info',info);
     let user_info = await fetch(
       getApiHost() + "users/update-profile",
       {
@@ -260,7 +272,8 @@ const UserProvider = ({ children }) => {
     token,
     listRecruimentCv,
     SetlistRecruimentCv,
-    getCompanyInfo
+    getCompanyInfo,
+    imageString
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

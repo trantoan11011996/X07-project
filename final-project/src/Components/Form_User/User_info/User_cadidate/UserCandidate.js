@@ -15,7 +15,19 @@ import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { UserContext } from "../../../../Context/UserContext";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { isVietnamesePhoneNumberValid } from "../../../../utils/validate";
+import {
+  candidateAddress,
+  candidateAge,
+  candidateDes,
+  candidateEmail,
+  candidateGender,
+  candidateName,
+  candidatePhone,
+  canidateCategory,
+  isDesCompany,
+  isEmail,
+  isVietnamesePhoneNumberValid,
+} from "../../../../utils/validate";
 import "../User_cadidate/candidate.css";
 import { getApiHost, getApiHostImage } from "../../../../config";
 import { Radio } from "antd";
@@ -51,14 +63,16 @@ export default function UserCandidate() {
   const [phoneEmpty, setPhoneEmpty] = useState(false);
   const [addressEmpty, setAddressEmpty] = useState(false);
   const [emailEmpty, setEmailEmpty] = useState(false);
+  const [EmailErr, setEmailErr] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [descriptEmpty, setDescriptEmpty] = useState(false);
   const [ageErr, setAgeErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
   const [selectedFile, setSelectedFile] = useState();
   const [imageData, setImageData] = useState("");
+  const [imageEmpty, setImageEmpty] = useState(false);
+  const [imageFile, setImageFile] = useState(false);
   const [token, setToken] = useState("");
   const [ckEditorOutput, setCkEditorOutput] = useState(null);
   const [succes, setSucces] = useState(false);
@@ -82,7 +96,7 @@ export default function UserCandidate() {
       setEmailCandidate(user.email);
       setAddress(user.info.address);
       setCategoryUser(user.category);
-      setDescription(user.info.description);
+      setCkEditorOutput(user.info.description);
     }
     if (!user.info) {
       setName("");
@@ -95,7 +109,7 @@ export default function UserCandidate() {
       setDescription("");
     }
   }, []);
-
+console.log(description);
   const getAllCategory = async () => {
     const all = await fetch(getApiHost() + `users/category`, {
       method: "GET",
@@ -108,19 +122,33 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
         setCategories(data);
       });
     return all;
   };
   const getFile = (e) => {
     setSelectedFile(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
-
+  const checkFileType = (string) => {
+    if (string === "png") {
+      setImageFile(false);
+      return;
+    } else if (string === "jpeg") {
+      setImageFile(false);
+      return;
+    } else if (string === "jpg") {
+      setImageFile(false);
+      return;
+    } else if (string === "jfif") {
+      setImageFile(false);
+      return;
+    } else {
+      setImageFile(true);
+    }
+    return;
+  };
   const handleSubmitAvarta = async (e) => {
     e.preventDefault();
-    console.log("token", token);
     const formData = new FormData();
 
     formData.append("formFile", selectedFile);
@@ -135,8 +163,9 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        // console.log("data", data);
         const splitString = data.split("\\");
+        const stringCheck = splitString[2].split(".");
+        checkFileType(stringCheck[1]);
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
@@ -150,36 +179,29 @@ export default function UserCandidate() {
 
   const handleSubmitUpdateCandidate = (event) => {
     event.preventDefault();
-
-    if (!name || name == null) {
+    if (!candidateName(name)) {
+      console.log(name);
       setNameEmpty(true);
       return;
     } else {
       setNameEmpty(false);
     }
 
-    if (!gender || gender == null) {
+    if (!candidateGender(gender)) {
       setGenderEmpty(true);
       return;
     } else {
       setGenderEmpty(false);
     }
 
-    if (!age || age == null) {
+    if (!candidateAge(age)) {
       setAgeEmpty(true);
       return;
     } else {
       setAgeEmpty(false);
     }
 
-    if (age < 18) {
-      setAgeErr(true);
-      return;
-    } else {
-      setAgeErr(false);
-    }
-
-    if (!phone || phone == null) {
+    if (!candidatePhone(phone)) {
       setPhoneEmpty(true);
       return;
     } else {
@@ -192,34 +214,46 @@ export default function UserCandidate() {
     } else {
       setPhoneErr(false);
     }
-    if (!emailCandidate || emailCandidate == null) {
+    if (!candidateEmail(emailCandidate)) {
       setEmailEmpty(true);
       return;
     } else {
       setEmailEmpty(false);
     }
-    if (!address || address == null) {
+    if(!isEmail(emailCandidate)){
+      setEmailErr(true)
+      return
+    }else{
+      setEmailErr(false)
+    }
+    if (!candidateAddress(address)) {
       setAddressEmpty(true);
       return;
     } else {
       setAddressEmpty(false);
     }
 
-    if (!categoryUser || categoryUser == null) {
+    if (!canidateCategory(categoryUser)) {
       setCategoryEmpty(true);
       return;
     } else {
-      setDescriptEmpty(false);
       setCategoryEmpty(false);
     }
-    setDescriptEmpty(false);
+    if (!candidateDes(ckEditorOutput)) {
+      setDescriptEmpty(true);
+      return;
+    } else {
+      setDescriptEmpty(false);
+      updateCandidateInfo(ckEditorOutput);
+      setSucces(true);
+      setShowLogin(false);
+    }
 
-    updateCandidateInfo(ckEditorOutput);
-    setSucces(true);
-    setShowLogin(false);
     // navigate("/");
   };
-
+  const handleCancelUpload = () => {
+    setSucces(false);
+  };
   return (
     <div class="form-container-candidate">
       <div className="form-candidate-content">
@@ -269,9 +303,8 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
-                  value={name}
                   maxLength={100}
-                  defaultValue={userInfo?.info?.fullName}
+                  defaultValue={name}
                   onChange={(event) => setName(event.target.value)}
                 />
                 {nameEmpty && (
@@ -290,14 +323,18 @@ export default function UserCandidate() {
                 <div className="radio-gender">
                   <Radio.Group
                     name="radiogroup"
-                    defaultValue={gender}
+                    value={gender}
                     onChange={(e) => {
                       // console.log("gender", gender);
                       setGender(e.target.value);
                     }}
                   >
-                    <Radio value="Nam">Nam</Radio>
-                    <Radio value="Nữ">Nữ</Radio>
+                    <Radio value="Nam">
+                      Nam
+                    </Radio>
+                    <Radio  value="Nữ">
+                      Nữ
+                    </Radio>
                   </Radio.Group>
                 </div>
                 {genderEmpty && (
@@ -318,10 +355,9 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="number"
-                  value={age}
                   min={18}
                   max={100}
-                  defaultValue={userInfo?.info?.age}
+                  defaultValue={age}
                   onChange={(event) => setAge(event.target.value)}
                 />
                 {ageEmpty && <p className="text"> Tuổi không được để trống</p>}
@@ -339,8 +375,7 @@ export default function UserCandidate() {
                 <Form.Control
                   className="input ms-2"
                   type="text"
-                  value={phone}
-                  defaultValue={userInfo?.info?.phoneNumber}
+                  defaultValue={phone}
                   onChange={(event) => setPhone(event.target.value)}
                 />
                 {phoneEmpty && (
@@ -361,13 +396,15 @@ export default function UserCandidate() {
             </b>
             <Form.Control
               className="input ms-2"
-              type="email"
+              type="text"
               maxLength={200}
-              value={emailCandidate}
-              defaultValue={userInfo?.info?.email}
+              defaultValue={emailCandidate}
               onChange={(event) => setEmailCandidate(event.target.value)}
             />
             {emailEmpty && <p className="text"> Email không được để trống</p>}
+            {EmailErr && (
+                  <p className="text">Nhập đúng định dạng Email</p>
+                )}
           </Row>
 
           <Row className="row-form">
@@ -380,8 +417,7 @@ export default function UserCandidate() {
               className="input ms-2"
               type="text"
               maxLength={200}
-              value={address}
-              defaultValue={userInfo?.info?.address}
+              defaultValue={address}
               onChange={(event) => setAddress(event.target.value)}
             />
             {addressEmpty && (
@@ -396,6 +432,7 @@ export default function UserCandidate() {
             </b>
             <Form.Select
               className="input ms-2"
+              defaultValue={categoryUser._id}
               onChange={(event) => setCategoryUser(event.target.value)}
             >
               <option value={categoryUser._id}>{categoryUser.name}</option>
@@ -421,16 +458,13 @@ export default function UserCandidate() {
             </b>
             <CKEditor
               editor={ClassicEditor}
-              data={description}
+              data={ckEditorOutput}
               onChange={(event, editor) => setCkEditorOutput(editor.getData())}
               style={{ padding: "20px" }}
             />
-            {/* {descriptEmpty && (
-              <p className="text"> Mô tả không được để trống</p>
-            )}
             {descriptEmpty && (
               <p className="text"> Mô tả không được để trống</p>
-            )} */}
+            )}
           </Row>
           {succes && (
             <div className="noti-upload-succes">
@@ -460,8 +494,8 @@ export default function UserCandidate() {
               )}
             </Col>
             <Col sm={3} md={3}>
-              <Link to={"/"}>
-                <Button variant="light"> Hủy bỏ </Button>
+              <Link >
+                <Button variant="light" onClick={()=>handleCancelUpload()}> Hủy bỏ </Button>
               </Link>
             </Col>
           </Row>
