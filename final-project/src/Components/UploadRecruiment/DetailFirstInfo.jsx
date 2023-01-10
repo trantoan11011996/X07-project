@@ -31,7 +31,7 @@ export default function DetailFirstInfo(){
                 <Form.Label>
                   Cấp bậc <span style={{ color: "red" }}>*</span>
                 </Form.Label>
-                <Form.Select onChange={(e) => setLevel(e.target.value)}>
+                <Form.Select value={level} onChange={(e) => setLevel(e.target.value)}>
                   <option></option>
                   <option value="Thực tập">Thực Tập</option>
                   <option value="nhân viên">Nhân Viên</option>
@@ -51,6 +51,7 @@ export default function DetailFirstInfo(){
               <Form.Control
                 maxLength={100}
                 type="text"
+                value={salary}
                 placeholder="2.000.000-3.000.000"
                 onChange={(e) => setSalary(e.target.value)}
                 // required
@@ -70,6 +71,7 @@ export default function DetailFirstInfo(){
                   <Form.Control
                     type="number"
                     min={18}
+                    value={ageFrom}
                     placeholder="18"
                     onChange={(e) => setAgeFrom(e.target.value)}
                   />
@@ -89,6 +91,7 @@ export default function DetailFirstInfo(){
                     type="number"
                     min={20}
                     max={80}
+                    value={ageTo}
                     placeholder="20"
                     onChange={(e) => setAgeTo(e.target.value)}
                   />

@@ -25,12 +25,13 @@ export const AvailableRecruitment = () => {
     typeSort,
     token,
     setSearch,
+    removeRcm
   } = useContext(JobContext);
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [isClearable, setIsClearable] = useState(true);
   const [params, setParams] = useSearchParams();
   const [complete, setComplete] = useState(false);
-
+  const [confirmRemove,setConfirmRemove] = useState("")
   const setParamsKey = (key, value) => {
     // => biến 1 mảng  thành 1 object (param là 1 object đặc biệt)
     let currentParams = Object.fromEntries([...params]);
@@ -121,7 +122,12 @@ export const AvailableRecruitment = () => {
        }
     }
   };
-      
+  const removeMyRcm = (id,e) =>{
+    removeRcm(id)
+    getMyRecruitmentJobs(token,"","","","","")
+    console.log("????");
+  }
+ 
   return (
     <>
       <MetaData title="Danh sách tin tuyển dụng đã đăng" />
@@ -211,7 +217,7 @@ export const AvailableRecruitment = () => {
                   </div>
                   <div>
                     <ul className={cx("list_group_jobs")}>
-                      <JobListRecruitment myJobRecruitment={myJobRecruitment} />
+                      <JobListRecruitment myJobRecruitment={myJobRecruitment} removeRcm={removeMyRcm}/>
                     </ul>
                   </div>
                 </>

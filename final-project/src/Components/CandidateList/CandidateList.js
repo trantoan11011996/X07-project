@@ -12,6 +12,7 @@ import { JobContext } from "../../Context/JobContext";
 import Lottie from "lottie-react";
 import loadingAnimation from "../../animationJson/loading-animation.json";
 import { useSearchParams } from "react-router-dom";
+import MetaData from "../MetaData/MetaData";
 export default function CandidateList() {
   const { getCV, confirmCV,listRecruimentCv } = useContext(JobContext);
 
@@ -59,6 +60,8 @@ export default function CandidateList() {
     getCV(id,"", userToken)
   }, [statusCv])
   return (
+    <>
+    <MetaData title="Danh sách ứng viên"/>
     <Container>
       <Form>
         <Row className="select-bar">
@@ -104,7 +107,7 @@ export default function CandidateList() {
           ) : (
             <>
               {listRecruimentCv?.length == 0 ? (
-                <></>
+                <h2 className="text">Chưa có ứng viên nào ứng tuyển công việc này</h2>
               ) : (
                 <List
                   pagination={{
@@ -125,5 +128,6 @@ export default function CandidateList() {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }

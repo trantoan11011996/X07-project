@@ -198,6 +198,7 @@ const JobProvider = ({ children }) => {
       createAt,
       deadline
     );
+    console.log("new",newRecruiment);
     // console.log(newRecruiment);
     const createRecruiment = await fetch(getApiHost() + `recruiments/new`, {
       method: "post",
@@ -212,7 +213,7 @@ const JobProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        // console.log("data", data);
+        console.log("data", data);
         return data;
       });
     return createRecruiment;
@@ -254,7 +255,20 @@ const JobProvider = ({ children }) => {
     return updateRecruitment;
   };
 
-  
+  const removeRcm  = async(id)=>{
+    console.log(id,token);
+    const remove = await fetch(getApiHost() + `recruiments/detail/${id}`,{
+      method : "delete",
+      headers:{
+        authorization: `Bearer ${token}`,
+      }}).then((res)=>{
+        return res.json()
+      }).then((data)=>{
+        console.log('data',data);
+        return data
+      })
+      return remove
+  }
 
 
   //post CV
@@ -459,7 +473,8 @@ const JobProvider = ({ children }) => {
     SetlistRecruimentCv,
     getRecruiterCompany ,
     setCompany,
-    company
+    company,
+    removeRcm
   };
   return <JobContext.Provider value={value}>{children}</JobContext.Provider>;
 };

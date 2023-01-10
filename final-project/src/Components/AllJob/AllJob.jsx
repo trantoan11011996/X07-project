@@ -87,7 +87,7 @@ export const AllJob = () => {
                   type="text"
                   name="search"
                   onChange={handleChangeInput}
-                  placeholder="Tên công ty, vị trí việc làm"
+                  placeholder="Tiêu đề việc làm..."
                 />
                 <div className={cx("search-text")}>
                   <CiSearch />
@@ -107,20 +107,6 @@ export const AllJob = () => {
                   placeholder="Lĩnh Vực"
                 />
               </div>
-              <div className={cx("form-group")}>
-                <Select
-                  defaultValue={selectedOptionsAddress}
-                  isMulti
-                  // name="address"
-                  options={address}
-                  isSearchable="true"
-                  className="basic-multi-select"
-                  onChange={(e) => setSelectedOptionsAddress(e)}
-                  isOptionDisabled={() => selectedOptionsAddress.length >= 2}
-                  classNamePrefix="select"
-                  placeholder="Địa điểm"
-                />
-              </div>
               <div className={cx("form-group-button")}>
                 <button>
                   <CiSearch />
@@ -132,10 +118,7 @@ export const AllJob = () => {
             <div className={cx("wrapper_jobs")}>
               <div className={cx("recruit_title")}>
                 <div className={cx("left")}>
-                  <h2>Tất cả tin tuyển dụng</h2>
-                </div>
-                <div className={cx("right")}>
-                  <Link to="/">Danh sách việc làm đã ứng tuyển</Link>
+                  <h2 className={cx("left-title")}>Tất cả tin tuyển dụng</h2>
                 </div>
               </div>
               <div className={cx("recruit_title")}>
@@ -165,7 +148,6 @@ export const AllJob = () => {
                     <option value="defaults">-- Sắp xếp theo --</option>
                     <option value="createAt">Mới đăng </option>
                     <option value="deadline">Ngày hết hạn</option>
-                    <option value="numberApplicant">Số lượng ứng viên</option>
                   </select>
                 </div>
               </div>

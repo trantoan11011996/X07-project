@@ -11,20 +11,20 @@ export default function DetailSeccondInfo() {
     allLocation,
     setExperience,
     setNumberApplicant,
+    numberApplicant,
     setLocation,
     setCategory,
+    experience,
+    category,
+    location
   } = useContext(JobContext);
   const {
     warningNumberApplicant,
     warningExp,
     warningCategory,
     warningLocation,
-    warningDescription,
     setCkEditorOutput,
-    aletUploadSuccess,
-    disabledUpload,
     confirmInfo,
-    confirmInfoJob
   } = useContext(AuthContext);
   const handleConfirmInfo = () => {
     confirmInfo();
@@ -43,6 +43,7 @@ export default function DetailSeccondInfo() {
           max="10000"
           min="1"
           type="number"
+          value={numberApplicant}
           onChange={(e) => setNumberApplicant(e.target.value)}
         />
         {warningNumberApplicant && (
@@ -54,7 +55,7 @@ export default function DetailSeccondInfo() {
       <Row className="mb-3">
         <Col>
           <Form.Label>Kinh nghiệm làm việc</Form.Label>
-          <Form.Select onChange={(e) => setExperience(e.target.value)}>
+          <Form.Select value={experience} onChange={(e) => setExperience(e.target.value)}>
             <option></option>
             <option value="Mới tốt nghiệp/ chưa có">
               Mới tốt nghiệp/ chưa có kinh nghiệm
@@ -76,7 +77,7 @@ export default function DetailSeccondInfo() {
           <Form.Label>
             Lĩnh vực tuyển dụng <span style={{ color: "red" }}>*</span>
           </Form.Label>
-          <Form.Select onChange={(e) => setCategory(e.target.value)}>
+          <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option></option>
             {allCategory?.map((item, index) => {
               return (
@@ -99,7 +100,7 @@ export default function DetailSeccondInfo() {
           <Form.Label>
             Địa điểm tuyển dụng<span style={{ color: "red" }}>*</span>
           </Form.Label>
-          <Form.Select onChange={(e) => setLocation(e.target.value)}>
+          <Form.Select value={location} onChange={(e) => setLocation(e.target.value)}>
             <option></option>
             {allLocation?.map((item, index) => {
               return (

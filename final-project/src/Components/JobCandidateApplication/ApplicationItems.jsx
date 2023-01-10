@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function ApplicationItems({ job, recruimentId, id, handleDelete }) {
   const image = recruimentId?.name?.avatar;
-  const splitString = image.split("/");
+  const splitString = image.split("\\");
   const imageString = splitString[1] + "/".concat(splitString[2]);
   console.log('job',job);
   const [recruitmentStatus, setRecruitmentStatus] = useState(

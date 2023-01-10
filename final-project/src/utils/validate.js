@@ -45,15 +45,15 @@ export const isVietnamesePhoneNumberValid = (phone) => {
   return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(phone);
 };
 
-const whiteSpaceCheck = /\s/g
+
 export const isTitle = (title)=>{
-  if(!title){
+  if(!title || !title.replace(/\s/g, '').length){
     return false
   }
   return true
 }
 export const isPosition = (position)=>{
-  if(!position){
+  if(!position || !position.replace(/\s/g, '').length){
     return false
   }
   return true
@@ -72,13 +72,15 @@ export const isLevel = (level)=>{
 }
 
 export const isAgeFrom = (ageFrom)=>{
-  if(!ageFrom || whiteSpaceCheck.test(ageFrom)){
+  console.log(ageFrom);
+  if(!ageFrom){
     return false
   }
   return true
 }
 export const isAgeTo = (ageTo)=>{
-  if(!ageTo || whiteSpaceCheck.test(ageTo)){
+  console.log(ageTo);
+  if(!ageTo){
     return false
   }
   return true
@@ -90,9 +92,10 @@ export const isExperience = (experience)=>{
   return true
 }
 export const isSalary = (salary)=>{
-  if(!salary || whiteSpaceCheck.test(salary)){
+  if(!salary || !salary.replace(/\s/g, '').length){
     return false
   }
+  console.log("đúng");
   return true
 }
 
@@ -121,8 +124,110 @@ export const isDescription = (description)=>{
   }
   return true
 }
-export const isDate = (date)=>{
-  if(!date){
+export const isDate = (date)=>{;
+  console.log(date);
+  if(date.length===0){
+    return false
+  }
+  return true
+}
+
+export const isCompanyName = (companyName) =>{
+      if(!companyName ||!companyName.replace(/\s/g, '').length){
+        return false
+      }
+      return true
+}
+
+export const isEmailCompany = (emailCompany)=>{
+  if(!emailCompany || !emailCompany.replace(/\s/g, '').length){
+    console.log("sai roi",emailCompany);
+    return false
+  }
+  return true
+}
+
+export const isPhoneCompany = (phoneCompany)=>{
+  if(!phoneCompany || !phoneCompany.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+} 
+
+export const isAddressCompany = (addressCompany)=>{
+  if(!addressCompany || !addressCompany.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const isCategoryCompany = (categoryCompany)=>{
+  if(!categoryCompany){
+    return false
+  }
+  return true
+}
+
+export const isDesCompany = (desCompany)=>{
+  if(!desCompany || !desCompany.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const candidateName = (name)=>{
+  if(!name ||  !name.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const candidateGender = (gender)=>{
+  console.log("gender",gender);
+  if(!gender){
+    return false
+  }
+  return true
+}
+
+export const candidateAge = (age)=>{
+  if(!age){
+    return false
+  }
+  return true
+}
+
+export const candidateEmail = (email)=>{
+  if(!email || !email.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const candidatePhone = (phone)=>{
+  if(!phone ||  !phone.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const candidateAddress = (address)=>{
+  if(!address || !address.replace(/\s/g, '').length){
+    return false
+  }
+  return true
+}
+
+export const canidateCategory = (category)=>{
+  if(!category){
+    return false
+  }
+  return true
+}
+
+export const candidateDes = (des)=>{
+  console.log(des);
+  if(!des || !des.replace(/\s/g, '').length){
     return false
   }
   return true
