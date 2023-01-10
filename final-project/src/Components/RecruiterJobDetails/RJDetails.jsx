@@ -310,8 +310,7 @@ export default function RJDetails() {
 
                             <div className="mt-3">
                               <h3 className="require-text">
-                                <TiFlowChildren className="me-2">
-                                  Độ tuổi{" "}
+                                <TiFlowChildren className="me-2"> <span> Độ tuổi{" "}</span>
                                 </TiFlowChildren>
                               </h3>
                               <p className="ms-2"> {jobData?.age} tuổi</p>

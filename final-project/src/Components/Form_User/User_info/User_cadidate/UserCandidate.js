@@ -135,8 +135,8 @@ export default function UserCandidate() {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
-        const splitString = data.split("/");
+        // console.log("data", data);
+        const splitString = data.split("\\");
         const imageString = splitString[1] + "/".concat(splitString[2]);
         setImageData(imageString);
         let user = localStorage.getItem("currentUser");
