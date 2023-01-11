@@ -62,15 +62,9 @@ const AuthHeader = ({ mode }) => {
         </Link>
       </div>
       <div className="header-navbar">
-        <Link to={"/company"} className="navbar-content navbar-content-link company-navbar">
-          <div className="navbar-content company-navbar">
-            <BsBuilding className="icon-navbar"></BsBuilding>
-            <p className="content">Danh sách công ty</p>
-          </div>
-        </Link>
-        <div className="navbar-content location-navbar">
-          <BsSearch className="icon-navbar"></BsSearch>
-          <p className="content">Địa điểm/Ngành nghề</p>
+        <div className="navbar-content company-navbar">
+          <BsBuilding className="icon-navbar"></BsBuilding>
+          <p className="content">Danh sách công ty</p>
         </div>
         <div
           className="navbar-content account-user"

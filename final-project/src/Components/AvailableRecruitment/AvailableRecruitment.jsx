@@ -9,7 +9,7 @@ import { images } from "../../img/index";
 import { CiSearch } from "react-icons/ci";
 import Select from "react-select";
 import { JobContext } from "../../Context/JobContext";
-
+import useDebounce from './useDebounce';
 import JobListRecruitment from "./JobListRecruitment";
 const cx = classNames.bind(styles);
 
@@ -30,6 +30,7 @@ export const AvailableRecruitment = () => {
   const [selectedOptionsField, setSelectedOptionsField] = useState([]);
   const [isClearable, setIsClearable] = useState(true);
   const [params, setParams] = useSearchParams();
+  const [searchBox, setSearchBox] = useState('');
   const [complete, setComplete] = useState(false);
   const [confirmRemove,setConfirmRemove] = useState("")
   const setParamsKey = (key, value) => {
@@ -37,6 +38,13 @@ export const AvailableRecruitment = () => {
     let currentParams = Object.fromEntries([...params]);
     setParams({ ...currentParams, [key]: value });
   };
+
+  useDebounce(() => {
+   
+    myJobRecruitment.filter((d) => d.title.toLowerCase().includes(searchBox.toLowerCase()))
+    
+  }, [myJobRecruitment, searchBox], 1200
+);
 
   useEffect(() => {
     const getlocalToken = JSON.parse(localStorage.getItem("token"));
@@ -97,6 +105,9 @@ export const AvailableRecruitment = () => {
     setComplete(true);
   }, 2500);
 
+  const handleSearch = (e) => setSearchBox(setParamsKey("search", e.target.value));
+
+
   const handlSelectCategory = (e) => {
     let arrField = e;
     console.log(arrField);
@@ -139,7 +150,8 @@ export const AvailableRecruitment = () => {
                 <input
                   type="text"
                   placeholder="Tìm việc làm"
-                  onChange={(e) => setParamsKey("search", e.target.value)}
+                  value={searchBox}
+                  onChange={handleSearch}
                 />
                 <div className={cx("search-text")}>
                   <CiSearch />
